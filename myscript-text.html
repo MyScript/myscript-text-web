@@ -78,7 +78,7 @@ Element providing solution to no problem in particular.
                 this.renderer.drawEnd(event.detail.event, event.detail.x, event.detail.y, this.rendererParameters, this.canvas.shadowRoot.querySelector('canvas').getContext('2d'));
                 this.inputUnit.setComponents(this.stroker.getStrokes());
                 this.inputUnits.push(this.inputUnit);
-                this.recognizer.doSimpleRecognition(this.applicationKey, this.recognizerParameters, this.instanceId, this.inputUnits, this.hmacKey).then(
+                this.recognizer.doSimpleRecognition(this.applicationKey, this.instanceId, this.inputUnits, this.hmacKey, this.recognizerParameters).then(
                         function success (response) {
                             document.querySelector('myscript-text').shadowRoot.querySelector('myscript-recognizer').fire('recognitionSuccessEvent',{response:response});
                             document.querySelector('myscript-text').instanceId = response.instanceId;
