@@ -11,14 +11,14 @@ Element providing solution to no problem in particular.
 
 ##### Example
 
-    <myscript-text url="http://localhost:8888/api/v3.0/recognition/rest" applicationKey="ed45a5b4-946d-45c4-8234-fb840fb6416b" hmacKey="a1789a80-8514-3d17-acd0-cc5d6674acea" type="Text"></myscript-text>
+    <myscript-text url="http://localhost:8888/api/v3.0/recognition/rest" applicationkey="ed45a5b4-946d-45c4-8234-fb840fb6416b" hmackey="a1789a80-8514-3d17-acd0-cc5d6674acea" type="Text"></myscript-text>
 
 @element myscript-text
 @blurb MyScript HTML5 text Element to help developers integrate handwriting recognition.
 @status alpha
 @homepage http://polymerlabs.github.io/myscript-text
 -->
-<polymer-element name="myscript-text" attributes="url applicationKey hmacKey type" on-myscript-toolbar-delete="{{delete}}" on-myscript-toolbar-undo="{{undo}}" on-myscript-toolbar-redo="{{redo}}">
+<polymer-element name="myscript-text" attributes="url applicationkey hmackey type" on-myscript-toolbar-delete="{{delete}}" on-myscript-toolbar-undo="{{undo}}" on-myscript-toolbar-redo="{{redo}}">
     <template>
         <link rel="stylesheet" href="./myscript-text.css">
         <core-scaffold>
@@ -30,7 +30,7 @@ Element providing solution to no problem in particular.
                     <myscript-toolbar delete="true" undo="true" redo="true" play="true" settings="true" info="true"></myscript-toolbar>
                     <myscript-stroker></myscript-stroker>
                     <myscript-renderer type="{{type}}"></myscript-renderer>
-                    <myscript-recognizer type="{{type}}" url="{{url}}" applicationKey="{{applicationKey}}" hmacKey="{{hmacKey}}" ></myscript-recognizer>
+                    <myscript-recognizer type="{{type}}" url="{{url}}" applicationkey="{{applicationkey}}" hmackey="{{hmackey}}" ></myscript-recognizer>
                     <myscript-canvas on-myscript-canvas-down="{{down}}" on-myscript-canvas-track="{{track}}" on-myscript-canvas-up="{{up}}"></myscript-canvas>
                 </div>
             </div>
@@ -78,7 +78,7 @@ Element providing solution to no problem in particular.
                 this.renderer.drawEnd(event.detail.event, event.detail.x, event.detail.y, this.canvas.shadowRoot.querySelector('canvas').getContext('2d'), this.rendererParameters);
                 this.inputUnit.setComponents(this.stroker.getStrokes());
                 this.inputUnits.push(this.inputUnit);
-                this.recognizer.doSimpleRecognition(this.applicationKey, this.instanceId, this.inputUnits, this.hmacKey, this.recognizerParameters).then(
+                this.recognizer.doSimpleRecognition(this.applicationkey, this.instanceId, this.inputUnits, this.hmackey, this.recognizerParameters).then(
                         function success (response) {
                             document.querySelector('myscript-text').shadowRoot.querySelector('myscript-recognizer').fire('recognitionSuccessEvent',{response:response});
                             document.querySelector('myscript-text').instanceId = response.instanceId;
