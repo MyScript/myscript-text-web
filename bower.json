@@ -1,9 +1,6 @@
 {
   "name": "myscript-text",
-  "version": "0.1.0",
-  "authors": [
-    "Yohann Streibel <yohann.streibel@myscript.com>"
-  ],
+  "version": "1.1.x",
   "description": "MyScript HTML5 text Element to help developer for integrate handwriting recognition",
   "keywords": [
     "web-component",
@@ -14,20 +11,26 @@
   "main": "myscript-text.html",
   "license": "MIT",
   "homepage": "https://github.com/myscript/myscript-text/",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/MyScriptWebComponents/myscript-text.git"
+  },
   "ignore": [
     "/.*",
     "/tests/"
   ],
   "dependencies": {
-      "polymer": "Polymer/polymer#~0.5.x",
-      "myscript-toolbar": "0.1.0",
-      "myscript-result": "0.1.0",
-      "myscript-stroker": "0.1.0",
-      "myscript-renderer": "0.1.0",
-      "myscript-recognizer": "0.1.0",
-      "myscript-canvas": "0.1.0"
+      "polymer": "Polymer/polymer#1.0.x",
+      "paper-dialog": "polymerelements/paper-dialog#1.0.x",
+      "paper-progress": "polymerelements/paper-progress#1.0.x",
+      "myscript-toolbar": "1.1.x",
+      "myscript-result": "1.1.x",
+      "myscript-stroker": "1.1.x",
+      "myscript-renderer": "1.1.x",
+      "myscript-recognizer": "1.1.x",
+      "myscript-canvas": "1.1.x"
   },
   "devDependencies": {
-    "web-component-tester": "Polymer/web-component-tester#^0.7.x"
+    "web-component-tester": "*"
   }
 }
