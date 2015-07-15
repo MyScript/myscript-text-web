@@ -1,112 +1,226 @@
-<link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../myscript-toolbar/myscript-toolbar.html">
-<link rel="import" href="../myscript-result/myscript-result.html">
-<link rel="import" href="../myscript-stroker/myscript-stroker.html">
-<link rel="import" href="../myscript-renderer/myscript-renderer.html">
-<link rel="import" href="../myscript-recognizer/myscript-recognizer.html">
-<link rel="import" href="../myscript-canvas/myscript-canvas.html">
-
 <!--
-Element providing solution to no problem in particular.
+Copyright © MyScript.
+LICENSE: github.com/MyScriptWebComponents/myscript-text/blob/master/LICENSE
+-->
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../iron-icons/av-icons.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../paper-dialog/paper-dialog.html">
+<link rel="import" href="../paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../myscript-ink-paper/myscript-ink-paper.html">
+<!--
+The `myscript-text` is a turnkey solution for those who need to quickly implement MyScript Text recognition.
 
 ##### Example
 
-    <myscript-text url="http://localhost:8888/api/v3.0/recognition/rest" applicationkey="ed45a5b4-946d-45c4-8234-fb840fb6416b" hmackey="a1789a80-8514-3d17-acd0-cc5d6674acea" type="Text"></myscript-text>
+    <myscript-text application-key="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX" hmac-key="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"></myscript-text>
 
+@group MyScript Elements
 @element myscript-text
-@blurb MyScript HTML5 text Element to help developers integrate handwriting recognition.
+@blurb MyScript HTML5 Text Element to help developers integrate math handwriting recognition.
 @status alpha
-@homepage http://polymerlabs.github.io/myscript-text
+@homepage http://myscriptwebcomponents.github.io/myscript-text
+
+@demo demo/index.html Basic Demo
 -->
-<polymer-element name="myscript-text" attributes="url applicationkey hmackey type" on-myscript-toolbar-delete="{{delete}}" on-myscript-toolbar-undo="{{undo}}" on-myscript-toolbar-redo="{{redo}}">
+<dom-module id="myscript-text">
+    <style>
+        paper-toolbar {
+            --paper-toolbar-background: #00a7cf;
+        }
+    </style>
     <template>
-        <link rel="stylesheet" href="./myscript-text.css">
-        <core-scaffold>
-            <div vertical layout>
-                <div>
-                    <myscript-result></myscript-result>
-                </div>
-                <div>
-                    <myscript-toolbar delete="true" undo="true" redo="true" play="true" settings="true" info="true"></myscript-toolbar>
-                    <myscript-stroker></myscript-stroker>
-                    <myscript-renderer type="{{type}}"></myscript-renderer>
-                    <myscript-recognizer type="{{type}}" url="{{url}}" applicationkey="{{applicationkey}}" hmackey="{{hmackey}}" ></myscript-recognizer>
-                    <myscript-canvas on-myscript-canvas-down="{{down}}" on-myscript-canvas-track="{{track}}" on-myscript-canvas-up="{{up}}"></myscript-canvas>
-                </div>
+        <paper-toolbar>
+            <paper-icon-button id="delete" icon="delete"
+                               on-tap="_delete">
+            </paper-icon-button>
+            <paper-icon-button id="undo" icon="undo"
+                               on-tap="_undo" disabled="{{!hasUndo}}">
+            </paper-icon-button>
+            <paper-icon-button id="redo" icon="redo"
+                               on-tap="_redo" disabled="{{!hasRedo}}">
+            </paper-icon-button>
+            <paper-icon-button id="info" icon="info"
+                               on-tap="_info">
+            </paper-icon-button>
+        </paper-toolbar>
+        <paper-dialog id="infodialog" modal>
+            <h3>About</h3>
+
+            <p align='justify'>Write an equation in the canvas zone. <br> After a short timeout (a second) the
+                recognition will be launched and the result will be shown on the result field. <br> You
+                can clear the writing space by clicking on the garbage can icon in the top left corner.</p>
+
+            <div class="buttons">
+                <paper-button dialog-confirm autofocus>Close</paper-button>
             </div>
-        </core-scaffold>
+        </paper-dialog>
+        <myscript-ink-paper url="{{url}}"
+                            type="TEXT"
+                            application-key="{{ applicationKey }}"
+                            hmac-key="{{ hmacKey }}"
+                            width="{{ computedWidth }}"
+                            height="{{ computedHeight }}"
+                            timeout="{{ timeout }}"
+                            on-result="_onRecognized"
+                            on-error="_onError"
+                            on-changed="_onChanged">
+        </myscript-ink-paper>
     </template>
-    <script>
+</dom-module>
+
+<script>
+    (function () {
         Polymer({
-            result: '',
-            toolbar: '',
-            stroker: '',
-            renderer: '',
-            recognizer: '',
-            canvas: '',
-            rendererParameters: '',
-            recognizerParameters: '',
-            instanceId: '',
-            inputUnit: '',
-            inputUnits: [],
-            delete: function(event){
-                this.result.clear();
-                this.stroker.clear();
-                this.renderer.clear(this.canvas.$.canvas.getContext('2d'));
-                this.instanceId ='';
+            is: 'myscript-text',
+            properties: {
+                /**
+                 * Url to use for MyScript handwriting recognition server
+                 *
+                 * @attribute url
+                 * @type String
+                 */
+                url: String,
+                /**
+                 * The myscript-ink-paper width
+                 *
+                 * <b>Warning</b>: This is <b>not</b> the myscript-text width, but the canvas one.
+                 *
+                 * @attribute width
+                 * @type Number
+                 */
+                width: {
+                    type: Number,
+                    notify: true
+                },
+                /**
+                 * The myscript-ink-paper height
+                 *
+                 * <b>Warning</b>: This is <b>not</b> the myscript-text height, but the canvas one.
+                 *
+                 * @attribute height
+                 * @type Number
+                 */
+                height: {
+                    type: Number,
+                    notify: true
+                },
+                /**
+                 * Recognition timeout
+                 *
+                 * @attribute timeout
+                 * @type Number
+                 * @default 2000
+                 */
+                timeout: {
+                    type: Number,
+                    notify: true
+                },
+                /**
+                 * Application key to use for recognition on MyScript handwriting recognition server.<br>
+                 * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com.<br>
+                 * <b>Warning</b>: This parameter is <b>mandatory</b> and it's value should be a string.
+                 *
+                 * @attribute application-key
+                 * @type String
+                 */
+                applicationKey: {
+                    type: String,
+                    notify: true
+                },
+                /**
+                 * HMAC key to use for recognition on MyScript handwriting recognition server.<br>
+                 * You have to create your own HMAC key corresponding to your own application key in your account at http://cloud.myscript.com.<br>
+                 *
+                 * <b>Warning</b>: This parameter may be <b>mandatory</b> if HMAC signature security is enable for your application. The value should be a string.
+                 *
+                 * @attribute hmac-key
+                 * @type String
+                 */
+                hmacKey: {
+                    type: String,
+                    notify: true
+                },
+                hasUndo: {
+                    type: Boolean,
+                    notify: true,
+                    value: false
+                },
+                hasRedo: {
+                    type: Boolean,
+                    notify: true,
+                    value: false
+                }
             },
-            undo: function(event){
-                this.stroker.undo();
-                this.renderer.clear(this.canvas.$.canvas.getContext('2d'));
-                this.renderer.drawStrokes(this.stroker.getStrokes(), this.canvas.$.canvas.getContext('2d'), this.rendererParameters);
+            behaviors: [
+                Polymer.IronResizableBehavior
+            ],
+            listeners: {
+                'iron-resize': '_onResize'
             },
-            redo: function(event){
-                this.stroker.redo();
-                this.renderer.clear(this.canvas.$.canvas.getContext('2d'));
-                this.renderer.drawStrokes(this.stroker.getStrokes(), this.canvas.$.canvas.getContext('2d'), this.rendererParameters);
+            _delete: function () {
+                this._inkPaper.clear();
             },
-            down: function(event){
-                this.stroker.startStrokeWriting(event.detail.x, event.detail.y, event.detail.event.timeStamp);
-                this.renderer.drawStart(event.detail.event, event.detail.x, event.detail.y);
+            _undo: function () {
+                this._inkPaper.undo();
             },
-            track: function(event){
-                this.stroker.continueStrokeWriting(event.detail.x, event.detail.y, event.detail.event.timeStamp);
-                this.renderer.drawContinue(event.detail.event, event.detail.x, event.detail.y, this.canvas.shadowRoot.querySelector('canvas').getContext('2d'), this.rendererParameters);
+            _redo: function () {
+                this._inkPaper.redo();
             },
-            up: function(event){
-                this.stroker.endStrokeWriting();
-                this.renderer.drawEnd(event.detail.event, event.detail.x, event.detail.y, this.canvas.shadowRoot.querySelector('canvas').getContext('2d'), this.rendererParameters);
-                this.inputUnit.setComponents(this.stroker.getStrokes());
-                this.inputUnits.push(this.inputUnit);
-                this.recognizer.doSimpleRecognition(this.applicationkey, this.instanceId, this.inputUnits, this.hmackey, this.recognizerParameters).then(
-                        function success (response) {
-                            document.querySelector('myscript-text').shadowRoot.querySelector('myscript-recognizer').fire('recognitionSuccessEvent',{response:response});
-                            document.querySelector('myscript-text').instanceId = response.instanceId;
-                        },
-                        function error (response) {
-                            document.querySelector('myscript-text').shadowRoot.querySelector('myscript-recognizer').fire('recognitionErrorEvent',{response:response});
+            _info: function () {
+                this.$.infodialog.toggle();
+            },
+            _recognize: function () {
+                this._inkPaper.recognize();
+            },
+            _onRecognized: function (e) {
+                var result = e.detail;
+            },
+            _onError: function (e) {
+                var result = e.detail;
+            },
+            _onChanged: function (e) {
+                if (e.detail) {
+                    this.hasUndo = e.detail.hasUndo;
+                    this.hasRedo = e.detail.hasRedo;
+                }
+            },
+            _onResize: function () {
+                if (this._inkPaper) {
+                    if (!this.width && (this.parent.offsetWidth > 0)) {
+                        this.computedWidth = this.parent.offsetWidth;
+                    } else {
+                        this.computedWidth = this.width;
+                    }
+
+                    if (!this.height && (this.parent.offsetHeight > 0)) {
+                        this.computedHeight = this.parent.offsetHeight;
+                        for (var i in this.parent.children) {
+                            if (this.parent.children[i].offsetHeight) {
+                                this.computedHeight -= this.parent.children[i].offsetHeight;
+                            }
                         }
-                );
+                    } else {
+                        this.computedHeight = this.height;
+                    }
+                }
             },
-            ready: function() {
-
-                this.result = this.shadowRoot.querySelector('myscript-result');
-                this.toolbar = this.shadowRoot.querySelector('myscript-toolbar');
-                this.stroker = this.shadowRoot.querySelector('myscript-stroker');
-                this.renderer = this.shadowRoot.querySelector('myscript-renderer');
-                this.recognizer = this.shadowRoot.querySelector('myscript-recognizer');
-                this.canvas = this.shadowRoot.querySelector('myscript-canvas');
-
-                this.rendererParameters = this.renderer.createRenderingParameter();
-                this.recognizerParameters = this.recognizer.createTextParameter();
-
-                this.recognizerParameters.setLanguage('en_US');
-                this.recognizerParameters.setInputMode('CURSIVE');
-
-                this.instanceId = '';
-                this.inputUnit = new MyScript.TextInputUnit();
-                this.inputUnits = [];
+            get parent() {
+                if (this.parentNode.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
+                    return this.parentNode.host;
+                }
+                return this.parentNode;
+            },
+            attached: function () {
+                this.async(this.notifyResize, 1);
+            },
+            ready: function () {
+                this._inkPaper = this.querySelector('myscript-ink-paper');
             }
         });
-    </script>
-</polymer-element>
+
+    })();
+</script>
