@@ -17,7 +17,7 @@ The `myscript-text` is a turnkey solution for those who need to quickly implemen
 
 ##### Example
 
-    <myscript-text application-key="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX" hmac-key="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"></myscript-text>
+    <myscript-text applicationkey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX" hmackey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"></myscript-text>
 
 @group MyScript Elements
 @element myscript-text
@@ -55,16 +55,16 @@ The `myscript-text` is a turnkey solution for those who need to quickly implemen
                 <paper-button dialog-confirm autofocus>Close</paper-button>
             </div>
         </paper-dialog>
-        <myscript-ink-paper host="{{ host }}"
+        <myscript-common-element host="{{ host }}"
                             protocol="{{ protocol }}"
                             type="TEXT"
-                            application-key="{{ applicationkey }}"
-                            hmac-key="{{ hmackey }}"
+                            applicationkey="{{ applicationkey }}"
+                            hmackey="{{ hmackey }}"
                             timeout="{{ timeout }}"
                             on-changed="_onChanged"
                             on-success="_onSuccess"
                             on-failure="_onFailure">
-        </myscript-ink-paper>
+        </myscript-common-element>
         <paper-toast id="error"></paper-toast>
     </template>
 </dom-module>
@@ -168,21 +168,21 @@ The `myscript-text` is a turnkey solution for those who need to quickly implemen
                 }
             },
             _delete: function () {
-                this._inkPaper.clear();
+                this._myscriptCommonElement.clear();
                 // FIXME ugly hack
                 this.fire('textcandidate');
             },
             _undo: function () {
-                this._inkPaper.undo();
+                this._myscriptCommonElement.undo();
             },
             _redo: function () {
-                this._inkPaper.redo();
+                this._myscriptCommonElement.redo();
             },
             _info: function () {
                 this.$.infodialog.toggle();
             },
             _recognize: function () {
-                this._inkPaper.recognize();
+                this._myscriptCommonElement.recognize();
             },
             _onRecognized: function (e) {
                 var result = e.detail;
@@ -226,7 +226,7 @@ The `myscript-text` is a turnkey solution for those who need to quickly implemen
                 this._paperToast.show();
             },
             ready: function () {
-                this._inkPaper = this.querySelector('myscript-ink-paper');
+                this._myscriptCommonElement = this.querySelector('myscript-common-element');
                 this._paperToast = this.querySelector('paper-toast');
             }
         });

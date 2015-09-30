@@ -37,34 +37,34 @@
     <iron-localstorage id="applicationkey"
                        name="input-demo-applicationkey"
                        autoSaveDisabled="true"
-                       value="{{applicationKey}}">
+                       value="{{applicationkey}}">
     </iron-localstorage>
     <iron-localstorage id="hmackey"
                        name="input-demo-hmackey"
                        autoSaveDisabled="true"
-                       value="{{hmacKey}}">
+                       value="{{hmackey}}">
     </iron-localstorage>
 
     <form is="iron-form" id="authenticationKeys">
         <div class="horizontal around-justified layout">
-            <paper-input label="applicationKey"
+            <paper-input label="applicationkey"
                          auto-validate pattern="[a-zA-Z0-9\-]*"
                          error-message="invalid character"
-                         value="{{applicationKey}}"
+                         value="{{applicationkey}}"
                          class="flex">
             </paper-input>
-            <paper-input label="hmacKey"
+            <paper-input label="hmackey"
                          auto-validate pattern="[a-zA-Z0-9\-]*"
                          error-message="invalid character"
-                         value="{{hmacKey}}"
+                         value="{{hmackey}}"
                          class="flex">
             </paper-input>
         </div>
     </form>
     <div id="result" flex></div>
     <myscript-text id="text-input"
-                   application-key="{{applicationKey}}"
-                   hmac-key="{{hmacKey}}"
+                   applicationkey="{{applicationkey}}"
+                   hmackey="{{hmackey}}"
                    on-textcandidate="recognized">
     </myscript-text>
 </template>
