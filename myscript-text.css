@@ -1,0 +1,19 @@
+
+        :host {
+            display: block;
+        }
+
+        paper-toolbar {
+            --paper-toolbar-background: #00a7cf;
+        }
+
+        /*calc from paper-toolbar height*/
+        myscript-ink-paper {
+            height: calc(100% - 64px);
+        }
+
+        @media (max-width: 639px) {
+            myscript-ink-paper {
+                height: calc(100% - 56px);
+            }
+        }
