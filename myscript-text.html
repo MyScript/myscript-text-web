@@ -11,7 +11,7 @@ LICENSE: github.com/MyScriptWebComponents/myscript-text/blob/master/LICENSE
 <link rel="import" href="../paper-toast/paper-toast.html">
 <link rel="import" href="../paper-toolbar/paper-toolbar.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
-<link rel="import" href="../myscript-ink-paper/myscript-ink-paper.html">
+<link rel="import" href="../myscript-common-element/myscript-common-element.html">
 <!--
 The `myscript-text` is a turnkey solution for those who need to quickly implement MyScript Text recognition.
 
@@ -28,26 +28,7 @@ The `myscript-text` is a turnkey solution for those who need to quickly implemen
 @demo demo/index.html Basic Demo
 -->
 <dom-module id="myscript-text">
-    <style>
-        :host {
-            display: block;
-        }
-
-        paper-toolbar {
-            --paper-toolbar-background: #00a7cf;
-        }
-
-        /*calc from paper-toolbar height*/
-        myscript-ink-paper {
-            height: calc(100% - 64px);
-        }
-
-        @media (max-width: 639px) {
-            myscript-ink-paper {
-                height: calc(100% - 56px);
-            }
-        }
-    </style>
+    <link rel="import" type="css" href="myscript-text.css">
     <template>
         <paper-toolbar>
             <paper-icon-button id="delete" icon="delete"
@@ -77,8 +58,8 @@ The `myscript-text` is a turnkey solution for those who need to quickly implemen
         <myscript-ink-paper host="{{ host }}"
                             protocol="{{ protocol }}"
                             type="TEXT"
-                            application-key="{{ applicationKey }}"
-                            hmac-key="{{ hmacKey }}"
+                            application-key="{{ applicationkey }}"
+                            hmac-key="{{ hmackey }}"
                             timeout="{{ timeout }}"
                             on-changed="_onChanged"
                             on-success="_onSuccess"
@@ -145,10 +126,10 @@ The `myscript-text` is a turnkey solution for those who need to quickly implemen
                  * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com.<br>
                  * <b>Warning</b>: This parameter is <b>mandatory</b> and it's value should be a string.
                  *
-                 * @attribute application-key
+                 * @attribute applicationkey
                  * @type String
                  */
-                applicationKey: {
+                applicationkey: {
                     type: String,
                     notify: true
                 },
@@ -158,10 +139,10 @@ The `myscript-text` is a turnkey solution for those who need to quickly implemen
                  *
                  * <b>Warning</b>: This parameter may be <b>mandatory</b> if HMAC signature security is enable for your application. The value should be a string.
                  *
-                 * @attribute hmac-key
+                 * @attribute hmackey
                  * @type String
                  */
-                hmacKey: {
+                hmackey: {
                     type: String,
                     notify: true
                 },
