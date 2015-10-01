@@ -10,6 +10,7 @@ LICENSE: github.com/MyScriptWebComponents/myscript-text/blob/master/LICENSE
 <link rel="import" href="../paper-dialog/paper-dialog.html">
 <link rel="import" href="../paper-toast/paper-toast.html">
 <link rel="import" href="../paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../paper-fab/paper-fab.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../myscript-common-element/myscript-common-element.html">
 <!--
@@ -30,31 +31,13 @@ The `myscript-text` is a turnkey solution for those who need to quickly implemen
 <dom-module id="myscript-text">
     <link rel="import" type="css" href="myscript-text.css">
     <template>
-        <paper-toolbar>
-            <paper-icon-button id="delete" icon="delete"
-                               on-tap="_delete">
-            </paper-icon-button>
-            <paper-icon-button id="undo" icon="undo"
-                               on-tap="_undo" disabled="{{!hasUndo}}">
-            </paper-icon-button>
-            <paper-icon-button id="redo" icon="redo"
-                               on-tap="_redo" disabled="{{!hasRedo}}">
-            </paper-icon-button>
-            <paper-icon-button id="info" icon="info"
-                               on-tap="_info">
-            </paper-icon-button>
-        </paper-toolbar>
-        <paper-dialog id="infodialog" modal>
-            <h3>About</h3>
 
-            <p align='justify'>Write an equation in the canvas zone. <br> After a short timeout (a second) the
-                recognition will be launched and the result will be shown on the result field. <br> You
-                can clear the writing space by clicking on the garbage can icon in the top left corner.</p>
+        <div id="buttons">
+            <paper-fab id="delete" mini icon="delete" title="delete" on-tap="_delete"></paper-fab>
+            <paper-fab id="undo" mini icon="undo" title="undo" on-tap="_undo" disabled="{{ !hasUndo }}"></paper-fab>
+            <paper-fab id="redo" mini icon="redo" title="redo" on-tap="_redo" disabled="{{ !hasRedo }}"></paper-fab>
+        </div>
 
-            <div class="buttons">
-                <paper-button dialog-confirm autofocus>Close</paper-button>
-            </div>
-        </paper-dialog>
         <myscript-common-element host="{{ host }}"
                             protocol="{{ protocol }}"
                             type="TEXT"

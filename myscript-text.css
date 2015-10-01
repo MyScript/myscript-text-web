@@ -1,19 +1,21 @@
 
-        :host {
-            display: block;
-        }
+:host {
+    display: block;
+}
 
-        paper-toolbar {
-            --paper-toolbar-background: #00a7cf;
-        }
 
-        /*calc from paper-toolbar height*/
-        myscript-common-element {
-            height: calc(100% - 64px);
-        }
+/*calc from paper-toolbar height*/
+myscript-common-element {
+    height: calc(100% - 64px);
+}
 
-        @media (max-width: 639px) {
-            myscript-common-element {
-                height: calc(100% - 56px);
-            }
-        }
+@media (max-width: 639px) {
+    myscript-common-element {
+        height: calc(100% - 56px);
+    }
+}
+
+#buttons {
+    position: absolute;
+    z-index: 2;
+}
