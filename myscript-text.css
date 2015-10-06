@@ -1,6 +1,9 @@
 
 :host {
     display: block;
+    --paper-fab-background: #00A7CF;
+    --paper-fab-keyboard-focus-background: #00A7CF;
+
 }
 
 
@@ -19,3 +22,5 @@ myscript-common-element {
     position: absolute;
     z-index: 2;
 }
+
+

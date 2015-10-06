@@ -2,23 +2,23 @@
 Copyright © MyScript.
 LICENSE: github.com/MyScriptWebComponents/myscript-text/blob/master/LICENSE
 -->
-<link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
-<link rel="import" href="../iron-icons/iron-icons.html">
 <link rel="import" href="../iron-icons/av-icons.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
 <link rel="import" href="../paper-button/paper-button.html">
 <link rel="import" href="../paper-dialog/paper-dialog.html">
 <link rel="import" href="../paper-toast/paper-toast.html">
 <link rel="import" href="../paper-toolbar/paper-toolbar.html">
 <link rel="import" href="../paper-fab/paper-fab.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../myscript-common-element/myscript-common-element.html">
 <!--
 The `myscript-text` is a turnkey solution for those who need to quickly implement MyScript Text recognition.
 
 ##### Example
 
-    <myscript-text applicationkey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX" hmackey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"></myscript-text>
+    <myscript-text applicationkey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX" hmackey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX" enginelang="en_US"></myscript-text>
 
 @group MyScript Elements
 @element myscript-text
@@ -39,14 +39,14 @@ The `myscript-text` is a turnkey solution for those who need to quickly implemen
         </div>
 
         <myscript-common-element host="{{ host }}"
-                            protocol="{{ protocol }}"
-                            type="TEXT"
-                            applicationkey="{{ applicationkey }}"
-                            hmackey="{{ hmackey }}"
-                            timeout="{{ timeout }}"
-                            on-changed="_onChanged"
-                            on-success="_onSuccess"
-                            on-failure="_onFailure">
+                                 protocol="{{ protocol }}"
+                                 type="TEXT"
+                                 applicationkey="{{ applicationkey }}"
+                                 hmackey="{{ hmackey }}"
+                                 timeout="{{ timeout }}"
+                                 on-changed="_onChanged"
+                                 on-success="_onSuccess"
+                                 on-failure="_onFailure">
         </myscript-common-element>
         <paper-toast id="error"></paper-toast>
     </template>
@@ -148,12 +148,34 @@ The `myscript-text` is a turnkey solution for those who need to quickly implemen
                     type: String,
                     notify: true,
                     value: false
+                },
+                /**
+                 * Recogntion language use by the recogntion process.
+                 * @attribute enginelang
+                 * @type String
+                 */
+                enginelang: {
+                    type: String,
+                    notify: true,
+                    value: "en_US",
+                    observer: '_enginelangChanged'
+                },
+                /**
+                 * First candidate return by the handwriting recogntion engine.
+                 * @attribute firstcandidate
+                 * @type String
+                 */
+                firstcandidate: {
+                    type: String,
+                    notify: true
                 }
+
             },
             _delete: function () {
                 this._myscriptCommonElement.clear();
                 // FIXME ugly hack
                 this.fire('textcandidate');
+                this.firstcandidate = "";
             },
             _undo: function () {
                 this._myscriptCommonElement.undo();
@@ -180,6 +202,15 @@ The `myscript-text` is a turnkey solution for those who need to quickly implemen
                 }
             },
             /**
+             * Function fired when the engine lang is change.
+             */
+            _enginelangChanged: function (e) {
+                if (e && this._myscriptCommonElement) {
+                    this._myscriptCommonElement._inkPaper.getRecognizer().getParameters().setLanguage(this.enginelang);
+                    this._recognize();
+                }
+            },
+            /**
              * Recognition success listener
              *
              * @private
@@ -189,7 +220,8 @@ The `myscript-text` is a turnkey solution for those who need to quickly implemen
                 var result = e.detail;
                 if (result && (result instanceof MyScript.AbstractResult || result instanceof
                     MyScript.AbstractRecoResponseWSMessage)) {
-                    this.fire('textcandidate', result.getTextDocument().getTextSegment().getSelectedCandidate().getLabel());
+                    this.firstcandidate = result.getTextDocument().getTextSegment().getSelectedCandidate().getLabel();
+                    this.fire('textcandidate', this.firstcandidate);
                 } else {
                     this.fire('textcandidate');
                 }
@@ -210,6 +242,7 @@ The `myscript-text` is a turnkey solution for those who need to quickly implemen
             },
             ready: function () {
                 this._myscriptCommonElement = this.querySelector('myscript-common-element');
+                this._enginelangChanged();
                 this._paperToast = this.querySelector('paper-toast');
             }
         });

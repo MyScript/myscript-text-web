@@ -2,11 +2,24 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
-    <title>myscript-math</title>
+    <title>myscript-text demo</title>
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="../../iron-localstorage/iron-localstorage.html">
     <link rel="import" href="../../paper-input/paper-input.html">
+    <link rel="import" href="../../paper-dropdown-menu/paper-dropdown-menu.html">
+    <link rel="import" href="../../paper-menu/paper-menu.html">
+    <link rel="import" href="../../paper-item/paper-item.html">
+    <link rel="import" href="../../paper-button/paper-button.html">
+    <link rel="import" href="../../iron-selector/iron-selector.html">
+    <link rel="import" href="../../iron-iconset-svg/iron-iconset-svg.html">
+    <link rel="import" href="../../iron-icon/iron-icon.html">
     <link rel="import" href="../myscript-text.html">
+
+
+    <link rel="import" href="../../paper-dropdown-menu/paper-dropdown-menu.html">
+    <link rel="import" href="../../paper-menu/paper-menu.html">
+    <link rel="import" href="../../paper-item/paper-item.html">
+
 </head>
 <style>
     html, body {
@@ -15,25 +28,29 @@
         width: 100%;
         padding: 0;
         margin: 0;
+        font-family: Roboto, Noto, sans-serif;
+        font-size: 12px;
     }
-
     #result {
         height: 100px;
         overflow: auto;
         text-align: center;
         font-size: xx-large;
     }
-
     #authenticationKeys {
         min-height: 72px;
     }
-
     #text-input {
         height: calc(100% - 172px);
     }
+
+    paper-menu-button {
+        padding: 0px;
+        width : 250px;
+    }
 </style>
 <body unresolved>
-<template id="app" is="dom-bind">
+<template is="dom-bind">
     <iron-localstorage id="applicationkey"
                        name="input-demo-applicationkey"
                        autoSaveDisabled="true"
@@ -59,37 +76,23 @@
                          value="{{hmackey}}"
                          class="flex">
             </paper-input>
+            <paper-dropdown-menu label="Pick up your language">
+                <paper-menu class="dropdown-content" selected="{{selectedValue}}" attr-for-selected="value">
+                    <paper-item value="en_US">English</paper-item>
+                    <paper-item value="fr_FR">Français</paper-item>
+                    <paper-item value="zh_CN" >Chiness</paper-item>
+                </paper-menu>
+            </paper-dropdown-menu>
         </div>
     </form>
-    <div id="result" flex></div>
+    <div id="result" flex>[[firstcandidate]]</div>
     <myscript-text id="text-input"
+                   firstcandidate="{{firstcandidate}}"
                    applicationkey="{{applicationkey}}"
                    hmackey="{{hmackey}}"
-                   on-textcandidate="recognized">
+                   enginelang="{{selectedValue}}">
     </myscript-text>
 </template>
-<script>
-    (function (document) {
-        'use strict';
-        // Grab a reference to our auto-binding template
-        // and give it some initial binding values
-        // Learn more about auto-binding templates at http://goo.gl/Dx1u2g
-        var app = document.querySelector('#app');
-        // Listen for template bound event to know when bindings
-        // have resolved and content has been stamped to the page
-        app.addEventListener('template-bound', function () {
-            console.log('Our app is ready to rock!');
-        });
-        // See https://github.com/Polymer/polymer/issues/1381
-        window.addEventListener('WebComponentsReady', function () {
-            document.querySelector('body').removeAttribute('unresolved');
-            var result = document.querySelector('#result');
 
-            app.recognized = function (e) {
-                result.innerHTML = (typeof e.detail === 'object')? '': e.detail;
-            };
-        });
-    })(document);
-</script>
 </body>
 </html>
