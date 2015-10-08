@@ -1,6 +1,6 @@
 {
     "name": "myscript-text",
-    "version": "1.1.0-beta",
+    "version": "1.1.0",
     "description": "MyScript HTML5 text Element to help developer for integrate handwriting recognition",
     "keywords": [
         "web-component",
@@ -20,29 +20,24 @@
         "url": "git://github.com/MyScriptWebComponents/myscript-text.git"
     },
     "ignore": [
-        "/.*",
-        "/tests/"
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "tests",
+        "test"
     ],
     "dependencies": {
         "polymer": "Polymer/polymer#1.1.x",
         "iron-icons": "polymerelements/iron-icons#1.0.x",
-        "iron-resizable-behavior": "polymerelements/iron-resizable-behavior#1.0.x",
-        "paper-toolbar": "polymerelements/paper-toolbar#1.0.x",
-        "paper-dialog": "polymerelements/paper-dialog#1.0.x",
-        "paper-toast": "polymerelements/paper-toast#1.0.x",
-        "paper-progress": "polymerelements/paper-progress#1.0.x",
-        "paper-icon-button": "polymerelements/paper-icon-button#1.0.x",
         "paper-fab": "polymerelements/paper-fab#1.0.x",
+        "paper-toast": "polymerelements/paper-toast#1.0.x",
         "myscript-common-element": "https://zen.visionobjects.com/git/WS/Polymer/myscript-common-element.git#1.1.x"
     },
     "devDependencies": {
         "iron-component-page": "polymerelements/iron-component-page#1.0.x",
         "iron-localstorage": "PolymerElements/iron-localstorage#1.0.x",
-        "iron-selector": "PolymerElements/iron-selector#1.0.x",
         "paper-input": "PolymerElements/paper-input#1.0.x",
-        "paper-button": "PolymerElements/paper-button#1.0.x",
-        "iron-iconset-svg" : "PolymerElements/iron-iconset-svg#1.0.x",
-        "iron-icon": "PolymerElements/iron-icon#1.0.x",
+        "iron-selector": "PolymerElements/iron-selector#1.0.x",
         "web-component-tester": "*"
     }
 }

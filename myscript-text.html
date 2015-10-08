@@ -2,17 +2,13 @@
 Copyright © MyScript.
 LICENSE: github.com/MyScriptWebComponents/myscript-text/blob/master/LICENSE
 -->
-<link rel="import" href="../iron-icons/av-icons.html">
-<link rel="import" href="../iron-icons/iron-icons.html">
-<link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
-<link rel="import" href="../paper-button/paper-button.html">
-<link rel="import" href="../paper-dialog/paper-dialog.html">
-<link rel="import" href="../paper-toast/paper-toast.html">
-<link rel="import" href="../paper-toolbar/paper-toolbar.html">
-<link rel="import" href="../paper-fab/paper-fab.html">
-<link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../paper-fab/paper-fab.html">
+<link rel="import" href="../paper-toast/paper-toast.html">
+<!-- Import MyScript common element to add handwriting recognition -->
 <link rel="import" href="../myscript-common-element/myscript-common-element.html">
+
 <!--
 The `myscript-text` is a turnkey solution for those who need to quickly implement MyScript Text recognition.
 
@@ -57,9 +53,14 @@ The `myscript-text` is a turnkey solution for those who need to quickly implemen
         Polymer({
             is: 'myscript-text',
             /**
+             * Fired when a text recognition result is successfully received.
+             *
+             * @event myscript-text-result
+             */
+            /**
              * Fired when a text candidate recognition result is successfully received.
              *
-             * @event textcandidate
+             * @event myscript-text-candidate
              */
             /**
              * Fired when the content of the InkPaper changes.
@@ -150,7 +151,7 @@ The `myscript-text` is a turnkey solution for those who need to quickly implemen
                     value: false
                 },
                 /**
-                 * Recogntion language use by the recogntion process.
+                 * Recognition language use by the recognition process.
                  * @attribute enginelang
                  * @type String
                  */
@@ -161,7 +162,7 @@ The `myscript-text` is a turnkey solution for those who need to quickly implemen
                     observer: '_enginelangChanged'
                 },
                 /**
-                 * First candidate return by the handwriting recogntion engine.
+                 * First candidate return by the handwriting recognition engine.
                  * @attribute firstcandidate
                  * @type String
                  */
@@ -169,12 +170,9 @@ The `myscript-text` is a turnkey solution for those who need to quickly implemen
                     type: String,
                     notify: true
                 }
-
             },
             _delete: function () {
                 this._myscriptCommonElement.clear();
-                // FIXME ugly hack
-                this.fire('textcandidate');
                 this.firstcandidate = "";
             },
             _undo: function () {
@@ -183,31 +181,10 @@ The `myscript-text` is a turnkey solution for those who need to quickly implemen
             _redo: function () {
                 this._myscriptCommonElement.redo();
             },
-            _info: function () {
-                this.$.infodialog.toggle();
-            },
-            _recognize: function () {
-                this._myscriptCommonElement.recognize();
-            },
-            _onRecognized: function (e) {
-                var result = e.detail;
-            },
-            _onError: function (e) {
-                var result = e.detail;
-            },
             _onChanged: function (e) {
                 if (e.detail) {
                     this.hasUndo = e.detail.hasUndo;
                     this.hasRedo = e.detail.hasRedo;
-                }
-            },
-            /**
-             * Function fired when the engine lang is change.
-             */
-            _enginelangChanged: function (e) {
-                if (e && this._myscriptCommonElement) {
-                    this._myscriptCommonElement._inkPaper.getRecognizer().getParameters().setLanguage(this.enginelang);
-                    this._recognize();
                 }
             },
             /**
@@ -221,12 +198,11 @@ The `myscript-text` is a turnkey solution for those who need to quickly implemen
                 if (result && (result instanceof MyScript.AbstractResult || result instanceof
                     MyScript.AbstractRecoResponseWSMessage)) {
                     this.firstcandidate = result.getTextDocument().getTextSegment().getSelectedCandidate().getLabel();
-                    this.fire('textcandidate', this.firstcandidate);
+                    this.fire('myscript-text-candidate', this.firstcandidate);
                 } else {
-                    this.fire('textcandidate');
+                    this.fire('myscript-text-candidate');
                 }
-                this.fire('result', e.detail);
-                this.fire(e.type, e.detail);
+                this.fire('myscript-text-result', e.detail);
             },
             /**
              * Failure listener
@@ -235,15 +211,26 @@ The `myscript-text` is a turnkey solution for those who need to quickly implemen
              * @method _onFailure
              */
             _onFailure: function (e) {
-                this.fire('error', e.detail);
                 this.fire(e.type, e.detail);
                 this._paperToast.text = (typeof e.detail === 'object') ? JSON.stringify(e.detail) : e.detail;
                 this._paperToast.show();
             },
+            /**
+             * Function fired when the engine lang is change.
+             *
+             * @private
+             * @method _enginelangChanged
+             */
+            _enginelangChanged: function (e) {
+                if (e && this._myscriptCommonElement) {
+                    this._myscriptCommonElement._inkPaper.getRecognizer().getParameters().setLanguage(this.enginelang);
+                    this._myscriptCommonElement.recognize();
+                }
+            },
             ready: function () {
                 this._myscriptCommonElement = this.querySelector('myscript-common-element');
-                this._enginelangChanged();
                 this._paperToast = this.querySelector('paper-toast');
+                this._enginelangChanged();
             }
         });
 
