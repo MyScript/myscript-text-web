@@ -6,6 +6,12 @@
 
 }
 
+.resultField {
+    height: 100px;
+    overflow: auto;
+    text-align: center;
+    font-size: xx-large;
+}
 
 /*calc from paper-toolbar height*/
 myscript-common-element {
@@ -18,9 +24,12 @@ myscript-common-element {
     }
 }
 
-#buttons {
+.buttons {
     position: absolute;
     z-index: 2;
+}
+.myscript-text-container {
+    height: 100%;
 }
 
 

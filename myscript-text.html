@@ -14,7 +14,7 @@ The `myscript-text` is a turnkey solution for those who need to quickly implemen
 
 ##### Example
 
-    <myscript-text applicationkey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX" hmackey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX" enginelang="en_US"></myscript-text>
+    <myscript-text applicationkey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX" hmackey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX" enginelang="en_US" hidebuttons></myscript-text>
 
 @group MyScript Elements
 @element myscript-text
@@ -27,24 +27,25 @@ The `myscript-text` is a turnkey solution for those who need to quickly implemen
 <dom-module id="myscript-text">
     <link rel="import" type="css" href="myscript-text.css">
     <template>
-
-        <div id="buttons">
-            <paper-fab id="delete" mini icon="delete" title="delete" on-tap="_delete"></paper-fab>
-            <paper-fab id="undo" mini icon="undo" title="undo" on-tap="_undo" disabled="{{ !hasUndo }}"></paper-fab>
-            <paper-fab id="redo" mini icon="redo" title="redo" on-tap="_redo" disabled="{{ !hasRedo }}"></paper-fab>
+        <div class="myscript-text-container">
+            <div class="resultField" flex hidden="[[hideresult]]">[[firstcandidate]]</div>
+            <div class="buttons" hidden="[[hidebuttons]]">
+                <paper-fab class="delete" mini icon="delete" title="delete" on-tap="_delete"></paper-fab>
+                <paper-fab class="undo" mini icon="undo" title="undo" on-tap="_undo" disabled="{{ !hasUndo }}"></paper-fab>
+                <paper-fab class="redo" mini icon="redo" title="redo" on-tap="_redo" disabled="{{ !hasRedo }}"></paper-fab>
+            </div>
+            <myscript-common-element host="{{ host }}"
+                                     protocol="{{ protocol }}"
+                                     type="TEXT"
+                                     applicationkey="{{ applicationkey }}"
+                                     hmackey="{{ hmackey }}"
+                                     timeout="{{ timeout }}"
+                                     on-changed="_onChanged"
+                                     on-success="_onSuccess"
+                                     on-failure="_onFailure">
+            </myscript-common-element>
+            <paper-toast class="error"></paper-toast>
         </div>
-
-        <myscript-common-element host="{{ host }}"
-                                 protocol="{{ protocol }}"
-                                 type="TEXT"
-                                 applicationkey="{{ applicationkey }}"
-                                 hmackey="{{ hmackey }}"
-                                 timeout="{{ timeout }}"
-                                 on-changed="_onChanged"
-                                 on-success="_onSuccess"
-                                 on-failure="_onFailure">
-        </myscript-common-element>
-        <paper-toast id="error"></paper-toast>
     </template>
 </dom-module>
 
@@ -148,6 +149,20 @@ The `myscript-text` is a turnkey solution for those who need to quickly implemen
                 hasRedo: {
                     type: String,
                     notify: true,
+                    value: false
+                },
+                /**
+                 * hide the buttons
+                 */
+                hidebuttons: {
+                    type: Boolean,
+                    value: false
+                },
+                /**
+                 * hide the result div.
+                 */
+                hideresult: {
+                    type: Boolean,
                     value: false
                 },
                 /**
