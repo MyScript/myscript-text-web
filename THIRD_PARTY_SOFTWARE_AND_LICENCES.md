@@ -1,6 +1,6 @@
 Third Party Software and Licenses.
 
-Myscript-toolbar web component is using the following third party software:
+Myscript-text-web is using the following third party software:
 
 - Polymer
 

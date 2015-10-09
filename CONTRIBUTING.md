@@ -1,4 +1,4 @@
-# Contributing to MyScript Web Components
+# Contributing to MyScript text web
 
 We gladly welcome pull requests to MyScript Web Components. If you would like to add or modify new or larger features, see the "Adding features" section.
 If you have any questions, or want help solving a problem, feel free to stop by the [#MyScript forum](https://dev.myscript.com/support/forum/).

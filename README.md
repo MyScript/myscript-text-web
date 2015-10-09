@@ -1,11 +1,11 @@
-myscript-text
-============
+myscript-text-web
+=================
 
-See the [component page](http://myscript.github.io/myscript-text) for more information.
+See the [component page](http://myscript.github.io/myscript-text-web) for more information.
 
 ## Getting Started
 
-We've put together a [guide to myscript-text](http://doc.myscript.com/docs/start/reusableelements.html) to help get you rolling.
+We've put together a [guide to myscript-text-web](http://doc.myscript.com/docs/start/reusableelements.html) to help get you rolling.
 
 ## Testing Your Element
 
