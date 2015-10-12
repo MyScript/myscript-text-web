@@ -242,6 +242,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             _enginelangChanged: function (e) {
                 if (e && this._myscriptCommonElement) {
                     this._myscriptCommonElement._inkPaper.getRecognizer().getParameters().setLanguage(this.enginelang);
+                    this._myscriptCommonElement._inkPaper.clear();
                 }
             },
             ready: function () {
