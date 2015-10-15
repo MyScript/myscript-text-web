@@ -72,7 +72,7 @@
                          class="flex">
             </paper-input>
             <paper-dropdown-menu label="Pick up your language">
-                <paper-menu class="dropdown-content" selected="{{selectedValue}}" attr-for-selected="value">
+                <paper-menu class="dropdown-content" selected="{{selectedValue}}" attr-for-selected="value" >
                     <paper-item value="en_US">English</paper-item>
                     <paper-item value="fr_FR">Français</paper-item>
                     <paper-item value="zh_CN" >Chiness</paper-item>
@@ -84,8 +84,7 @@
                    firstcandidate='{{firstcandidate}}'
                    applicationkey='{{applicationkey}}'
                    hmackey='{{hmackey}}'
-                   enginelang='{{selectedValue}}'
-        >
+                   language='{{selectedValue}}'>
     </myscript-text-web>
 </template>
 

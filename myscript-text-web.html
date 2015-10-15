@@ -1,6 +1,6 @@
 <!--
 Copyright © MyScript.
-LICENSE: github.com/MyScriptWebComponents/myscript-text/blob/master/LICENSE
+LICENSE: github.com/MyScriptWebComponents/myscript-text-web/blob/master/LICENSE
 -->
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
@@ -15,7 +15,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
 
 ##### Example
 
-    <myscript-text-web applicationkey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX" hmackey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX" enginelang="en_US" hidebuttons></myscript-text-web>
+    <myscript-text-web applicationkey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX" hmackey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX" language="en_US" hidebuttons></myscript-text-web>
 
 @group MyScript Elements
 @element myscript-text-web
@@ -30,13 +30,14 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
     <template>
         <div class="resultField" flex hidden="[[hideresult]]">[[firstcandidate]]</div>
         <div class="horizontal layout buttons" hidden="[[hidebuttons]]">
-            <paper-fab class="delete" mini icon="delete" title="delete" on-tap="_delete"></paper-fab>
-            <paper-fab class="undo" mini icon="undo" title="undo" on-tap="_undo" disabled="{{ !hasUndo }}"></paper-fab>
-            <paper-fab class="redo" mini icon="redo" title="redo" on-tap="_redo" disabled="{{ !hasRedo }}"></paper-fab>
+            <paper-fab class="delete" mini icon="delete" title="delete" on-tap="delete"></paper-fab>
+            <paper-fab class="undo" mini icon="undo" title="undo" on-tap="undo" disabled="{{ !canundo }}"></paper-fab>
+            <paper-fab class="redo" mini icon="redo" title="redo" on-tap="redo" disabled="{{ !canredo }}"></paper-fab>
         </div>
         <myscript-common-element host="{{ host }}"
                                  protocol="{{ protocol }}"
                                  type="TEXT"
+                                 language="{{ language }}"
                                  applicationkey="{{ applicationkey }}"
                                  hmackey="{{ hmackey }}"
                                  timeout="{{ timeout }}"
@@ -53,19 +54,14 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
         Polymer({
             is: 'myscript-text-web',
             /**
-             * Fired when a text recognition result is successfully received.
-             *
-             * @event myscript-text-web-result
-             */
-            /**
-             * Fired when a text candidate recognition result is successfully received.
-             *
-             * @event myscript-text-web-candidate
-             */
-            /**
              * Fired when the content of the InkPaper changes.
              *
              * @event changed
+             */
+            /**
+             * Fired when a text recognition result is successfully received.
+             *
+             * @event myscript-text-web-result
              */
             /**
              * Fired when delete is done.
@@ -76,6 +72,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                 /**
                  * The current recognition protocol (e.g. REST, or WebSocket <b>ONLY</b> for TEXT and MATH)
                  *
+                 * @private
                  * @attribute protocol
                  * @type String
                  * @default 'REST'
@@ -88,6 +85,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                 /**
                  * The current recognition service host
                  *
+                 * @private
                  * @attribute host
                  * @type String
                  * @default 'cloud.myscript.com'
@@ -97,7 +95,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                     notify: true
                 },
                 /**
-                 * Recognition timeout
+                 * Recognition timeout, only use for HTTP
                  *
                  * @private
                  * @attribute timeout
@@ -135,33 +133,39 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                 },
                 /**
                  * @private
-                 * @attribute has-undo
+                 * @attribute canundo
                  * @type Boolean
                  */
-                hasUndo: {
+                canundo: {
                     type: Boolean,
                     notify: true,
                     value: false
                 },
                 /**
                  * @private
-                 * @attribute has-redo
+                 * @attribute canredo
                  * @type Boolean
                  */
-                hasRedo: {
-                    type: String,
+                canredo: {
+                    type: Boolean,
                     notify: true,
                     value: false
                 },
                 /**
                  * Hide the buttons.
+                 *
+                 * @attribute hidebuttons
+                 * @type Boolean
                  */
                 hidebuttons: {
                     type: Boolean,
                     value: false
                 },
                 /**
-                 * Hide the result div printing the firstcandidate in a div. Even if result is hide the firstcandidate property is fill after each recogniton.
+                 * Hide the result div.
+                 *
+                 * @attribute hideresult
+                 * @type Boolean
                  */
                 hideresult: {
                     type: Boolean,
@@ -169,14 +173,22 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                 },
                 /**
                  * Recognition language use by the recognition process.
-                 * @attribute enginelang
+                 * @attribute language
                  * @type String
                  */
-                enginelang: {
+                language: {
                     type: String,
                     notify: true,
-                    value: "en_US",
-                    observer: '_enginelangChanged'
+                    value: "en_US"
+                },
+                /**
+                 * Result return by the handwriting recognition engine.
+                 * @attribute result
+                 * @type String
+                 */
+                result: {
+                    type: Object,
+                    notify: true
                 },
                 /**
                  * First candidate return by the handwriting recognition engine.
@@ -188,21 +200,37 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                     notify: true
                 }
             },
-            _delete: function () {
-                this._myscriptCommonElement.clear();
+            /**
+             * Delete action
+             *
+             * @method delete
+             */
+            delete: function () {
+                this._myscriptCommonElement.delete();
+                this.result = undefined;
                 this.firstcandidate = "";
                 this.fire("myscript-text-web-delete");
             },
-            _undo: function () {
+            /**
+             * Undo action
+             *
+             * @method undo
+             */
+            undo: function () {
                 this._myscriptCommonElement.undo();
             },
-            _redo: function () {
+            /**
+             * Redo action
+             *
+             * @method redo
+             */
+            redo: function () {
                 this._myscriptCommonElement.redo();
             },
             _onChanged: function (e) {
                 if (e.detail) {
-                    this.hasUndo = e.detail.hasUndo;
-                    this.hasRedo = e.detail.hasRedo;
+                    this.canundo = e.detail.canUndo;
+                    this.canredo = e.detail.canRedo;
                 }
             },
             /**
@@ -212,15 +240,11 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
              * @method _onSuccess
              */
             _onSuccess: function (e) {
-                var result = e.detail;
-                if (result && (result instanceof MyScript.AbstractResult || result instanceof
-                    MyScript.AbstractRecoResponseWSMessage)) {
-                    this.firstcandidate = result.getTextDocument().getTextSegment().getSelectedCandidate().getLabel();
-                    this.fire('myscript-text-web-candidate', this.firstcandidate);
-                } else {
-                    this.fire('myscript-text-web-candidate');
+                this.result = e.detail;
+                if (this.result && (this.result instanceof MyScript.AbstractResult || this.result instanceof MyScript.AbstractRecoResponseWSMessage)) {
+                    this.firstcandidate = this.result.getTextDocument().getTextSegment().getSelectedCandidate().getLabel();
                 }
-                this.fire('myscript-text-web-result', e.detail);
+                this.fire('myscript-text-web-result', this.result);
             },
             /**
              * Failure listener.
@@ -233,23 +257,9 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                 this._paperToast.text = (typeof e.detail === 'object') ? JSON.stringify(e.detail) : e.detail;
                 this._paperToast.show();
             },
-            /**
-             * Function fired when the engine lang is change.
-             *
-             * @private
-             * @method _enginelangChanged
-             */
-            _enginelangChanged: function (e) {
-                if (e && this._myscriptCommonElement) {
-                    this._myscriptCommonElement._inkPaper.getRecognizer().getParameters().setLanguage(this.enginelang);
-                    this._myscriptCommonElement.clear();
-                    this.firstcandidate = "";
-                }
-            },
             ready: function () {
                 this._myscriptCommonElement = this.querySelector('myscript-common-element');
                 this._paperToast = this.querySelector('paper-toast');
-                this._enginelangChanged();
             }
         });
 
