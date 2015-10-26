@@ -1,33 +1,84 @@
 myscript-text-web
 =================
 
-See the [component page](http://myscript.github.io/myscript-text-web) for more information.
+The easy way to integrate handwriting recognition in your webapp.
 
-## Getting Started
+<a href="myscript.github.io/"><img src="text.gif" /></a>
 
-We've put together a [guide to myscript-text-web](http://doc.myscript.com/docs/start/reusableelements.html) to help get you rolling.
+```html
+<html>
+<head>
+     <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="bower_components/myscript-text-web.html">
+</head>
+<body>
+    <myscript-text-web applicationkey="#PUT YOUR MYSCRIPT CDK APPLICATION KEY HERE#" 
+        hmackey="#PUT YOUR MYSCRIPT CDK HMAC KEY HERE#" language="ja_JP">
+    </myscript-text-web>
+</template>
+</body>
+</html>
+```    
 
-## Testing Your Element
+Test [it live](http://myscript.github.io/myscript-text-web/index.html/demo/) !
 
-Add the logic specific to your new element and verify its functionality. Good unit tests are essential to your verification plan but a good way to quickly sanity test your component is to access your demo.html file via a local web server. There are several ways to do this but one easy method is to run a simple web server that ships with Python, using the commands:
+## What is it about ?
+myscript-text-web is a web component that could be used in every web application (whatever the javascript library you are using) to bring handwriting recognition. It integrates all what you need :
+- Signal capture
+- Nice digital ink rendering
+- Plug with MyScript CDK to bring Handwriting recognition
 
-```sh
-python -m SimpleHTTPServer
-```
+## Installation
 
-Or other method using NodeJS:
+**Bower**: `bower install myscript`
 
-```sh
-http-server ./
-```
 
-This starts a web server on port 8000, so you can test your new element by navigating a browser to `localhost:8000/test/index.html`.
+## Start using myscript-text-web
 
-### web-component-tester
+1. Create your MyScript Developer then access your application key and hmac key 
+Myscript-text-web requires a valid [MyScript Developer account](https://dev.myscript.com/) (sign up, then go to **Dashboard** and click **CDK samples** to accept the CDK Terms and Conditions).
 
-The tests are also compatible with [web-component-tester](https://github.com/Polymer/web-component-tester). You can run them on multiple local browsers via:
+2. Import Web Components' polyfill
 
-```sh
-npm install -g web-component-tester
-wct
-```
+    ```html
+     <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    ```
+
+3. Import Custom Element
+
+    ```html
+    <link rel="import" href="bower_components/myscript-text-web.html">
+    ```
+
+3. Use it
+
+    ```html
+    <myscript-text-web applicationkey="#PUT YOUR MYSCRIPT CDK APPLICATION KEY HERE#" 
+            hmackey="#PUT YOUR MYSCRIPT CDK HMAC KEY HERE#" language="ja_JP">
+        </myscript-text-web>
+    ```
+    
+
+## Documentation 
+
+The API reference (html tag if you are unfamiliar with web components terminology) could be browse on [http://myscript.github.io/myscript-text-web/](http://myscript.github.io/myscript-text-web/) 
+
+If you want use the component in a customized way please take time to read the full the [developer guide](http://dev.myscript.com).
+
+## Contribute
+
+We welcome your contributions: If you would like to extend myscript-text-web for your needs, feel free to fork it, fire bower install and use [polyserve](https://github.com/PolymerLabs/polyserve) as an http server. The demo page (in demo folder) could help making your first experimentation.
+
+Please sign our [Contributor License Agreement](CONTRIBUTING.md) before submitting your pull request.
+
+
+## Share your feedback
+
+Made a cool app with myscript-text-web? We would love to hear about you!
+
+We’re planning to showcase apps using it so let us know by sending a quick mail to [myapp@myscript.com](mailto://myapp@myscript.com)
+
+
+## License
+
+[Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
