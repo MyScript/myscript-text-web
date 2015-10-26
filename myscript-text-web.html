@@ -243,6 +243,8 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                 this.result = e.detail;
                 if (this.result && (this.result instanceof MyScript.AbstractResult || this.result instanceof MyScript.AbstractRecoResponseWSMessage)) {
                     this.firstcandidate = this.result.getTextDocument().getTextSegment().getSelectedCandidate().getLabel();
+                }else{
+                    this.firstcandidate = "";
                 }
                 this.fire('myscript-text-web-result', this.result);
             },
