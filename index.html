@@ -9,29 +9,13 @@
     <script src="../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="../iron-component-page/iron-component-page.html">
     <style>
-    xx {
+        #active {
             visibility: hidden;
         }
-        #demo {
-            overflow:hidden !important; -webkit-overflow-scrolling:touch !important;
-        }
-        iframe {
-            width:100%;
-            height:600px
-        }
+
     </style>
 </head>
 <body>
 <iron-component-page></iron-component-page>
-<script>
-    //Show demo if parameter view=demo is set in url
-    window.addEventListener('WebComponentsReady', function (e) {
-
-        if (window.location.search && "?view=demo".toUpperCase() === window.location.search.toUpperCase()) {
-            document.querySelector('iron-component-page').view = "demo";
-        }
-    });
-</script>
-
 </body>
 </html>
