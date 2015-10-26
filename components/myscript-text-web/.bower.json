@@ -49,7 +49,7 @@
   "_resolution": {
     "type": "version",
     "tag": "1.1.0-beta3",
-    "commit": "8bb1f7df5e473ca949ef68a2db2834c8f421e45f"
+    "commit": "edfea1295e87e133ff1027157433c940044cb157"
   },
   "_source": "https://zen.visionobjects.com/git/WS/Polymer/myscript-text-web.git",
   "_target": "1.1.0-beta3",

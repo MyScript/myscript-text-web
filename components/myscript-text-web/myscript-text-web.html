@@ -12,6 +12,7 @@ LICENSE: github.com/MyScriptWebComponents/myscript-text-web/blob/master/LICENSE
 
 <!--
 The `myscript-text-web` is a turnkey solution for those who need to quickly implement MyScript Text recognition.
+See a live demo [here](demo/index.html)
 
 ##### Example
 
@@ -23,7 +24,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
 @status alpha
 @homepage http://myscriptwebcomponents.github.io/myscript-text-web
 
-@demo demo/index.html Basic Demo
 -->
 <dom-module id="myscript-text-web">
     <link rel="import" type="css" href="myscript-text-web.css">
@@ -70,12 +70,11 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
              */
             properties: {
                 /**
-                 * The current recognition protocol (e.g. REST, or WebSocket <b>ONLY</b> for TEXT and MATH)
+                 * The current recognition protocol (e.g. REST, or WebSocket.) We strongly recommend WebSocket.
                  *
-                 * @private
                  * @attribute protocol
                  * @type String
-                 * @default 'REST'
+                 * @default 'WebSocket'
                  */
                 protocol: {
                     type: String,
@@ -243,6 +242,8 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                 this.result = e.detail;
                 if (this.result && (this.result instanceof MyScript.AbstractResult || this.result instanceof MyScript.AbstractRecoResponseWSMessage)) {
                     this.firstcandidate = this.result.getTextDocument().getTextSegment().getSelectedCandidate().getLabel();
+                }else{
+                    this.firstcandidate = "";
                 }
                 this.fire('myscript-text-web-result', this.result);
             },
