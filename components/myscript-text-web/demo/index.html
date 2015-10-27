@@ -3,21 +3,9 @@
 <head>
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="HandheldFriendly" content="true" />
-
     <title>myscript-text demo</title>
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-    <link rel="import" href="../../iron-localstorage/iron-localstorage.html">
-    <link rel="import" href="../../paper-input/paper-input.html">
-    <link rel="import" href="../../paper-dropdown-menu/paper-dropdown-menu.html">
-    <link rel="import" href="../../paper-menu/paper-menu.html">
-    <link rel="import" href="../../paper-item/paper-item.html">
-    <link rel="import" href="../../paper-button/paper-button.html">
-    <link rel="import" href="../../iron-selector/iron-selector.html">
-    <link rel="import" href="../../iron-iconset-svg/iron-iconset-svg.html">
-    <link rel="import" href="../../iron-icon/iron-icon.html">
     <link rel="import" href="../myscript-text-web.html">
-
-
     <link rel="import" href="../../paper-dropdown-menu/paper-dropdown-menu.html">
     <link rel="import" href="../../paper-menu/paper-menu.html">
     <link rel="import" href="../../paper-item/paper-item.html">
@@ -31,13 +19,10 @@
         padding: 0;
         margin: 0;
         font-family: Roboto, Noto, sans-serif;
-        font-size: 12px;
+        font-size: 14px;
     }
 
-    #authenticationKeys {
-        min-height: 72px;
-    }
-    #text-input {
+     #text-input {
         height: calc(100% - 172px);
     }
 
@@ -48,32 +33,9 @@
 </style>
 <body unresolved>
 <template is="dom-bind">
-    <iron-localstorage id="applicationkey"
-                       name="input-demo-applicationkey"
-                       autoSaveDisabled="true"
-                       value="{{applicationkey}}">
-    </iron-localstorage>
-    <iron-localstorage id="hmackey"
-                       name="input-demo-hmackey"
-                       autoSaveDisabled="true"
-                       value="{{hmackey}}">
-    </iron-localstorage>
-
     <form is="iron-form" id="authenticationKeys">
         <div class="horizontal around-justified layout">
-            <paper-input label="applicationkey"
-                         auto-validate pattern="[a-zA-Z0-9\-]*"
-                         error-message="invalid character"
-                         value="{{applicationkey}}"
-                         class="flex">
-            </paper-input>
-            <paper-input label="hmackey"
-                         auto-validate pattern="[a-zA-Z0-9\-]*"
-                         error-message="invalid character"
-                         value="{{hmackey}}"
-                         class="flex">
-            </paper-input>
-            <paper-dropdown-menu label="Pick up your language">
+            <paper-dropdown-menu label="Choose your language">
                 <paper-menu class="dropdown-content" selected="{{selectedValue}}" attr-for-selected="value" >
                     <paper-item value="en_US">English</paper-item>
                     <paper-item value="fr_FR">Français</paper-item>
@@ -84,11 +46,11 @@
     </form>
     <myscript-text-web id='text-input'
                    firstcandidate='{{firstcandidate}}'
-                   applicationkey='{{applicationkey}}'
-                   hmackey='{{hmackey}}'
+                   applicationkey='22eda92c-10af-40d8-abea-fd4093c17d81'
+                   hmackey='a1fa759f-b3ce-4091-9fd4-d34bb870c601'
+                   host='webdemo.myscript.com'
                    language='{{selectedValue}}'>
     </myscript-text-web>
 </template>
-
 </body>
 </html>

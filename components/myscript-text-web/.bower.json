@@ -37,19 +37,16 @@
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#1.0.x",
-    "iron-localstorage": "PolymerElements/iron-localstorage#1.0.x",
-    "paper-input": "PolymerElements/paper-input#1.0.x",
     "paper-dropdown-menu": "PolymerElements/paper-dropdown-menu#1.0.x",
     "paper-menu": "PolymerElements/paper-menu#1.0.x",
     "paper-item": "PolymerElements/paper-item#1.0.x",
-    "iron-selector": "PolymerElements/iron-selector#1.0.x",
     "web-component-tester": "*"
   },
   "_release": "1.1.0-beta3",
   "_resolution": {
     "type": "version",
     "tag": "1.1.0-beta3",
-    "commit": "edfea1295e87e133ff1027157433c940044cb157"
+    "commit": "a4fc9f00e038ed8e0a0bc329e7519dd2ff887f2f"
   },
   "_source": "https://zen.visionobjects.com/git/WS/Polymer/myscript-text-web.git",
   "_target": "1.1.0-beta3",
