@@ -37,12 +37,9 @@
     },
     "devDependencies": {
         "iron-component-page": "PolymerElements/iron-component-page#1.0.x",
-        "iron-localstorage": "PolymerElements/iron-localstorage#1.0.x",
-        "paper-input": "PolymerElements/paper-input#1.0.x",
         "paper-dropdown-menu": "PolymerElements/paper-dropdown-menu#1.0.x",
         "paper-menu": "PolymerElements/paper-menu#1.0.x",
         "paper-item": "PolymerElements/paper-item#1.0.x",
-        "iron-selector": "PolymerElements/iron-selector#1.0.x",
         "web-component-tester": "*"
     }
 }
