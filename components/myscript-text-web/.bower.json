@@ -1,6 +1,6 @@
 {
   "name": "myscript-text-web",
-  "version": "1.1.0-beta3",
+  "version": "1.1.0-beta4",
   "description": "HTML5 Element easing integration of MyScript text handwriting recognition in your web-page",
   "keywords": [
     "web-component",
@@ -42,14 +42,14 @@
     "paper-item": "PolymerElements/paper-item#1.0.x",
     "web-component-tester": "*"
   },
-  "_release": "1.1.0-beta3",
+  "_release": "1.1.0-beta4",
   "_resolution": {
     "type": "version",
-    "tag": "1.1.0-beta3",
-    "commit": "a4fc9f00e038ed8e0a0bc329e7519dd2ff887f2f"
+    "tag": "1.1.0-beta4",
+    "commit": "99f8bc721729776c529898fff8ca76a3909a5659"
   },
   "_source": "https://zen.visionobjects.com/git/WS/Polymer/myscript-text-web.git",
-  "_target": "1.1.0-beta3",
+  "_target": "1.1.0-beta4",
   "_originalSource": "https://zen.visionobjects.com/git/WS/Polymer/myscript-text-web.git",
   "_direct": true
 }
