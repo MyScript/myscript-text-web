@@ -1,0 +1,268 @@
+<!--
+Copyright © MyScript.
+LICENSE: github.com/MyScriptWebComponents/myscript-text-web/blob/master/LICENSE
+-->
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../paper-fab/paper-fab.html">
+<link rel="import" href="../paper-toast/paper-toast.html">
+<!-- Import MyScript common element to add handwriting recognition -->
+<link rel="import" href="../myscript-common-element/myscript-common-element.html">
+
+<!--
+The `myscript-text-web` is a turnkey solution for those who need to quickly implement MyScript Text recognition.
+See a live demo [here](demo/index.html)
+
+##### Example
+
+    <myscript-text-web applicationkey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX" hmackey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX" language="en_US" hidebuttons></myscript-text-web>
+
+@group MyScript Elements
+@element myscript-text-web
+@blurb MyScript HTML5 Text Element to help developers integrate math handwriting recognition.
+@status alpha
+@homepage http://myscriptwebcomponents.github.io/myscript-text-web
+
+-->
+<dom-module id="myscript-text-web">
+    <link rel="import" type="css" href="myscript-text-web.css">
+    <template>
+        <div class="resultField" flex hidden="[[hideresult]]">[[firstcandidate]]</div>
+        <div class="horizontal layout buttons" hidden="[[hidebuttons]]">
+            <paper-fab class="delete" mini icon="delete" title="delete" on-tap="delete"></paper-fab>
+            <paper-fab class="undo" mini icon="undo" title="undo" on-tap="undo" disabled="{{ !canundo }}"></paper-fab>
+            <paper-fab class="redo" mini icon="redo" title="redo" on-tap="redo" disabled="{{ !canredo }}"></paper-fab>
+        </div>
+        <myscript-common-element host="{{ host }}"
+                                 protocol="{{ protocol }}"
+                                 type="TEXT"
+                                 language="{{ language }}"
+                                 applicationkey="{{ applicationkey }}"
+                                 hmackey="{{ hmackey }}"
+                                 timeout="{{ timeout }}"
+                                 on-changed="_onChanged"
+                                 on-success="_onSuccess"
+                                 on-failure="_onFailure">
+        </myscript-common-element>
+        <paper-toast class="error"></paper-toast>
+    </template>
+</dom-module>
+
+<script>
+    (function () {
+        Polymer({
+            is: 'myscript-text-web',
+            /**
+             * Fired when the InkPaper content changes.
+             *
+             * @event changed
+             */
+            /**
+             * Fired when a text recognition result is successfully received.
+             *
+             * @event myscript-text-web-result
+             */
+            /**
+             * Fired when the Delete action is done.
+             *
+             * @event myscript-text-web-delete
+             */
+            properties: {
+                /**
+                 * The current recognition protocol (WebSocket or REST). We strongly recommend using WebSocket.
+                 *
+                 * @attribute protocol
+                 * @type String
+                 * @default 'WebSocket'
+                 */
+                protocol: {
+                    type: String,
+                    notify: true,
+                    value: 'WebSocket'
+                },
+                /**
+                 * The current recognition service host.
+                 *
+                 * @private
+                 * @attribute host
+                 * @type String
+                 * @default 'cloud.myscript.com'
+                 */
+                host: {
+                    type: String,
+                    notify: true
+                },
+                /**
+                 * Recognition timeout, only use for HTTP.
+                 *
+                 * @private
+                 * @attribute timeout
+                 * @type Number
+                 * @default 2000
+                 */
+                timeout: {
+                    type: Number,
+                    notify: true
+                },
+                /**
+                 * Application key to use for recognition on MyScript handwriting recognition server.<br>
+                 * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.<br>
+                 * <b>Warning</b>: This parameter is <b>mandatory</b> and its value should be a string.
+                 *
+                 * @attribute applicationkey
+                 * @type String
+                 */
+                applicationkey: {
+                    type: String,
+                    notify: true
+                },
+                /**
+                 * HMAC key to use for recognition on MyScript handwriting recognition server.<br>
+                 * You have to create your own HMAC key corresponding to your own application key in your account at http://cloud.myscript.com.<br>
+                 *
+                 * <b>Warning</b>: This parameter may be <b>mandatory</b> if HMAC signature security is enabled for your application. The value should be a string.
+                 *
+                 * @attribute hmackey
+                 * @type String
+                 */
+                hmackey: {
+                    type: String,
+                    notify: true
+                },
+                /**
+                 * @private
+                 * @attribute canundo
+                 * @type Boolean
+                 */
+                canundo: {
+                    type: Boolean,
+                    notify: true,
+                    value: false
+                },
+                /**
+                 * @private
+                 * @attribute canredo
+                 * @type Boolean
+                 */
+                canredo: {
+                    type: Boolean,
+                    notify: true,
+                    value: false
+                },
+                /**
+                 * Hide the buttons (Trash, Undo, Redo).
+                 *
+                 * @attribute hidebuttons
+                 * @type Boolean
+                 */
+                hidebuttons: {
+                    type: Boolean,
+                    value: false
+                },
+                /**
+                 * Hide the result div tag.
+                 *
+                 * @attribute hideresult
+                 * @type Boolean
+                 */
+                hideresult: {
+                    type: Boolean,
+                    value: false
+                },
+                /**
+                 * Recognition language used by the recognition process.
+                 * @attribute language
+                 * @type String
+                 */
+                language: {
+                    type: String,
+                    notify: true,
+                    value: "en_US"
+                },
+                /**
+                 * Result returned by the handwriting recognition engine.
+                 * @attribute result
+                 * @type String
+                 */
+                result: {
+                    type: Object,
+                    notify: true
+                },
+                /**
+                 * First candidate returned by the handwriting recognition engine.
+                 * @attribute firstcandidate
+                 * @type String
+                 */
+                firstcandidate: {
+                    type: String,
+                    notify: true
+                }
+            },
+            /**
+             * Delete action.
+             *
+             * @method delete
+             */
+            delete: function () {
+                this._myscriptCommonElement.delete();
+                this.result = undefined;
+                this.firstcandidate = "";
+                this.fire("myscript-text-web-delete");
+            },
+            /**
+             * Undo action.
+             *
+             * @method undo
+             */
+            undo: function () {
+                this._myscriptCommonElement.undo();
+            },
+            /**
+             * Redo action.
+             *
+             * @method redo
+             */
+            redo: function () {
+                this._myscriptCommonElement.redo();
+            },
+            _onChanged: function (e) {
+                if (e.detail) {
+                    this.canundo = e.detail.canUndo;
+                    this.canredo = e.detail.canRedo;
+                }
+            },
+            /**
+             * Recognition success listener.
+             *
+             * @private
+             * @method _onSuccess
+             */
+            _onSuccess: function (e) {
+                this.result = e.detail;
+                if (this.result && (this.result instanceof MyScript.AbstractResult || this.result instanceof MyScript.AbstractRecoResponseWSMessage)) {
+                    this.firstcandidate = this.result.getTextDocument().getTextSegment().getSelectedCandidate().getLabel();
+                }else{
+                    this.firstcandidate = "";
+                }
+                this.fire('myscript-text-web-result', this.result);
+            },
+            /**
+             * Failure listener.
+             *
+             * @private
+             * @method _onFailure
+             */
+            _onFailure: function (e) {
+                this.fire(e.type, e.detail);
+                this._paperToast.text = (typeof e.detail === 'object') ? JSON.stringify(e.detail) : e.detail;
+                this._paperToast.show();
+            },
+            ready: function () {
+                this._myscriptCommonElement = this.querySelector('myscript-common-element');
+                this._paperToast = this.querySelector('paper-toast');
+            }
+        });
+
+    })();
+</script>
