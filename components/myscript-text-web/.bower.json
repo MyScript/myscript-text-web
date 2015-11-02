@@ -46,7 +46,7 @@
   "_resolution": {
     "type": "version",
     "tag": "1.1.0-beta4",
-    "commit": "99f8bc721729776c529898fff8ca76a3909a5659"
+    "commit": "27160383b8090d27245739045b051e337d864f10"
   },
   "_source": "https://zen.visionobjects.com/git/WS/Polymer/myscript-text-web.git",
   "_target": "1.1.0-beta4",
