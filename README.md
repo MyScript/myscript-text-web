@@ -1,7 +1,7 @@
 myscript-text-web
 =================
 
-The easy way to integrate handwriting recognition in your web app.
+The easy way to integrate text handwriting recognition in your web app.
 
 <a href="myscript.github.io/"><img src="text.gif" /></a>
 
