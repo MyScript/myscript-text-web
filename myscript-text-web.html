@@ -31,7 +31,7 @@ See a live demo [here](demo/index.html)
         <div class="resultField" flex hidden="[[hideresult]]">[[firstcandidate]]</div>
         <div class="horizontal layout buttons" hidden="[[hidebuttons]]">
             <paper-fab class="delete" mini icon="delete" title="delete" on-tap="delete"
-                       disabled="{{ !canUndo && !canRedo}}"></paper-fab>
+                       disabled="{{ !canClear }}"></paper-fab>
             <paper-fab class="undo" mini icon="undo" title="undo" on-tap="undo" disabled="{{ !canUndo }}"></paper-fab>
             <paper-fab class="redo" mini icon="redo" title="redo" on-tap="redo" disabled="{{ !canRedo }}"></paper-fab>
         </div>
@@ -150,6 +150,16 @@ See a live demo [here](demo/index.html)
                     type: Boolean,
                     notify: true,
                     value: false
+                },
+                /**
+                 * @private
+                 * @attribute canClear
+                 * @type Boolean
+                 */
+                canClear: {
+                    type: Boolean,
+                    notify: true,
+                    computed: '_computeCanClear(canUndo, canRedo)'
                 },
                 /**
                  * Hide the buttons (Trash, Undo, Redo).
@@ -276,6 +286,9 @@ See a live demo [here](demo/index.html)
             ready: function () {
                 this._myscriptCommonElement = this.querySelector('myscript-common-element');
                 this._paperToast = this.querySelector('paper-toast');
+            },
+            _computeCanClear: function (canUndo, canRedo) {
+                return canUndo || canRedo;
             },
             _computeTextParameters: function (language) {
                 var parameters = new MyScript.TextParameter();
