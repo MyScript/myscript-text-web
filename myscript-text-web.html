@@ -30,17 +30,18 @@ See a live demo [here](demo/index.html)
     <template>
         <div class="resultField" flex hidden="[[hideresult]]">[[firstcandidate]]</div>
         <div class="horizontal layout buttons" hidden="[[hidebuttons]]">
-            <paper-fab class="delete" mini icon="delete" title="delete" on-tap="delete"></paper-fab>
-            <paper-fab class="undo" mini icon="undo" title="undo" on-tap="undo" disabled="{{ !canundo }}"></paper-fab>
-            <paper-fab class="redo" mini icon="redo" title="redo" on-tap="redo" disabled="{{ !canredo }}"></paper-fab>
+            <paper-fab class="delete" mini icon="delete" title="delete" on-tap="delete"
+                       disabled="{{ !canUndo && !canRedo}}"></paper-fab>
+            <paper-fab class="undo" mini icon="undo" title="undo" on-tap="undo" disabled="{{ !canUndo }}"></paper-fab>
+            <paper-fab class="redo" mini icon="redo" title="redo" on-tap="redo" disabled="{{ !canRedo }}"></paper-fab>
         </div>
         <myscript-common-element host="{{ host }}"
                                  protocol="{{ protocol }}"
                                  type="TEXT"
-                                 language="{{ language }}"
                                  applicationkey="{{ applicationkey }}"
                                  hmackey="{{ hmackey }}"
                                  timeout="{{ timeout }}"
+                                 text-parameters="{{ textParameters }}"
                                  on-changed="_onChanged"
                                  on-success="_onSuccess"
                                  on-failure="_onFailure">
@@ -132,20 +133,20 @@ See a live demo [here](demo/index.html)
                 },
                 /**
                  * @private
-                 * @attribute canundo
+                 * @attribute canUndo
                  * @type Boolean
                  */
-                canundo: {
+                canUndo: {
                     type: Boolean,
                     notify: true,
                     value: false
                 },
                 /**
                  * @private
-                 * @attribute canredo
+                 * @attribute canRedo
                  * @type Boolean
                  */
-                canredo: {
+                canRedo: {
                     type: Boolean,
                     notify: true,
                     value: false
@@ -181,6 +182,18 @@ See a live demo [here](demo/index.html)
                     value: "en_US"
                 },
                 /**
+                 * Recognition parameters for the text recognition.<br>
+                 *
+                 * @private
+                 * @attribute text-parameters
+                 * @type Object
+                 */
+                textParameters: {
+                    type: Object,
+                    notify: true,
+                    computed: '_computeTextParameters(language)'
+                },
+                /**
                  * Result returned by the handwriting recognition engine.
                  * @attribute result
                  * @type String
@@ -205,7 +218,7 @@ See a live demo [here](demo/index.html)
              * @method delete
              */
             delete: function () {
-                this._myscriptCommonElement.delete();
+                this._myscriptCommonElement.clear();
                 this.result = undefined;
                 this.firstcandidate = "";
                 this.fire("myscript-text-web-delete");
@@ -228,9 +241,10 @@ See a live demo [here](demo/index.html)
             },
             _onChanged: function (e) {
                 if (e.detail) {
-                    this.canundo = e.detail.canUndo;
-                    this.canredo = e.detail.canRedo;
+                    this.canUndo = e.detail.canUndo;
+                    this.canRedo = e.detail.canRedo;
                 }
+                this.fire(e.type, e.detail);
             },
             /**
              * Recognition success listener.
@@ -242,9 +256,10 @@ See a live demo [here](demo/index.html)
                 this.result = e.detail;
                 if (this.result && (this.result instanceof MyScript.AbstractResult || this.result instanceof MyScript.AbstractRecoResponseWSMessage)) {
                     this.firstcandidate = this.result.getTextDocument().getTextSegment().getSelectedCandidate().getLabel();
-                }else{
+                } else {
                     this.firstcandidate = "";
                 }
+                this.fire(e.type, e.detail);
                 this.fire('myscript-text-web-result', this.result);
             },
             /**
@@ -261,6 +276,11 @@ See a live demo [here](demo/index.html)
             ready: function () {
                 this._myscriptCommonElement = this.querySelector('myscript-common-element');
                 this._paperToast = this.querySelector('paper-toast');
+            },
+            _computeTextParameters: function (language) {
+                var parameters = new MyScript.TextParameter();
+                parameters.setLanguage(language);
+                return parameters;
             }
         });
 
