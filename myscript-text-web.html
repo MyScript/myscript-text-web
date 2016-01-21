@@ -204,6 +204,18 @@ See a live demo [here](demo/index.html)
                     computed: '_computeTextParameters(language)'
                 },
                 /**
+                 * Text recognition result document.<br>
+                 *
+                 * @private
+                 * @attribute text-document
+                 * @type Object
+                 */
+                textDocument: {
+                    type: Object,
+                    value: new MyScript.TextDocument(),
+                    notify: true
+                },
+                /**
                  * Result returned by the handwriting recognition engine.
                  * @attribute result
                  * @type String
@@ -219,7 +231,8 @@ See a live demo [here](demo/index.html)
                  */
                 firstcandidate: {
                     type: String,
-                    notify: true
+                    notify: true,
+                    computed: '_computeFirstCandidate(textDocument)'
                 }
             },
             /**
@@ -230,7 +243,6 @@ See a live demo [here](demo/index.html)
             delete: function () {
                 this._myscriptCommonElement.clear();
                 this.result = undefined;
-                this.firstcandidate = "";
                 this.fire("myscript-text-web-delete");
             },
             /**
@@ -264,10 +276,10 @@ See a live demo [here](demo/index.html)
              */
             _onSuccess: function (e) {
                 this.result = e.detail;
-                if (this.result && (this.result instanceof MyScript.AbstractResult || this.result instanceof MyScript.AbstractRecoResponseWSMessage)) {
-                    this.firstcandidate = this.result.getTextDocument().getTextSegment().getSelectedCandidate().getLabel();
+                if (e.detail && e.detail.getTextDocument) {
+                    this.textDocument = e.detail.getTextDocument();
                 } else {
-                    this.firstcandidate = "";
+                    this.textDocument = new MyScript.TextDocument();
                 }
                 this.fire(e.type, e.detail);
                 this.fire('myscript-text-web-result', this.result);
@@ -294,6 +306,12 @@ See a live demo [here](demo/index.html)
                 var parameters = new MyScript.TextParameter();
                 parameters.setLanguage(language);
                 return parameters;
+            },
+            _computeFirstCandidate: function (textDocument) {
+                if (textDocument && textDocument.getTextSegment()) {
+                    return textDocument.getTextSegment().getSelectedCandidate().getLabel();
+                }
+                return undefined;
             }
         });
 
