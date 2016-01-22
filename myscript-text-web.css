@@ -7,7 +7,7 @@
 }
 
 .resultField {
-    height: 100px;
+    min-height: 100px;
     overflow: auto;
     text-align: center;
     font-size: xx-large;
@@ -29,4 +29,6 @@ myscript-common-element {
     z-index: 2;
 }
 
-
+.selected {
+    color: #00A7CF;
+}
