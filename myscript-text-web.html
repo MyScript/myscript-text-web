@@ -84,7 +84,7 @@ See a live demo [here](demo/index.html)
                 protocol: {
                     type: String,
                     notify: true,
-                    value: 'WebSocket'
+                    value: MyScript.Protocol.WS
                 },
                 /**
                  * The current recognition service host.
@@ -193,12 +193,17 @@ See a live demo [here](demo/index.html)
                 language: {
                     type: String,
                     notify: true,
-                    value: "en_US"
+                    value: 'en_US'
                 },
                 resultDetail: {
                     type: String,
                     notify: true,
-                    value: 'TEXT'
+                    value: MyScript.ResultDetail.TEXT
+                },
+                inputMode: {
+                    type: String,
+                    notify: true,
+                    value: MyScript.InputMode.CURSIVE
                 },
                 recognitionCandidates: {
                     type: Number,
@@ -231,7 +236,7 @@ See a live demo [here](demo/index.html)
                 textParameters: {
                     type: Object,
                     notify: true,
-                    computed: '_computeTextParameters(language, resultDetail, textProperties)'
+                    computed: '_computeTextParameters(inputMode, language, resultDetail, textProperties)'
                 },
                 /**
                  * Text recognition result document.<br>
@@ -344,8 +349,9 @@ See a live demo [here](demo/index.html)
             _computeCanClear: function (canUndo, canRedo) {
                 return canUndo || canRedo;
             },
-            _computeTextParameters: function (language, resultDetail, textProperties) {
+            _computeTextParameters: function (inputMode, language, resultDetail, textProperties) {
                 var parameters = new MyScript.TextParameter();
+                parameters.setInputMode(inputMode);
                 parameters.setResultDetail(resultDetail);
                 parameters.setTextProperties(textProperties);
                 parameters.setLanguage(language);
@@ -355,9 +361,9 @@ See a live demo [here](demo/index.html)
                 var properties = new MyScript.TextProperties();
                 properties.setTextCandidateListSize(recognitionCandidates);
                 switch (resultDetail) {
-                    case 'CHARACTER':
+                    case MyScript.ResultDetail.CHARACTER:
                         properties.setCharacterCandidateListSize(recognitionCandidates);
-                    case 'WORD':
+                    case MyScript.ResultDetail.WORD:
                         properties.setWordCandidateListSize(recognitionCandidates);
                         properties.setWordPredictionListSize(predictionCandidates);
                         properties.setWordCompletionListSize(completionCandidates);
