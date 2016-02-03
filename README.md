@@ -3,13 +3,13 @@ myscript-text-web
 
 The easy way to integrate text handwriting recognition in your web app.
 
-<a href="myscript.github.io/"><img src="text.gif" /></a>
+<a href="https://myscript.github.io/myscript-text-web/components/myscript-text-web/demo/"><img src="text.gif" /></a>
 
 ```html
 <html>
 <head>
-     <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-    <link rel="import" href="bower_components/myscript-text-web.html">
+    <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="bower_components/myscript-text-web/myscript-text-web.html">
 </head>
 <body>
     <myscript-text-web applicationkey="#PUT YOUR MYSCRIPT CDK APPLICATION KEY HERE#" 
@@ -20,7 +20,7 @@ The easy way to integrate text handwriting recognition in your web app.
 </html>
 ```    
 
-[Test it live](http://myscript.github.io/myscript-text-web/components/myscript-text-web/demo/)!
+[Test it live](https://myscript.github.io/myscript-text-web/components/myscript-text-web/demo/)!
 
 ## What is it about?
 
@@ -31,7 +31,7 @@ myscript-text-web is a web component that can be used in every web application (
 
 ## Installation
 
-**Bower**: `bower install myscript`
+**Bower**: `bower install myscript-text-web`
 
 ## Start using myscript-text-web
 
