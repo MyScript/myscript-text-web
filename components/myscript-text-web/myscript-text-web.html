@@ -1,0 +1,390 @@
+<!--
+Copyright © MyScript.
+LICENSE: github.com/MyScriptWebComponents/myscript-text-web/blob/master/LICENSE
+-->
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../paper-fab/paper-fab.html">
+<link rel="import" href="../paper-toast/paper-toast.html">
+<!-- Import MyScript common element to add handwriting recognition -->
+<link rel="import" href="../myscript-common-element/myscript-common-element.html">
+
+<!--
+The `myscript-text-web` is a turnkey solution for those who need to quickly implement MyScript Text recognition.
+See a live demo [here](demo/index.html)
+
+##### Example
+
+    <myscript-text-web applicationkey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX" hmackey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX" language="en_US" hidebuttons></myscript-text-web>
+
+@group MyScript Elements
+@element myscript-text-web
+@blurb MyScript HTML5 Text Element to help developers integrate math handwriting recognition.
+@status alpha
+@homepage http://myscriptwebcomponents.github.io/myscript-text-web
+
+-->
+<dom-module id="myscript-text-web">
+    <link rel="import" type="css" href="myscript-text-web.css">
+    <template>
+        <div class="container flex-center-justified resultField" flex hidden="[[hideresult]]">
+            <template is="dom-repeat" items="{{ candidates }}" as="candidate">
+                <span class$="{{ isSelected(candidate) }}">[[candidate.label]]</span>
+            </template>
+        </div>
+        <div class="horizontal layout buttons" hidden="[[hidebuttons]]">
+            <paper-fab class="delete" mini icon="delete" title="delete" on-tap="delete"
+                       disabled="{{ !canClear }}"></paper-fab>
+            <paper-fab class="undo" mini icon="undo" title="undo" on-tap="undo" disabled="{{ !canUndo }}"></paper-fab>
+            <paper-fab class="redo" mini icon="redo" title="redo" on-tap="redo" disabled="{{ !canRedo }}"></paper-fab>
+        </div>
+        <myscript-common-element host="{{ host }}"
+                                 protocol="{{ protocol }}"
+                                 type="TEXT"
+                                 applicationkey="{{ applicationkey }}"
+                                 hmackey="{{ hmackey }}"
+                                 timeout="{{ timeout }}"
+                                 text-parameters="{{ textParameters }}"
+                                 on-changed="_onChanged"
+                                 on-success="_onSuccess"
+                                 on-failure="_onFailure">
+        </myscript-common-element>
+        <paper-toast class="error"></paper-toast>
+    </template>
+</dom-module>
+
+<script>
+    (function () {
+        Polymer({
+            is: 'myscript-text-web',
+            /**
+             * Fired when the InkPaper content changes.
+             *
+             * @event changed
+             */
+            /**
+             * Fired when a text recognition result is successfully received.
+             *
+             * @event myscript-text-web-result
+             */
+            /**
+             * Fired when the Delete action is done.
+             *
+             * @event myscript-text-web-delete
+             */
+            properties: {
+                /**
+                 * The current recognition protocol (WebSocket or REST). We strongly recommend using WebSocket.
+                 *
+                 * @attribute protocol
+                 * @type String
+                 * @default 'WebSocket'
+                 */
+                protocol: {
+                    type: String,
+                    notify: true,
+                    value: MyScript.Protocol.WS
+                },
+                /**
+                 * The current recognition service host.
+                 *
+                 * @private
+                 * @attribute host
+                 * @type String
+                 * @default 'cloud.myscript.com'
+                 */
+                host: {
+                    type: String,
+                    notify: true
+                },
+                /**
+                 * Recognition timeout, only use for HTTP.
+                 *
+                 * @private
+                 * @attribute timeout
+                 * @type Number
+                 * @default 2000
+                 */
+                timeout: {
+                    type: Number,
+                    notify: true
+                },
+                /**
+                 * Application key to use for recognition on MyScript handwriting recognition server.<br>
+                 * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.<br>
+                 * <b>Warning</b>: This parameter is <b>mandatory</b> and its value should be a string.
+                 *
+                 * @attribute applicationkey
+                 * @type String
+                 */
+                applicationkey: {
+                    type: String,
+                    notify: true
+                },
+                /**
+                 * HMAC key to use for recognition on MyScript handwriting recognition server.<br>
+                 * You have to create your own HMAC key corresponding to your own application key in your account at http://cloud.myscript.com.<br>
+                 *
+                 * <b>Warning</b>: This parameter may be <b>mandatory</b> if HMAC signature security is enabled for your application. The value should be a string.
+                 *
+                 * @attribute hmackey
+                 * @type String
+                 */
+                hmackey: {
+                    type: String,
+                    notify: true
+                },
+                /**
+                 * @private
+                 * @attribute canUndo
+                 * @type Boolean
+                 */
+                canUndo: {
+                    type: Boolean,
+                    notify: true,
+                    value: false
+                },
+                /**
+                 * @private
+                 * @attribute canRedo
+                 * @type Boolean
+                 */
+                canRedo: {
+                    type: Boolean,
+                    notify: true,
+                    value: false
+                },
+                /**
+                 * @private
+                 * @attribute canClear
+                 * @type Boolean
+                 */
+                canClear: {
+                    type: Boolean,
+                    notify: true,
+                    computed: '_computeCanClear(canUndo, canRedo)'
+                },
+                /**
+                 * Hide the buttons (Trash, Undo, Redo).
+                 *
+                 * @attribute hidebuttons
+                 * @type Boolean
+                 */
+                hidebuttons: {
+                    type: Boolean,
+                    value: false
+                },
+                /**
+                 * Hide the result div tag.
+                 *
+                 * @attribute hideresult
+                 * @type Boolean
+                 */
+                hideresult: {
+                    type: Boolean,
+                    value: false
+                },
+                /**
+                 * Recognition language used by the recognition process.
+                 * @attribute language
+                 * @type String
+                 */
+                language: {
+                    type: String,
+                    notify: true,
+                    value: 'en_US'
+                },
+                resultDetail: {
+                    type: String,
+                    notify: true,
+                    value: MyScript.ResultDetail.TEXT
+                },
+                inputMode: {
+                    type: String,
+                    notify: true,
+                    value: MyScript.InputMode.CURSIVE
+                },
+                recognitionCandidates: {
+                    type: Number,
+                    notify: true,
+                    value: 1
+                },
+                predictionCandidates: {
+                    type: Number,
+                    notify: true,
+                    value: 0
+                },
+                completionCandidates: {
+                    type: Number,
+                    notify: true,
+                    value: 0
+                },
+                textProperties: {
+                    type: Object,
+                    notify: true,
+                    computed:
+                        '_computeTextProperties(resultDetail, recognitionCandidates, predictionCandidates, completionCandidates)'
+                },
+                /**
+                 * Recognition parameters for the text recognition.<br>
+                 *
+                 * @private
+                 * @attribute text-parameters
+                 * @type Object
+                 */
+                textParameters: {
+                    type: Object,
+                    notify: true,
+                    computed: '_computeTextParameters(inputMode, language, resultDetail, textProperties)'
+                },
+                /**
+                 * Text recognition result document.<br>
+                 *
+                 * @private
+                 * @attribute text-document
+                 * @type Object
+                 */
+                textDocument: {
+                    type: Object,
+                    value: new MyScript.TextDocument(),
+                    notify: true
+                },
+                /**
+                 * Result returned by the handwriting recognition engine.
+                 * @attribute result
+                 * @type String
+                 */
+                result: {
+                    type: Object,
+                    notify: true
+                },
+                /**
+                 * First candidate returned by the handwriting recognition engine.
+                 * @attribute firstcandidate
+                 * @type String
+                 */
+                firstcandidate: {
+                    type: String,
+                    notify: true,
+                    computed: '_computeFirstCandidate(textDocument)'
+                },
+                candidates: {
+                    type: Array,
+                    notify: true,
+                    computed: '_computeCandidates(textDocument)'
+                }
+            },
+            /**
+             * Delete action.
+             *
+             * @method delete
+             */
+            delete: function () {
+                this._myscriptCommonElement.clear();
+                this.result = undefined;
+                this.fire("myscript-text-web-delete");
+            },
+            /**
+             * Undo action.
+             *
+             * @method undo
+             */
+            undo: function () {
+                this._myscriptCommonElement.undo();
+            },
+            /**
+             * Redo action.
+             *
+             * @method redo
+             */
+            redo: function () {
+                this._myscriptCommonElement.redo();
+            },
+            _onChanged: function (e) {
+                if (e.detail) {
+                    this.canUndo = e.detail.canUndo;
+                    this.canRedo = e.detail.canRedo;
+                }
+                this.fire(e.type, e.detail);
+            },
+            /**
+             * Recognition success listener.
+             *
+             * @private
+             * @method _onSuccess
+             */
+            _onSuccess: function (e) {
+                this.result = e.detail;
+                if (e.detail && e.detail.getTextDocument) {
+                    this.textDocument = e.detail.getTextDocument();
+                } else {
+                    this.textDocument = new MyScript.TextDocument();
+                }
+                this.fire(e.type, e.detail);
+                this.fire('myscript-text-web-result', this.result);
+            },
+            /**
+             * Failure listener.
+             *
+             * @private
+             * @method _onFailure
+             */
+            _onFailure: function (e) {
+                this.fire(e.type, e.detail);
+                this._paperToast.text = (typeof e.detail === 'object') ? JSON.stringify(e.detail) : e.detail;
+                this._paperToast.show();
+            },
+            ready: function () {
+                this._myscriptCommonElement = this.querySelector('myscript-common-element');
+                this._paperToast = this.querySelector('paper-toast');
+            },
+            isSelected: function (candidate) {
+                if (this.textDocument) {
+                    return (candidate === this.textDocument.getTextSegment().getSelectedCandidate())? 'selected':
+                        undefined;
+                }
+                return undefined;
+            },
+            _computeCanClear: function (canUndo, canRedo) {
+                return canUndo || canRedo;
+            },
+            _computeTextParameters: function (inputMode, language, resultDetail, textProperties) {
+                var parameters = new MyScript.TextParameter();
+                parameters.setInputMode(inputMode);
+                parameters.setResultDetail(resultDetail);
+                parameters.setTextProperties(textProperties);
+                parameters.setLanguage(language);
+                return parameters;
+            },
+            _computeTextProperties: function (resultDetail, recognitionCandidates, predictionCandidates, completionCandidates) {
+                var properties = new MyScript.TextProperties();
+                properties.setTextCandidateListSize(recognitionCandidates);
+                switch (resultDetail) {
+                    case MyScript.ResultDetail.CHARACTER:
+                        properties.setCharacterCandidateListSize(recognitionCandidates);
+                    case MyScript.ResultDetail.WORD:
+                        properties.setWordCandidateListSize(recognitionCandidates);
+                        properties.setWordPredictionListSize(predictionCandidates);
+                        properties.setWordCompletionListSize(completionCandidates);
+                    default:
+                        properties.setTextCandidateListSize(recognitionCandidates);
+                }
+                return properties;
+            },
+            _computeCandidates: function (textDocument) {
+                if (textDocument && textDocument.getTextSegment()) {
+                    return textDocument.getTextSegment().getCandidates();
+                }
+                return [];
+            },
+            _computeFirstCandidate: function (textDocument) {
+                if (textDocument && textDocument.getTextSegment()) {
+                    return textDocument.getTextSegment().getSelectedCandidate().getLabel();
+                }
+                return undefined;
+            }
+        });
+
+    })();
+</script>
