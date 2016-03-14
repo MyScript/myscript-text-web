@@ -31,3 +31,11 @@ myscript-common-element {
 .selected {
     color: #00A7CF;
 }
+
+.char.predicted {
+    color: #73818C;
+}
+
+.char.completed {
+    color: #318c8a;
+}

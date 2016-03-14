@@ -29,8 +29,8 @@ See a live demo [here](demo/index.html)
     <link rel="import" type="css" href="myscript-text-web.css">
     <template>
         <div id="resultField" class="container flex-center-justified" flex hidden="[[hideresult]]">
-            <template is="dom-repeat" items="{{ candidates }}" as="candidate">
-                <span class$="{{ isSelected(candidate) }}">[[candidate.label]]</span>
+            <template is="dom-repeat" id="candidateList" items="{{ candidates }}" as="candidate">
+                <span class$="{{ isSelected(candidate) }}" inner-h-t-m-l="{{ getLabel(candidate) }}"></span>
             </template>
         </div>
         <div class="horizontal layout buttons" hidden="[[hidebuttons]]">
@@ -267,12 +267,17 @@ See a live demo [here](demo/index.html)
                 firstcandidate: {
                     type: String,
                     notify: true,
-                    computed: '_computeFirstCandidate(textDocument)'
+                    computed: '_computeSelectedCandidate(textDocument)'
                 },
                 candidates: {
                     type: Array,
                     notify: true,
                     computed: '_computeCandidates(textDocument)'
+                },
+                selectedCandidate: {
+                    type: String,
+                    notify: true,
+                    computed: '_computeSelectedCandidate(textDocument)'
                 }
             },
             /**
@@ -346,6 +351,56 @@ See a live demo [here](demo/index.html)
                 }
                 return undefined;
             },
+            getLabel: function (textCandidate) {
+                if (!this.textDocument || !textCandidate) {
+                    return undefined;
+                }
+                var textLabel = '<span class="text">';
+                if (textCandidate.getFlags().indexOf('PREDICTED') > -1) {
+                    textLabel = '<span class="text predicted">';
+                }
+                else if (textCandidate.getFlags().indexOf('COMPLETED') > -1) {
+                    textLabel = '<span class="text completed">';
+                }
+                if (this.textDocument.getWordSegments().length <= 0) {
+                    textLabel += textCandidate.getLabel();
+                } else {
+                    for (var i in textCandidate.getChildren()) {
+                        var wordSegmentItem = textCandidate.getChildren()[i];
+                        var wordCandidateIndex = wordSegmentItem.getSelectedCandidateIdx();
+                        var wordInkRanges = wordSegmentItem.getInkRanges();
+                        var wordSegment = this.textDocument.getWordSegment(wordInkRanges);
+                        var wordCandidate = wordSegment.getCandidates()[wordCandidateIndex];
+                        var wordLabel = '<span class="word">';
+                        if (wordCandidate.getFlags().indexOf('PREDICTED') > -1) {
+                            wordLabel = '<span class="word predicted">';
+                        } else if (wordCandidate.getFlags().indexOf('COMPLETED') > -1) {
+                            wordLabel = '<span class="word completed">';
+                        }
+                        if (this.textDocument.getCharSegments().length <= 0) {
+                            wordLabel += wordCandidate.getLabel();
+                        } else {
+                            for (var j in wordCandidate.getChildren()) {
+                                var charSegmentItem = wordCandidate.getChildren()[j];
+                                var charLabel = '<span class="char">';
+                                if (!(charSegmentItem.getInkRanges() && charSegmentItem.getInkRanges().length > 0)) {
+                                    if (wordCandidate.getFlags().indexOf('PREDICTED') > -1) {
+                                        charLabel = '<span class="char predicted">';
+                                    } else if (wordCandidate.getFlags().indexOf('COMPLETED') > -1) {
+                                        charLabel = '<span class="char completed">';
+                                    }
+                                }
+                                charLabel += wordCandidate.getLabel().charAt(j);
+                                charLabel += '</span>';
+                                wordLabel += charLabel;
+                            }
+                        }
+                        wordLabel += '</span>';
+                        textLabel += wordLabel;
+                    }
+                }
+                return textLabel + '</span>';
+            },
             _computeCanClear: function (canUndo, canRedo) {
                 return canUndo || canRedo;
             },
@@ -378,7 +433,7 @@ See a live demo [here](demo/index.html)
                 }
                 return [];
             },
-            _computeFirstCandidate: function (textDocument) {
+            _computeSelectedCandidate: function (textDocument) {
                 if (textDocument && textDocument.getTextSegment()) {
                     return textDocument.getTextSegment().getSelectedCandidate().getLabel();
                 }
