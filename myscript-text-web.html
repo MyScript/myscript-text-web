@@ -28,7 +28,7 @@ See a live demo [here](demo/index.html)
 <dom-module id="myscript-text-web">
     <link rel="import" type="css" href="myscript-text-web.css">
     <template>
-        <div id="resultField" class="container flex-center-justified" flex hidden="[[hideresult]]">
+        <div id="resultField" class="flex-center-justified" flex hidden="[[hideresult]]">
             <template is="dom-repeat" id="candidateList" items="{{ candidates }}" as="candidate">
                 <span class$="{{ isSelected(candidate) }}" inner-h-t-m-l="{{ getLabel(candidate) }}"></span>
             </template>
