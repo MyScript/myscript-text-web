@@ -1,8 +1,9 @@
 <!doctype html>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta name="HandheldFriendly" content="true" />
+    <meta name="viewport"
+          content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="HandheldFriendly" content="true"/>
     <title>myscript-text demo</title>
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="../myscript-text-web.html">
@@ -23,12 +24,12 @@
     }
 
     myscript-text-web {
-        height: calc(100% - 60px);
+        height: calc(100% - 160px);
     }
 
     paper-menu-button {
         padding: 0px;
-        width : 250px;
+        width: 250px;
     }
 </style>
 <body unresolved>
@@ -36,21 +37,20 @@
     <form is="iron-form" id="authenticationKeys">
         <div class="horizontal around-justified layout">
             <paper-dropdown-menu label="Choose your language">
-                <paper-menu class="dropdown-content" selected="{{selectedValue}}" attr-for-selected="value" >
+                <paper-menu class="dropdown-content" selected="{{selectedValue}}" attr-for-selected="value">
                     <paper-item value="en_US">English</paper-item>
                     <paper-item value="fr_FR">Français</paper-item>
-                    <paper-item value="zh_CN" >Chinese</paper-item>
+                    <paper-item value="zh_CN">Chinese</paper-item>
                 </paper-menu>
             </paper-dropdown-menu>
         </div>
     </form>
     <myscript-text-web id='text-input'
-                   firstcandidate='{{firstcandidate}}'
-                   applicationkey='22eda92c-10af-40d8-abea-fd4093c17d81'
-                   hmackey='a1fa759f-b3ce-4091-9fd4-d34bb870c601'
-                   host='webdemo.myscript.com'
-                   recognition-candidates="3"
-                   language='{{selectedValue}}'>
+                       host='webdemo.myscript.com'
+                       applicationkey='22eda92c-10af-40d8-abea-fd4093c17d81'
+                       hmackey='a1fa759f-b3ce-4091-9fd4-d34bb870c601'
+                       recognition-candidates="3"
+                       language='{{selectedValue}}'>
     </myscript-text-web>
 </template>
 </body>

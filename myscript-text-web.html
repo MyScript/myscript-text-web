@@ -268,7 +268,7 @@ See a live demo [here](demo/index.html)
                 firstcandidate: {
                     type: String,
                     notify: true,
-                    computed: '_computeSelectedCandidate(textDocument)'
+                    computed: '_computeFirstCandidate(textDocument)'
                 },
                 candidates: {
                     type: Array,
@@ -276,7 +276,7 @@ See a live demo [here](demo/index.html)
                     computed: '_computeCandidates(textDocument)'
                 },
                 selectedCandidate: {
-                    type: String,
+                    type: Object,
                     notify: true,
                     computed: '_computeSelectedCandidate(textDocument)'
                 }
@@ -435,9 +435,15 @@ See a live demo [here](demo/index.html)
                 }
                 return [];
             },
-            _computeSelectedCandidate: function (textDocument) {
+            _computeFirstCandidate: function (textDocument) {
                 if (textDocument && textDocument.getTextSegment()) {
                     return textDocument.getTextSegment().getSelectedCandidate().getLabel();
+                }
+                return undefined;
+            },
+            _computeSelectedCandidate: function (textDocument) {
+                if (textDocument && textDocument.getTextSegment()) {
+                    return textDocument.getTextSegment().getSelectedCandidate();
                 }
                 return undefined;
             },
