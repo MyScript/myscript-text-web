@@ -41,8 +41,7 @@ See a live demo [here](demo/index.html)
             <paper-fab class="undo" mini icon="undo" title="undo" on-tap="undo" disabled="{{ !canUndo }}"></paper-fab>
             <paper-fab class="redo" mini icon="redo" title="redo" on-tap="redo" disabled="{{ !canRedo }}"></paper-fab>
         </div>
-        <myscript-common-element id="ink-paper"
-                                 class="{{ computeCommonElementClass(hideresult) }}"
+        <myscript-common-element class="{{ computeCommonElementClass(hideresult) }}"
                                  host="{{ host }}"
                                  protocol="{{ protocol }}"
                                  type="TEXT"
