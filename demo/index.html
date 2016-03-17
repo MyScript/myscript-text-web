@@ -37,20 +37,21 @@
     <form is="iron-form" id="authenticationKeys">
         <div class="horizontal around-justified layout">
             <paper-dropdown-menu label="Choose your language">
-                <paper-menu class="dropdown-content" selected="{{selectedValue}}" attr-for-selected="value">
-                    <paper-item value="en_US">English</paper-item>
-                    <paper-item value="fr_FR">Français</paper-item>
-                    <paper-item value="zh_CN">Chinese</paper-item>
+                <paper-menu class="dropdown-content" selected="{{ language }}" attr-for-selected="value">
+                    <paper-item value="ar">العربية</paper-item>
+                    <paper-item value="en_US">English (United States)</paper-item>
+                    <paper-item value="fr_FR">Français (France)</paper-item>
+                    <paper-item value="zh_CN">中文 (中国)</paper-item>
                 </paper-menu>
             </paper-dropdown-menu>
         </div>
     </form>
-    <myscript-text-web id='text-input'
-                       host='webdemo.myscript.com'
-                       applicationkey='22eda92c-10af-40d8-abea-fd4093c17d81'
-                       hmackey='a1fa759f-b3ce-4091-9fd4-d34bb870c601'
+    <myscript-text-web id="text-input"
+                       host="webdemo.myscript.com"
+                       applicationkey="22eda92c-10af-40d8-abea-fd4093c17d81"
+                       hmackey="a1fa759f-b3ce-4091-9fd4-d34bb870c601"
                        recognition-candidates="3"
-                       language='{{selectedValue}}'>
+                       language="{{ language }}">
     </myscript-text-web>
 </template>
 </body>

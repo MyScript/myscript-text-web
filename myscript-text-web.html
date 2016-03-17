@@ -39,7 +39,9 @@ See a live demo [here](demo/index.html)
             <paper-fab class="undo" mini icon="undo" title="undo" on-tap="undo" disabled="{{ !canUndo }}"></paper-fab>
             <paper-fab class="redo" mini icon="redo" title="redo" on-tap="redo" disabled="{{ !canRedo }}"></paper-fab>
         </div>
-        <myscript-common-element host="{{ host }}"
+        <myscript-common-element id="ink-paper"
+                                 class="{{ {result: !hideresult} | tokenList }}"
+                                 host="{{ host }}"
                                  protocol="{{ protocol }}"
                                  type="TEXT"
                                  applicationkey="{{ applicationkey }}"
@@ -183,8 +185,7 @@ See a live demo [here](demo/index.html)
                  */
                 hideresult: {
                     type: Boolean,
-                    value: false,
-                    observer: '_hideresultChanged'
+                    value: false
                 },
                 /**
                  * Recognition language used by the recognition process.
@@ -196,6 +197,11 @@ See a live demo [here](demo/index.html)
                     notify: true,
                     value: 'en_US'
                 },
+                availableLanguages: {
+                    type: Array,
+                    notify: true,
+                    value: ['en_US']
+                },
                 resultDetail: {
                     type: String,
                     notify: true,
@@ -204,7 +210,8 @@ See a live demo [here](demo/index.html)
                 inputMode: {
                     type: String,
                     notify: true,
-                    value: MyScript.InputMode.CURSIVE
+                    value: MyScript.InputMode.CURSIVE,
+                    observer: '_inputModeChanged'
                 },
                 recognitionCandidates: {
                     type: Number,
@@ -224,8 +231,7 @@ See a live demo [here](demo/index.html)
                 textProperties: {
                     type: Object,
                     notify: true,
-                    computed:
-                        '_computeTextProperties(resultDetail, recognitionCandidates, predictionCandidates, completionCandidates)'
+                    computed: '_computeTextProperties(resultDetail, recognitionCandidates, predictionCandidates, completionCandidates)'
                 },
                 /**
                  * Recognition parameters for the text recognition.<br>
@@ -307,6 +313,9 @@ See a live demo [here](demo/index.html)
             redo: function () {
                 this._myscriptCommonElement.redo();
             },
+            getAvailableLanguageList: function () {
+                this._myscriptCommonElement.getAvailableLanguages(this.inputMode);
+            },
             _onChanged: function (e) {
                 if (e.detail) {
                     this.canUndo = e.detail.canUndo;
@@ -324,6 +333,8 @@ See a live demo [here](demo/index.html)
                 this.result = e.detail;
                 if (e.detail && e.detail.getTextDocument) {
                     this.textDocument = e.detail.getTextDocument();
+                } else if (e.detail && (e.detail instanceof Array)) {
+                    this.availableLanguages = e.detail;
                 } else {
                     this.textDocument = new MyScript.TextDocument();
                 }
@@ -344,17 +355,17 @@ See a live demo [here](demo/index.html)
             ready: function () {
                 this._myscriptCommonElement = this.querySelector('myscript-common-element');
                 this._paperToast = this.querySelector('paper-toast');
-                this._hideresultChanged(this.hideresult);
+                console.log(this.localName + '#' + this.id + ' has local DOM initialized');
             },
             isSelected: function (candidate) {
                 if (this.textDocument) {
-                    return (candidate === this.textDocument.getTextSegment().getSelectedCandidate())? 'selected':
+                    return (candidate === this.textDocument.getTextSegment().getSelectedCandidate()) ? 'selected' :
                         undefined;
                 }
                 return undefined;
             },
             getLabel: function (textCandidate) {
-                if (!this.textDocument || !textCandidate) {
+                if (!this.textDocument || !textCandidate) {
                     return undefined;
                 }
                 var textLabel = '<span class="text">';
@@ -404,7 +415,7 @@ See a live demo [here](demo/index.html)
                 return textLabel + '</span>';
             },
             _computeCanClear: function (canUndo, canRedo) {
-                return canUndo || canRedo;
+                return canUndo || canRedo;
             },
             _computeTextParameters: function (inputMode, language, resultDetail, textProperties) {
                 var parameters = new MyScript.TextParameter();
@@ -447,13 +458,9 @@ See a live demo [here](demo/index.html)
                 }
                 return undefined;
             },
-            _hideresultChanged: function (hideresult) {
+            _inputModeChanged: function (inputMode) {
                 if (this._myscriptCommonElement) {
-                    if (hideresult) {
-                        this._myscriptCommonElement.classList.remove('result');
-                    } else {
-                        this._myscriptCommonElement.classList.add('result');
-                    }
+                    this._myscriptCommonElement.getAvailableLanguages(inputMode);
                 }
             }
         });
