@@ -5,6 +5,7 @@ LICENSE: github.com/MyScriptWebComponents/myscript-text-web/blob/master/LICENSE
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
 <link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../paper-fab/paper-fab.html">
 <link rel="import" href="../paper-toast/paper-toast.html">
 <!-- Import MyScript common element to add handwriting recognition -->
@@ -26,6 +27,7 @@ See a live demo [here](demo/index.html)
 
 -->
 <dom-module id="myscript-text-web">
+    <style include="iron-flex"></style>
     <link rel="import" type="css" href="myscript-text-web.css">
     <template>
         <div id="resultField" class="flex-center-justified" flex hidden="[[hideresult]]">
@@ -33,14 +35,14 @@ See a live demo [here](demo/index.html)
                 <span class$="{{ isSelected(candidate) }}" inner-h-t-m-l="{{ getLabel(candidate) }}"></span>
             </template>
         </div>
-        <div class="horizontal layout buttons" hidden="[[hidebuttons]]">
+        <div class="layout horizontal buttons" hidden="[[hidebuttons]]">
             <paper-fab class="delete" mini icon="delete" title="delete" on-tap="delete"
                        disabled="{{ !canClear }}"></paper-fab>
             <paper-fab class="undo" mini icon="undo" title="undo" on-tap="undo" disabled="{{ !canUndo }}"></paper-fab>
             <paper-fab class="redo" mini icon="redo" title="redo" on-tap="redo" disabled="{{ !canRedo }}"></paper-fab>
         </div>
         <myscript-common-element id="ink-paper"
-                                 class="{{ {result: !hideresult} | tokenList }}"
+                                 class="{{ computeCommonElementClass(hideresult) }}"
                                  host="{{ host }}"
                                  protocol="{{ protocol }}"
                                  type="TEXT"
@@ -175,7 +177,8 @@ See a live demo [here](demo/index.html)
                  */
                 hidebuttons: {
                     type: Boolean,
-                    value: false
+                    value: false,
+                    notify: true
                 },
                 /**
                  * Hide the result div tag.
@@ -185,7 +188,9 @@ See a live demo [here](demo/index.html)
                  */
                 hideresult: {
                     type: Boolean,
-                    value: false
+                    value: false,
+                    notify: true,
+                    observer: '_hideresultChanged'
                 },
                 /**
                  * Recognition language used by the recognition process.
@@ -355,7 +360,7 @@ See a live demo [here](demo/index.html)
             ready: function () {
                 this._myscriptCommonElement = this.querySelector('myscript-common-element');
                 this._paperToast = this.querySelector('paper-toast');
-                console.log(this.localName + '#' + this.id + ' has local DOM initialized');
+                this._hideresultChanged(this.hideresult);
             },
             isSelected: function (candidate) {
                 if (this.textDocument) {
@@ -461,6 +466,15 @@ See a live demo [here](demo/index.html)
             _inputModeChanged: function (inputMode) {
                 if (this._myscriptCommonElement) {
                     this._myscriptCommonElement.getAvailableLanguages(inputMode);
+                }
+            },
+            _hideresultChanged: function (hideresult) {
+                if (this._myscriptCommonElement) {
+                    if (hideresult) {
+                        this._myscriptCommonElement.classList.remove('result');
+                    } else {
+                        this._myscriptCommonElement.classList.add('result');
+                    }
                 }
             }
         });
