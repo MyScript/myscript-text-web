@@ -30,7 +30,7 @@ See a live demo [here](demo/index.html)
     <template>
         <div id="resultField" class="flex-center-justified" flex hidden="[[hideresult]]">
             <template is="dom-repeat" id="candidateList" items="{{ candidates }}" as="candidate">
-                <span class$="{{ isSelected(candidate) }}" inner-h-t-m-l="{{ getLabel(candidate) }}"></span>
+                <span class$="{{ isSelected(candidate, textDocument) }}" inner-h-t-m-l="{{ getLabel(candidate, textDocument) }}" on-tap="select"></span>
             </template>
         </div>
         <div class="layout horizontal buttons" hidden="[[hidebuttons]]">
@@ -267,16 +267,6 @@ See a live demo [here](demo/index.html)
                     type: Object,
                     notify: true
                 },
-                /**
-                 * First candidate returned by the handwriting recognition engine.
-                 * @attribute firstcandidate
-                 * @type String
-                 */
-                firstcandidate: {
-                    type: String,
-                    notify: true,
-                    computed: '_computeFirstCandidate(textDocument)'
-                },
                 candidates: {
                     type: Array,
                     notify: true,
@@ -285,7 +275,17 @@ See a live demo [here](demo/index.html)
                 selectedCandidate: {
                     type: Object,
                     notify: true,
-                    computed: '_computeSelectedCandidate(textDocument)'
+                    computed: '_computeSelectedCandidate(candidates,textDocument)'
+                },
+                /**
+                 * First candidate returned by the handwriting recognition engine.
+                 * @attribute firstcandidate
+                 * @type String
+                 */
+                firstcandidate: {
+                    type: String,
+                    notify: true,
+                    computed: '_computeFirstCandidate(selectedCandidate)'
                 }
             },
             /**
@@ -358,15 +358,18 @@ See a live demo [here](demo/index.html)
                 this._paperToast = this.querySelector('paper-toast');
                 this._hideresultChanged(this.hideresult);
             },
-            isSelected: function (candidate) {
-                if (this.textDocument) {
-                    return (candidate === this.textDocument.getTextSegment().getSelectedCandidate()) ? 'selected' :
-                        '';
+            select: function (e) {
+                this.textDocument.getTextSegment().selectedCandidateIdx = e.model.index;
+                this.textDocument = new MyScript.TextDocument(this.textDocument);
+            },
+            isSelected: function (candidate, textDocument) {
+                if (textDocument.getTextSegment()) {
+                    return (candidate === textDocument.getTextSegment().getSelectedCandidate()) ? 'selected' : '';
                 }
                 return '';
             },
-            getLabel: function (textCandidate) {
-                if (!this.textDocument || !textCandidate) {
+            getLabel: function (textCandidate, textDocument) {
+                if (!textDocument || !textCandidate) {
                     return undefined;
                 }
                 var textLabel = '<span class="text">';
@@ -376,14 +379,14 @@ See a live demo [here](demo/index.html)
                 else if (textCandidate.getFlags().indexOf('COMPLETED') > -1) {
                     textLabel = '<span class="text completed">';
                 }
-                if (this.textDocument.getWordSegments().length <= 0) {
+                if (textDocument.getWordSegments().length <= 0) {
                     textLabel += textCandidate.getLabel();
                 } else {
                     for (var i in textCandidate.getChildren()) {
                         var wordSegmentItem = textCandidate.getChildren()[i];
                         var wordCandidateIndex = wordSegmentItem.getSelectedCandidateIdx();
                         var wordInkRanges = wordSegmentItem.getInkRanges();
-                        var wordSegment = this.textDocument.getWordSegment(wordInkRanges);
+                        var wordSegment = textDocument.getWordSegment(wordInkRanges);
                         var wordCandidate = wordSegment.getCandidates()[wordCandidateIndex];
                         var wordLabel = '<span class="word">';
                         if (wordCandidate.getFlags().indexOf('PREDICTED') > -1) {
@@ -391,7 +394,7 @@ See a live demo [here](demo/index.html)
                         } else if (wordCandidate.getFlags().indexOf('COMPLETED') > -1) {
                             wordLabel = '<span class="word completed">';
                         }
-                        if (this.textDocument.getCharSegments().length <= 0) {
+                        if (textDocument.getCharSegments().length <= 0) {
                             wordLabel += wordCandidate.getLabel();
                         } else {
                             for (var j in wordCandidate.getChildren()) {
@@ -447,17 +450,18 @@ See a live demo [here](demo/index.html)
                 }
                 return [];
             },
-            _computeFirstCandidate: function (textDocument) {
-                if (textDocument && textDocument.getTextSegment()) {
-                    return textDocument.getTextSegment().getSelectedCandidate().getLabel();
+            _computeSelectedCandidate: function (candidates, textDocument) {
+                if (candidates && textDocument && textDocument.getTextSegment()) {
+                    var selectedCandidate = candidates[textDocument.getTextSegment().getSelectedCandidateIdx()];
+                    return selectedCandidate;
                 }
                 return undefined;
             },
-            _computeSelectedCandidate: function (textDocument) {
-                if (textDocument && textDocument.getTextSegment()) {
-                    return textDocument.getTextSegment().getSelectedCandidate();
+            _computeFirstCandidate: function (selectedCandidate) {
+                if (selectedCandidate) {
+                    return selectedCandidate.getLabel();
                 }
-                return undefined;
+                return '';
             },
             _inputModeChanged: function (inputMode) {
                 if (this._myscriptCommonElement) {
