@@ -361,9 +361,9 @@ See a live demo [here](demo/index.html)
             isSelected: function (candidate) {
                 if (this.textDocument) {
                     return (candidate === this.textDocument.getTextSegment().getSelectedCandidate()) ? 'selected' :
-                        undefined;
+                        '';
                 }
-                return undefined;
+                return '';
             },
             getLabel: function (textCandidate) {
                 if (!this.textDocument || !textCandidate) {
