@@ -33,9 +33,11 @@ See a live demo [here](demo/index.html)
                 <span class$="{{ isSelected(candidate) }}" inner-h-t-m-l="{{ getLabel(candidate) }}" on-tap="select" hidden="[[hideresult]]"></span>
             </template>
         </div>
-        <paper-fab mini icon="delete" title="delete" on-tap="delete" disabled="{{ !canClear }}" hidden="[[hidebuttons]]"></paper-fab>
-        <paper-fab mini icon="undo" title="undo" on-tap="undo" disabled="{{ !canUndo }}" hidden="[[hidebuttons]]"></paper-fab>
-        <paper-fab mini icon="redo" title="redo" on-tap="redo" disabled="{{ !canRedo }}" hidden="[[hidebuttons]]"></paper-fab>
+        <div class="buttons">
+            <paper-fab mini icon="delete" title="delete" on-tap="delete" disabled="{{ !canClear }}" hidden="[[hidebuttons]]"></paper-fab>
+            <paper-fab mini icon="undo" title="undo" on-tap="undo" disabled="{{ !canUndo }}" hidden="[[hidebuttons]]"></paper-fab>
+            <paper-fab mini icon="redo" title="redo" on-tap="redo" disabled="{{ !canRedo }}" hidden="[[hidebuttons]]"></paper-fab>
+        </div>
         <myscript-common-element host="{{ host }}"
                                  protocol="{{ protocol }}"
                                  type="TEXT"

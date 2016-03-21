@@ -12,17 +12,22 @@ myscript-common-element.result {
     height: calc(100% - 100px);
 }
 
-div.resultField {
-    min-height: 100px;
-    max-height: 100px;
+.resultField {
     overflow: auto;
     text-align: center;
     font-size: xx-large;
+    min-height: 100px;
+    max-height: 100px;
+}
+
+.buttons {
+    float: left;
+    display: flex;
+    display: -webkit-flex;
 }
 
 paper-fab {
     z-index: 3;
-    float: left;
 }
 
 .selected {
