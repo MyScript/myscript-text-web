@@ -119,7 +119,8 @@ See a live demo [here](demo/index.html)
                  */
                 applicationkey: {
                     type: String,
-                    notify: true
+                    notify: true,
+                    observer: '_applicationKeyChanged'
                 },
                 /**
                  * HMAC key to use for recognition on MyScript handwriting recognition server.<br>
@@ -355,6 +356,9 @@ See a live demo [here](demo/index.html)
             ready: function () {
                 this._myscriptCommonElement = this.querySelector('myscript-common-element');
                 this._paperToast = this.querySelector('paper-toast');
+                if (this.applicationkey) {
+                    this.getAvailableLanguageList(this.inputMode);
+                }
                 this._hideresultChanged(this.hideresult);
             },
             select: function (e) {
@@ -463,8 +467,13 @@ See a live demo [here](demo/index.html)
                 return '';
             },
             _inputModeChanged: function (inputMode) {
-                if (this._myscriptCommonElement) {
-                    this._myscriptCommonElement.getAvailableLanguages(inputMode);
+                if (this._myscriptCommonElement && inputMode) {
+                    this._myscriptCommonElement.getAvailableLanguages(this.inputMode);
+                }
+            },
+            _applicationKeyChanged: function (applicationKey) {
+                if (this._myscriptCommonElement && applicationKey) {
+                    this._myscriptCommonElement.getAvailableLanguages(this.inputMode);
                 }
             },
             _hideresultChanged: function (hideresult) {

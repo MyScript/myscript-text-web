@@ -8,7 +8,7 @@
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="../myscript-text-web.html">
     <link rel="import" href="../../paper-dropdown-menu/paper-dropdown-menu.html">
-    <link rel="import" href="../../paper-menu/paper-menu.html">
+    <link rel="import" href="../../paper-listbox/paper-listbox.html">
     <link rel="import" href="../../paper-item/paper-item.html">
 
 </head>
@@ -33,26 +33,113 @@
     }
 </style>
 <body unresolved>
-<template is="dom-bind">
-    <form is="iron-form" id="authenticationKeys">
-        <div class="horizontal around-justified layout">
-            <paper-dropdown-menu label="Choose your language">
-                <paper-menu class="dropdown-content" selected="{{ language }}" attr-for-selected="value">
-                    <paper-item value="ar">العربية</paper-item>
-                    <paper-item value="en_US">English (United States)</paper-item>
-                    <paper-item value="fr_FR">Français (France)</paper-item>
-                    <paper-item value="zh_CN">中文 (中国)</paper-item>
-                </paper-menu>
-            </paper-dropdown-menu>
-        </div>
-    </form>
+<template id="text-template" is="dom-bind">
+    <div class="horizontal around-justified layout">
+        <paper-dropdown-menu label="Choose your language">
+            <paper-listbox class="dropdown-content" selected="{{ language }}" attr-for-selected="value">
+                <template is="dom-repeat" id="languageList" items="[[ availableLanguages ]]" as="lang">
+                    <paper-item value="[[ lang ]]" inner-h-t-m-l="{{ get(lang) }}"></paper-item>
+                </template>
+            </paper-listbox>
+        </paper-dropdown-menu>
+    </div>
     <myscript-text-web id="text-input"
-                       host="webdemo.myscript.com"
-                       applicationkey="22eda92c-10af-40d8-abea-fd4093c17d81"
-                       hmackey="a1fa759f-b3ce-4091-9fd4-d34bb870c601"
+                       host="[[ host ]]"
+                       applicationkey="[[ applicationKey ]]"
+                       hmackey="[[ hmacKey ]]"
                        recognition-candidates="3"
+                       available-languages="{{ availableLanguages }}"
                        language="{{ language }}">
     </myscript-text-web>
 </template>
 </body>
+<script>
+    (function (document) {
+        'use strict';
+        var template = document.querySelector('#text-template');
+        template.addEventListener('template-bound', function () {
+            console.log('Our app is ready to rock!');
+        });
+        // See https://github.com/Polymer/polymer/issues/1381
+        window.addEventListener('WebComponentsReady', function () {
+            document.querySelector('body').removeAttribute('unresolved');
+
+            template.host = 'webdemo.myscript.com';
+            template.applicationKey = '22eda92c-10af-40d8-abea-fd4093c17d81';
+            template.hmacKey = 'a1fa759f-b3ce-4091-9fd4-d34bb870c601';
+            template.resultDetail = MyScript.ResultDetail.TEXT;
+            template.recognitionCandidates = 3;
+
+            template.get = function (code) {
+                switch (code) {
+                    case "af_ZA": return "Afrikaans";
+                    case "ar": return "العربية";
+                    case "az_AZ": return "Azərbaycanca";
+                    case "be_BY": return "Беларуская";
+                    case "bg_BG": return "Български";
+                    case "ca_ES": return "Català";
+                    case "cs_CZ": return "Čeština";
+                    case "da_DK": return "Dansk";
+                    case "de_AT": return "Deutsch (Österreich)";
+                    case "de_DE": return "Deutsch";
+                    case "en_CA": return "English (Canada)";
+                    case "en_GB": return "English (United Kingdom)";
+                    case "en_US": return "English (United States)";
+                    case "es_ES": return "Español (España)";
+                    case "es_MX": return "Español (México)";
+                    case "et_EE": return "Eesti";
+                    case "eu_ES": return "Euskara";
+                    case "fa_IR": return "فارسی";
+                    case "fi_FI": return "Suomi";
+                    case "fr_CA": return "Français (Canada)";
+                    case "fr_FR": return "Français (France)";
+                    case "el_GR": return "Ελληνικά";
+                    case "ga_IE": return "Gaeilge";
+                    case "gl_ES": return "Galego";
+                    case "he_IL": return "עברית";
+                    case "hi_IN": return "हिन्दी";
+                    case "hr_HR": return "Hrvatski";
+                    case "hu_HU": return "Magyar";
+                    case "hy_AM": return "Հայերեն";
+                    case "id_ID": return "Bahasa Indonesia";
+                    case "is_IS": return "Íslenska";
+                    case "it_IT": return "Italiano";
+                    case "ja_JP": return "日本語";
+                    case "ka_GE": return "ქართული";
+                    case "kk_KZ": return "Қазақша";
+                    case "ko_KR": return "한국어";
+                    case "lt_LT": return "Lietuvių";
+                    case "lv_LV": return "Latviešu";
+                    case "mk_MK": return "Македонски";
+                    case "mn_MN": return "Монгол";
+                    case "ms_MY": return "Bahasa Melayu (Malaysia)";
+                    case "nl_BE": return "Nederlands (België)";
+                    case "nl_NL": return "Nederlands";
+                    case "no_NO": return "Norsk (Bokmål)";
+                    case "pl_PL": return "Polski";
+                    case "pt_BR": return "Português (Brasil)";
+                    case "pt_PT": return "Português (Portugal)";
+                    case "ro_RO": return "Română";
+                    case "ru_RU": return "Русский";
+                    case "sk_SK": return "Slovenčina";
+                    case "sl_SI": return "Slovenščina";
+                    case "sq_AL": return "Shqip";
+                    case "sr_Cyrl_RS": return "Српски";
+                    case "sr_Latn_RS": return "Srpski";
+                    case "sv_SE": return "Svenska";
+                    case "th_TH": return "ไทย";
+                    case "tr_TR": return "Türkçe";
+                    case "tt_RU": return "Татарча";
+                    case "uk_UA": return "Українська";
+                    case "ur_PK": return "اردو";
+                    case "vi_VN": return "Tiếng Việt";
+                    case "zh_CN": return "中文 (中国)";
+                    case "zh_HK": return "中文 (香港)";
+                    case "zh_TW": return "中文 (台灣)";
+                    default: return code;
+                }
+            }
+        });
+    })(document);
+</script>
 </html>
