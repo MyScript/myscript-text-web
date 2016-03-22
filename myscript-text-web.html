@@ -95,7 +95,8 @@ See a live demo [here](demo/index.html)
                  */
                 host: {
                     type: String,
-                    notify: true
+                    notify: true,
+                    value: 'cloud.myscript.com'
                 },
                 /**
                  * Recognition timeout, only use for HTTP.
@@ -107,7 +108,8 @@ See a live demo [here](demo/index.html)
                  */
                 timeout: {
                     type: Number,
-                    notify: true
+                    notify: true,
+                    value: 2000
                 },
                 /**
                  * Application key to use for recognition on MyScript handwriting recognition server.<br>
@@ -173,8 +175,8 @@ See a live demo [here](demo/index.html)
                  */
                 hidebuttons: {
                     type: Boolean,
-                    value: false,
-                    notify: true
+                    notify: true,
+                    value: false
                 },
                 /**
                  * Hide the result div tag.
@@ -184,8 +186,8 @@ See a live demo [here](demo/index.html)
                  */
                 hideresult: {
                     type: Boolean,
-                    value: false,
                     notify: true,
+                    value: false,
                     observer: '_hideresultChanged'
                 },
                 /**
@@ -255,17 +257,8 @@ See a live demo [here](demo/index.html)
                  */
                 textDocument: {
                     type: Object,
-                    value: new MyScript.TextDocument(),
-                    notify: true
-                },
-                /**
-                 * Result returned by the handwriting recognition engine.
-                 * @attribute result
-                 * @type String
-                 */
-                result: {
-                    type: Object,
-                    notify: true
+                    notify: true,
+                    value: new MyScript.TextDocument()
                 },
                 candidates: {
                     type: Array,
@@ -295,7 +288,6 @@ See a live demo [here](demo/index.html)
              */
             delete: function () {
                 this._myscriptCommonElement.clear();
-                this.result = undefined;
                 this.fire("myscript-text-web-delete");
             },
             /**
@@ -331,7 +323,6 @@ See a live demo [here](demo/index.html)
              * @method _onSuccess
              */
             _onSuccess: function (e) {
-                this.result = e.detail;
                 if (e.detail && e.detail.getTextDocument) {
                     this.textDocument = e.detail.getTextDocument();
                 } else if (e.detail && (e.detail instanceof Array)) {
@@ -340,7 +331,7 @@ See a live demo [here](demo/index.html)
                     this.textDocument = new MyScript.TextDocument();
                 }
                 this.fire(e.type, e.detail);
-                this.fire('myscript-text-web-result', this.result);
+                this.fire('myscript-text-web-result', e.detail);
             },
             /**
              * Failure listener.
