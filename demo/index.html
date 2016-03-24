@@ -6,10 +6,11 @@
     <meta name="HandheldFriendly" content="true"/>
     <title>myscript-text demo</title>
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-    <link rel="import" href="../myscript-text-web.html">
+    <link rel="import" href="../../iron-ajax/iron-ajax.html">
     <link rel="import" href="../../paper-dropdown-menu/paper-dropdown-menu.html">
     <link rel="import" href="../../paper-listbox/paper-listbox.html">
     <link rel="import" href="../../paper-item/paper-item.html">
+    <link rel="import" href="../myscript-text-web.html">
 
 </head>
 <style>
@@ -34,11 +35,22 @@
 </style>
 <body unresolved>
 <template id="text-template" is="dom-bind">
+    <iron-ajax
+        auto
+        handle-as="json"
+        url="languages.json"
+        last-response="{{ languages }}"
+        debounce-duration="300">
+    </iron-ajax>
     <div class="horizontal around-justified layout">
         <paper-dropdown-menu label="Choose your language">
             <paper-listbox class="dropdown-content" selected="{{ language }}" attr-for-selected="value">
-                <template is="dom-repeat" id="languageList" items="[[ availableLanguages ]]" as="lang">
-                    <paper-item value="[[ lang ]]" inner-h-t-m-l="[[ get(lang) ]]"></paper-item>
+                <template is="dom-repeat"
+                          id="languageList"
+                          items="[[ languages ]]"
+                          as="lang"
+                          filter="[[get(lang.value, availableLanguages)]]">
+                    <paper-item value="[[ lang.value ]]">[[ lang.description ]]</paper-item>
                 </template>
             </paper-listbox>
         </paper-dropdown-menu>
@@ -70,74 +82,8 @@
             template.resultDetail = MyScript.ResultDetail.TEXT;
             template.recognitionCandidates = 3;
 
-            template.get = function (code) {
-                switch (code) {
-                    case "af_ZA": return "Afrikaans";
-                    case "ar": return "العربية";
-                    case "az_AZ": return "Azərbaycanca";
-                    case "be_BY": return "Беларуская";
-                    case "bg_BG": return "Български";
-                    case "ca_ES": return "Català";
-                    case "cs_CZ": return "Čeština";
-                    case "da_DK": return "Dansk";
-                    case "de_AT": return "Deutsch (Österreich)";
-                    case "de_DE": return "Deutsch";
-                    case "en_CA": return "English (Canada)";
-                    case "en_GB": return "English (United Kingdom)";
-                    case "en_US": return "English (United States)";
-                    case "es_ES": return "Español (España)";
-                    case "es_MX": return "Español (México)";
-                    case "et_EE": return "Eesti";
-                    case "eu_ES": return "Euskara";
-                    case "fa_IR": return "فارسی";
-                    case "fi_FI": return "Suomi";
-                    case "fr_CA": return "Français (Canada)";
-                    case "fr_FR": return "Français (France)";
-                    case "el_GR": return "Ελληνικά";
-                    case "ga_IE": return "Gaeilge";
-                    case "gl_ES": return "Galego";
-                    case "he_IL": return "עברית";
-                    case "hi_IN": return "हिन्दी";
-                    case "hr_HR": return "Hrvatski";
-                    case "hu_HU": return "Magyar";
-                    case "hy_AM": return "Հայերեն";
-                    case "id_ID": return "Bahasa Indonesia";
-                    case "is_IS": return "Íslenska";
-                    case "it_IT": return "Italiano";
-                    case "ja_JP": return "日本語";
-                    case "ka_GE": return "ქართული";
-                    case "kk_KZ": return "Қазақша";
-                    case "ko_KR": return "한국어";
-                    case "lt_LT": return "Lietuvių";
-                    case "lv_LV": return "Latviešu";
-                    case "mk_MK": return "Македонски";
-                    case "mn_MN": return "Монгол";
-                    case "ms_MY": return "Bahasa Melayu (Malaysia)";
-                    case "nl_BE": return "Nederlands (België)";
-                    case "nl_NL": return "Nederlands";
-                    case "no_NO": return "Norsk (Bokmål)";
-                    case "pl_PL": return "Polski";
-                    case "pt_BR": return "Português (Brasil)";
-                    case "pt_PT": return "Português (Portugal)";
-                    case "ro_RO": return "Română";
-                    case "ru_RU": return "Русский";
-                    case "sk_SK": return "Slovenčina";
-                    case "sl_SI": return "Slovenščina";
-                    case "sq_AL": return "Shqip";
-                    case "sr_Cyrl_RS": return "Српски";
-                    case "sr_Latn_RS": return "Srpski";
-                    case "sv_SE": return "Svenska";
-                    case "th_TH": return "ไทย";
-                    case "tr_TR": return "Türkçe";
-                    case "tt_RU": return "Татарча";
-                    case "uk_UA": return "Українська";
-                    case "ur_PK": return "اردو";
-                    case "vi_VN": return "Tiếng Việt";
-                    case "zh_CN": return "中文 (中国)";
-                    case "zh_HK": return "中文 (香港)";
-                    case "zh_TW": return "中文 (台灣)";
-                    default: return code;
-                }
+            template.get = function (lang, availableLanguages) {
+                return availableLanguages.indexOf(lang) > -1;
             }
         });
     })(document);
