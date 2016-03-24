@@ -38,7 +38,7 @@
         <paper-dropdown-menu label="Choose your language">
             <paper-listbox class="dropdown-content" selected="{{ language }}" attr-for-selected="value">
                 <template is="dom-repeat" id="languageList" items="[[ availableLanguages ]]" as="lang">
-                    <paper-item value="[[ lang ]]" inner-h-t-m-l="{{ get(lang) }}"></paper-item>
+                    <paper-item value="[[ lang ]]" inner-h-t-m-l="[[ get(lang) ]]"></paper-item>
                 </template>
             </paper-listbox>
         </paper-dropdown-menu>
