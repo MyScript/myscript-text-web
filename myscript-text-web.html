@@ -5,8 +5,6 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
 <link rel="import" href="../paper-fab/paper-fab.html">
-<link rel="import" href="../paper-toast/paper-toast.html">
-<!-- Import MyScript common element to add handwriting recognition -->
 <link rel="import" href="../myscript-common-element/myscript-common-element.html">
 
 <!--
@@ -26,7 +24,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
     <template>
         <div class="resultField" hidden="[[ hideresult ]]">
             <template is="dom-repeat" id="candidateList" items="[[ candidates ]]" as="candidate">
-                <span class$="[[ _isSelected(candidate) ]]" inner-h-t-m-l="[[ _getLabel(candidate) ]]" on-tap="_select" hidden="[[ hideresult ]]"></span>
+                <span selected$="[[ _isSelected(candidate,textDocument) ]]" inner-h-t-m-l="[[ _getLabel(candidate,textDocument) ]]" on-tap="_select"></span>
             </template>
         </div>
         <div class="buttons" hidden="[[ hidebuttons ]]">
@@ -41,11 +39,13 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                                  hmackey="[[ hmackey ]]"
                                  timeout="[[ timeout ]]"
                                  text-parameters="[[ _textParameters ]]"
+                                 can-undo="{{ canUndo }}"
+                                 can-redo="{{ canRedo }}"
+                                 can-clear="{{ canClear }}"
                                  on-changed="_onChanged"
                                  on-success="_onSuccess"
                                  on-error="_onError">
         </myscript-common-element>
-        <paper-toast class="error"></paper-toast>
     </template>
 </dom-module>
 
@@ -104,25 +104,16 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             hmackey: {
                 type: String
             },
-            /**
-             * @private
-             */
             canUndo: {
                 type: Boolean,
                 notify: true,
                 value: false
             },
-            /**
-             * @private
-             */
             canRedo: {
                 type: Boolean,
                 notify: true,
                 value: false
             },
-            /**
-             * @private
-             */
             canClear: {
                 type: Boolean,
                 notify: true,
@@ -207,6 +198,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             /**
              * The text recognition result document.
              * @private
+             * @default {}
              */
             textDocument: {
                 type: Object,
@@ -279,11 +271,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             this._myscriptCommonElement.getAvailableLanguages(this.inputMode);
         },
         _onChanged: function (e) {
-            if (e.detail) {
-                this.canUndo = e.detail.canUndo;
-                this.canRedo = e.detail.canRedo;
-                this.canClear = this.canUndo || this.canRedo;
-            }
             this.fire(e.type, e.detail);
         },
         _onSuccess: function (e) {
@@ -299,12 +286,9 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
         },
         _onError: function (e) {
             this.fire(e.type, e.detail);
-            this._paperToast.text = (typeof e.detail === 'object') ? JSON.stringify(e.detail) : e.detail;
-            this._paperToast.show();
         },
         ready: function () {
             this._myscriptCommonElement = this.querySelector('myscript-common-element');
-            this._paperToast = this.querySelector('paper-toast');
             if (this.applicationkey) {
                 this.getAvailableLanguageList(this.inputMode);
             }
@@ -314,14 +298,14 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             this.textDocument.getTextSegment().selectedCandidateIdx = e.model.index;
             this.textDocument = new MyScript.TextDocument(this.textDocument);
         },
-        _isSelected: function (candidate) {
-            if (this.textDocument.getTextSegment()) {
-                return (candidate === this.textDocument.getTextSegment().getSelectedCandidate()) ? 'selected' : '';
+        _isSelected: function (candidate, textDocument) {
+            if (textDocument.getTextSegment()) {
+                return (candidate === textDocument.getTextSegment().getSelectedCandidate());
             }
-            return '';
+            return false;
         },
-        _getLabel: function (textCandidate) {
-            if (!this.textDocument || !textCandidate) {
+        _getLabel: function (textCandidate, textDocument) {
+            if (!textDocument || !textCandidate) {
                 return undefined;
             }
             var textLabel = '<span class="text">';
@@ -331,14 +315,14 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             else if (textCandidate.getFlags().indexOf('COMPLETED') > -1) {
                 textLabel = '<span class="text completed">';
             }
-            if (this.textDocument.getWordSegments().length <= 0) {
+            if (textDocument.getWordSegments().length <= 0) {
                 textLabel += textCandidate.getLabel();
             } else {
                 for (var i in textCandidate.getChildren()) {
                     var wordSegmentItem = textCandidate.getChildren()[i];
                     var wordCandidateIndex = wordSegmentItem.getSelectedCandidateIdx();
                     var wordInkRanges = wordSegmentItem.getInkRanges();
-                    var wordSegment = this.textDocument.getWordSegment(wordInkRanges);
+                    var wordSegment = textDocument.getWordSegment(wordInkRanges);
                     var wordCandidate = wordSegment.getCandidates()[wordCandidateIndex];
                     var wordLabel = '<span class="word">';
                     if (wordCandidate.getFlags().indexOf('PREDICTED') > -1) {
@@ -346,7 +330,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                     } else if (wordCandidate.getFlags().indexOf('COMPLETED') > -1) {
                         wordLabel = '<span class="word completed">';
                     }
-                    if (this.textDocument.getCharSegments().length <= 0) {
+                    if (textDocument.getCharSegments().length <= 0) {
                         wordLabel += wordCandidate.getLabel();
                     } else {
                         for (var j in wordCandidate.getChildren()) {
@@ -417,7 +401,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
         },
         _inputModeChanged: function (inputMode) {
             if (this._myscriptCommonElement && inputMode) {
-                this._myscriptCommonElement.getAvailableLanguages(this.inputMode);
+                this._myscriptCommonElement.getAvailableLanguages(inputMode);
             }
         },
         _applicationKeyChanged: function (applicationKey) {

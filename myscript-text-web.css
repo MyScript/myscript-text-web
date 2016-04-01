@@ -30,7 +30,7 @@ paper-fab {
     z-index: 3;
 }
 
-.selected {
+span[selected] {
     color: #00A7CF;
 }
 
