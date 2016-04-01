@@ -15,7 +15,7 @@
     ],
     "main": "myscript-text-web.html",
     "license": "Apache-2",
-    "homepage": "https://github.com/MyScript/myscript-text-web/",
+    "homepage": "https://myscript.github.io/myscript-text-web/components/myscript-text-web/",
     "repository": {
         "type": "git",
         "url": "git://github.com/MyScript/myscript-text-web.git"
@@ -40,7 +40,6 @@
         "iron-ajax": "PolymerElements/iron-ajax#1.2.x",
         "paper-dropdown-menu": "PolymerElements/paper-dropdown-menu#1.1.x",
         "paper-listbox": "PolymerElements/paper-listbox#1.1.x",
-        "paper-item": "PolymerElements/paper-item#1.1.x",
-        "web-component-tester": "*"
+        "paper-item": "PolymerElements/paper-item#1.1.x"
     }
 }

@@ -1,8 +1,7 @@
 <!doctype html>
 <html>
 <head>
-    <meta name="viewport"
-          content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <meta name="HandheldFriendly" content="true"/>
     <title>myscript-text demo</title>
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
@@ -36,7 +35,7 @@
     }
 </style>
 <body unresolved>
-<template id="text-template" is="dom-bind">
+<template id="app" is="dom-bind">
     <iron-ajax
         auto
         handle-as="json"
@@ -70,7 +69,7 @@
 <script>
     (function (document) {
         'use strict';
-        var template = document.querySelector('#text-template');
+        var template = document.querySelector('#app');
         template.addEventListener('template-bound', function () {
             console.log('Our app is ready to rock!');
         });

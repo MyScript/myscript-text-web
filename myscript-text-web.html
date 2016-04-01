@@ -1,6 +1,6 @@
 <!--
 Copyright © MyScript.
-LICENSE: github.com/MyScriptWebComponents/myscript-text-web/blob/master/LICENSE
+LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 -->
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
@@ -12,8 +12,6 @@ LICENSE: github.com/MyScriptWebComponents/myscript-text-web/blob/master/LICENSE
 <!--
 The `myscript-text-web` is a turnkey solution for those who need to quickly implement MyScript Text recognition.
 
-##### Example
-
     <myscript-text-web
         applicationkey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
         hmackey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
@@ -22,12 +20,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
     </myscript-text-web>
 
 @demo
-@group MyScript Elements
-@element myscript-text-web
-@blurb MyScript HTML5 Text Element to help developers integrate math handwriting recognition.
-@status alpha
-@homepage https://myscriptwebcomponents.github.io/myscript-text-web
-
 -->
 <dom-module id="myscript-text-web">
     <link rel="import" type="css" href="myscript-text-web.css">
@@ -38,9 +30,9 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             </template>
         </div>
         <div class="buttons" hidden="[[ hidebuttons ]]">
-            <paper-fab mini icon="delete" title="delete" on-tap="delete" disabled="[[ !canClear ]]" hidden="[[ hidebuttons ]]"></paper-fab>
-            <paper-fab mini icon="undo" title="undo" on-tap="undo" disabled="[[ !canUndo ]]" hidden="[[ hidebuttons ]]"></paper-fab>
-            <paper-fab mini icon="redo" title="redo" on-tap="redo" disabled="[[ !canRedo ]]" hidden="[[ hidebuttons ]]"></paper-fab>
+            <paper-fab mini icon="delete" title="delete" on-tap="_clear" disabled="[[ !canClear ]]" hidden="[[ hidebuttons ]]"></paper-fab>
+            <paper-fab mini icon="undo" title="undo" on-tap="_undo" disabled="[[ !canUndo ]]" hidden="[[ hidebuttons ]]"></paper-fab>
+            <paper-fab mini icon="redo" title="redo" on-tap="_redo" disabled="[[ !canRedo ]]" hidden="[[ hidebuttons ]]"></paper-fab>
         </div>
         <myscript-common-element host="[[ host ]]"
                                  protocol="[[ protocol ]]"
@@ -51,7 +43,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                                  text-parameters="[[ _textParameters ]]"
                                  on-changed="_onChanged"
                                  on-success="_onSuccess"
-                                 on-failure="_onFailure">
+                                 on-error="_onError">
         </myscript-common-element>
         <paper-toast class="error"></paper-toast>
     </template>
@@ -61,19 +53,17 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
     Polymer({
         is: 'myscript-text-web',
         /**
-         * Fired when the myscript-text-web content changes.
-         *
-         * @event changed
-         */
-        /**
          * Fired when a text recognition result is successfully received.
          *
          * @event myscript-text-web-result
          */
         /**
-         * Fired when the Delete action is done.
-         *
-         * @event myscript-text-web-delete
+         * Fired when a recognition error occurred.
+         * @event error
+         */
+        /**
+         * Fired when the content of the myscript-text-web changes.
+         * @event changed
          */
         properties: {
             /**
@@ -82,25 +72,20 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
              */
             protocol: {
                 type: String,
-                notify: true,
                 value: MyScript.Protocol.WS
             },
             /**
              * The current recognition service host.
-             * @default 'cloud.myscript.com'
              */
             host: {
                 type: String,
-                notify: true,
                 value: 'cloud.myscript.com'
             },
             /**
              * The recognition timeout, only use for HTTP.
-             * @default 2000
              */
             timeout: {
                 type: Number,
-                notify: true,
                 value: 2000
             },
             /**
@@ -109,9 +94,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
              * <b>Warning</b>: This parameter is <b>mandatory</b> and its value should be a string.
              */
             applicationkey: {
-                type: String,
-                notify: true,
-                observer: '_applicationKeyChanged'
+                type: String
             },
             /**
              * HMAC key to use for recognition on MyScript handwriting recognition server.<br />
@@ -119,8 +102,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
              * <b>Warning</b>: This parameter may be <b>mandatory</b> if HMAC signature security is enabled for your application. The value should be a string.
              */
             hmackey: {
-                type: String,
-                notify: true
+                type: String
             },
             /**
              * @private
@@ -144,14 +126,13 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             canClear: {
                 type: Boolean,
                 notify: true,
-                computed: '_computeCanClear(canUndo, canRedo)'
+                value: false
             },
             /**
              * If set to true, hide the buttons (Trash, Undo, Redo).
              */
             hidebuttons: {
                 type: Boolean,
-                notify: true,
                 value: false
             },
             /**
@@ -159,7 +140,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
              */
             hideresult: {
                 type: Boolean,
-                notify: true,
                 value: false,
                 observer: '_hideresultChanged'
             },
@@ -185,7 +165,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
              */
             resultDetail: {
                 type: String,
-                notify: true,
                 value: MyScript.ResultDetail.TEXT
             },
             /**
@@ -193,7 +172,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
              */
             inputMode: {
                 type: String,
-                notify: true,
                 value: MyScript.InputMode.CURSIVE,
                 observer: '_inputModeChanged'
             },
@@ -202,7 +180,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
              */
             recognitionCandidates: {
                 type: Number,
-                notify: true,
                 value: 1
             },
             /**
@@ -210,7 +187,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
              */
             predictionCandidates: {
                 type: Number,
-                notify: true,
                 value: 0
             },
             /**
@@ -218,17 +194,14 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
              */
             completionCandidates: {
                 type: Number,
-                notify: true,
                 value: 0
             },
             _textProperties: {
                 type: Object,
-                notify: true,
                 computed: '_computeTextProperties(resultDetail, recognitionCandidates, predictionCandidates, completionCandidates)'
             },
             _textParameters: {
                 type: Object,
-                notify: true,
                 computed: '_computeTextParameters(inputMode, language, resultDetail, _textProperties)'
             },
             /**
@@ -269,24 +242,35 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                 computed: '_computeFirstCandidate(selectedCandidate)'
             }
         },
-        /**
-         * Delete the  current document.
-         */
-        delete: function () {
+        _clear: function () {
             this._myscriptCommonElement.clear();
-            this.fire("myscript-text-web-delete");
+        },
+        _undo: function () {
+            this._myscriptCommonElement.undo();
+        },
+        _redo: function () {
+            this._myscriptCommonElement.redo();
         },
         /**
+         * <b>Deprecated</b><br />
+         * Clear the  current document.
+         */
+        delete: function () {
+            this._clear();
+        },
+        /**
+         * <b>Deprecated</b><br />
          * Undo the last action.
          */
         undo: function () {
-            this._myscriptCommonElement.undo();
+            this._undo();
         },
         /**
+         * <b>Deprecated</b><br />
          * Redo the last action.
          */
         redo: function () {
-            this._myscriptCommonElement.redo();
+            this._redo();
         },
         /**
          * Get the list of available languages.
@@ -298,6 +282,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             if (e.detail) {
                 this.canUndo = e.detail.canUndo;
                 this.canRedo = e.detail.canRedo;
+                this.canClear = this.canUndo || this.canRedo;
             }
             this.fire(e.type, e.detail);
         },
@@ -312,7 +297,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             this.fire(e.type, e.detail);
             this.fire('myscript-text-web-result', e.detail);
         },
-        _onFailure: function (e) {
+        _onError: function (e) {
             this.fire(e.type, e.detail);
             this._paperToast.text = (typeof e.detail === 'object') ? JSON.stringify(e.detail) : e.detail;
             this._paperToast.show();
