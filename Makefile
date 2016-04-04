@@ -1,10 +1,19 @@
 include Makefile.inc
 
-ALL:
+ALL: purge clean prepare
 
 .PHONY: ALL \
+	purge clean prepare \
 	watch dev \
 	escrow
+
+purge:
+	@rm -rf bower_components/
+
+clean:
+
+prepare:
+	@bower install
 
 watch:
 

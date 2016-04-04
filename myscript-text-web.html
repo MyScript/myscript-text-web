@@ -3,8 +3,6 @@ Copyright © MyScript.
 LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 -->
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../iron-icons/iron-icons.html">
-<link rel="import" href="../paper-fab/paper-fab.html">
 <link rel="import" href="../myscript-common-element/myscript-common-element.html">
 
 <!--
@@ -20,17 +18,38 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
 @demo
 -->
 <dom-module id="myscript-text-web">
-    <link rel="import" type="css" href="myscript-text-web.css">
+    <style>
+        :host {
+            display: block;
+        }
+        myscript-common-element {
+            height: 100%;
+        }
+        myscript-common-element.result {
+            height: calc(100% - 100px);
+        }
+        .resultField {
+            overflow: auto;
+            text-align: center;
+            font-size: xx-large;
+            min-height: 100px;
+            max-height: 100px;
+        }
+        span[selected] {
+            color: #00A7CF;
+        }
+        .char.predicted {
+            color: #73818C;
+        }
+        .char.completed {
+            color: #318c8a;
+        }
+    </style>
     <template>
         <div class="resultField" hidden="[[ hideresult ]]">
             <template is="dom-repeat" id="candidateList" items="[[ candidates ]]" as="candidate">
                 <span selected$="[[ _isSelected(candidate,textDocument) ]]" inner-h-t-m-l="[[ _getLabel(candidate,textDocument) ]]" on-tap="_select"></span>
             </template>
-        </div>
-        <div class="buttons" hidden="[[ hidebuttons ]]">
-            <paper-fab mini icon="delete" title="delete" on-tap="_clear" disabled="[[ !canClear ]]" hidden="[[ hidebuttons ]]"></paper-fab>
-            <paper-fab mini icon="undo" title="undo" on-tap="_undo" disabled="[[ !canUndo ]]" hidden="[[ hidebuttons ]]"></paper-fab>
-            <paper-fab mini icon="redo" title="redo" on-tap="_redo" disabled="[[ !canRedo ]]" hidden="[[ hidebuttons ]]"></paper-fab>
         </div>
         <myscript-common-element host="[[ host ]]"
                                  protocol="[[ protocol ]]"
@@ -38,6 +57,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                                  applicationkey="[[ applicationkey ]]"
                                  hmackey="[[ hmackey ]]"
                                  timeout="[[ timeout ]]"
+                                 hidebuttons="[[ hidebuttons ]]"
                                  text-parameters="[[ _textParameters ]]"
                                  can-undo="{{ canUndo }}"
                                  can-redo="{{ canRedo }}"
