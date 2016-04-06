@@ -12,7 +12,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
         applicationkey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
         hmackey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
         language="en_US"
-        recognition-candidates="3">
+        recognitioncandidates="3">
     </myscript-text-web>
 
 @demo
@@ -48,7 +48,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
     <template>
         <div class="resultField" hidden="[[ hideresult ]]">
             <template is="dom-repeat" id="candidateList" items="[[ candidates ]]" as="candidate">
-                <span selected$="[[ _isSelected(candidate,textDocument) ]]" inner-h-t-m-l="[[ _getLabel(candidate,textDocument) ]]" on-tap="_select"></span>
+                <span selected$="[[ _isSelected(candidate,textdocument) ]]" inner-h-t-m-l="[[ _getLabel(candidate,textdocument) ]]" on-tap="_select"></span>
             </template>
         </div>
         <myscript-common-element host="[[ host ]]"
@@ -58,10 +58,10 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                                  hmackey="[[ hmackey ]]"
                                  timeout="[[ timeout ]]"
                                  hidebuttons="[[ hidebuttons ]]"
-                                 text-parameters="[[ _textParameters ]]"
-                                 can-undo="{{ canundo }}"
-                                 can-redo="{{ canredo }}"
-                                 can-clear="{{ canclear }}"
+                                 textparameters="[[ _textParameters ]]"
+                                 canundo="{{ canundo }}"
+                                 canredo="{{ canredo }}"
+                                 canclear="{{ canclear }}"
                                  on-changed="_onChanged"
                                  on-success="_onSuccess"
                                  on-error="_onError">
@@ -179,7 +179,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             /**
              * The available recognition languages.
              */
-            availableLanguages: {
+            availablelanguages: {
                 type: Array,
                 notify: true,
                 readOnly: true,
@@ -188,14 +188,14 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             /**
              * @private
              */
-            resultDetail: {
+            resultdetail: {
                 type: String,
                 value: MyScript.ResultDetail.TEXT
             },
             /**
              * @private
              */
-            inputMode: {
+            inputmode: {
                 type: String,
                 value: MyScript.InputMode.CURSIVE,
                 observer: '_inputModeChanged'
@@ -203,38 +203,38 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             /**
              * The desired count of recognition candidates
              */
-            recognitionCandidates: {
+            recognitioncandidates: {
                 type: Number,
                 value: 1
             },
             /**
              * @private
              */
-            predictionCandidates: {
+            predictioncandidates: {
                 type: Number,
                 value: 0
             },
             /**
              * @private
              */
-            completionCandidates: {
+            completioncandidates: {
                 type: Number,
                 value: 0
             },
             _textProperties: {
                 type: Object,
-                computed: '_computeTextProperties(resultDetail, recognitionCandidates, predictionCandidates, completionCandidates)'
+                computed: '_computeTextProperties(resultdetail, recognitioncandidates, predictioncandidates, completioncandidates)'
             },
             _textParameters: {
                 type: Object,
-                computed: '_computeTextParameters(inputMode, language, resultDetail, _textProperties)'
+                computed: '_computeTextParameters(inputmode, language, resultdetail, _textProperties)'
             },
             /**
              * The text recognition result document.
              * @private
              * @default {}
              */
-            textDocument: {
+            textdocument: {
                 type: Object,
                 notify: true,
                 value: new MyScript.TextDocument()
@@ -246,26 +246,26 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                 type: Array,
                 notify: true,
                 readOnly: true,
-                computed: '_computeCandidates(textDocument)'
+                computed: '_computeCandidates(textdocument)'
             },
             /**
              * The selected recognition result candidate
              */
-            selectedCandidate: {
+            selectedcandidate: {
                 type: Object,
                 notify: true,
                 readOnly: true,
-                computed: '_computeSelectedCandidate(candidates,textDocument)'
+                computed: '_computeSelectedCandidate(candidates,textdocument)'
             },
             /**
-             * The selected recognition result candidate label (same as selectedCandidate.label)
-             * @deprecated Use selectedCandidate.label instead of firstcandidate
+             * The selected recognition result candidate label (same as selectedcandidate.label)
+             * @deprecated Use selectedcandidate.label instead of firstcandidate
              */
             firstcandidate: {
                 type: String,
                 notify: true,
                 readOnly: true,
-                computed: '_computeFirstCandidate(selectedCandidate)'
+                computed: '_computeFirstCandidate(selectedcandidate)'
             }
         },
         _clear: function () {
@@ -279,21 +279,18 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             this._myscriptCommonElement.redo();
         },
         /**
-         * <b>Deprecated</b><br />
          * Clear the  current document.
          */
         delete: function () {
             this._clear();
         },
         /**
-         * <b>Deprecated</b><br />
          * Undo the last action.
          */
         undo: function () {
             this._undo();
         },
         /**
-         * <b>Deprecated</b><br />
          * Redo the last action.
          */
         redo: function () {
@@ -303,18 +300,18 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
          * Get the list of available languages.
          */
         getAvailableLanguageList: function () {
-            this._myscriptCommonElement.getAvailableLanguages(this.inputMode);
+            this._myscriptCommonElement.getAvailableLanguages(this.inputmode);
         },
         _onChanged: function (e) {
             this.fire(e.type, e.detail);
         },
         _onSuccess: function (e) {
             if (e.detail && e.detail.getTextDocument) {
-                this.textDocument = e.detail.getTextDocument();
+                this.textdocument = e.detail.getTextDocument();
             } else if (e.detail && (e.detail instanceof Array)) {
-                this.availableLanguages = e.detail;
+                this.availablelanguages = e.detail;
             } else {
-                this.textDocument = new MyScript.TextDocument();
+                this.textdocument = new MyScript.TextDocument();
             }
             this.fire(e.type, e.detail);
             this.fire('myscript-text-web-result', e.detail);
@@ -325,13 +322,13 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
         ready: function () {
             this._myscriptCommonElement = this.querySelector('myscript-common-element');
             if (this.applicationkey) {
-                this.getAvailableLanguageList(this.inputMode);
+                this.getAvailableLanguageList(this.inputmode);
             }
             this._hideresultChanged(this.hideresult);
         },
         _select: function (e) {
-            this.textDocument.getTextSegment().selectedCandidateIdx = e.model.index;
-            this.textDocument = new MyScript.TextDocument(this.textDocument);
+            this.textdocument.getTextSegment().selectedCandidateIdx = e.model.index;
+            this.textdocument = new MyScript.TextDocument(this.textdocument);
         },
         _isSelected: function (candidate, textDocument) {
             if (textDocument.getTextSegment()) {
@@ -438,7 +435,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
         },
         _applicationKeyChanged: function (applicationKey) {
             if (this._myscriptCommonElement && applicationKey) {
-                this._myscriptCommonElement.getAvailableLanguages(this.inputMode);
+                this._myscriptCommonElement.getAvailableLanguages(this.inputmode);
             }
         },
         _hideresultChanged: function (hideresult) {
