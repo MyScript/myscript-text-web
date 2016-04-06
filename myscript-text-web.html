@@ -59,9 +59,9 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                                  timeout="[[ timeout ]]"
                                  hidebuttons="[[ hidebuttons ]]"
                                  text-parameters="[[ _textParameters ]]"
-                                 can-undo="{{ canUndo }}"
-                                 can-redo="{{ canRedo }}"
-                                 can-clear="{{ canClear }}"
+                                 can-undo="{{ canundo }}"
+                                 can-redo="{{ canredo }}"
+                                 can-clear="{{ canclear }}"
                                  on-changed="_onChanged"
                                  on-success="_onSuccess"
                                  on-error="_onError">
@@ -76,6 +76,11 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
          * Fired when a text recognition result is successfully received.
          *
          * @event myscript-text-web-result
+         */
+        /**
+         * Fired when the delete action is done.
+         *
+         * @event myscript-text-web-delete
          */
         /**
          * Fired when a recognition error occurred.
@@ -124,17 +129,26 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             hmackey: {
                 type: String
             },
-            canUndo: {
+            /**
+             * @private
+             */
+            canundo: {
                 type: Boolean,
                 notify: true,
                 value: false
             },
-            canRedo: {
+            /**
+             * @private
+             */
+            canredo: {
                 type: Boolean,
                 notify: true,
                 value: false
             },
-            canClear: {
+            /**
+             * @private
+             */
+            canclear: {
                 type: Boolean,
                 notify: true,
                 value: false
@@ -256,6 +270,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
         },
         _clear: function () {
             this._myscriptCommonElement.clear();
+            this.fire('myscript-text-web-delete');
         },
         _undo: function () {
             this._myscriptCommonElement.undo();
@@ -373,9 +388,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                 }
             }
             return textLabel + '</span>';
-        },
-        _computeCanClear: function (canUndo, canRedo) {
-            return canUndo || canRedo;
         },
         _computeTextParameters: function (inputMode, language, resultDetail, _textProperties) {
             var parameters = new MyScript.TextParameter();
