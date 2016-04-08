@@ -355,33 +355,37 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                     var wordCandidateIndex = wordSegmentItem.getSelectedCandidateIdx();
                     var wordInkRanges = wordSegmentItem.getInkRanges();
                     var wordSegment = textDocument.getWordSegment(wordInkRanges);
-                    var wordCandidate = wordSegment.getCandidates()[wordCandidateIndex];
-                    var wordLabel = '<span class="word">';
-                    if (wordCandidate.getFlags().indexOf('PREDICTED') > -1) {
-                        wordLabel = '<span class="word predicted">';
-                    } else if (wordCandidate.getFlags().indexOf('COMPLETED') > -1) {
-                        wordLabel = '<span class="word completed">';
-                    }
-                    if (textDocument.getCharSegments().length <= 0) {
-                        wordLabel += wordCandidate.getLabel();
-                    } else {
-                        for (var j in wordCandidate.getChildren()) {
-                            var charSegmentItem = wordCandidate.getChildren()[j];
-                            var charLabel = '<span class="char">';
-                            if (!(charSegmentItem.getInkRanges() && charSegmentItem.getInkRanges().length > 0)) {
-                                if (wordCandidate.getFlags().indexOf('PREDICTED') > -1) {
-                                    charLabel = '<span class="char predicted">';
-                                } else if (wordCandidate.getFlags().indexOf('COMPLETED') > -1) {
-                                    charLabel = '<span class="char completed">';
+                    if (wordSegment) {
+                        var wordCandidate = wordSegment.getCandidates()[wordCandidateIndex];
+                        if (wordCandidate) {
+                            var wordLabel = '<span class="word">';
+                            if (wordCandidate.getFlags().indexOf('PREDICTED') > -1) {
+                                wordLabel = '<span class="word predicted">';
+                            } else if (wordCandidate.getFlags().indexOf('COMPLETED') > -1) {
+                                wordLabel = '<span class="word completed">';
+                            }
+                            if (textDocument.getCharSegments().length <= 0) {
+                                wordLabel += wordCandidate.getLabel();
+                            } else {
+                                for (var j in wordCandidate.getChildren()) {
+                                    var charSegmentItem = wordCandidate.getChildren()[j];
+                                    var charLabel = '<span class="char">';
+                                    if (!(charSegmentItem.getInkRanges() && charSegmentItem.getInkRanges().length > 0)) {
+                                        if (wordCandidate.getFlags().indexOf('PREDICTED') > -1) {
+                                            charLabel = '<span class="char predicted">';
+                                        } else if (wordCandidate.getFlags().indexOf('COMPLETED') > -1) {
+                                            charLabel = '<span class="char completed">';
+                                        }
+                                    }
+                                    charLabel += wordCandidate.getLabel().charAt(j);
+                                    charLabel += '</span>';
+                                    wordLabel += charLabel;
                                 }
                             }
-                            charLabel += wordCandidate.getLabel().charAt(j);
-                            charLabel += '</span>';
-                            wordLabel += charLabel;
+                            wordLabel += '</span>';
+                            textLabel += wordLabel;
                         }
                     }
-                    wordLabel += '</span>';
-                    textLabel += wordLabel;
                 }
             }
             return textLabel + '</span>';
