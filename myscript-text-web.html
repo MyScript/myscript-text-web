@@ -433,7 +433,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                 var selectedCandidate = candidates[textDocument.getTextSegment().getSelectedCandidateIdx()];
                 return selectedCandidate;
             }
-            return undefined;
+            return new MyScript.TextCandidate();
         },
         _computeFirstCandidate: function (selectedCandidate) {
             if (selectedCandidate) {
