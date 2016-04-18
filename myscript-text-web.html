@@ -420,13 +420,13 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
         _computeTextProperties: function (resultDetail, recognitionCandidates, predictionCandidates, completionCandidates) {
             var properties = new MyScript.TextProperties();
             properties.setTextCandidateListSize(recognitionCandidates);
+            properties.setWordPredictionListSize(predictionCandidates);
+            properties.setWordCompletionListSize(completionCandidates);
             switch (resultDetail) {
                 case MyScript.ResultDetail.CHARACTER:
                     properties.setCharacterCandidateListSize(recognitionCandidates);
                 case MyScript.ResultDetail.WORD:
                     properties.setWordCandidateListSize(recognitionCandidates);
-                    properties.setWordPredictionListSize(predictionCandidates);
-                    properties.setWordCompletionListSize(completionCandidates);
                 default:
                     properties.setTextCandidateListSize(recognitionCandidates);
             }
