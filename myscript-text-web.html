@@ -57,6 +57,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                                  applicationkey="[[ applicationkey ]]"
                                  hmackey="[[ hmackey ]]"
                                  timeout="[[ timeout ]]"
+                                 ssl="[[ ssl ]]"
                                  hidebuttons="[[ hidebuttons ]]"
                                  textparameters="[[ _textParameters ]]"
                                  canundo="{{ canundo }}"
@@ -280,6 +281,13 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                 notify: true,
                 readOnly: true,
                 computed: '_computeFirstCandidate(selectedcandidate)'
+            },
+            /**
+             * @private
+             */
+            ssl: {
+                type: Boolean,
+                value: true
             }
         },
         _clear: function () {
