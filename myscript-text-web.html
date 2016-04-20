@@ -228,13 +228,20 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                 type: Array,
                 value: []
             },
+            /**
+             * @private
+             */
+            userresources: {
+                type: Array,
+                value: []
+            },
             _textProperties: {
                 type: Object,
                 computed: '_computeTextProperties(resultdetail, recognitioncandidates, predictioncandidates, completioncandidates)'
             },
             _textParameters: {
                 type: Object,
-                computed: '_computeTextParameters(inputmode, language, resultdetail, contenttypes, _textProperties)'
+                computed: '_computeTextParameters(inputmode, language, resultdetail, contenttypes, userresources, _textProperties)'
             },
             /**
              * The text recognition result document.
@@ -406,12 +413,15 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             }
             return textLabel + '</span>';
         },
-        _computeTextParameters: function (inputMode, language, resultDetail, contentTypes, _textProperties) {
+        _computeTextParameters: function (inputMode, language, resultDetail, contentTypes, resources, _textProperties) {
             var parameters = new MyScript.TextParameter();
             parameters.setInputMode(inputMode);
             parameters.setResultDetail(resultDetail);
             parameters.setTextProperties(_textProperties);
             parameters.setLanguage(language);
+            if (resources.length > 0) {
+                parameters.setUserResources(resources);
+            }
             if (contentTypes.length > 0) {
                 parameters.setContentTypes(contentTypes);
             }
