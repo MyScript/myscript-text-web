@@ -50,16 +50,16 @@
                           id="languageList"
                           items="[[ languages ]]"
                           as="lang"
-                          filter="[[get(lang.value, availableLanguages)]]">
+                          filter="[[getLang(lang.value, availableLanguages)]]">
                     <paper-item value="[[ lang.value ]]">[[ lang.description ]]</paper-item>
                 </template>
             </paper-listbox>
         </paper-dropdown-menu>
     </div>
     <myscript-text-web id="text-input"
-                       host="[[ host ]]"
-                       applicationkey="[[ applicationKey ]]"
-                       hmackey="[[ hmacKey ]]"
+                       host="webdemo.myscript.com"
+                       applicationkey="22eda92c-10af-40d8-abea-fd4093c17d81"
+                       hmackey="a1fa759f-b3ce-4091-9fd4-d34bb870c601"
                        recognitioncandidates="3"
                        availablelanguages="{{ availableLanguages }}"
                        language="{{ language }}">
@@ -73,19 +73,13 @@
         template.addEventListener('template-bound', function () {
             console.log('Our app is ready to rock!');
         });
+        template.getLang = function (lang, availableLanguages) {
+            return availableLanguages.indexOf(lang) > -1;
+        }
+
         // See https://github.com/Polymer/polymer/issues/1381
         window.addEventListener('WebComponentsReady', function () {
             document.querySelector('body').removeAttribute('unresolved');
-
-            template.host = 'webdemo.myscript.com';
-            template.applicationKey = '22eda92c-10af-40d8-abea-fd4093c17d81';
-            template.hmacKey = 'a1fa759f-b3ce-4091-9fd4-d34bb870c601';
-            template.resultDetail = MyScript.ResultDetail.TEXT;
-            template.recognitionCandidates = 3;
-
-            template.get = function (lang, availableLanguages) {
-                return availableLanguages.indexOf(lang) > -1;
-            }
         });
     })(document);
 </script>

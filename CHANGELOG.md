@@ -18,6 +18,8 @@
 - Replace the error panel by the `myscript-common-element` ones
 - Upgrade from Polymer 1.2 to 1.4
 - Add docs/demo buttons on component page
+- Add getStats method to get various stats relative to ink in order to help evaluate the myscript cdk usage
+
 
 ### Bugs
 - Fixes issue on resize due to CSS
