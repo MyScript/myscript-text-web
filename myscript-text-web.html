@@ -290,6 +290,12 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                 value: true
             }
         },
+        behaviors: [
+            Polymer.IronResizableBehavior
+        ],
+        listeners: {
+            'iron-resize': '_onResize'
+        },
         _clear: function () {
             this._myscriptCommonElement.clear();
             this.fire('myscript-text-web-delete');
@@ -332,6 +338,17 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
          */
         getAvailableLanguageList: function () {
             this._myscriptCommonElement.getAvailableLanguages(this.inputmode);
+        },
+        /**
+         * Resize listener
+         *
+         * @private
+         * @method _onResize
+         */
+        _onResize: function () {
+            if (this._myscriptCommonElement) {
+                this._myscriptCommonElement._onResize();
+            }
         },
         _onChanged: function (e) {
             this.fire(e.type, e.detail);
