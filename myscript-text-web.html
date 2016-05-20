@@ -108,7 +108,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                 value: 'cloud.myscript.com'
             },
             /**
-             * The recognition timeout, only use for HTTP.
+             * The recognition timeout, only use in REST mode.
              */
             timeout: {
                 type: Number,
@@ -320,7 +320,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
         },
         /**
          * Return the stats allowing to monitor what ink size is send to the server.
-         * @returns Stats objects format {strokesCount : 0, pointsCount : 0, byteSize : 0, humanSize : 0, humanUnit : 'BYTE'} humanUnit could have the values BYTE, BYTES, KiB, MiB
+         * Stats objects format {strokesCount : 0, pointsCount : 0, byteSize : 0, humanSize : 0, humanUnit : 'BYTE'} humanUnit could have the values BYTE, BYTES, KiB, MiB
          */
         getStats: function () {
             if (this._myscriptCommonElement) {
