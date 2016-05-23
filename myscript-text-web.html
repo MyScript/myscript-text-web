@@ -131,6 +131,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                 type: String
             },
             /**
+             * True if undo is available
              * @private
              */
             canundo: {
@@ -139,6 +140,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                 value: false
             },
             /**
+             * True if redo is available
              * @private
              */
             canredo: {
@@ -147,7 +149,9 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                 value: false
             },
             /**
+             * True if there is something to clear
              * @private
+             * @default false
              */
             canclear: {
                 type: Boolean,
@@ -179,6 +183,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             },
             /**
              * The available recognition languages as configured for your application on MyScript Cloud or Server.
+             * @type {Array<String>}
              */
             availablelanguages: {
                 type: Array,
@@ -187,6 +192,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                 value: ['en_US']
             },
             /**
+             * The result detail to use (TEXT, WORD or CHARACTER).
              * @private
              */
             resultdetail: {
@@ -194,6 +200,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                 value: MyScript.ResultDetail.TEXT
             },
             /**
+             * The input mode to use (CURSIVE, ISOLATED, SUPERIMPOSED or VERTICAL).
              * @private
              */
             inputmode: {
@@ -209,6 +216,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                 value: 1
             },
             /**
+             * The desired count of prediction candidates
              * @private
              */
             predictioncandidates: {
@@ -216,6 +224,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                 value: 0
             },
             /**
+             * The desired count of completion candidates
              * @private
              */
             completioncandidates: {
@@ -223,6 +232,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                 value: 0
             },
             /**
+             * @type {Array<String>}
              * @private
              */
             contenttypes: {
@@ -230,16 +240,25 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                 value: []
             },
             /**
+             * The user resources to use for the recognition.
+             * @type {Array<String>}
              * @private
              */
             userresources: {
                 type: Array,
                 value: []
             },
+            /**
+             * @type {{textCandidateListSize: Number, wordCandidateListSize: Number, wordPredictionListSize: Number, wordCompletionListSize: Number, characterCandidateListSize: Number, enableOutOfLexicon: Boolean, discardCaseVariations: Boolean, discardAccentuationVariations: Boolean, disableSpatialOrdering: Boolean, glyphDistortion: Number, spellingDistortion: Number}}
+             */
             _textProperties: {
                 type: Object,
                 computed: '_computeTextProperties(resultdetail, recognitioncandidates, predictioncandidates, completioncandidates)'
             },
+            /**
+             * Recognition parameters for the text recognition.
+             * @type {{language: String, textInputMode: String, resultDetail: String, contentTypes: Array<String>, subsetKnowledges: Array<String>, userResources: Array<String>, userLkWords: Array<String>, textProperties: {textCandidateListSize: Number, wordCandidateListSize: Number, wordPredictionListSize: Number, wordCompletionListSize: Number, characterCandidateListSize: Number, enableOutOfLexicon: Boolean, discardCaseVariations: Boolean, discardAccentuationVariations: Boolean, disableSpatialOrdering: Boolean, glyphDistortion: Number, spellingDistortion: Number}}}
+             */
             _textParameters: {
                 type: Object,
                 computed: '_computeTextParameters(inputmode, language, resultdetail, contenttypes, userresources, _textProperties)'
@@ -256,6 +275,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             },
             /**
              * The recognition result candidates
+             * @type {Array<{label: String, flags: Array<String>}>}
              */
             candidates: {
                 type: Array,
@@ -265,6 +285,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             },
             /**
              * The selected recognition result candidate
+             * @type {{label: String, flags: Array<String>}}
              */
             selectedcandidate: {
                 type: Object,
@@ -283,6 +304,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                 computed: '_computeFirstCandidate(selectedcandidate)'
             },
             /**
+             * True if SSL is activated, false otherwise
              * @private
              */
             ssl: {
