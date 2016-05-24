@@ -48,8 +48,8 @@
     "tag": "1.2.0-beta1",
     "commit": "6ad5581dbbaec306defa801ece49b11e33d20185"
   },
-  "_source": "https://zen.visionobjects.com/git/WS/Polymer/myscript-text-web.git",
+  "_source": "https://scm.corp.myscript.com/scm/ws/webcomponents-myscript-text-web.git",
   "_target": "1.2.0-beta1",
-  "_originalSource": "https://zen.visionobjects.com/git/WS/Polymer/myscript-text-web.git",
+  "_originalSource": "https://scm.corp.myscript.com/scm/ws/webcomponents-myscript-text-web.git",
   "_direct": true
 }
