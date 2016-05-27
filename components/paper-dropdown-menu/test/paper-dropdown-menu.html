@@ -19,7 +19,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script src="../../test-fixture/test-fixture-mocha.js"></script>
   <script src="../../iron-test-helpers/mock-interactions.js"></script>
 
-  <link rel="import" href="../../paper-menu/paper-menu.html">
+  <link rel="import" href="../../paper-listbox/paper-listbox.html">
   <link rel="import" href="../../paper-item/paper-item.html">
   <link rel="import" href="../../test-fixture/test-fixture.html">
   <link rel="import" href="../paper-dropdown-menu.html">
@@ -30,10 +30,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <test-fixture id="TrivialDropdownMenu">
     <template>
       <paper-dropdown-menu no-animations>
-        <paper-menu class="dropdown-content">
+        <paper-listbox class="dropdown-content">
           <paper-item>Foo</paper-item>
           <paper-item>Bar</paper-item>
-        </paper-menu>
+        </paper-listbox>
       </paper-dropdown-menu>
     </template>
   </test-fixture>
@@ -41,10 +41,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <test-fixture id="PreselectedDropdownMenu">
     <template>
       <paper-dropdown-menu no-animations>
-        <paper-menu class="dropdown-content" selected="1">
+        <paper-listbox class="dropdown-content" selected="1">
           <paper-item>Foo</paper-item>
           <paper-item>Bar</paper-item>
-        </paper-menu>
+        </paper-listbox>
       </paper-dropdown-menu>
     </template>
   </test-fixture>
@@ -115,6 +115,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         });
 
         test('the input area shows the correct selection', function() {
+          Polymer.dom.flush();
           var secondItem = Polymer.dom(dropdownMenu).querySelectorAll('paper-item')[1];
           expect(dropdownMenu.selectedItem).to.be.equal(secondItem);
         });
@@ -129,6 +130,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         });
 
         test('an `iron-deselect` event clears the current selection', function() {
+          Polymer.dom.flush();
           menu.selected = null;
           expect(dropdownMenu.selectedItem).to.be.equal(null);
         });
@@ -163,8 +165,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         test('a required dropdown is valid with a selection', function() {
           var dropdownMenu = fixture('PreselectedDropdownMenu');
+          Polymer.dom.flush();
+
           dropdownMenu.required = true;
-          
+
           expect(dropdownMenu.validate()).to.be.true;
           expect(dropdownMenu.invalid).to.be.false;
           expect(dropdownMenu.value).to.be.equal('Bar');

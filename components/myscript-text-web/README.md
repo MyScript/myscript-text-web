@@ -12,21 +12,22 @@ The easy way to integrate text handwriting recognition in your web app.
     <link rel="import" href="bower_components/myscript-text-web/myscript-text-web.html">
 </head>
 <body>
-    <myscript-text-web applicationkey="#PUT YOUR MYSCRIPT CDK APPLICATION KEY HERE#" 
-        hmackey="#PUT YOUR MYSCRIPT CDK HMAC KEY HERE#" language="ja_JP">
+    <myscript-text-web 
+        applicationkey="#PUT YOUR MYSCRIPT CDK APPLICATION KEY HERE#" 
+        hmackey="#PUT YOUR MYSCRIPT CDK HMAC KEY HERE#" 
+        language="ja_JP">
     </myscript-text-web>
-</template>
 </body>
 </html>
 ```    
 
-[Test it live](https://myscript.github.io/myscript-text-web/components/myscript-text-web/demo/)!
+[Test it live](https://myscript.github.io/myscript-text-web/components/myscript-text-web/)!
 
 ## What is it about?
 
 myscript-text-web is a web component that can be used in every web application (whatever the JavaScript library you are using) to bring handwriting recognition. It integrates all you need:  
-* Signal capture,  
-* Nice digital ink rendering,  
+* Signal capture,
+* Nice digital ink rendering,
 * Plug with MyScript CDK to bring handwriting recognition.
 
 ## Installation
@@ -51,11 +52,11 @@ myscript-text-web is a web component that can be used in every web application (
     
 ## Documentation 
 
-The API Reference is available here: [http://myscript.github.io/myscript-text-web/](http://myscript.github.io/myscript-text-web/) 
+The API Reference is available here: [https://myscript.github.io/myscript-text-web/](https://myscript.github.io/myscript-text-web/) 
 
 ## Contribute
 
-If you wish to contribute to myscript-text-web, feel free to fork it, fire `bower install` and use [Polyserve](https://github.com/PolymerLabs/polyserve) as an HTTP server. The demo page (in `demo` directory) can help you make your first experimentation.
+If you wish to contribute to myscript-text-web, feel free to fork it, fire `bower install` and use [polyserve](https://github.com/PolymerLabs/polyserve) as an HTTP server. The demo page (in `demo` directory) can help you make your first experimentation.
 
 Please sign our [Contributor License Agreement](CONTRIBUTING.md) before submitting your pull request.
 
