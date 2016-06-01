@@ -15,22 +15,15 @@
     <style is="custom-style" include="iron-flex"></style>
 </head>
 <style>
-    html, body {
-        position: absolute;
-        height: 100%;
-        width: 100%;
-        padding: 0;
+    body {
         margin: 0;
-        font-family: Roboto, Noto, sans-serif;
-        font-size: 14px;
+        height: 100vh;
     }
-
     myscript-text-web {
         height: calc(100% - 60px);
     }
-
     paper-menu-button {
-        padding: 0px;
+        padding: 0;
         width: 250px;
     }
 </style>
@@ -75,7 +68,7 @@
         });
         template.getLang = function (lang, availableLanguages) {
             return availableLanguages.indexOf(lang) > -1;
-        }
+        };
 
         // See https://github.com/Polymer/polymer/issues/1381
         window.addEventListener('WebComponentsReady', function () {
