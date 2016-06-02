@@ -360,8 +360,8 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             this.fire(e.type, e.detail);
         },
         _onSuccess: function (e) {
-            if (e.detail && e.detail.getTextDocument) {
-                this.textdocument = e.detail.getTextDocument();
+            if (e.detail && e.detail.getDocument) {
+                this.textdocument = e.detail.getDocument();
             } else if (e.detail && (e.detail instanceof Array)) {
                 this.availablelanguages = e.detail;
             } else {
