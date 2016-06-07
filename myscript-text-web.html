@@ -194,7 +194,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             },
             /**
              * The result detail to use (TEXT, WORD or CHARACTER).
-             * @private
              */
             resultdetail: {
                 type: String,
@@ -202,7 +201,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             },
             /**
              * The input mode to use (CURSIVE, ISOLATED, SUPERIMPOSED or VERTICAL).
-             * @private
              */
             inputmode: {
                 type: String,
@@ -210,31 +208,29 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                 observer: '_inputModeChanged'
             },
             /**
-             * The desired count of recognition candidates
+             * The desired count of recognition candidates.
              */
             recognitioncandidates: {
                 type: Number,
                 value: 1
             },
             /**
-             * The desired count of prediction candidates
-             * @private
+             * The desired count of prediction candidates.
              */
             predictioncandidates: {
                 type: Number,
                 value: 0
             },
             /**
-             * The desired count of completion candidates
-             * @private
+             * The desired count of completion candidates.
              */
             completioncandidates: {
                 type: Number,
                 value: 0
             },
             /**
+             * The content types to use for the recognition.
              * @type {Array<String>}
-             * @private
              */
             contenttypes: {
                 type: Array,
@@ -243,7 +239,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             /**
              * The user resources to use for the recognition.
              * @type {Array<String>}
-             * @private
              */
             userresources: {
                 type: Array,
