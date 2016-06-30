@@ -2,8 +2,12 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="HandheldFriendly" content="true"/>
+
     <title>myscript-text demo</title>
+
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="../../iron-ajax/iron-ajax.html">
     <link rel="import" href="../../iron-flex-layout/iron-flex-layout-classes.html">
@@ -27,7 +31,7 @@
         width: 250px;
     }
 </style>
-<body unresolved>
+<body touch-action="none" unresolved>
 <template id="app" is="dom-bind">
     <iron-ajax
         auto

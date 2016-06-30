@@ -40,6 +40,7 @@
     "paper-item": "PolymerElements/paper-item#1.1.x"
   },
   "resolutions": {
-    "myscript": "master"
+    "myscript": "master",
+    "polymer": "1.4.x"
   }
 }
