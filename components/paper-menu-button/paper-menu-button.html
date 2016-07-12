@@ -133,6 +133,11 @@ Custom property | Description | Default
     (function() {
       'use strict';
 
+      var config = {
+        ANIMATION_CUBIC_BEZIER: 'cubic-bezier(.3,.95,.5,1)',
+        MAX_ANIMATION_TIME_MS: 400
+      };
+
       var PaperMenuButton = Polymer({
         is: 'paper-menu-button',
 
@@ -242,14 +247,14 @@ Custom property | Description | Default
                 timing: {
                   delay: 100,
                   duration: 150,
-                  easing: PaperMenuButton.ANIMATION_CUBIC_BEZIER
+                  easing: config.ANIMATION_CUBIC_BEZIER
                 }
               }, {
                 name: 'paper-menu-grow-height-animation',
                 timing: {
                   delay: 100,
                   duration: 275,
-                  easing: PaperMenuButton.ANIMATION_CUBIC_BEZIER
+                  easing: config.ANIMATION_CUBIC_BEZIER
                 }
               }];
             }
@@ -272,7 +277,7 @@ Custom property | Description | Default
                 timing: {
                   delay: 100,
                   duration: 50,
-                  easing: PaperMenuButton.ANIMATION_CUBIC_BEZIER
+                  easing: config.ANIMATION_CUBIC_BEZIER
                 }
               }, {
                 name: 'paper-menu-shrink-height-animation',
@@ -398,8 +403,9 @@ Custom property | Description | Default
         }
       });
 
-      PaperMenuButton.ANIMATION_CUBIC_BEZIER = 'cubic-bezier(.3,.95,.5,1)';
-      PaperMenuButton.MAX_ANIMATION_TIME_MS = 400;
+      Object.keys(config).forEach(function (key) {
+        PaperMenuButton[key] = config[key];
+      });
 
       Polymer.PaperMenuButton = PaperMenuButton;
     })();
