@@ -42,5 +42,9 @@
   "resolutions": {
     "myscript": "master",
     "polymer": "1.4.x"
-  }
+  },
+  "_source": "/home/padewitte/projets/webcomponents/myscript-text-web",
+  "_target": "*",
+  "_originalSource": "../../myscript-text-web/",
+  "_direct": true
 }

@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="HandheldFriendly" content="true"/>
+
+    <title>myscript-text demo</title>
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../../iron-ajax/iron-ajax.html">
+    <link rel="import" href="../../iron-flex-layout/iron-flex-layout-classes.html">
+    <link rel="import" href="../../paper-dropdown-menu/paper-dropdown-menu.html">
+    <link rel="import" href="../../paper-listbox/paper-listbox.html">
+    <link rel="import" href="../../paper-item/paper-item.html">
+    <link rel="import" href="../myscript-text-web.html">
+
+    <style is="custom-style" include="iron-flex"></style>
+</head>
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+    }
+    myscript-text-web {
+        height: calc(100% - 60px);
+    }
+    paper-menu-button {
+        padding: 0;
+        width: 250px;
+    }
+</style>
+<body touch-action="none" unresolved>
+<template id="app" is="dom-bind">
+    <iron-ajax
+        auto
+        handle-as="json"
+        url="languages.json"
+        last-response="{{ languages }}"
+        debounce-duration="300">
+    </iron-ajax>
+    <div class="horizontal center-justified layout">
+        <paper-dropdown-menu label="Choose your language">
+            <paper-listbox class="dropdown-content" selected="{{ language }}" attr-for-selected="value">
+                <template is="dom-repeat"
+                          id="languageList"
+                          items="[[ languages ]]"
+                          as="lang"
+                          filter="[[getLang(lang.value, availableLanguages)]]">
+                    <paper-item value="[[ lang.value ]]">[[ lang.description ]]</paper-item>
+                </template>
+            </paper-listbox>
+        </paper-dropdown-menu>
+    </div>
+    <myscript-text-web id="text-input"
+                       host="webdemoapi.myscript.com"
+                       applicationkey="22eda92c-10af-40d8-abea-fd4093c17d81"
+                       hmackey="a1fa759f-b3ce-4091-9fd4-d34bb870c601"
+                       recognitioncandidates="3"
+                       availablelanguages="{{ availableLanguages }}"
+                       language="{{ language }}">
+    </myscript-text-web>
+</template>
+</body>
+<script>
+    (function (document) {
+        'use strict';
+        var template = document.querySelector('#app');
+        template.addEventListener('template-bound', function () {
+            console.log('Our app is ready to rock!');
+        });
+        template.getLang = function (lang, availableLanguages) {
+            return availableLanguages.indexOf(lang) > -1;
+        };
+
+        // See https://github.com/Polymer/polymer/issues/1381
+        window.addEventListener('WebComponentsReady', function () {
+            document.querySelector('body').removeAttribute('unresolved');
+        });
+    })(document);
+</script>
+</html>
