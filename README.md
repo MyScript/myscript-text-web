@@ -44,7 +44,7 @@ myscript-text-web is a web component that can be used in every web application (
 
 3. Import Custom Element
 
-    `<link rel="import" href="bower_components/myscript-text-web.html">`
+    `<link rel="import" href="bower_components/myscript-text-web/myscript-text-web.html">`
 
 3. Use it
 
