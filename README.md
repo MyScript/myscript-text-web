@@ -40,15 +40,15 @@ myscript-text-web is a web component that can be used in every web application (
 
 2. Import Web Components' polyfill
 
-    `html <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>`
+    `<script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>`
 
 3. Import Custom Element
 
-    `html <link rel="import" href="bower_components/myscript-text-web.html">`
+    `<link rel="import" href="bower_components/myscript-text-web.html">`
 
 3. Use it
 
-    `html <myscript-text-web applicationkey="#PUT YOUR MYSCRIPT CDK APPLICATION KEY HERE#" hmackey="#PUT YOUR MYSCRIPT CDK HMAC KEY HERE#" language="ja_JP"></myscript-text-web>`
+    `<myscript-text-web applicationkey="#PUT YOUR MYSCRIPT CDK APPLICATION KEY HERE#" hmackey="#PUT YOUR MYSCRIPT CDK HMAC KEY HERE#" language="ja_JP"></myscript-text-web>`
     
 ## Documentation 
 
