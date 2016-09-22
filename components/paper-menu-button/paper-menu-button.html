@@ -104,6 +104,10 @@ Custom property | Description | Default
         margin-bottom: -10px;
         margin-top: 20px;
       }
+      
+      #trigger {
+        cursor: pointer;
+      }
     </style>
 
     <div id="trigger" on-tap="toggle">
@@ -115,13 +119,16 @@ Custom property | Description | Default
       opened="{{opened}}"
       horizontal-align="[[horizontalAlign]]"
       vertical-align="[[verticalAlign]]"
+      dynamic-align="[[dynamicAlign]]"
       horizontal-offset="[[horizontalOffset]]"
       vertical-offset="[[verticalOffset]]"
+      no-overlap="[[noOverlap]]"
       open-animation-config="[[openAnimationConfig]]"
       close-animation-config="[[closeAnimationConfig]]"
       no-animations="[[noAnimations]]"
       focus-target="[[_dropdownContent]]"
-      restore-focus-on-close
+      allow-outside-scroll="[[allowOutsideScroll]]"
+      restore-focus-on-close="[[restoreFocusOnClose]]"
       on-iron-overlay-canceled="__onIronOverlayCanceled">
       <div class="dropdown-content">
         <content id="content" select=".dropdown-content"></content>
@@ -190,6 +197,16 @@ Custom property | Description | Default
           },
 
           /**
+           * If true, the `horizontalAlign` and `verticalAlign` properties will
+           * be considered preferences instead of strict requirements when
+           * positioning the dropdown and may be changed if doing so reduces
+           * the area of the dropdown falling outside of `fitInto`.
+           */
+          dynamicAlign: {
+            type: Boolean
+          },
+
+          /**
            * A pixel value that will be added to the position calculated for the
            * given `horizontalAlign`. Use a negative value to offset to the
            * left, or a positive value to offset to the right.
@@ -212,6 +229,14 @@ Custom property | Description | Default
           },
 
           /**
+           * If true, the dropdown will be positioned so that it doesn't overlap
+           * the button.
+           */
+          noOverlap: {
+            type: Boolean
+          },
+
+          /**
            * Set to true to disable animations when opening and closing the
            * dropdown.
            */
@@ -225,6 +250,15 @@ Custom property | Description | Default
            * a selection has been made.
            */
           ignoreSelect: {
+            type: Boolean,
+            value: false
+          },
+
+          /**
+           * Set to true to enable automatically closing the dropdown after an
+           * item has been activated, even if the selection did not change.
+           */
+          closeOnActivate: {
             type: Boolean,
             value: false
           },
@@ -290,6 +324,25 @@ Custom property | Description | Default
           },
 
           /**
+           * By default, the dropdown will constrain scrolling on the page
+           * to itself when opened.
+           * Set to true in order to prevent scroll from being constrained
+           * to the dropdown when it opens.
+           */
+          allowOutsideScroll: {
+            type: Boolean,
+            value: false
+          },
+
+          /**
+           * Whether focus should be restored to the button when the menu closes.
+           */
+          restoreFocusOnClose: {
+            type: Boolean,
+            value: true
+          },
+
+          /**
            * This is the element intended to be bound as the focus target
            * for the `iron-dropdown` contained by `paper-menu-button`.
            */
@@ -304,6 +357,7 @@ Custom property | Description | Default
         },
 
         listeners: {
+          'iron-activate': '_onIronActivate',
           'iron-select': '_onIronSelect'
         },
 
@@ -353,6 +407,18 @@ Custom property | Description | Default
          */
         _onIronSelect: function(event) {
           if (!this.ignoreSelect) {
+            this.close();
+          }
+        },
+
+        /**
+         * Closes the dropdown when an `iron-activate` event is received if
+         * `closeOnActivate` is true.
+         *
+         * @param {CustomEvent} event A CustomEvent of type 'iron-activate'.
+         */
+        _onIronActivate: function(event) {
+          if (this.closeOnActivate) {
             this.close();
           }
         },
