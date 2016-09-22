@@ -32,11 +32,7 @@
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#1.1.x",
-    "iron-flex-layout": "PolymerElements/iron-flex-layout#1.3.x",
-    "iron-ajax": "PolymerElements/iron-ajax#1.2.x",
-    "paper-dropdown-menu": "PolymerElements/paper-dropdown-menu#1.1.x",
-    "paper-listbox": "PolymerElements/paper-listbox#1.1.x",
-    "paper-item": "PolymerElements/paper-item#1.1.x"
+    "iron-ajax": "PolymerElements/iron-ajax#1.2.x"
   },
   "resolutions": {
     "myscript": "master",
