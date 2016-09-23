@@ -21,7 +21,7 @@ The easy way to integrate text handwriting recognition in your web app.
 </html>
 ```    
 
-[Test it live](https://myscript.github.io/myscript-text-web/components/myscript-text-web/)!
+[Test it live](https://myscript.github.io/myscript-text-web/components/myscript-text-web/demo/)!
 
 ## What is it about?
 
