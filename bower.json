@@ -13,7 +13,7 @@
     "recognition"
   ],
   "main": "myscript-text-web.html",
-  "license": "Apache-2",
+  "license": "Apache-2.0",
   "homepage": "https://myscript.github.io/myscript-text-web/components/myscript-text-web/",
   "repository": {
     "type": "git",
