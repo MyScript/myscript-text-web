@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="HandheldFriendly" content="true"/>
+
+    <title>myscript-text demo</title>
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../../iron-ajax/iron-ajax.html">
+    <link rel="import" href="../myscript-text-web.html">
+
+    <style is="custom-style" include="iron-flex"></style>
+</head>
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+    }
+    myscript-text-web {
+        height: calc(100% - 60px);
+    }
+    paper-menu-button {
+        padding: 0;
+        width: 250px;
+    }
+    select {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        width: auto;
+        padding: .375rem 1.75rem .4375rem .75rem;
+        color: #131F26;
+        background:url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxOCAxNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik00LjQyMi4yNmMtLjIzMy0uMzM3LS42MS0uMzM3LS44NDQgMEwuMTc1IDUuMTdDLS4xNDIgNS42MjguMDQ4IDYgLjYxIDZoNi43OGMuNTU4IDAgLjc1NC0uMzcuNDM1LS44M0w0LjQyMi4yNnptLjAyIDEzLjQ3Yy0uMjM2LjM0Mi0uNjE4LjM0Ny0uODUuMDFMLjE2NyA4LjgxOEMtLjE0NiA4LjM2Ny4wNDggOCAuNjA4IDhoNi43ODNjLjU1OCAwIC43NTUuMzcuNDM3LjgzbC0zLjM4NSA0Ljl6IiBmaWxsPSIjMTMxRjI2Ii8+PC9nPjwvc3ZnPg==) right center no-repeat #fff;
+        -webkit-appearance: none;
+        appearance: none;
+        height: 2.625rem;
+        font: 400 1.125rem "Source Sans Pro",sans-serif;
+        border: 1px solid #CED5D9;
+        border-radius: 3px;
+        -webkit-tap-highlight-color: transparent;
+    }
+    .ooo-language-selector {
+        text-align: center;
+        line-height: 60px;
+    }
+</style>
+<body touch-action="none" unresolved>
+<template id="app" is="dom-bind">
+    <iron-ajax
+        auto
+        handle-as="json"
+        url="languages.json"
+        last-response="{{ languages }}"
+        debounce-duration="300">
+    </iron-ajax>
+    <div class="ooo-language-selector">
+        <select onchange="select(this.value)">
+            <template is="dom-repeat"
+                      id="languageList"
+                      items="[[ languages ]]"
+                      as="lang"
+                      filter="[[getLang(lang.value, availableLanguages)]]">
+                <option value="[[ lang.value ]]" selected="[[isSelected(lang.value, language)]]">[[ lang.description ]]</option>
+            </template>
+        </select>
+    </div>
+    <myscript-text-web id="text-input"
+                       host="webdemoapi.myscript.com"
+                       applicationkey="22eda92c-10af-40d8-abea-fd4093c17d81"
+                       hmackey="a1fa759f-b3ce-4091-9fd4-d34bb870c601"
+                       recognitioncandidates="3"
+                       availablelanguages="{{ availableLanguages }}"
+                       language="{{ language }}">
+    </myscript-text-web>
+</template>
+</body>
+<script>
+    function select (lang) {
+        document.getElementById('app').language = lang;
+    }
+    (function (document) {
+        'use strict';
+        var template = document.querySelector('#app');
+        template.addEventListener('template-bound', function () {
+            console.log('Our app is ready to rock!');
+        });
+        template.getLang = function (lang, availableLanguages) {
+            return availableLanguages.indexOf(lang) > -1;
+        };
+        template.isSelected = function (lang, language) {
+            return lang === language;
+        };
+
+        // See https://github.com/Polymer/polymer/issues/1381
+        window.addEventListener('WebComponentsReady', function () {
+            document.querySelector('body').removeAttribute('unresolved');
+        });
+    })(document);
+</script>
+</html>
