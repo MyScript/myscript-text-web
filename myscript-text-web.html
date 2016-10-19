@@ -97,17 +97,15 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
              * <b>not mutable</b><br />
              * The current recognition protocol (WebSocket or REST). We strongly recommend using WebSocket.
              * @type String
-             * @default 'WebSocket'
              */
             protocol: {
                 type: String,
-                value: MyScript.Protocol.WS
+                value: 'WebSocket'
             },
             /**
              * <b>not mutable</b><br />
              * The current recognition service host.
              * @type String
-             * @default 'cloud.myscript.com'
              */
             host: {
                 type: String,
@@ -117,7 +115,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
              * <b>not mutable</b><br />
              * The recognition timeout, only use in REST mode.
              * @type Number
-             * @default 2000
              */
             timeout: {
                 type: Number,
@@ -147,7 +144,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
              * True if undo is available
              * @private
              * @type Boolean
-             * @default false
              */
             canundo: {
                 type: Boolean,
@@ -158,7 +154,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
              * True if redo is available
              * @private
              * @type Boolean
-             * @default false
              */
             canredo: {
                 type: Boolean,
@@ -169,7 +164,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
              * True if there is something to clear
              * @private
              * @type Boolean
-             * @default false
              */
             canclear: {
                 type: Boolean,
@@ -180,7 +174,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
              * <b>not mutable</b><br />
              * If set to true, hide the buttons (Trash, Undo, Redo).
              * @type Boolean
-             * @default false
              */
             hidebuttons: {
                 type: Boolean,
@@ -190,7 +183,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
              * <b>not mutable</b><br />
              * If set to true, hide the result div tag.
              * @type Boolean
-             * @default false
              */
             hideresult: {
                 type: Boolean,
@@ -200,7 +192,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             /**
              * The recognition language used by the recognition process.
              * @type String
-             * @default 'en_US'
              */
             language: {
                 type: String,
@@ -210,7 +201,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             /**
              * The available recognition languages as configured for your application on MyScript Cloud or Server.
              * @type {Array<String>}
-             * @default ['en_US']
              */
             availablelanguages: {
                 type: Array,
@@ -221,26 +211,23 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             /**
              * The result detail to use (TEXT, WORD or CHARACTER).
              * @type String
-             * @default TEXT
              */
             resultdetail: {
                 type: String,
-                value: MyScript.ResultDetail.TEXT
+                value: 'TEXT'
             },
             /**
              * The input mode to use (CURSIVE, ISOLATED, SUPERIMPOSED or VERTICAL).
              * @type String
-             * @default CURSIVE
              */
             inputmode: {
                 type: String,
-                value: MyScript.InputMode.CURSIVE,
+                value: 'CURSIVE',
                 observer: '_inputModeChanged'
             },
             /**
              * The desired count of recognition candidates.
              * @type Number
-             * @default 1
              */
             recognitioncandidates: {
                 type: Number,
@@ -249,7 +236,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             /**
              * The desired count of prediction candidates.
              * @type Number
-             * @default 0
              */
             predictioncandidates: {
                 type: Number,
@@ -258,7 +244,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             /**
              * The desired count of completion candidates.
              * @type Number
-             * @default 0
              */
             completioncandidates: {
                 type: Number,
@@ -267,7 +252,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             /**
              * The content types to use for the recognition.
              * @type {Array<String>}
-             * @default []
              */
             contenttypes: {
                 type: Array,
@@ -276,7 +260,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             /**
              * The user resources to use for the recognition.
              * @type {Array<String>}
-             * @default []
              */
             userresources: {
                 type: Array,
@@ -342,7 +325,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
              * True if SSL is activated, false otherwise
              * @private
              * @type Boolean
-             * @default true
              */
             ssl: {
                 type: Boolean,
