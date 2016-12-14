@@ -64,6 +64,8 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                                  canundo="{{ canundo }}"
                                  canredo="{{ canredo }}"
                                  canclear="{{ canclear }}"
+                                 strokecolor="[[ strokecolor ]]"
+                                 strokewidth="[[ strokewidth]]"
                                  on-changed="_onChanged"
                                  on-success="_onSuccess"
                                  on-error="_onError">
@@ -264,6 +266,20 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             userresources: {
                 type: Array,
                 value: []
+            },
+            /**
+             * Set the stroke color
+             * @type String
+             */
+            strokecolor: {
+                type: String
+            },
+            /**
+             * Set the stroke width
+             * @type String
+             */
+            strokewidth: {
+                type: Number
             },
             /**
              * @type {{textCandidateListSize: Number, wordCandidateListSize: Number, wordPredictionListSize: Number, wordCompletionListSize: Number, characterCandidateListSize: Number, enableOutOfLexicon: Boolean, discardCaseVariations: Boolean, discardAccentuationVariations: Boolean, disableSpatialOrdering: Boolean, glyphDistortion: Number, spellingDistortion: Number}}
