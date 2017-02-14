@@ -103,22 +103,12 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
         textParameter.language = myscriptTextWebElement.language;
         textParameter.textInputMode = myscriptTextWebElement.textinputmode;
         textParameter.resultDetail = myscriptTextWebElement.resultdetail;
-        if (myscriptTextWebElement.contenttypes) {
-            textParameter.contentTypes = myscriptTextWebElement.contenttypes;
-        }
-        if (myscriptTextWebElement.subsetknowledges) {
-            textParameter.subsetKnowledges = myscriptTextWebElement.subsetknowledges;
-        }
-        if (myscriptTextWebElement.userlkwords) {
-            textParameter.userLkWords = myscriptTextWebElement.userlkwords;
-        }
-        if (myscriptTextWebElement.userresources) {
-            textParameter.userResources = myscriptTextWebElement.userresources;
-        }
+        textParameter.contentTypes = myscriptTextWebElement.contenttypes;
+        textParameter.subsetKnowledges = myscriptTextWebElement.subsetknowledges;
+        textParameter.userLkWords = myscriptTextWebElement.userlkwords;
+        textParameter.userResources = myscriptTextWebElement.userresources;
         // TODO Add textProperties object if needed
-        if (myscriptTextWebElement.textproperties) {
-            textParameter.textProperties = myscriptTextWebElement.textproperties;
-        }
+        textParameter.textProperties = myscriptTextWebElement.textproperties;
         return textParameter;
     }
 
