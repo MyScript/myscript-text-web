@@ -48,57 +48,12 @@
 </style>
 <body touch-action="none" unresolved>
 <template id="app" is="dom-bind">
-    <myscript-languages-element scheme="https"
-                                host="cloud-internal-stable.visionobjects.com"
-                                applicationKey="a8f991e2-994d-4f36-b61d-55f7ddf6f85d"
-                                languages="{{ languages }}">
-    </myscript-languages-element>
-    <div class="ooo-language-selector">
-        <select onchange="select(this.value)">
-            <template is="dom-repeat"
-                      id="languageList"
-                      items="[[ languages ]]"
-                      as="lang">
-                <option value="[[ lang.value ]]" selected="[[isSelected(lang.value, language)]]">[[ lang.description ]]</option>
-            </template>
-        </select>
-    </div>
     <myscript-text-web id="text-input"
                        host="webdemoapi.myscript.com"
                        applicationkey="22eda92c-10af-40d8-abea-fd4093c17d81"
                        hmackey="a1fa759f-b3ce-4091-9fd4-d34bb870c601"
-                       language="{{ language }}" unloaded>
+                       language="fr_FR">
     </myscript-text-web>
 </template>
 </body>
-<script>
-    function select (lang) {
-        var myscripttextweb = document.querySelector('myscript-text-web');
-        myscripttextweb.unloaded = true;
-        myscripttextweb.language = lang;
-        myscripttextweb.unloaded = false;
-    }
-    (function (document) {
-        'use strict';
-        var template = document.querySelector('#app');
-        template.addEventListener('template-bound', function () {
-            console.log('Our app is ready to rock!');
-        });
-        template.isSelected = function (lang, language) {
-          return lang === language;
-        };
-        // See https://github.com/Polymer/polymer/issues/1381
-        window.addEventListener('WebComponentsReady', function () {
-            document.querySelector('body').removeAttribute('unresolved');
-        });
-        // Programmatic loading to set the default language
-        window.addEventListener("load", function (event) {
-            window.setTimeout(function () {
-                document.querySelector('myscript-text-web').language = 'fr_FR';
-                document.querySelector('myscript-text-web').unloaded = false;
-            }, 3000);
-        });
-
-    })(document);
-</script>
 </html>
