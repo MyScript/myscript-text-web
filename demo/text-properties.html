@@ -22,9 +22,6 @@
     myscript-text-web {
         height: calc(100% - 60px);
     }
-    canvas.ms-capture-canvas.ms-canvas {
-        background-color: rgba(255,255,255,0.50);
-    }
     select {
         -webkit-appearance: none;
         -moz-appearance: none;
@@ -67,8 +64,13 @@
                        applicationkey="22eda92c-10af-40d8-abea-fd4093c17d81"
                        hmackey="a1fa759f-b3ce-4091-9fd4-d34bb870c601"
                        language="{{ language }}"
-                       textinputmode="SUPERIMPOSED"
-                       textcandidatelistsize="3">
+                       resultdetail="CHARACTER"
+                       textcandidatelistsize="3"
+                       wordcandidatelistsize="3"
+                       wordpredictionlistsize="3"
+                       wordcompletionlistsize="3"
+                       charactercandidatelistsize="3"
+                       unloaded>
     </myscript-text-web>
 </template>
 </body>
@@ -95,6 +97,7 @@
         // Programmatic loading to set the default language
         window.addEventListener("load", function (event) {
             window.setTimeout(function () {
+                document.querySelector('myscript-text-web').language = 'fr_FR';
                 document.querySelector('myscript-text-web').unloaded = false;
             }, 3000);
         });

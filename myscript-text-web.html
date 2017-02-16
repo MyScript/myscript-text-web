@@ -40,7 +40,19 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             color: #1580CD;
         }
         span[selected] {
-            color: #1580CD;
+            color: #FFFFFF;
+            background-color: #1580CD;
+        }
+        span[selected] * {
+            color: inherit;
+            background-color: inherit;
+        }
+        .text {
+            background-color: #EDF0F2;
+            font-size: 1.75rem;
+            padding: .5rem .75rem;
+            border-radius: 3px;
+            cursor: pointer;
         }
         .char.predicted {
             color: #73818C;
@@ -52,7 +64,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
     <template>
         <div class="resultField" hidden="[[ displayResultZone(hideresult, unloaded) ]]">
             <template is="dom-repeat" id="candidateList" items="[[ candidates ]]" as="candidate">
-                <span selected$="[[ candidate === result.textSegmentResult.selectedCandidateIdx ]]" inner-h-t-m-l="[[ getLabel(candidate) ]]" on-tap="select"></span>
+                <span selected$="[[ isSelected(candidate, result) ]]" inner-h-t-m-l="[[ getLabel(candidate) ]]" on-tap="select"></span>
             </template>
         </div>
         <myscript-common-element
@@ -107,8 +119,19 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
         textParameter.subsetKnowledges = myscriptTextWebElement.subsetknowledges;
         textParameter.userLkWords = myscriptTextWebElement.userlkwords;
         textParameter.userResources = myscriptTextWebElement.userresources;
-        // TODO Add textProperties object if needed
-        textParameter.textProperties = myscriptTextWebElement.textproperties;
+        textParameter.textProperties = {};
+        textParameter.textProperties.textCandidateListSize = myscriptTextWebElement.textcandidatelistsize;
+        textParameter.textProperties.wordCandidateListSize = myscriptTextWebElement.wordcandidatelistsize;
+        textParameter.textProperties.wordPredictionListSize = myscriptTextWebElement.wordpredictionlistsize;
+        textParameter.textProperties.wordCompletionListSize = myscriptTextWebElement.wordcompletionlistsize;
+        textParameter.textProperties.characterCandidateListSize = myscriptTextWebElement.charactercandidatelistsize;
+        textParameter.textProperties.enableOutOfLexicon = myscriptTextWebElement.enableoutoflexicon;
+        textParameter.textProperties.discardCaseVariations = myscriptTextWebElement.discardcasevariations;
+        textParameter.textProperties.discardAccentuationVariations = myscriptTextWebElement.discardaccentuationvariations;
+        textParameter.textProperties.glyphDistortion = myscriptTextWebElement.glyphdistortion;
+        textParameter.textProperties.enableTagger = myscriptTextWebElement.enabletagger;
+        textParameter.textProperties.spellingDistortion = myscriptTextWebElement.spellingdistortion;
+
         return textParameter;
     }
 
@@ -121,14 +144,18 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
     function textManageResultEvent(myscriptTextWebElement, eventDetail) {
         myscriptTextWebElement.result = {};
         // Transforming an Array into an hashmap to ease bindings.
-        if (eventDetail.result) {
-            myscriptTextWebElement.result = eventDetail.result;
+        if (eventDetail.rawResult && eventDetail.rawResult.result) {
+            myscriptTextWebElement.result = eventDetail.rawResult.result;
+            myscriptTextWebElement.resultlabel = eventDetail.rawResult.result.textSegmentResult.candidates[eventDetail.rawResult.result.textSegmentResult.selectedCandidateIdx].label
+            myscriptTextWebElement.candidates = eventDetail.rawResult.result.textSegmentResult.candidates;
         }
     }
 
     function textManageClearEvent(myscriptTextWebElement, eventDetail) {
         if (myscriptTextWebElement.myscriptcommonelement) {
             myscriptTextWebElement.result = {};
+            myscriptTextWebElement.resultlabel = undefined;
+            myscriptTextWebElement.candidates = [];
         }
     }
 
@@ -159,37 +186,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             });
         }
     }
-
-    //                _computeTextParameters: function (inputMode, language, resultDetail, contentTypes, resources, _textProperties) {
-    //                    var parameters = new MyScript.TextParameter();
-    //                    parameters.setInputMode(inputMode);
-    //                    parameters.setResultDetail(resultDetail);
-    //                    parameters.setTextProperties(_textProperties);
-    //                    parameters.setLanguage(language);
-    //                    if (resources.length > 0) {
-    //                        parameters.setUserResources(resources);
-    //                    }
-    //                    if (contentTypes.length > 0) {
-    //                        parameters.setContentTypes(contentTypes);
-    //                    }
-    //                    return parameters;
-    //                },
-    //                _computeTextProperties: function (resultDetail, recognitionCandidates, predictionCandidates, completionCandidates) {
-    //                    var properties = new MyScript.TextProperties();
-    //                    properties.setTextCandidateListSize(recognitionCandidates);
-    //                    switch (resultDetail) {
-    //                        case MyScript.ResultDetail.CHARACTER:
-    //                            properties.setCharacterCandidateListSize(recognitionCandidates);
-    //                        case MyScript.ResultDetail.WORD:
-    //                            properties.setWordCandidateListSize(recognitionCandidates);
-    //                            properties.setWordPredictionListSize(predictionCandidates);
-    //                            properties.setWordCompletionListSize(completionCandidates);
-    //                        default:
-    //                            properties.setTextCandidateListSize(recognitionCandidates);
-    //                    }
-    //                    return properties;
-    //                },
-
 
     Polymer({
                 is: 'myscript-text-web',
@@ -430,12 +426,12 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                         value: 'CURSIVE'
                     },
                     /**
-                     * The result detail to use (TEXT, WORD or CHARACTER).
+                     * The resultdetail is an entry property that conditioning result depth output. To use (TEXT, WORD or CHARACTER).
                      * @type String
                      */
                     resultdetail: {
                         type: String,
-                        value: 'CHARACTER'
+                        value: 'TEXT'
                     },
                     /**
                      * The content types to use for the recognition.
@@ -466,63 +462,100 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                      * @type {Array}
                      */
                     userresources: {
-                        type: Array
+                        type: Array,
+                        value: []
                     },
                     /**
-                     * @TODO Define all sub properties to expose on the webcomponent
-                     * The Text properties to use for the recognition
-                     * @type {Object}
+                     * The size of the candidate lists that will be provided at the text level in the recognition result.
+                     * This value must be between `1` and `20`.
                      */
-                    textproperties: {
-                        type: Object,
-                        value: function () {
-                            return {
-                                  textCandidateListSize: 3,
-                                  // You can't set a wordCandidateListSize > 0 if ResultDetail is not set to WORD or CHARACTER
-                                  wordCandidateListSize: 3,
-                                  wordPredictionListSize: 1,
-                                  wordCompletionListSize: 1,
-                                  // You can't set a characterCandidateListSize > 0 if ResultDetail is not set to CHARACTER
-                                  characterCandidateListSize: 3,
-                                  enableOutOfLexicon: false,
-                                  discardCaseVariations: false,
-                                  discardAccentuationVariations: false,
-                                  // glyphdistortion is only valid with ISOLATED mode
-                                  glyphDistortion: undefined,
-                                  enableTagger: false,
-                                  // spellingDistortion is only valid with ISOLATED mode
-                                  spellingDistortion: undefined
-                              };
-                        }
+                    textcandidatelistsize: {
+                      type: Number,
+                      value: 1
                     },
                     /**
-                     * @TODO Devons nous exposer les sous propriétés de textproperties de manière aplatie ?
+                     * The size of the candidate lists that will be provided at the word level in the recognition result.
+                     * This value must be between `1` and `20`.
+                     * You can't set a wordCandidateListSize > 0 if depth is not set to WORD or CHARACTER
                      */
-//                    /**
-//                     * The desired count of recognition candidates.
-//                     * @type Number
-//                     */
-//                    recognitioncandidates: {
-//                        type: Number,
-//                        value: 1
-//                    },
-//                    /**
-//                     * The desired count of prediction candidates.
-//                     * @type Number
-//                     */
-//                    predictioncandidates: {
-//                        type: Number,
-//                        value: 0
-//                    },
-//                    /**
-//                     * The desired count of completion candidates.
-//                     * @type Number
-//                     */
-//                    completioncandidates: {
-//                        type: Number,
-//                        value: 0
-//                    },
+                    wordcandidatelistsize: {
+                        type: Number
+                    },
+                    /**
+                     * This value must be between `0` and `20`.
+                     */
+                    wordpredictionlistsize: {
+                        type: Number,
+                        value: 0
+                    },
+                    /**
+                     * This value must be between `0` and `20`.
+                     */
+                    wordcompletionlistsize: {
+                        type: Number,
+                        value: 0
+                    },
+                    /**
+                     * The size of the candidate lists that will be provided at the character level in the recognition result.
+                     * This value must be between `1` and `20`.
+                     * You can't set a characterCandidateListSize > 0 if depth is not set to CHARACTER
+                     */
+                    charactercandidatelistsize: {
+                        type: Number
+                    },
+                    /**
+                     * Property that controls the out of lexicon match.
+                     */
+                    enableoutoflexicon: {
+                        type: Boolean,
+                        value: false
+                    },
+                    /**
+                     * Property that tells the recognizer to detect the candidates that differ only in case and return the best candidate of that lot.
+                     */
+                    discardcasevariations: {
+                        type: Boolean,
+                        value: false
+                    },
+                    /**
+                     * Property that tells the recognizer to detect the candidates that differ only in accentuation and return the best candidate of that lot.
+                     */
+                    discardaccentuationvariations: {
+                        type: Boolean,
+                        value: false
+                    },
+                    /**
+                     * Glyphdistortion is only valid with ISOLATED mode
+                     *
+                     * The value of the <code>GlyphDistortion</code> property that controls the amount of glyph distortion.
+                     * A value between <code>0</code> and <code>255</code>.
+                     *
+                     * <code>0</code> means no distortion.
+                     * <code>255</code> means maximum supported distortion.
+                     */
 
+                    glyphdistortion: {
+                        type: Number
+                    },
+                    /**
+                     * Attach a digital ink tagger to the recognizer
+                     */
+                    enabletagger: {
+                        type: Boolean,
+                        value: false
+                    },
+                    /**
+                     * SpellingDistortion is only valid with ISOLATED mode
+                     *
+                     * The value of the <code>SpellingDistortion</code> property that controls the amount of spelling distortion.
+                     * A value between <code>0</code> and <code>255</code>.
+                     *
+                     * <code>0</code> means no distortion.
+                     * <code>255</code> means maximum supported distortion.
+                     */
+                    spellingdistortion: {
+                        type: Number
+                    },
                     /**
                      * Recognition result.
                      * @attribute result
@@ -533,36 +566,19 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                         notify: true
                     },
                     /**
-                     * @TODO Devons nous créer un compute pour chaque type de canditats (Text, word, char) ?
+                     * The recognition result selected candidate label
+                     */
+                    resultlabel: {
+                        type: String,
+                        notify: true
+                    },
+                    /**
                      * The recognition result candidates
                      * @type {Array<{label: String, flags: Array<String>}>}
                      */
                     candidates: {
                         type: Array,
-                        notify: true,
-                        readOnly: true,
-                        computed: 'computeCandidates(result)'
-                    },
-                    /**
-                     * The selected recognition result candidate
-                     * @type {{label: String, flags: Array<String>}}
-                     */
-                    selectedcandidate: {
-                        type: Object,
-                        notify: true,
-                        readOnly: true,
-                        computed: 'computeSelectedCandidate(result)'
-                    },
-                    /**
-                     * @TODO Devons nous utiliser cette propriété pour récupérer le firstcandidate ?
-                     * The selected recognition result candidate label (same as selectedcandidate.label)
-                     * @deprecated Use selectedcandidate.label instead of firstcandidate
-                     */
-                    firstcandidate: {
-                        type: String,
-                        notify: true,
-                        readOnly: true,
-                        computed: 'computeFirstCandidate(selectedcandidate)'
+                        notify: true
                     }
                 },
                 //-----------------------------------------------------------------------
@@ -629,7 +645,9 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                     this.unloaded = newUnloadValue;
                     if (this.myscriptcommonelement && newUnloadValue !== false) {
                         this.myscriptcommonelement.setAttribute('unloaded', true);
-                        this.result = null;
+                        this.result = {};
+                        this.candidates = [];
+                        this.resultlabel = undefined;
                     }
                     textAttachElementToDom(this);
                 },
@@ -646,47 +664,23 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                     return hideResultValue && ( unloadedValue || unloadedValue !== true);
                 },
                 /**
-                 * Return the list of text candidates
-                 * @TODO Devons nous créer un compute pour chaque type de canditats (Text, word, char) ?
-                 */
-                computeCandidates: function(result) {
-                   if (result && result.textSegmentResult && result.textSegmentResult.candidates && result.textSegmentResult.candidates.length > 0) {
-                        return result.textSegmentResult.candidates;
-                    }
-                    return [];
-                },
-                /**
-                 * Return the selected candidate
-                 * @TODO Doit on garder cette méthode
-                 */
-                computeSelectedCandidate: function(result) {
-                    if (result && result.textSegmentResult && result.textSegmentResult.candidates && result.textSegmentResult.candidates.length > 0) {
-                        var selectedCandidate = result.textSegmentResult.candidates[result.textSegmentResult.selectedCandidateIdx];
-                        return selectedCandidate;
-                    }
-                    return undefined;
-                },
-                /**
-                 * Return the firstcandidate
-                 * @TODO Doit on garder cette méthode car correspond au selectedcandidates
-                 */
-                computeFirstCandidate: function(selectedCandidate) {
-                    if (selectedCandidate) {
-                        return selectedCandidate.label;
-                    }
-                    return '';
-                },
-                /**
                  * Select a new candidate
-                 * #TODO Devons nous supprimer cette methode ?
                  * @param e
                  */
                 select: function (e) {
-                    this.result.textSegmentResult.selectedCandidateIdx = e.model.index;
+                    var result = this.result;
+                    result.textSegmentResult.selectedCandidateIdx = e.model.index;
+                    this.result = {};
+                    this.result = result;
+                },
+                isSelected: function (candidate, result) {
+                    if (result && result.textSegmentResult) {
+                        return (candidate === result.textSegmentResult.candidates[result.textSegmentResult.selectedCandidateIdx]);
+                    }
+                    return false;
                 },
                 /**
                  * Méthode d'affichage des label d'un candidat.
-                 * @TODO Devons nous garder cette méthode ?
                  * @param candidate
                  * @returns {*}
                  */
