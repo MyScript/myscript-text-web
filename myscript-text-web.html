@@ -64,7 +64,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
     <template>
         <div class="resultField" hidden="[[ displayResultZone(hideresult, unloaded) ]]">
             <template is="dom-repeat" id="candidateList" items="[[ candidates ]]" as="candidate">
-                <span id="candidate" index="[[ index ]]" selected$="[[ candidate.isSelected ]]" inner-h-t-m-l="[[ candidate.customlabel ]]"></span>
+                <span id="candidate" index="[[ index ]]" selected$="[[ _isSelected(candidate, result) ]]" inner-h-t-m-l="[[ candidate.customlabel ]]" on-tap="_select"></span>
             </template>
         </div>
         <myscript-common-element
@@ -147,7 +147,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
         myscriptTextWebElement.result = {};
         if (eventDetail.rawResult && eventDetail.rawResult.result) {
             textUpdateCandidatesCustomLabel(eventDetail.rawResult.result);
-            textUpdateCandidatesIsSelected(eventDetail.rawResult.result);
             myscriptTextWebElement.result = eventDetail.rawResult.result;
             myscriptTextWebElement.resultlabel = eventDetail.rawResult.result.textSegmentResult.candidates[eventDetail.rawResult.result.textSegmentResult.selectedCandidateIdx].label;
             myscriptTextWebElement.candidates = eventDetail.rawResult.result.textSegmentResult.candidates;
@@ -251,32 +250,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
           }
           candidate.customlabel = textLabel + '</span>';
       });
-    }
-    /**
-     * Update custom isSelected property of candidates
-     */
-    function textUpdateCandidatesIsSelected (result) {
-        result.textSegmentResult.candidates.forEach(function (candidate) {
-          candidate.isSelected = (candidate === result.textSegmentResult.candidates[result.textSegmentResult.selectedCandidateIdx]);
-        });
-    }
-
-    function textUpdateOnTapCandidatesEventListener (myscriptTextWebElement){
-        myscriptTextWebElement.querySelectorAll('#candidate').forEach(function(candidate){
-            candidate.addEventListener('tap', function (event) {
-                LOG("text select candidate intercepted", event);
-                //var result = myscriptTextWebElement.result;
-                //result.textSegmentResult.selectedCandidateIdx = candidate.index;
-                //myscriptTextWebElement.result = {};
-                //myscriptTextWebElement.result = result;
-
-                //textManageResultEvent(myscriptTextWebElement, e.detail);
-                //myscriptTextWebElement.querySelector('[selected]').removeAttribute('selected');
-                //candidate.setAttribute('selected', true);
-                myscriptTextWebElement.result.textSegmentResult.selectedCandidateIdx = candidate.index;
-                myscriptTextWebElement.myscriptcommonelement.dispatchEvent(new CustomEvent('myscript-common-element-result', { detail: { rawResult: { result: myscriptTextWebElement.result }}}));
-            });
-        });
     }
 
     Polymer({
@@ -776,7 +749,30 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                     LOG('shouldLoadCommonElement', hideResultValue, unloadedValue);
                     // Common element should not be attached if the unload attribute of myscript-math-web element is set to true and if he is not already connected to the dom.
                     return hideResultValue && ( unloadedValue || unloadedValue !== true);
-                }
+                },
+                /**
+                 * Select a new candidate
+                 * @param e
+                 */
+                _select: function (e) {
+                    var result = this.result;
+                    result.textSegmentResult.selectedCandidateIdx = e.model.index;
+                    this.result = {};
+                    this.result = result;
+                },
+                /**
+                 * Determine if the candidate is selected
+                 * @param candidate
+                 * @param result
+                 * @returns {boolean}
+                 * @private
+                 */
+                _isSelected: function (candidate, result) {
+                    if (result && result.textSegmentResult) {
+                        return (candidate === result.textSegmentResult.candidates[result.textSegmentResult.selectedCandidateIdx]);
+                    }
+                    return false;
+                },
             })
     ;
 </script>
