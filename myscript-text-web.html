@@ -64,7 +64,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
     <template>
         <div class="resultField" hidden="[[ displayResultZone(hideresult, unloaded) ]]">
             <template is="dom-repeat" id="candidateList" items="[[ candidates ]]" as="candidate">
-                <span selected$="[[ isSelected(candidate, result) ]]" inner-h-t-m-l="[[ getLabel(candidate) ]]" on-tap="select"></span>
+                <span id="candidate" index="[[ index ]]" selected$="[[ candidate.isSelected ]]" inner-h-t-m-l="[[ candidate.customlabel ]]"></span>
             </template>
         </div>
         <myscript-common-element
@@ -145,10 +145,11 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
      */
     function textManageResultEvent(myscriptTextWebElement, eventDetail) {
         myscriptTextWebElement.result = {};
-        // Transforming an Array into an hashmap to ease bindings.
         if (eventDetail.rawResult && eventDetail.rawResult.result) {
+            textUpdateCandidatesCustomLabel(eventDetail.rawResult.result);
+            textUpdateCandidatesIsSelected(eventDetail.rawResult.result);
             myscriptTextWebElement.result = eventDetail.rawResult.result;
-            myscriptTextWebElement.resultlabel = eventDetail.rawResult.result.textSegmentResult.candidates[eventDetail.rawResult.result.textSegmentResult.selectedCandidateIdx].label
+            myscriptTextWebElement.resultlabel = eventDetail.rawResult.result.textSegmentResult.candidates[eventDetail.rawResult.result.textSegmentResult.selectedCandidateIdx].label;
             myscriptTextWebElement.candidates = eventDetail.rawResult.result.textSegmentResult.candidates;
         }
     }
@@ -187,6 +188,95 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                 myscriptTextWebElement.dispatchEvent(new CustomEvent('myscript-text-web-clear', { detail: event.detail }));
             });
         }
+    }
+
+    /**
+     * Update custom label of candidates by theirs owns properties
+     */
+    function textUpdateCandidatesCustomLabel(result) {
+      result.textSegmentResult.candidates.forEach(function (candidate) {
+          var textLabel = '<span class="text myscript-text-web">';
+          if (candidate.flags && candidate.flags.indexOf('PREDICTED') > -1) {
+              textLabel = '<span class="text predicted myscript-text-web">';
+          }
+          else if (candidate.flags && candidate.flags.indexOf('COMPLETED') > -1) {
+              textLabel = '<span class="text completed myscript-text-web">';
+          }
+          if (!result.wordSegments || result.wordSegments.length <= 0) {
+              textLabel += candidate.label;
+          } else {
+              for (var i in candidate.children) {
+                  var wordSegmentItem = candidate.children[i];
+                  var wordCandidateIndex = wordSegmentItem.selectedCandidateIdx;
+                  var wordInkRanges = wordSegmentItem.inkRanges;
+                  var wordSegment = undefined;
+                  for (var i = 0; i < result.wordSegments.length; i++) {
+                      if (JSON.stringify(result.wordSegments[i].inkRanges) === JSON.stringify(wordInkRanges)) {
+                          wordSegment = result.wordSegments[i];
+                          break;
+                      }
+                  }
+                  if (wordSegment) {
+                      var wordCandidate = wordSegment.candidates[wordCandidateIndex];
+                      if (wordCandidate) {
+                          var wordLabel = '<span class="word myscript-text-web">';
+                          if (wordCandidate.flags && wordCandidate.flags.indexOf('PREDICTED') > -1) {
+                              wordLabel = '<span class="word predicted myscript-text-web">';
+                          } else if (wordCandidate.flags && wordCandidate.flags.indexOf('COMPLETED') > -1) {
+                              wordLabel = '<span class="word completed myscript-text-web">';
+                          }
+                          if (!result.charSegments || result.charSegments.length <= 0) {
+                              wordLabel += wordCandidate.label;
+                          } else {
+                              for (var j in wordCandidate.children) {
+                                  var charSegmentItem = wordCandidate.children[j];
+                                  var charLabel = '<span class="char myscript-text-web">';
+                                  if (!(charSegmentItem.inkRanges && charSegmentItem.inkRanges.length > 0)) {
+                                      if (wordCandidate.flags.indexOf('PREDICTED') > -1) {
+                                          charLabel = '<span class="char predicted myscript-text-web">';
+                                      } else if (wordCandidate.flags.indexOf('COMPLETED') > -1) {
+                                          charLabel = '<span class="char completed myscript-text-web">';
+                                      }
+                                  }
+                                  charLabel += wordCandidate.label.charAt(j);
+                                  charLabel += '</span>';
+                                  wordLabel += charLabel;
+                              }
+                          }
+                          wordLabel += '</span>';
+                          textLabel += wordLabel;
+                      }
+                  }
+              }
+          }
+          candidate.customlabel = textLabel + '</span>';
+      });
+    }
+    /**
+     * Update custom isSelected property of candidates
+     */
+    function textUpdateCandidatesIsSelected (result) {
+        result.textSegmentResult.candidates.forEach(function (candidate) {
+          candidate.isSelected = (candidate === result.textSegmentResult.candidates[result.textSegmentResult.selectedCandidateIdx]);
+        });
+    }
+
+    function textUpdateOnTapCandidatesEventListener (myscriptTextWebElement){
+        myscriptTextWebElement.querySelectorAll('#candidate').forEach(function(candidate){
+            candidate.addEventListener('tap', function (event) {
+                LOG("text select candidate intercepted", event);
+                //var result = myscriptTextWebElement.result;
+                //result.textSegmentResult.selectedCandidateIdx = candidate.index;
+                //myscriptTextWebElement.result = {};
+                //myscriptTextWebElement.result = result;
+
+                //textManageResultEvent(myscriptTextWebElement, e.detail);
+                //myscriptTextWebElement.querySelector('[selected]').removeAttribute('selected');
+                //candidate.setAttribute('selected', true);
+                myscriptTextWebElement.result.textSegmentResult.selectedCandidateIdx = candidate.index;
+                myscriptTextWebElement.myscriptcommonelement.dispatchEvent(new CustomEvent('myscript-common-element-result', { detail: { rawResult: { result: myscriptTextWebElement.result }}}));
+            });
+        });
     }
 
     Polymer({
@@ -504,6 +594,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                         type: Number
                     },
                     /**
+                     * The size of the candidate prediction lists that will be provided at the word level in the recognition result.
                      * This value must be between `0` and `20`.
                      */
                     wordpredictionlistsize: {
@@ -511,6 +602,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                         value: 0
                     },
                     /**
+                     * The size of the candidate completion lists that will be provided at the word level in the recognition result.
                      * This value must be between `0` and `20`.
                      */
                     wordcompletionlistsize: {
@@ -684,87 +776,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                     LOG('shouldLoadCommonElement', hideResultValue, unloadedValue);
                     // Common element should not be attached if the unload attribute of myscript-math-web element is set to true and if he is not already connected to the dom.
                     return hideResultValue && ( unloadedValue || unloadedValue !== true);
-                },
-                /**
-                 * Select a new candidate
-                 * @param e
-                 */
-                select: function (e) {
-                    var result = this.result;
-                    result.textSegmentResult.selectedCandidateIdx = e.model.index;
-                    this.result = {};
-                    this.result = result;
-                },
-                isSelected: function (candidate, result) {
-                    if (result && result.textSegmentResult) {
-                        return (candidate === result.textSegmentResult.candidates[result.textSegmentResult.selectedCandidateIdx]);
-                    }
-                    return false;
-                },
-                /**
-                 * Méthode d'affichage des label d'un candidat.
-                 * @param candidate
-                 * @returns {*}
-                 */
-                getLabel: function (candidate) {
-                    if (!candidate) {
-                        return undefined;
-                    }
-                    var textLabel = '<span class="text myscript-text-web">';
-                    if (candidate.flags && candidate.flags.indexOf('PREDICTED') > -1) {
-                        textLabel = '<span class="text predicted myscript-text-web">';
-                    }
-                    else if (candidate.flags && candidate.flags.indexOf('COMPLETED') > -1) {
-                        textLabel = '<span class="text completed myscript-text-web">';
-                    }
-                    if (!this.result.wordSegments || this.result.wordSegments.length <= 0) {
-                        textLabel += candidate.label;
-                    } else {
-                        for (var i in candidate.children) {
-                            var wordSegmentItem = candidate.children[i];
-                            var wordCandidateIndex = wordSegmentItem.selectedCandidateIdx;
-                            var wordInkRanges = wordSegmentItem.inkRanges;
-                            var wordSegment = undefined;
-                            for (var i = 0; i < this.result.wordSegments.length; i++) {
-                                if (JSON.stringify(this.result.wordSegments[i].inkRanges) === JSON.stringify(wordInkRanges)) {
-                                    wordSegment = this.result.wordSegments[i];
-                                    break;
-                                }
-                            }
-                            if (wordSegment) {
-                                var wordCandidate = wordSegment.candidates[wordCandidateIndex];
-                                if (wordCandidate) {
-                                    var wordLabel = '<span class="word myscript-text-web">';
-                                    if (wordCandidate.flags && wordCandidate.flags.indexOf('PREDICTED') > -1) {
-                                        wordLabel = '<span class="word predicted myscript-text-web">';
-                                    } else if (wordCandidate.flags && wordCandidate.flags.indexOf('COMPLETED') > -1) {
-                                        wordLabel = '<span class="word completed myscript-text-web">';
-                                    }
-                                    if (!this.result.charSegments || this.result.charSegments.length <= 0) {
-                                        wordLabel += wordCandidate.label;
-                                    } else {
-                                        for (var j in wordCandidate.children) {
-                                            var charSegmentItem = wordCandidate.children[j];
-                                            var charLabel = '<span class="char myscript-text-web">';
-                                            if (!(charSegmentItem.inkRanges && charSegmentItem.inkRanges.length > 0)) {
-                                                if (wordCandidate.flags.indexOf('PREDICTED') > -1) {
-                                                    charLabel = '<span class="char predicted myscript-text-web">';
-                                                } else if (wordCandidate.flags.indexOf('COMPLETED') > -1) {
-                                                    charLabel = '<span class="char completed myscript-text-web">';
-                                                }
-                                            }
-                                            charLabel += wordCandidate.label.charAt(j);
-                                            charLabel += '</span>';
-                                            wordLabel += charLabel;
-                                        }
-                                    }
-                                    wordLabel += '</span>';
-                                    textLabel += wordLabel;
-                                }
-                            }
-                        }
-                    }
-                    return textLabel + '</span>';
                 }
             })
     ;
