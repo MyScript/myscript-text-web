@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <title>myscript-text-web demo</title>
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../myscript-text-web.html">
+    <link rel="stylesheet" href="demo.css">
+</head>
+<body touch-action="none" unresolved>
+<div id="waiting">myscript-text-web will be loaded in 3 seconds with customs params.</div>
+
+<!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
+<myscript-text-web unloaded host="webdemoapi.myscript.com">
+</myscript-text-web>
+<script>
+    window.addEventListener("load", function (event) {
+        window.setTimeout(function () {
+            var waitingDiv = document.querySelector('#waiting');
+            waitingDiv.parentNode.removeChild(waitingDiv);
+            console.log("All resources finished loading! Starting to init myscript-text-web");
+            var mycustomconfiguration = {
+                // Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account
+                applicationKey: '515131ab-35fa-411c-bb4d-3917e00faf60',
+                hmacKey: '54b2ca8a-6752-469d-87dd-553bb450e9ad',
+                language: 'zh_CN'
+            };
+            var myscriptTextWebElement = document.querySelector('myscript-text-web');
+            // Testing if attributes binding via DOM, setAttribute or direct object manipulation is working.
+            myscriptTextWebElement.setAttribute('applicationkey', mycustomconfiguration.applicationKey);
+            myscriptTextWebElement.hmackey = mycustomconfiguration.hmacKey;
+            // Testing if options are taken into account
+            myscriptTextWebElement.options = {
+                recognitionParams: {
+                    textParameter: {
+                        language: 'fr_FR'
+                    },
+                    timestampFloatPrecision: 2
+                }
+            };
+            myscriptTextWebElement.language = mycustomconfiguration.language;
+            myscriptTextWebElement.unloaded = false;
+            console.log("myscript-text-web should be displayed");
+        }, 3000);
+    });
+</script>
+</body>
+</html>
+

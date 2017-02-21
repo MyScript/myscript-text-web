@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="HandheldFriendly" content="true"/>
+
+    <title>MyScript text web demo</title>
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../../myscript-common-element/myscript-languages-element.html">
+    <link rel="import" href="../myscript-text-web.html">
+
+    <style is="custom-style" include="iron-flex"></style>
+</head>
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+    }
+    myscript-text-web {
+        height: calc(100% - 60px);
+    }
+    select {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        width: auto;
+        padding: .375rem 1.75rem .4375rem .75rem;
+        color: #131F26;
+        background:url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTQiIHZpZXdCb3g9IjAgMCAxOCAxNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik00LjQyMi4yNmMtLjIzMy0uMzM3LS42MS0uMzM3LS44NDQgMEwuMTc1IDUuMTdDLS4xNDIgNS42MjguMDQ4IDYgLjYxIDZoNi43OGMuNTU4IDAgLjc1NC0uMzcuNDM1LS44M0w0LjQyMi4yNnptLjAyIDEzLjQ3Yy0uMjM2LjM0Mi0uNjE4LjM0Ny0uODUuMDFMLjE2NyA4LjgxOEMtLjE0NiA4LjM2Ny4wNDggOCAuNjA4IDhoNi43ODNjLjU1OCAwIC43NTUuMzcuNDM3LjgzbC0zLjM4NSA0Ljl6IiBmaWxsPSIjMTMxRjI2Ii8+PC9nPjwvc3ZnPg==) right center no-repeat #fff;
+        -webkit-appearance: none;
+        appearance: none;
+        height: 2.625rem;
+        font: 400 1.125rem "Source Sans Pro",sans-serif;
+        border: 1px solid #CED5D9;
+        border-radius: 3px;
+        -webkit-tap-highlight-color: transparent;
+    }
+    .ooo-language-selector {
+        text-align: center;
+        line-height: 60px;
+    }
+</style>
+<body touch-action="none" unresolved>
+<template id="app" is="dom-bind">
+    <myscript-languages-element scheme="https"
+                                host="cloud-internal-stable.visionobjects.com"
+                                applicationKey="a8f991e2-994d-4f36-b61d-55f7ddf6f85d"
+                                languages="{{ languages }}">
+    </myscript-languages-element>
+    <div class="ooo-language-selector">
+        <select onchange="select(this.value)">
+            <template is="dom-repeat"
+                      id="languageList"
+                      items="[[ languages ]]"
+                      as="lang">
+                <option value="[[ lang.value ]]" selected="[[isSelected(lang.value, language)]]">[[ lang.description ]]</option>
+            </template>
+        </select>
+    </div>
+    <myscript-text-web id="text-input"
+                       host="webdemoapi.myscript.com"
+                       applicationkey="22eda92c-10af-40d8-abea-fd4093c17d81"
+                       hmackey="a1fa759f-b3ce-4091-9fd4-d34bb870c601"
+                       language="{{ language }}"
+                       resultdetail="CHARACTER"
+                       textcandidatelistsize="3"
+                       wordcandidatelistsize="3"
+                       wordpredictionlistsize="3"
+                       wordcompletionlistsize="3"
+                       charactercandidatelistsize="3"
+                       unloaded>
+    </myscript-text-web>
+</template>
+</body>
+<script>
+    function select (lang) {
+        var myscripttextweb = document.querySelector('myscript-text-web');
+        myscripttextweb.unloaded = true;
+        myscripttextweb.language = lang;
+        myscripttextweb.unloaded = false;
+    }
+    (function (document) {
+        'use strict';
+        var template = document.querySelector('#app');
+        template.addEventListener('template-bound', function () {
+            console.log('Our app is ready to rock!');
+        });
+        template.isSelected = function (lang, language) {
+          return lang === language;
+        };
+        // See https://github.com/Polymer/polymer/issues/1381
+        window.addEventListener('WebComponentsReady', function () {
+            document.querySelector('body').removeAttribute('unresolved');
+        });
+        // Programmatic loading to set the default language
+        window.addEventListener("load", function (event) {
+            window.setTimeout(function () {
+                document.querySelector('myscript-text-web').language = 'fr_FR';
+                document.querySelector('myscript-text-web').unloaded = false;
+            }, 3000);
+        });
+
+    })(document);
+</script>
+</html>
