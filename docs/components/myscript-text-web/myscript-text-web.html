@@ -11,8 +11,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
     <myscript-text-web
         applicationkey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
         hmackey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
-        language="en_US"
-        recognitioncandidates="3">
+        language="en_US">
     </myscript-text-web>
 
 @demo demo/index.html
@@ -22,6 +21,9 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
     <style>
         :host {
             display: block;
+            --myscript-common-element-button-background: var(--myscript-text-web-button-background);
+            --myscript-common-element-button-focus-background: var(--myscript-text-web-button-focus-background);
+            --myscript-common-element-button-disabled-background: var(--myscript-text-web-button-disabled-background);
         }
         myscript-common-element {
             height: 100%;
@@ -38,7 +40,19 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             color: #1580CD;
         }
         span[selected] {
-            color: #1580CD;
+            color: #FFFFFF;
+            background-color: #1580CD;
+        }
+        span[selected] * {
+            color: inherit;
+            background-color: inherit;
+        }
+        .text {
+            background-color: #EDF0F2;
+            font-size: 1.75rem;
+            padding: .5rem .75rem;
+            border-radius: 3px;
+            cursor: pointer;
         }
         .char.predicted {
             color: #73818C;
@@ -48,517 +62,717 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
         }
     </style>
     <template>
-        <div class="resultField" hidden="[[ hideresult ]]">
+        <div class="resultField" hidden="[[ displayResultZone(hideresult, unloaded) ]]">
             <template is="dom-repeat" id="candidateList" items="[[ candidates ]]" as="candidate">
-                <span selected$="[[ _isSelected(candidate,textdocument) ]]" inner-h-t-m-l="[[ _getLabel(candidate,textdocument) ]]" on-tap="_select"></span>
+                <span id="candidate" index="[[ index ]]" selected$="[[ _isSelected(candidate, result) ]]" inner-h-t-m-l="[[ candidate.customlabel ]]" on-tap="_select"></span>
             </template>
         </div>
-        <myscript-common-element host="[[ host ]]"
-                                 protocol="[[ protocol ]]"
-                                 type="TEXT"
-                                 applicationkey="[[ applicationkey ]]"
-                                 hmackey="[[ hmackey ]]"
-                                 timeout="[[ timeout ]]"
-                                 ssl="[[ ssl ]]"
-                                 hidebuttons="[[ hidebuttons ]]"
-                                 textparameters="[[ _textParameters ]]"
-                                 canundo="{{ canundo }}"
-                                 canredo="{{ canredo }}"
-                                 canclear="{{ canclear }}"
-                                 strokecolor="[[ strokecolor ]]"
-                                 strokewidth="[[ strokewidth]]"
-                                 on-changed="_onChanged"
-                                 on-success="_onSuccess"
-                                 on-error="_onError">
+        <myscript-common-element
+            apiversion="{{ apiversion }}"
+            applicationkey="{{ applicationkey }}"
+            hidebuttons="{{ hidebuttons }}"
+            hmackey="{{ hmackey }}"
+            options="[[ options ]]"
+            protocol="{{ protocol }}"
+            host="{{ host }}"
+            recognitiontriggerdelay="{{recognitiontriggerdelay}}"
+            recognitionprocessdelay="{{recognitionprocessdelay}}"
+            strokecolor="{{ strokecolor }}"
+            strokewidth="{{ strokewidth }}"
+            timeout="{{ timeout }}"
+            unloaded
+            type="TEXT"
+            disableclear="{{ disableclear }}"
+            disablerecognize="{{ disablerecognize }}"
+            disableundoredo="{{ disableundoredo }}"
+            canclear="[[ canclear ]]"
+            canredo="[[ canredo ]]"
+            canundo="[[ canundo ]]"
+            scheme="{{ scheme }}">
         </myscript-common-element>
     </template>
 </dom-module>
 
 <script>
+
+    /**
+     * Function returning the root dom element whatever shadow or shady dom is used.
+     * @param domElement
+     * @returns {*}
+     */
+    function textQsWrapper(domElement) {
+        if (domElement.shadowRoot) {
+            return domElement.shadowRoot;
+        } else {
+            return domElement;
+        }
+    }
+
+    /**
+     *
+     * @param myscriptTextWebElement
+     */
+    function textBuildOptionsFromTextParam(myscriptTextWebElement) {
+        const textParameter = {};
+        textParameter.language = myscriptTextWebElement.language;
+        textParameter.textInputMode = myscriptTextWebElement.textinputmode;
+        textParameter.resultDetail = myscriptTextWebElement.resultdetail;
+        textParameter.contentTypes = myscriptTextWebElement.contenttypes;
+        textParameter.subsetKnowledges = myscriptTextWebElement.subsetknowledges;
+        textParameter.userLkWords = myscriptTextWebElement.userlkwords;
+        textParameter.userResources = myscriptTextWebElement.userresources;
+        textParameter.textProperties = {};
+        textParameter.textProperties.textCandidateListSize = myscriptTextWebElement.textcandidatelistsize;
+        textParameter.textProperties.wordCandidateListSize = myscriptTextWebElement.wordcandidatelistsize;
+        textParameter.textProperties.wordPredictionListSize = myscriptTextWebElement.wordpredictionlistsize;
+        textParameter.textProperties.wordCompletionListSize = myscriptTextWebElement.wordcompletionlistsize;
+        textParameter.textProperties.characterCandidateListSize = myscriptTextWebElement.charactercandidatelistsize;
+        textParameter.textProperties.enableOutOfLexicon = myscriptTextWebElement.enableoutoflexicon;
+        textParameter.textProperties.discardCaseVariations = myscriptTextWebElement.discardcasevariations;
+        textParameter.textProperties.discardAccentuationVariations = myscriptTextWebElement.discardaccentuationvariations;
+        textParameter.textProperties.glyphDistortion = myscriptTextWebElement.glyphdistortion;
+        textParameter.textProperties.enableTagger = myscriptTextWebElement.enabletagger;
+        textParameter.textProperties.spellingDistortion = myscriptTextWebElement.spellingdistortion;
+
+        return textParameter;
+    }
+
+    /**
+     * Recognition success listener.
+     *
+     * @private
+     * @method _onSuccess
+     */
+    function textManageResultEvent(myscriptTextWebElement, eventDetail) {
+        myscriptTextWebElement.result = {};
+        if (eventDetail.rawResult && eventDetail.rawResult.result) {
+            textUpdateCandidatesCustomLabel(eventDetail.rawResult.result);
+            myscriptTextWebElement.result = eventDetail.rawResult.result;
+            myscriptTextWebElement.resultlabel = eventDetail.rawResult.result.textSegmentResult.candidates[eventDetail.rawResult.result.textSegmentResult.selectedCandidateIdx].label;
+            myscriptTextWebElement.candidates = eventDetail.rawResult.result.textSegmentResult.candidates;
+        }
+    }
+
+    function textManageClearEvent(myscriptTextWebElement, eventDetail) {
+        if (myscriptTextWebElement.myscriptcommonelement) {
+            myscriptTextWebElement.result = {};
+            myscriptTextWebElement.resultlabel = undefined;
+            myscriptTextWebElement.candidates = [];
+        }
+    }
+
+    function textAttachElementToDom(myscriptTextWebElement) {
+        if (myscriptTextWebElement.unloaded !== true && myscriptTextWebElement.connected === true) {
+
+            myscriptTextWebElement.myscriptcommonelement = textQsWrapper(myscriptTextWebElement).querySelector('myscript-common-element');
+            myscriptTextWebElement.myscriptcommonelement.options = { recognitionParams: { textParameter: textBuildOptionsFromTextParam(myscriptTextWebElement) } };
+            myscriptTextWebElement.myscriptcommonelement.removeAttribute('unloaded');
+            myscriptTextWebElement.hideresultChanged(myscriptTextWebElement.hideresult);
+            myscriptTextWebElement.myscriptcommonelement.addEventListener('myscript-common-element-change', function (event) {
+                LOG("text change intercepted", event);
+                myscriptTextWebElement.dispatchEvent(new CustomEvent('myscript-text-web-change', { detail: event.detail }));
+            });
+            myscriptTextWebElement.myscriptcommonelement.addEventListener('myscript-common-element-error', function (event) {
+                LOG("text error intercepted", event);
+                myscriptTextWebElement.dispatchEvent(new CustomEvent('myscript-text-web-error', { detail: event.detail }));
+            });
+            myscriptTextWebElement.myscriptcommonelement.addEventListener('myscript-common-element-result', function (event) {
+                LOG("text result intercepted", event);
+                textManageResultEvent(myscriptTextWebElement, event.detail);
+                myscriptTextWebElement.dispatchEvent(new CustomEvent('myscript-text-web-result', { detail: { result: myscriptTextWebElement.result, srcDetail: event.detail } }));
+            });
+            myscriptTextWebElement.myscriptcommonelement.addEventListener('myscript-common-element-clear', function (event) {
+                LOG("text clear intercepted", event);
+                textManageClearEvent(myscriptTextWebElement, event.detail);
+                myscriptTextWebElement.dispatchEvent(new CustomEvent('myscript-text-web-clear', { detail: event.detail }));
+            });
+        }
+    }
+
+    /**
+     * Update custom label of candidates by theirs owns properties
+     */
+    function textUpdateCandidatesCustomLabel(result) {
+      result.textSegmentResult.candidates.forEach(function (candidate) {
+          var textLabel = '<span class="text myscript-text-web">';
+          if (candidate.flags && candidate.flags.indexOf('PREDICTED') > -1) {
+              textLabel = '<span class="text predicted myscript-text-web">';
+          }
+          else if (candidate.flags && candidate.flags.indexOf('COMPLETED') > -1) {
+              textLabel = '<span class="text completed myscript-text-web">';
+          }
+          if (!result.wordSegments || result.wordSegments.length <= 0) {
+              textLabel += candidate.label;
+          } else {
+              for (var i in candidate.children) {
+                  var wordSegmentItem = candidate.children[i];
+                  var wordCandidateIndex = wordSegmentItem.selectedCandidateIdx;
+                  var wordInkRanges = wordSegmentItem.inkRanges;
+                  var wordSegment = undefined;
+                  for (var i = 0; i < result.wordSegments.length; i++) {
+                      if (JSON.stringify(result.wordSegments[i].inkRanges) === JSON.stringify(wordInkRanges)) {
+                          wordSegment = result.wordSegments[i];
+                          break;
+                      }
+                  }
+                  if (wordSegment) {
+                      var wordCandidate = wordSegment.candidates[wordCandidateIndex];
+                      if (wordCandidate) {
+                          var wordLabel = '<span class="word myscript-text-web">';
+                          if (wordCandidate.flags && wordCandidate.flags.indexOf('PREDICTED') > -1) {
+                              wordLabel = '<span class="word predicted myscript-text-web">';
+                          } else if (wordCandidate.flags && wordCandidate.flags.indexOf('COMPLETED') > -1) {
+                              wordLabel = '<span class="word completed myscript-text-web">';
+                          }
+                          if (!result.charSegments || result.charSegments.length <= 0) {
+                              wordLabel += wordCandidate.label;
+                          } else {
+                              for (var j in wordCandidate.children) {
+                                  var charSegmentItem = wordCandidate.children[j];
+                                  var charLabel = '<span class="char myscript-text-web">';
+                                  if (!(charSegmentItem.inkRanges && charSegmentItem.inkRanges.length > 0)) {
+                                      if (wordCandidate.flags.indexOf('PREDICTED') > -1) {
+                                          charLabel = '<span class="char predicted myscript-text-web">';
+                                      } else if (wordCandidate.flags.indexOf('COMPLETED') > -1) {
+                                          charLabel = '<span class="char completed myscript-text-web">';
+                                      }
+                                  }
+                                  charLabel += wordCandidate.label.charAt(j);
+                                  charLabel += '</span>';
+                                  wordLabel += charLabel;
+                              }
+                          }
+                          wordLabel += '</span>';
+                          textLabel += wordLabel;
+                      }
+                  }
+              }
+          }
+          candidate.customlabel = textLabel + '</span>';
+      });
+    }
+
     Polymer({
-        is: 'myscript-text-web',
-        /**
-         * Fired when a text recognition result is successfully received.
-         *
-         * @event myscript-text-web-result
-         */
-        /**
-         * Fired when the delete action is done.
-         *
-         * @event myscript-text-web-delete
-         */
-        /**
-         * Fired when a recognition error occurred.
-         * @event error
-         */
-        /**
-         * Fired when the content of the myscript-text-web changes.
-         * @event changed
-         */
-        properties: {
-            /**
-             * <b>not mutable</b><br />
-             * The current recognition protocol (WebSocket or REST). We strongly recommend using WebSocket.
-             * @type String
-             */
-            protocol: {
-                type: String,
-                value: 'WebSocket'
-            },
-            /**
-             * <b>not mutable</b><br />
-             * The current recognition service host.
-             * @type String
-             */
-            host: {
-                type: String,
-                value: 'cloud.myscript.com'
-            },
-            /**
-             * <b>not mutable</b><br />
-             * The recognition timeout, only use in REST mode.
-             * @type Number
-             */
-            timeout: {
-                type: Number,
-                value: 2000
-            },
-            /**
-             * <b>not mutable</b><br />
-             * Application key to use for recognition on MyScript handwriting recognition server.<br />
-             * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.<br /><br />
-             * <b>Warning</b>: This parameter is <b>mandatory</b> and its value should be a string.
-             * @type String
-             */
-            applicationkey: {
-                type: String
-            },
-            /**
-             * <b>not mutable</b><br />
-             * HMAC key to use for recognition on MyScript handwriting recognition server.<br />
-             * You have to create your own HMAC key corresponding to your own application key in your account at http://cloud.myscript.com.<br /><br />
-             * <b>Warning</b>: This parameter may be <b>mandatory</b> if HMAC signature security is enabled for your application. The value should be a string.
-             * @type String
-             */
-            hmackey: {
-                type: String
-            },
-            /**
-             * True if undo is available
-             * @private
-             * @type Boolean
-             */
-            canundo: {
-                type: Boolean,
-                notify: true,
-                value: false
-            },
-            /**
-             * True if redo is available
-             * @private
-             * @type Boolean
-             */
-            canredo: {
-                type: Boolean,
-                notify: true,
-                value: false
-            },
-            /**
-             * True if there is something to clear
-             * @private
-             * @type Boolean
-             */
-            canclear: {
-                type: Boolean,
-                notify: true,
-                value: false
-            },
-            /**
-             * <b>not mutable</b><br />
-             * If set to true, hide the buttons (Trash, Undo, Redo).
-             * @type Boolean
-             */
-            hidebuttons: {
-                type: Boolean,
-                value: false
-            },
-            /**
-             * <b>not mutable</b><br />
-             * If set to true, hide the result div tag.
-             * @type Boolean
-             */
-            hideresult: {
-                type: Boolean,
-                value: false,
-                observer: '_hideresultChanged'
-            },
-            /**
-             * The recognition language used by the recognition process.
-             * @type String
-             */
-            language: {
-                type: String,
-                notify: true,
-                value: 'en_US'
-            },
-            /**
-             * The available recognition languages as configured for your application on MyScript Cloud or Server.
-             * @type {Array<String>}
-             */
-            availablelanguages: {
-                type: Array,
-                notify: true,
-                readOnly: true,
-                value: ['en_US']
-            },
-            /**
-             * The result detail to use (TEXT, WORD or CHARACTER).
-             * @type String
-             */
-            resultdetail: {
-                type: String,
-                value: 'TEXT'
-            },
-            /**
-             * The input mode to use (CURSIVE, ISOLATED, SUPERIMPOSED or VERTICAL).
-             * @type String
-             */
-            inputmode: {
-                type: String,
-                value: 'CURSIVE',
-                observer: '_inputModeChanged'
-            },
-            /**
-             * The desired count of recognition candidates.
-             * @type Number
-             */
-            recognitioncandidates: {
-                type: Number,
-                value: 1
-            },
-            /**
-             * The desired count of prediction candidates.
-             * @type Number
-             */
-            predictioncandidates: {
-                type: Number,
-                value: 0
-            },
-            /**
-             * The desired count of completion candidates.
-             * @type Number
-             */
-            completioncandidates: {
-                type: Number,
-                value: 0
-            },
-            /**
-             * The content types to use for the recognition.
-             * @type {Array<String>}
-             */
-            contenttypes: {
-                type: Array,
-                value: []
-            },
-            /**
-             * The user resources to use for the recognition.
-             * @type {Array<String>}
-             */
-            userresources: {
-                type: Array,
-                value: []
-            },
-            /**
-             * Set the stroke color
-             * @type String
-             */
-            strokecolor: {
-                type: String
-            },
-            /**
-             * Set the stroke width
-             * @type String
-             */
-            strokewidth: {
-                type: Number
-            },
-            /**
-             * @type {{textCandidateListSize: Number, wordCandidateListSize: Number, wordPredictionListSize: Number, wordCompletionListSize: Number, characterCandidateListSize: Number, enableOutOfLexicon: Boolean, discardCaseVariations: Boolean, discardAccentuationVariations: Boolean, disableSpatialOrdering: Boolean, glyphDistortion: Number, spellingDistortion: Number}}
-             */
-            _textProperties: {
-                type: Object,
-                computed: '_computeTextProperties(resultdetail, recognitioncandidates, predictioncandidates, completioncandidates)'
-            },
-            /**
-             * Recognition parameters for the text recognition.
-             * @type {{language: String, textInputMode: String, resultDetail: String, contentTypes: Array<String>, subsetKnowledges: Array<String>, userResources: Array<String>, userLkWords: Array<String>, textProperties: {textCandidateListSize: Number, wordCandidateListSize: Number, wordPredictionListSize: Number, wordCompletionListSize: Number, characterCandidateListSize: Number, enableOutOfLexicon: Boolean, discardCaseVariations: Boolean, discardAccentuationVariations: Boolean, disableSpatialOrdering: Boolean, glyphDistortion: Number, spellingDistortion: Number}}}
-             */
-            _textParameters: {
-                type: Object,
-                computed: '_computeTextParameters(inputmode, language, resultdetail, contenttypes, userresources, _textProperties)'
-            },
-            /**
-             * The text recognition result document.
-             * @private
-             * @type {{tagItems: Array, wordCandidates: Array, charCandidates: Array}}
-             * @default {}
-             */
-            textdocument: {
-                type: Object,
-                notify: true,
-                value: new MyScript.TextDocument()
-            },
-            /**
-             * The recognition result candidates
-             * @type {Array<{label: String, flags: Array<String>}>}
-             */
-            candidates: {
-                type: Array,
-                notify: true,
-                readOnly: true,
-                computed: '_computeCandidates(textdocument)'
-            },
-            /**
-             * The selected recognition result candidate
-             * @type {{label: String, flags: Array<String>}}
-             */
-            selectedcandidate: {
-                type: Object,
-                notify: true,
-                readOnly: true,
-                computed: '_computeSelectedCandidate(candidates,textdocument)'
-            },
-            /**
-             * The selected recognition result candidate label (same as selectedcandidate.label)
-             * @deprecated Use selectedcandidate.label instead of firstcandidate
-             */
-            firstcandidate: {
-                type: String,
-                notify: true,
-                readOnly: true,
-                computed: '_computeFirstCandidate(selectedcandidate)'
-            },
-            /**
-             * True if SSL is activated, false otherwise
-             * @private
-             * @type Boolean
-             */
-            ssl: {
-                type: Boolean,
-                value: true
-            }
-        },
-        _clear: function () {
-            this._myscriptCommonElement.clear();
-            this.fire('myscript-text-web-delete');
-        },
-        _undo: function () {
-            this._myscriptCommonElement.undo();
-        },
-        _redo: function () {
-            this._myscriptCommonElement.redo();
-        },
-        /**
-         * Clear the  current document.
-         * @deprecated Use clear instead of delete
-         * @private
-         */
-        delete: function () {
-            this._clear();
-        },
-        /**
-         * Clear the  current document.
-         */
-        clear: function () {
-            this._clear();
-        },
-        /**
-         * Undo the last action.
-         */
-        undo: function () {
-            this._undo();
-        },
-        /**
-         * Redo the last action.
-         */
-        redo: function () {
-            this._redo();
-        },
-        /**
-         * Return the stats allowing to monitor what ink size is send to the server.
-         * Stats objects format {strokesCount : 0, pointsCount : 0, byteSize : 0, humanSize : 0, humanUnit : 'BYTE'} humanUnit could have the values BYTE, BYTES, KiB, MiB
-         */
-        getStats: function () {
-            if (this._myscriptCommonElement) {
-                return this._myscriptCommonElement.getStats();
-            }
-        },
-        /**
-         * Get the list of available languages.
-         */
-        getAvailableLanguageList: function () {
-            this._myscriptCommonElement.getAvailableLanguages(this.inputmode);
-        },
-        _onChanged: function (e) {
-            this.fire(e.type, e.detail);
-        },
-        /**
-         * Recognition success listener.
-         *
-         * @private
-         * @method _onSuccess
-         */
-        _onSuccess: function (e) {
-            if (e.detail && e.detail.getDocument) {
-                this.textdocument = e.detail.getDocument();
-            } else if (e.detail && (e.detail instanceof Array)) {
-                this.availablelanguages = e.detail;
-            } else {
-                this.textdocument = new MyScript.TextDocument();
-            }
-            this.fire(e.type, e.detail);
-            this.fire('myscript-text-web-result', e.detail);
-        },
-        _onError: function (e) {
-            this.fire(e.type, e.detail);
-        },
-        ready: function () {
-            this._myscriptCommonElement = this.querySelector('myscript-common-element');
-            if (this.applicationkey) {
-                this.getAvailableLanguageList(this.inputmode);
-            }
-            this._hideresultChanged(this.hideresult);
-        },
-        _select: function (e) {
-            this.textdocument.getTextSegment().selectedCandidateIdx = e.model.index;
-            this.textdocument = new MyScript.TextDocument(this.textdocument);
-        },
-        _isSelected: function (candidate, textDocument) {
-            if (textDocument.getTextSegment()) {
-                return (candidate === textDocument.getTextSegment().getSelectedCandidate());
-            }
-            return false;
-        },
-        _getLabel: function (textCandidate, textDocument) {
-            if (!textDocument || !textCandidate) {
-                return undefined;
-            }
-            var textLabel = '<span class="text">';
-            if (textCandidate.getFlags().indexOf('PREDICTED') > -1) {
-                textLabel = '<span class="text predicted">';
-            }
-            else if (textCandidate.getFlags().indexOf('COMPLETED') > -1) {
-                textLabel = '<span class="text completed">';
-            }
-            if (textDocument.getWordSegments().length <= 0) {
-                textLabel += textCandidate.getLabel();
-            } else {
-                for (var i in textCandidate.getChildren()) {
-                    var wordSegmentItem = textCandidate.getChildren()[i];
-                    var wordCandidateIndex = wordSegmentItem.getSelectedCandidateIdx();
-                    var wordInkRanges = wordSegmentItem.getInkRanges();
-                    var wordSegment = textDocument.getWordSegment(wordInkRanges);
-                    if (wordSegment) {
-                        var wordCandidate = wordSegment.getCandidates()[wordCandidateIndex];
-                        if (wordCandidate) {
-                            var wordLabel = '<span class="word">';
-                            if (wordCandidate.getFlags().indexOf('PREDICTED') > -1) {
-                                wordLabel = '<span class="word predicted">';
-                            } else if (wordCandidate.getFlags().indexOf('COMPLETED') > -1) {
-                                wordLabel = '<span class="word completed">';
-                            }
-                            if (textDocument.getCharSegments().length <= 0) {
-                                wordLabel += wordCandidate.getLabel();
-                            } else {
-                                for (var j in wordCandidate.getChildren()) {
-                                    var charSegmentItem = wordCandidate.getChildren()[j];
-                                    var charLabel = '<span class="char">';
-                                    if (!(charSegmentItem.getInkRanges() && charSegmentItem.getInkRanges().length > 0)) {
-                                        if (wordCandidate.getFlags().indexOf('PREDICTED') > -1) {
-                                            charLabel = '<span class="char predicted">';
-                                        } else if (wordCandidate.getFlags().indexOf('COMPLETED') > -1) {
-                                            charLabel = '<span class="char completed">';
-                                        }
-                                    }
-                                    charLabel += wordCandidate.getLabel().charAt(j);
-                                    charLabel += '</span>';
-                                    wordLabel += charLabel;
-                                }
-                            }
-                            wordLabel += '</span>';
-                            textLabel += wordLabel;
+                is: 'myscript-text-web',
+                /**
+                 * Fired when state of canundo / canredo / canclear / canrecognize
+                 *
+                 * @event myscript-text-web-change
+                 */
+                /**
+                 * Fired when the delete action is done.
+                 *
+                 * @event myscript-text-web-result
+                 */
+                /**
+                 * Fired when a recognition error occurred.
+                 * @event myscript-text-web-error
+                 */
+                properties: {
+                    // ----------------------------------------------------------------------------------------------
+                    // The following section is a recopy of myscript-common-element attributes
+                    // Polymer documentation generation prevent from reusing attributes from another element.
+                    // ----------------------------------------------------------------------------------------------
+                    /**
+                     * The current recognition protocol (WEBSOCKET or REST). We strongly recommend using WEBSOCKET.
+                     * @type String
+                     * @default 'WEBSOCKET'
+                     */
+                    protocol: {
+                        type: String,
+                        reflectToAttribute: true,
+                        value: 'WEBSOCKET'
+                    },
+                    /**
+                     * Scheme to use to connect to MyScript Cloud or Server. (https or http)
+                     * @private
+                     * @type Boolean
+                     * @default true
+                     */
+                    scheme: {
+                        type: String,
+                        reflectToAttribute: true,
+                        value: 'https'
+                    },
+                    /**
+                     * The current recognition service host.
+                     * @type String
+                     * @default 'cloud.myscript.com'
+                     */
+                    host: {
+                        type: String,
+                        reflectToAttribute: true,
+                        value: 'cloud.myscript.com'
+                    },
+                    /**
+                     * Recogntion API version to use (eg V3 or V4)
+                     * @type String
+                     * @default 'V3'
+                     */
+                    apiversion: {
+                        type: String,
+                        reflectToAttribute: true,
+                        value: 'V3'
+                    },
+                    /**
+                     * Delay without any user input before asking for recognition, only use in REST mode.
+                     * @type Number
+                     * @default 2000
+                     */
+                    recognitiontriggerdelay: {
+                        type: Number,
+                        reflectToAttribute: true,
+                        value: 2000
+                    },
+                    /**
+                     * Delay without any recognition result received before processing the last one received, only use in WEBSOCKET mode.
+                     * @type Number
+                     * @default 2000
+                     */
+                    recognitionprocessdelay: {
+                        type: Number,
+                        reflectToAttribute: true,
+                        value: 1000
+                    },
+                    /**
+                     * The recognition timeout, only use in REST mode.
+                     * @type Number
+                     * @default 2000
+                     */
+                    timeout: {
+                        type: Number,
+                        reflectToAttribute: true,
+                        value: 2000
+                    },
+                    /**
+                     * Application key to use for recognition on MyScript handwriting recognition server.<br />
+                     * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.<br /><br />
+                     * <b>Warning</b>: This parameter is <b>mandatory</b> and its value should be a string.
+                     * @type String
+                     */
+                    applicationkey: {
+                        type: String,
+                        reflectToAttribute: true
+                    },
+                    /**
+                     * HMAC key to use for recognition on MyScript handwriting recognition server.<br />
+                     * You have to create your own HMAC key corresponding to your own application key in your account at http://cloud.myscript.com.<br /><br />
+                     * <b>Warning</b>: This parameter may be <b>mandatory</b> if HMAC signature security is enabled for your application. The value should be a string.
+                     * @type String
+                     */
+                    hmackey: {
+                        type: String,
+                        reflectToAttribute: true
+                    },
+                    /**
+                     * Properties to set when you wish to set attributes in javascript. unloaded attributes shoudl be removed once all properties are set.
+                     * (see demo/programmatic-init.html for a better understanding)
+                     */
+                    unloaded: {
+                        type: Boolean,
+                        value: false,
+                        notify: true,
+                        reflectToAttribute: true,
+                        observer: 'unloadedChanged'
+                    },
+                    /**
+                     * Set the additional options used to feed MyScript ink Paper (Structure of object as defined in MyScriptjs MyScriptJSOptions.js file)
+                     * Options values are taken into account when myscript-common-element is attach to the dom and when detached is set to false.
+                     * Options values are not reflected to myscript-common-element attributes plus attributes values are always taken into account before options values (see demo/programmatic-init.html for a better understanding).
+                     */
+                    options: {
+                        type: Object,
+                        notify: true
+                    },
+                    /**
+                     * Set the stroke color
+                     * @type String
+                     */
+                    strokecolor: {
+                        type: String,
+                        value: '#1580CD',
+                        reflectToAttribute: true
+                    },
+                    /**
+                     * Set the stroke width
+                     * @type String
+                     */
+                    strokewidth: {
+                        type: Number,
+                        value: 4,
+                        reflectToAttribute: true
+                    },
+                    /**
+                     * True if undo is available
+                     * @private
+                     * @type Boolean
+                     * @default false
+                     */
+                    canundo: {
+                        type: Boolean,
+                        value: false,
+                        reflectToAttribute: true,
+                        notify: true
+                    },
+                    /**
+                     * True if redo is available
+                     * @private
+                     * @type Boolean
+                     * @default false
+                     */
+                    canredo: {
+                        type: Boolean,
+                        value: false,
+                        reflectToAttribute: true,
+                        notify: true
+                    },
+                    /**
+                     * True if there is something to clear
+                     * @private
+                     * @type Boolean
+                     * @default false
+                     */
+                    canclear: {
+                        type: Boolean,
+                        value: false,
+                        reflectToAttribute: true,
+                        notify: true
+                    },
+                    /**
+                     * If set to true, hide the buttons (Trash, Undo, Redo).
+                     * @type Boolean
+                     * @default false
+                     */
+                    hidebuttons: {
+                        type: Boolean,
+                        reflectToAttribute: true,
+                        value: false,
+                        notify: true
+                    },
+
+                    /**
+                     * True if the undo/redo feature is disabled, false otherwise
+                     */
+                    disableundoredo: {
+                        type: Boolean,
+                        reflectToAttribute: true,
+                        value: false
+                    },
+                    /**
+                     * True if the clear feature is disabled, false otherwise
+                     */
+                    disableclear: {
+                        type: Boolean,
+                        reflectToAttribute: true,
+                        value: false
+                    },
+                    /**
+                     * True if the recognize feature is disabled, false otherwise
+                     */
+                    disablerecognize: {
+                        type: Boolean,
+                        reflectToAttribute: true,
+                        value: true
+                    },
+
+                    //------------------------------------------------------------------------------
+                    //                 End of recopy
+                    // -----------------------------------------------------------------------------
+                    /**
+                     * The underlying myscriptcommonelement. This could allow to access more advanced properties.
+                     */
+                    myscriptcommonelement: {
+                        type: Object
+                    },
+                    /**
+                     * If set to true, hide the result div tag.
+                     * @type Boolean
+                     */
+                    hideresult: {
+                        type: Boolean,
+                        value: false,
+                        observer: 'hideresultChanged'
+                    },
+                    /**
+                     * The recognition language used by the recognition process.
+                     * @type String
+                     */
+                    language: {
+                        type: String,
+                        notify: true,
+                        value: 'en_US'
+                    },
+                    /**
+                     * The text input mode to use (CURSIVE, ISOLATED, SUPERIMPOSED or VERTICAL).
+                     * @type String
+                     */
+                    textinputmode: {
+                        type: String,
+                        value: 'CURSIVE'
+                    },
+                    /**
+                     * The resultdetail is an entry property that conditioning result depth output. To use (TEXT, WORD or CHARACTER).
+                     * @type String
+                     */
+                    resultdetail: {
+                        type: String,
+                        value: 'TEXT'
+                    },
+                    /**
+                     * The content types to use for the recognition.
+                     * @type {Array<String>}
+                     */
+                    contenttypes: {
+                        type: Array,
+                        value: []
+                    },
+                    /**
+                     * The subset knowledges to use for the recognition.
+                     * @type {Array<String>}
+                     */
+                    subsetknowledges: {
+                        type: Array,
+                        value: []
+                    },
+                    /**
+                     * The user lk words to use for the recognition.
+                     * @type {Array<String>}
+                     */
+                    userlkwords: {
+                        type: Array,
+                        value: []
+                    },
+                    /**
+                     * List of user resources to use for recognitions. Thoses user ressources have to be attached to the user account where application is declare.
+                     * @type {Array}
+                     */
+                    userresources: {
+                        type: Array,
+                        value: []
+                    },
+                    /**
+                     * The size of the candidate lists that will be provided at the text level in the recognition result.
+                     * This value must be between `1` and `20`.
+                     */
+                    textcandidatelistsize: {
+                      type: Number,
+                      value: 1
+                    },
+                    /**
+                     * The size of the candidate lists that will be provided at the word level in the recognition result.
+                     * This value must be between `1` and `20`.
+                     * You can't set a wordCandidateListSize > 0 if depth is not set to WORD or CHARACTER
+                     */
+                    wordcandidatelistsize: {
+                        type: Number
+                    },
+                    /**
+                     * The size of the candidate prediction lists that will be provided at the word level in the recognition result.
+                     * This value must be between `0` and `20`.
+                     */
+                    wordpredictionlistsize: {
+                        type: Number,
+                        value: 0
+                    },
+                    /**
+                     * The size of the candidate completion lists that will be provided at the word level in the recognition result.
+                     * This value must be between `0` and `20`.
+                     */
+                    wordcompletionlistsize: {
+                        type: Number,
+                        value: 0
+                    },
+                    /**
+                     * The size of the candidate lists that will be provided at the character level in the recognition result.
+                     * This value must be between `1` and `20`.
+                     * You can't set a characterCandidateListSize > 0 if depth is not set to CHARACTER
+                     */
+                    charactercandidatelistsize: {
+                        type: Number
+                    },
+                    /**
+                     * Property that controls the out of lexicon match.
+                     */
+                    enableoutoflexicon: {
+                        type: Boolean,
+                        value: false
+                    },
+                    /**
+                     * Property that tells the recognizer to detect the candidates that differ only in case and return the best candidate of that lot.
+                     */
+                    discardcasevariations: {
+                        type: Boolean,
+                        value: false
+                    },
+                    /**
+                     * Property that tells the recognizer to detect the candidates that differ only in accentuation and return the best candidate of that lot.
+                     */
+                    discardaccentuationvariations: {
+                        type: Boolean,
+                        value: false
+                    },
+                    /**
+                     * Glyphdistortion is only valid with ISOLATED mode
+                     *
+                     * The value of the <code>GlyphDistortion</code> property that controls the amount of glyph distortion.
+                     * A value between <code>0</code> and <code>255</code>.
+                     *
+                     * <code>0</code> means no distortion.
+                     * <code>255</code> means maximum supported distortion.
+                     */
+
+                    glyphdistortion: {
+                        type: Number
+                    },
+                    /**
+                     * Attach a digital ink tagger to the recognizer
+                     */
+                    enabletagger: {
+                        type: Boolean,
+                        value: false
+                    },
+                    /**
+                     * SpellingDistortion is only valid with ISOLATED mode
+                     *
+                     * The value of the <code>SpellingDistortion</code> property that controls the amount of spelling distortion.
+                     * A value between <code>0</code> and <code>255</code>.
+                     *
+                     * <code>0</code> means no distortion.
+                     * <code>255</code> means maximum supported distortion.
+                     */
+                    spellingdistortion: {
+                        type: Number
+                    },
+                    /**
+                     * Recognition result.
+                     * @attribute result
+                     * @type {Object<String, Object>} Attributes depends on recognition type already configured.
+                     */
+                    result: {
+                        type: Object,
+                        notify: true
+                    },
+                    /**
+                     * The recognition result selected candidate label
+                     */
+                    resultlabel: {
+                        type: String,
+                        notify: true
+                    },
+                    /**
+                     * The recognition result candidates
+                     * @type {Array<{label: String, flags: Array<String>}>}
+                     */
+                    candidates: {
+                        type: Array,
+                        notify: true
+                    }
+                },
+                //-----------------------------------------------------------------------
+                //---------  Wrapping of myscript-common-element  methods    ------------
+                //-----------------------------------------------------------------------
+                /**
+                 * Clear all context
+                 */
+                clear: function () {
+                    if (this.myscriptcommonelement) {
+                        this.myscriptcommonelement.clear();
+                    }
+                },
+                /**
+                 * Undo action, and launch recognition if timeout is set
+                 */
+                undo: function () {
+                    if (this.myscriptcommonelement) {
+                        this.myscriptcommonelement.undo();
+                    }
+                },
+                /**
+                 * Redo action, and launch recognition if timeout is set
+                 */
+                redo: function () {
+                    if (this.myscriptcommonelement) {
+                        this.myscriptcommonelement.redo();
+                    }
+                },
+                /**
+                 * Launch recognition
+                 */
+                recognize: function () {
+                    if (this.myscriptcommonelement) {
+                        this.myscriptcommonelement.recognize();
+                    }
+                },
+                /**
+                 * Return the stats allowing to monitor what ink size is send to the server.
+                 * Stats objects format {strokesCount : 0, pointsCount : 0, byteSize : 0, humanSize : 0, humanUnit : 'BYTE'} humanUnit could have the values BYTE, BYTES, KiB, MiB
+                 */
+                getStats: function () {
+                    if (this.myscriptcommonelement) {
+                        return this.myscriptcommonelement.getStats();
+                    }
+                },
+                //-----------------------------------------------------------------------
+                //---------  Wrapping END                                    ------------
+                //-----------------------------------------------------------------------
+                /**
+                 *
+                 */
+                hideresultChanged: function (hideresult) {
+                    if (this.myscriptcommonelement) {
+                        if (hideresult) {
+                            this.myscriptcommonelement.classList.remove('result');
+                        } else {
+                            this.myscriptcommonelement.classList.add('result');
                         }
                     }
-                }
-            }
-            return textLabel + '</span>';
-        },
-        _computeTextParameters: function (inputMode, language, resultDetail, contentTypes, resources, _textProperties) {
-            var parameters = new MyScript.TextParameter();
-            parameters.setInputMode(inputMode);
-            parameters.setResultDetail(resultDetail);
-            parameters.setTextProperties(_textProperties);
-            parameters.setLanguage(language);
-            if (resources.length > 0) {
-                parameters.setUserResources(resources);
-            }
-            if (contentTypes.length > 0) {
-                parameters.setContentTypes(contentTypes);
-            }
-            return parameters;
-        },
-        _computeTextProperties: function (resultDetail, recognitionCandidates, predictionCandidates, completionCandidates) {
-            var properties = new MyScript.TextProperties();
-            properties.setTextCandidateListSize(recognitionCandidates);
-            switch (resultDetail) {
-                case MyScript.ResultDetail.CHARACTER:
-                    properties.setCharacterCandidateListSize(recognitionCandidates);
-                case MyScript.ResultDetail.WORD:
-                    properties.setWordCandidateListSize(recognitionCandidates);
-                    properties.setWordPredictionListSize(predictionCandidates);
-                    properties.setWordCompletionListSize(completionCandidates);
-                default:
-                    properties.setTextCandidateListSize(recognitionCandidates);
-            }
-            return properties;
-        },
-        _computeCandidates: function (textDocument) {
-            if (textDocument && textDocument.getTextSegment()) {
-                return textDocument.getTextSegment().getCandidates();
-            }
-            return [];
-        },
-        _computeSelectedCandidate: function (candidates, textDocument) {
-            if (candidates && textDocument && textDocument.getTextSegment()) {
-                var selectedCandidate = candidates[textDocument.getTextSegment().getSelectedCandidateIdx()];
-                return selectedCandidate;
-            }
-            return undefined;
-        },
-        _computeFirstCandidate: function (selectedCandidate) {
-            if (selectedCandidate) {
-                return selectedCandidate.getLabel();
-            }
-            return '';
-        },
-        _inputModeChanged: function (inputMode) {
-            if (this._myscriptCommonElement && inputMode) {
-                this._myscriptCommonElement.getAvailableLanguages(inputMode);
-            }
-        },
-        _applicationKeyChanged: function (applicationKey) {
-            if (this._myscriptCommonElement && applicationKey) {
-                this._myscriptCommonElement.getAvailableLanguages(this.inputmode);
-            }
-        },
-        _hideresultChanged: function (hideresult) {
-            if (this._myscriptCommonElement) {
-                if (hideresult) {
-                    this._myscriptCommonElement.classList.remove('result');
-                } else {
-                    this._myscriptCommonElement.classList.add('result');
-                }
-            }
-        }
-    });
+                },
+                unloadedChanged: function (newUnloadValue) {
+                    LOG('text unloaded changed', newUnloadValue);
+                    this.unloaded = newUnloadValue;
+                    if (this.myscriptcommonelement && newUnloadValue !== false) {
+                        this.myscriptcommonelement.setAttribute('unloaded', true);
+                        this.result = {};
+                        this.candidates = [];
+                        this.resultlabel = undefined;
+                    }
+                    textAttachElementToDom(this);
+                },
+                //Will be renamed connected with pure custom element support
+                attached: function () {
+                    LOG('text attached');
+                    this.myscriptcommonelement = this.querySelector('myscript-common-element');
+                    this.connected = true;
+                    textAttachElementToDom(this);
+                },
+                displayResultZone: function (hideResultValue, unloadedValue) {
+                    LOG('shouldLoadCommonElement', hideResultValue, unloadedValue);
+                    // Common element should not be attached if the unload attribute of myscript-math-web element is set to true and if he is not already connected to the dom.
+                    return hideResultValue && ( unloadedValue || unloadedValue !== true);
+                },
+                /**
+                 * Select a new candidate
+                 * @param e
+                 */
+                _select: function (e) {
+                    var result = this.result;
+                    result.textSegmentResult.selectedCandidateIdx = e.model.index;
+                    this.result = {};
+                    this.result = result;
+                },
+                /**
+                 * Determine if the candidate is selected
+                 * @param candidate
+                 * @param result
+                 * @returns {boolean}
+                 * @private
+                 */
+                _isSelected: function (candidate, result) {
+                    if (result && result.textSegmentResult) {
+                        return (candidate === result.textSegmentResult.candidates[result.textSegmentResult.selectedCandidateIdx]);
+                    }
+                    return false;
+                },
+            })
+    ;
 </script>

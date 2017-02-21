@@ -6,10 +6,10 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="HandheldFriendly" content="true"/>
 
-    <title>myscript-text demo</title>
+    <title>MyScript text web demo</title>
 
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-    <link rel="import" href="../../iron-ajax/iron-ajax.html">
+    <link rel="import" href="../../myscript-common-element/myscript-languages-element.html">
     <link rel="import" href="../myscript-text-web.html">
 
     <style is="custom-style" include="iron-flex"></style>
@@ -21,10 +21,6 @@
     }
     myscript-text-web {
         height: calc(100% - 60px);
-    }
-    paper-menu-button {
-        padding: 0;
-        width: 250px;
     }
     select {
         -webkit-appearance: none;
@@ -48,20 +44,17 @@
 </style>
 <body touch-action="none" unresolved>
 <template id="app" is="dom-bind">
-    <iron-ajax
-        auto
-        handle-as="json"
-        url="languages.json"
-        last-response="{{ languages }}"
-        debounce-duration="300">
-    </iron-ajax>
+    <myscript-languages-element scheme="https"
+                                host="cloud-internal-stable.visionobjects.com"
+                                applicationKey="a8f991e2-994d-4f36-b61d-55f7ddf6f85d"
+                                languages="{{ languages }}">
+    </myscript-languages-element>
     <div class="ooo-language-selector">
         <select onchange="select(this.value)">
             <template is="dom-repeat"
                       id="languageList"
                       items="[[ languages ]]"
-                      as="lang"
-                      filter="[[getLang(lang.value, availableLanguages)]]">
+                      as="lang">
                 <option value="[[ lang.value ]]" selected="[[isSelected(lang.value, language)]]">[[ lang.description ]]</option>
             </template>
         </select>
@@ -70,15 +63,17 @@
                        host="webdemoapi.myscript.com"
                        applicationkey="22eda92c-10af-40d8-abea-fd4093c17d81"
                        hmackey="a1fa759f-b3ce-4091-9fd4-d34bb870c601"
-                       recognitioncandidates="3"
-                       availablelanguages="{{ availableLanguages }}"
-                       language="{{ language }}">
+                       language="{{ language }}"
+                       unloaded>
     </myscript-text-web>
 </template>
 </body>
 <script>
     function select (lang) {
-        document.getElementById('app').language = lang;
+        var myscripttextweb = document.querySelector('myscript-text-web');
+        myscripttextweb.unloaded = true;
+        myscripttextweb.language = lang;
+        myscripttextweb.unloaded = false;
     }
     (function (document) {
         'use strict';
@@ -86,17 +81,21 @@
         template.addEventListener('template-bound', function () {
             console.log('Our app is ready to rock!');
         });
-        template.getLang = function (lang, availableLanguages) {
-            return availableLanguages.indexOf(lang) > -1;
-        };
         template.isSelected = function (lang, language) {
-            return lang === language;
+          return lang === language;
         };
-
         // See https://github.com/Polymer/polymer/issues/1381
         window.addEventListener('WebComponentsReady', function () {
             document.querySelector('body').removeAttribute('unresolved');
         });
+        // Programmatic loading to set the default language
+        window.addEventListener("load", function (event) {
+            window.setTimeout(function () {
+                document.querySelector('myscript-text-web').language = 'fr_FR';
+                document.querySelector('myscript-text-web').unloaded = false;
+            }, 3000);
+        });
+
     })(document);
 </script>
 </html>

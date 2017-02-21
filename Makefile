@@ -1,10 +1,8 @@
-include Makefile.inc
-
-ALL: clean prepare docker test
+ALL: clean prepare docs
 
 .PHONY: ALL \
 	purge clean prepare \
-	watch dev docs
+	dev docs
 
 purge:
 	@rm -rf bower_components/
@@ -16,18 +14,8 @@ prepare:
 	@git fetch --tags
 	@bower install $(BOWER_PARAMETERS)
 
-build:
-
-test:
-
-docker: build
-
-watch:
-
 dev:
 	@polyserve
 
 docs:
-	@rm -rf docs/components/* && mkdir -p docs/components
-	@cd docs && bower install -q ../../myscript-text-web
-	@cp -r bower_components/* docs/components/
+rm -rf docs/components/* && mkdir -p docs/components; cd docs && bower install -q ../../myscript-text-web; cp -r bower_components/* docs/components/
