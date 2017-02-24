@@ -161,34 +161,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
         }
     }
 
-    function textAttachElementToDom(myscriptTextWebElement) {
-        if (myscriptTextWebElement.unloaded !== true && myscriptTextWebElement.connected === true) {
-
-            myscriptTextWebElement.myscriptcommonelement = textQsWrapper(myscriptTextWebElement).querySelector('myscript-common-element');
-            myscriptTextWebElement.myscriptcommonelement.options = { recognitionParams: { textParameter: textBuildOptionsFromTextParam(myscriptTextWebElement) } };
-            myscriptTextWebElement.myscriptcommonelement.removeAttribute('unloaded');
-            myscriptTextWebElement.hideresultChanged(myscriptTextWebElement.hideresult);
-            myscriptTextWebElement.myscriptcommonelement.addEventListener('myscript-common-element-change', function (event) {
-                LOG("text change intercepted", event);
-                myscriptTextWebElement.dispatchEvent(new CustomEvent('myscript-text-web-change', { detail: event.detail }));
-            });
-            myscriptTextWebElement.myscriptcommonelement.addEventListener('myscript-common-element-error', function (event) {
-                LOG("text error intercepted", event);
-                myscriptTextWebElement.dispatchEvent(new CustomEvent('myscript-text-web-error', { detail: event.detail }));
-            });
-            myscriptTextWebElement.myscriptcommonelement.addEventListener('myscript-common-element-result', function (event) {
-                LOG("text result intercepted", event);
-                textManageResultEvent(myscriptTextWebElement, event.detail);
-                myscriptTextWebElement.dispatchEvent(new CustomEvent('myscript-text-web-result', { detail: { result: myscriptTextWebElement.result, srcDetail: event.detail } }));
-            });
-            myscriptTextWebElement.myscriptcommonelement.addEventListener('myscript-common-element-clear', function (event) {
-                LOG("text clear intercepted", event);
-                textManageClearEvent(myscriptTextWebElement, event.detail);
-                myscriptTextWebElement.dispatchEvent(new CustomEvent('myscript-text-web-clear', { detail: event.detail }));
-            });
-        }
-    }
-
     /**
      * Update custom label of candidates by theirs owns properties
      */
@@ -250,6 +222,36 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
           }
           candidate.customlabel = textLabel + '</span>';
       });
+    }
+
+    function textAttachElementToDom(myscriptTextWebElement) {
+        if (myscriptTextWebElement.unloaded !== true && myscriptTextWebElement.connected === true) {
+
+            myscriptTextWebElement.myscriptcommonelement = textQsWrapper(myscriptTextWebElement).querySelector('myscript-common-element');
+            //myscriptTextWebElement.myscriptcommonelement.unloaded = false;
+            myscriptTextWebElement.myscriptcommonelement.options = { recognitionParams: { textParameter: textBuildOptionsFromTextParam(myscriptTextWebElement) } };
+            myscriptTextWebElement.myscriptcommonelement.removeAttribute('unloaded');
+            myscriptTextWebElement.hideresultChanged(myscriptTextWebElement.hideresult);
+
+            myscriptTextWebElement.myscriptcommonelement.addEventListener('myscript-common-element-change', function (event) {
+                LOG("text change intercepted", event);
+                myscriptTextWebElement.dispatchEvent(new CustomEvent('myscript-text-web-change', { detail: event.detail }));
+            });
+            myscriptTextWebElement.myscriptcommonelement.addEventListener('myscript-common-element-error', function (event) {
+                LOG("text error intercepted", event);
+                myscriptTextWebElement.dispatchEvent(new CustomEvent('myscript-text-web-error', { detail: event.detail }));
+            });
+            myscriptTextWebElement.myscriptcommonelement.addEventListener('myscript-common-element-result', function (event) {
+                LOG("text result intercepted", event);
+                textManageResultEvent(myscriptTextWebElement, event.detail);
+                myscriptTextWebElement.dispatchEvent(new CustomEvent('myscript-text-web-result', { detail: { result: myscriptTextWebElement.result, srcDetail: event.detail } }));
+            });
+            myscriptTextWebElement.myscriptcommonelement.addEventListener('myscript-common-element-clear', function (event) {
+                LOG("text clear intercepted", event);
+                textManageClearEvent(myscriptTextWebElement, event.detail);
+                myscriptTextWebElement.dispatchEvent(new CustomEvent('myscript-text-web-clear', { detail: event.detail }));
+            });
+        }
     }
 
     Polymer({
