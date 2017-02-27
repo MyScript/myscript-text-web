@@ -18,4 +18,6 @@ dev:
 	@polyserve
 
 docs:
-rm -rf docs/components/* && mkdir -p docs/components; cd docs && bower install -q ../../myscript-text-web; cp -r bower_components/* docs/components/
+	@rm -rf docs/components/* && mkdir -p docs/components
+	@cd docs && bower install -q ../../myscript-text-web
+	@cp -r bower_components/* docs/components/

@@ -53,7 +53,6 @@ const defaultOptions = {
   undoRedoMaxStackSize: 20,
   triggerResizeQuietPeriod: 200,
   renderingParams: {
-    renderer: 'canvas',
     // Type of stroker. Actually only quadratic is implemented.
     stroker: 'quadratic'
   },
@@ -126,6 +125,7 @@ const defaultOptions = {
       }
     },
     shapeParameter: {
+      userResources: undefined,
       rejectDetectionSensitivity: 1,
       doBeautification: true
     },
@@ -142,14 +142,16 @@ const defaultOptions = {
         symbol: 'G',
         octave: 0,
         line: 2
-      }
+      },
+      scratchOutDetectionSensitivity: 1
     },
     analyzerParameter: {
       textParameter: {
         textProperties: {},
         language: 'en_US',
         textInputMode: 'CURSIVE'
-      }
+      },
+      coordinateResolution: undefined
     }
   }
 };
