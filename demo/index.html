@@ -97,8 +97,9 @@
                 var waitingDiv = document.querySelector('#waiting');
                 waitingDiv.parentNode.removeChild(waitingDiv);
                 console.log("All resources finished loading! Starting to init myscript-text-web");
-
-                select('fr_FR');
+                var myscriptTextWebElement = document.querySelector('myscript-text-web');
+                myscriptTextWebElement.language = 'fr_FR';
+                myscriptTextWebElement.unloaded = false;
                 console.log("myscript-text-web should be displayed");
             }, 3000);
         });
