@@ -73,15 +73,15 @@
 </template>
 </body>
 <script>
-    function select(lang) {
-        var myscriptTextWebElement = document.querySelector('myscript-text-web');
+    window.addEventListener("load", function (event) {
+        function select(lang) {
+            var myscriptTextWebElement = document.querySelector('myscript-text-web');
 
-        myscriptTextWebElement.unloaded = true;
-        myscriptTextWebElement.language = lang;
-        myscriptTextWebElement.unloaded = false;
-    }
-    (function (document) {
-        'use strict';
+            myscriptTextWebElement.unloaded = true;
+            myscriptTextWebElement.language = lang;
+            myscriptTextWebElement.unloaded = false;
+        }
+
         var template = document.querySelector('#app');
         template.addEventListener('template-bound', function () {
             console.log('Our app is ready to rock!');
@@ -97,13 +97,10 @@
                 var waitingDiv = document.querySelector('#waiting');
                 waitingDiv.parentNode.removeChild(waitingDiv);
                 console.log("All resources finished loading! Starting to init myscript-text-web");
-                var myscriptTextWebElement = document.querySelector('myscript-text-web');
-                myscriptTextWebElement.language = 'fr_FR';
-                myscriptTextWebElement.unloaded = false;
+                select('fr_FR');
                 console.log("myscript-text-web should be displayed");
             }, 3000);
         });
-
-    })(document);
+    });
 </script>
 </html>
