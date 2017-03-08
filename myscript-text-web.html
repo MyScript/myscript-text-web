@@ -145,12 +145,18 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
      */
     function textManageResultEvent(myscriptTextWebElement, eventDetail) {
         myscriptTextWebElement.result = {};
-        if (eventDetail.rawResult && eventDetail.rawResult.result) {
-            textUpdateCandidatesCustomLabel(eventDetail.rawResult.result);
+        myscriptTextWebElement.resultlabel = '';
+        myscriptTextWebElement.candidates = [];
+        if (eventDetail.rawResult &&
+            eventDetail.rawResult.result &&
+            eventDetail.rawResult.result.textSegmentResult &&
+            eventDetail.rawResult.result.textSegmentResult.candidates) {
+
             myscriptTextWebElement.result = eventDetail.rawResult.result;
             myscriptTextWebElement.resultlabel = eventDetail.rawResult.result.textSegmentResult.candidates[eventDetail.rawResult.result.textSegmentResult.selectedCandidateIdx].label;
             myscriptTextWebElement.candidates = eventDetail.rawResult.result.textSegmentResult.candidates;
             myscriptTextWebElement.candidates[eventDetail.rawResult.result.textSegmentResult.selectedCandidateIdx].selected = true; // FIXME: ugly hack to mark selected candidate
+            textUpdateCandidatesCustomLabel(myscriptTextWebElement);
         }
     }
 
@@ -165,7 +171,8 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
     /**
      * Update custom label of candidates by theirs owns properties
      */
-    function textUpdateCandidatesCustomLabel(result) {
+    function textUpdateCandidatesCustomLabel(myscriptTextWebElement) {
+      var result = myscriptTextWebElement.result;
       result.textSegmentResult.candidates.forEach(function (candidate) {
           var textLabel = '<span class="text myscript-text-web">';
           if (candidate.flags && candidate.flags.indexOf('PREDICTED') > -1) {
