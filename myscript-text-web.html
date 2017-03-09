@@ -42,7 +42,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             max-height: 95px;
         }
 
-        .candidate {
+        .text {
             color: #1580CD;
             background-color: #EDF0F2;
             font-size: 1.75rem;
@@ -51,7 +51,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             cursor: pointer;
         }
 
-        .candidate[selected] {
+        .text[selected] {
             color: #FFFFFF;
             background-color: #1580CD;
         }
@@ -71,9 +71,24 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
     </style>
     <template>
         <div class="resultField" hidden="[[ displayResultZone(hideresult, unloaded) ]]">
-            <template is="dom-repeat" id="candidateList" items="[[ candidates ]]" as="candidate">
-                <span id="candidate" class="candidate" selected$="[[ _isSelected(index, result.textSegmentResult.selectedCandidateIdx) ]]"
-                      inner-h-t-m-l="[[ candidate.customlabel ]]" on-tap="_select"></span>
+            <template is="dom-repeat" id="textCandidateList" items="[[ candidates ]]" as="textCandidate" index-as="textIndex">
+                <span class$="text {{ _getCandidateFlags(candidate) }}" selected$="[[ _isSelected(textIndex, result.textSegmentResult.selectedCandidateIdx) ]]" on-tap="_select">
+                    <template is="dom-if" if="[[ !textCandidate.children ]]">
+                            {{ textCandidate.label }}
+                    </template>
+                    <template is="dom-if" if="[[ textCandidate.children ]]"><!--WARN: templates needs to be inline to avoid carriage return after span-->
+                        <template is="dom-repeat" id="wordCandidateList" items="[[ _getChildCandidates(textCandidate, result, 'text') ]]" as="wordCandidate">
+                            <span class$="word {{ _getCandidateFlags(wordCandidate) }}">
+                                <template is="dom-if" if="[[ !wordCandidate.children ]]">
+                                    {{ wordCandidate.label }}
+                                </template>
+                                <template is="dom-if" if="[[ wordCandidate.children ]]">
+                                    <template is="dom-repeat" id="charCandidateList" items="[[ _getChildCandidates(wordCandidate, result, 'word') ]]" as="charCandidate"><span class$="char {{ _getCandidateFlags(charCandidate) }}">{{ charCandidate.label }}</span></template>
+                                </template>
+                            </span>
+                         </template>
+                     </template>
+                </span>
             </template>
         </div>
         <myscript-common-element
@@ -162,9 +177,8 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             eventDetail.rawResult.result.textSegmentResult.candidates) {
 
             myscriptTextWebElement.result = eventDetail.rawResult.result;
-            myscriptTextWebElement.resultlabel = eventDetail.rawResult.result.textSegmentResult.candidates[eventDetail.rawResult.result.textSegmentResult.selectedCandidateIdx].label;
-            myscriptTextWebElement.candidates = eventDetail.rawResult.result.textSegmentResult.candidates;
-            textUpdateCandidatesCustomLabel(myscriptTextWebElement);
+            myscriptTextWebElement.resultlabel = myscriptTextWebElement.result.textSegmentResult.candidates[myscriptTextWebElement.result.textSegmentResult.selectedCandidateIdx].label;
+            myscriptTextWebElement.candidates = myscriptTextWebElement.result.textSegmentResult.candidates;
         }
     }
 
@@ -174,52 +188,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             myscriptTextWebElement.resultlabel = undefined;
             myscriptTextWebElement.candidates = [];
         }
-    }
-
-    /**
-     * Update custom label of candidates by theirs owns properties
-     */
-    function textUpdateCandidatesCustomLabel(myscriptTextWebElement) {
-        var result = myscriptTextWebElement.result;
-        result.textSegmentResult.candidates.forEach(function (candidate) {
-            var textClasses = ['text'];
-            if (candidate.flags) {
-                textClasses.push(candidate.flags.join(' ').toLowerCase());
-            }
-            var textLabel = '<span class="' + textClasses.join(' ') + '">';
-            if (result.wordSegments && result.wordSegments.length > -1) {
-                myscriptTextWebElement._getChildSegments(candidate, result, 'text').forEach(function (wordSegment) {
-                    var wordCandidate = wordSegment.candidates[wordSegment.selectedCandidateIdx];
-                    if (wordCandidate) {
-                        var wordClasses = ['word'];
-                        if (candidate.flags) {
-                            wordClasses.push(wordCandidate.flags.join(' ').toLowerCase());
-                        }
-                        var wordLabel = '<span class="' + wordClasses.join(' ') + '">';
-                        if (result.wordSegments && result.wordSegments.length > -1) {
-                            myscriptTextWebElement._getChildSegments(wordCandidate, result, 'word').forEach(function (charSegment) {
-                                var charCandidate = charSegment.candidates[charSegment.selectedCandidateIdx];
-                                if (charCandidate) {
-                                    var charClasses = ['char'];
-                                    if (charCandidate.flags) {
-                                        charClasses.push(charCandidate.flags.join(' ').toLowerCase());
-                                    }
-                                    wordLabel += '<span class="' + charClasses.join(' ') + '">' + charCandidate.label + '</span>';
-
-                                }
-                            });
-                        } else {
-                            wordLabel += wordCandidate.label;
-                        }
-                        wordLabel += '</span>';
-                        textLabel += wordLabel;
-                    }
-                });
-            } else {
-                textLabel += candidate.label;
-            }
-            candidate.customlabel = textLabel + '</span>';
-        });
     }
 
     function textAttachElementToDom(myscriptTextWebElement) {
@@ -516,7 +484,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                      */
                     resultdetail: {
                         type: String,
-                        value: 'TEXT'
+                        value: 'WORD'
                     },
                     /**
                      * The content types to use for the recognition.
@@ -798,6 +766,20 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                         });
                     }
                     return segments;
+                },
+                _getChildCandidates: function (candidate, result, type) {
+                    var candidates = [];
+                    this._getChildSegments(candidate, result, type)
+                        .forEach(function (segment) {
+                            candidates.push(segment.candidates[segment.selectedCandidateIdx]);
+                        });
+                    return candidates;
+                },
+                _getCandidateFlags: function (candidate) {
+                    if (candidate.flags) {
+                        return candidate.flags.join(' ').toLowerCase();
+                    }
+                    return '';
                 }
             })
     ;
