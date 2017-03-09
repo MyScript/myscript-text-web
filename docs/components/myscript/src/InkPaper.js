@@ -37,7 +37,7 @@ function triggerCallbacks(callbacks, model, element, ...types) {
         callbacks.forEach(callback => callback.call(element, model.rawResults.state, type));
         break;
       case MyScriptJSConstants.EventType.RECOGNITION_RESULT:
-        callbacks.forEach(callback => callback.call(element, { rawResult: model.rawResults.recognition, recognitionResult: model.recognitionResult }, type));
+        callbacks.forEach(callback => callback.call(element, { rawResult: model.rawResults.recognition }, type));
         break;
       case MyScriptJSConstants.EventType.ERROR:
         callbacks.forEach(callback => callback.call(element, model, type));
@@ -281,8 +281,8 @@ export class InkPaper {
      * @type {Behaviors}
      */
     this.innerBehaviors = MyScriptJSBehaviors.overrideDefaultBehaviors(behaviors);
-    this.customStyle = customStyle;
     this.options = options;
+    this.customStyle = customStyle;
 
     // As we are manipulating a dom element no other way to change one of it's attribute without writing an impure function
     // eslint-disable-next-line no-param-reassign

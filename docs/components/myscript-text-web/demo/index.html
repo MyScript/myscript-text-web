@@ -12,8 +12,6 @@
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="../../myscript-common-element/myscript-languages-element.html">
     <link rel="import" href="../myscript-text-web.html">
-
-    <style is="custom-style" include="iron-flex"></style>
 </head>
 <style>
     body {
@@ -60,9 +58,7 @@
                       id="languageList"
                       items="[[ languages ]]"
                       as="lang">
-                <option value="[[ lang.value ]]" selected="[[isSelected(lang.value, language)]]">[[
-                    lang.description ]]
-                </option>
+                <option value="[[ lang.value ]]" selected="[[isSelected(lang.value, language)]]">[[ lang.description ]]</option>
             </template>
         </select>
     </div>
@@ -77,15 +73,15 @@
 </template>
 </body>
 <script>
-    function select(lang) {
-        var myscriptTextWebElement = document.querySelector('myscript-text-web');
+    window.addEventListener("load", function (event) {
+        function select(lang) {
+            var myscriptTextWebElement = document.querySelector('myscript-text-web');
 
-        myscriptTextWebElement.unloaded = true;
-        myscriptTextWebElement.language = lang;
-        myscriptTextWebElement.unloaded = false;
-    }
-    (function (document) {
-        'use strict';
+            myscriptTextWebElement.unloaded = true;
+            myscriptTextWebElement.language = lang;
+            myscriptTextWebElement.unloaded = false;
+        }
+
         var template = document.querySelector('#app');
         template.addEventListener('template-bound', function () {
             console.log('Our app is ready to rock!');
@@ -101,12 +97,10 @@
                 var waitingDiv = document.querySelector('#waiting');
                 waitingDiv.parentNode.removeChild(waitingDiv);
                 console.log("All resources finished loading! Starting to init myscript-text-web");
-
                 select('fr_FR');
                 console.log("myscript-text-web should be displayed");
             }, 3000);
         });
-
-    })(document);
+    });
 </script>
 </html>

@@ -2,7 +2,6 @@ import { recognizerLogger as logger } from '../../../configuration/LoggerConfig'
 import * as NetworkWSInterface from '../networkWSInterface';
 import * as CryptoHelper from '../../CryptoHelper';
 import * as InkModel from '../../../model/InkModel';
-import * as CdkWSRecognizerUtil from '../CdkWSRecognizerUtil';
 
 /**
  * A CDK v3 websocket dialog have this sequence :
@@ -26,11 +25,25 @@ function buildHmac(recognizerContext, message, options) {
   };
 }
 
+function simpleCallBack(payload) {
+  logger.info('This is something unexpected in current recognizer. Not the type of message we should have here.', payload);
+}
+
+function errorCallBack(errorDetail, recognizerContext, destructuredPromise) {
+  logger.debug('Error detected stopping all recognition', errorDetail);
+  if (recognizerContext && recognizerContext.recognitionContexts && recognizerContext.recognitionContexts.length > 0) {
+    recognizerContext.recognitionContexts.shift().callback(errorDetail);
+  }
+  if (destructuredPromise) {
+    destructuredPromise.reject(errorDetail);
+  }
+  // Giving back the hand to the InkPaper by resolving the promise.
+}
+
 function resultCallback(recognizerContext, message) {
-  logger.debug(`Cdkv3WSRecognizer ${message.data.type} message`, message);
+  logger.debug('Cdkv3WSRecognizer success', message);
   const recognitionContext = recognizerContext.recognitionContexts[recognizerContext.recognitionContexts.length - 1];
 
-  const modelReference = InkModel.updateModelReceivedPosition(recognitionContext.model);
   if (recognizerContext.instanceId && recognizerContext.instanceId !== message.data.instanceId) {
     logger.debug(`Instance id switch from ${recognizerContext.instanceId} to ${message.data.instanceId} this is suspicious`);
   }
@@ -38,6 +51,7 @@ function resultCallback(recognizerContext, message) {
   recognizerContextReference.instanceId = message.data.instanceId;
   logger.debug('Cdkv3WSRecognizer memorizing instance id', message.data.instanceId);
 
+  const modelReference = InkModel.updateModelReceivedPosition(recognitionContext.model);
   modelReference.rawResults.recognition = message.data;
 
   logger.debug('Cdkv3WSRecognizer model updated', modelReference);
@@ -56,7 +70,7 @@ function resultCallback(recognizerContext, message) {
 export function buildWebSocketCallback(options, model, recognizerContext, destructuredPromise) {
   return (message) => {
     // Handle websocket messages
-    logger.debug(`${message.type} websocket callback`, message);
+    logger.debug('Handling', message.type, message);
 
     switch (message.type) {
       case 'open' :
@@ -69,16 +83,22 @@ export function buildWebSocketCallback(options, model, recognizerContext, destru
             NetworkWSInterface.send(recognizerContext, buildHmac(recognizerContext, message, options));
             break;
           case 'init' :
+            logger.debug('Websocket init done');
+            resultCallback(recognizerContext, message);
+            break;
           case 'reset' :
+            logger.debug('Websocket reset done');
+            resultCallback(recognizerContext, message);
+            break;
           case 'mathResult' :
           case 'textResult' :
             resultCallback(recognizerContext, message);
             break;
           case 'error' :
-            CdkWSRecognizerUtil.errorCallBack({ msg: 'Websocket connection error', recoverable: false, serverMessage: message.data }, recognizerContext, destructuredPromise);
+            errorCallBack({ msg: 'Websocket connection error', recoverable: false, serverMessage: message.data }, recognizerContext, destructuredPromise);
             break;
           default :
-            CdkWSRecognizerUtil.simpleCallBack(message);
+            simpleCallBack(message);
             destructuredPromise.reject('Unknown message', recognizerContext, destructuredPromise);
         }
         break;
@@ -86,10 +106,10 @@ export function buildWebSocketCallback(options, model, recognizerContext, destru
         logger.debug('Websocket close done');
         break;
       case 'error' :
-        CdkWSRecognizerUtil.errorCallBack({ msg: 'Websocket connection error', recoverable: false }, recognizerContext, destructuredPromise);
+        errorCallBack({ msg: 'Websocket connection error', recoverable: false }, recognizerContext, destructuredPromise);
         break;
       default :
-        CdkWSRecognizerUtil.simpleCallBack(message);
+        simpleCallBack(message);
     }
   };
 }

@@ -125,7 +125,6 @@ const defaultOptions = {
       }
     },
     shapeParameter: {
-      userResources: undefined,
       rejectDetectionSensitivity: 1,
       doBeautification: true
     },
@@ -142,16 +141,14 @@ const defaultOptions = {
         symbol: 'G',
         octave: 0,
         line: 2
-      },
-      scratchOutDetectionSensitivity: 1
+      }
     },
     analyzerParameter: {
       textParameter: {
         textProperties: {},
         language: 'en_US',
         textInputMode: 'CURSIVE'
-      },
-      coordinateResolution: undefined
+      }
     }
   }
 };

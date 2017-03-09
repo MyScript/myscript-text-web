@@ -39,7 +39,7 @@
     "myscript": "https://scm.corp.myscript.com/scm/ws/myscriptjs.git#2.0.0-alpha1",
     "polymer": "1.8.x"
   },
-  "_source": "/Users/ystreibel/Projects/webcomponents/myscript-text-web",
+  "_source": "/home/fxg/projects/webcomponents/myscript-text-web",
   "_target": "*",
   "_originalSource": "../../myscript-text-web",
   "_direct": true

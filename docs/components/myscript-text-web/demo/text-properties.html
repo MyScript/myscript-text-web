@@ -11,8 +11,6 @@
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="../../myscript-common-element/myscript-languages-element.html">
     <link rel="import" href="../myscript-text-web.html">
-
-    <style is="custom-style" include="iron-flex"></style>
 </head>
 <style>
     body {
@@ -55,7 +53,7 @@
                       id="languageList"
                       items="[[ languages ]]"
                       as="lang">
-                <option value="[[ lang.value ]]" selected="[[isSelected(lang.value, language)]]">[[ lang.description ]]</option>
+                <option value="[[ lang.value ]]" selected="[[isSelected(lang.value, language)]]">[[lang.description]]</option>
             </template>
         </select>
     </div>
