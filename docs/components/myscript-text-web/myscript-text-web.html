@@ -25,46 +25,70 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             --myscript-common-element-button-focus-background: var(--myscript-text-web-button-focus-background);
             --myscript-common-element-button-disabled-background: var(--myscript-text-web-button-disabled-background);
         }
+
         myscript-common-element {
-            height: 100%;
-        }
-        myscript-common-element.result {
             height: calc(100% - 100px);
         }
+
         .resultField {
             overflow: auto;
             text-align: center;
             font-size: xx-large;
             min-height: 95px;
             max-height: 95px;
-            color: #1580CD;
         }
-        span[selected] {
-            color: #FFFFFF;
-            background-color: #1580CD;
+
+        .resultField[hidden] + myscript-common-element {
+            height: 100%;
         }
-        span[selected] * {
-            color: inherit;
-            background-color: inherit;
-        }
+
         .text {
+            color: #1580CD;
             background-color: #EDF0F2;
             font-size: 1.75rem;
             padding: .5rem .75rem;
             border-radius: 3px;
             cursor: pointer;
         }
+
+        .text[selected] {
+            color: #FFFFFF;
+            background-color: #1580CD;
+        }
+
+        .candidate[selected] * {
+            color: inherit;
+            background-color: inherit;
+        }
+
         .char.predicted {
             color: #73818C;
         }
+
         .char.completed {
             color: #1A9FFF;
         }
     </style>
     <template>
         <div class="resultField" hidden="[[ displayResultZone(hideresult, unloaded) ]]">
-            <template is="dom-repeat" id="candidateList" items="[[ candidates ]]" as="candidate">
-                <span id="candidate" index="[[ index ]]" selected$="[[ candidate.selected ]]" inner-h-t-m-l="[[ candidate.customlabel ]]" on-tap="_select"></span>
+            <template is="dom-repeat" id="textCandidateList" items="[[ candidates ]]" as="textCandidate" index-as="textIndex">
+                <span class$="text {{ _getCandidateFlags(candidate) }}" selected$="[[ _isSelected(textIndex, result.textSegmentResult.selectedCandidateIdx) ]]" on-tap="_select">
+                    <template is="dom-if" if="[[ !textCandidate.children ]]">
+                            {{ textCandidate.label }}
+                    </template>
+                    <template is="dom-if" if="[[ textCandidate.children ]]"><!--WARN: templates needs to be inline to avoid carriage return after span-->
+                        <template is="dom-repeat" id="wordCandidateList" items="[[ _getChildCandidates(textCandidate, result, 'text') ]]" as="wordCandidate">
+                            <span class$="word {{ _getCandidateFlags(wordCandidate) }}">
+                                <template is="dom-if" if="[[ !wordCandidate.children ]]">
+                                    {{ wordCandidate.label }}
+                                </template>
+                                <template is="dom-if" if="[[ wordCandidate.children ]]">
+                                    <template is="dom-repeat" id="charCandidateList" items="[[ _getChildCandidates(wordCandidate, result, 'word') ]]" as="charCandidate"><span class$="char {{ _getCandidateFlags(charCandidate) }}">{{ charCandidate.label }}</span></template>
+                                </template>
+                            </span>
+                         </template>
+                     </template>
+                </span>
             </template>
         </div>
         <myscript-common-element
@@ -147,16 +171,18 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
         myscriptTextWebElement.result = {};
         myscriptTextWebElement.resultlabel = '';
         myscriptTextWebElement.candidates = [];
+
+        if (eventDetail.recognitionResult && eventDetail.recognitionResult['text/plain']) {
+            myscriptTextWebElement.resultlabel = eventDetail.recognitionResult['text/plain'];
+        }
         if (eventDetail.rawResult &&
             eventDetail.rawResult.result &&
             eventDetail.rawResult.result.textSegmentResult &&
             eventDetail.rawResult.result.textSegmentResult.candidates) {
 
             myscriptTextWebElement.result = eventDetail.rawResult.result;
-            myscriptTextWebElement.resultlabel = eventDetail.rawResult.result.textSegmentResult.candidates[eventDetail.rawResult.result.textSegmentResult.selectedCandidateIdx].label;
-            myscriptTextWebElement.candidates = eventDetail.rawResult.result.textSegmentResult.candidates;
-            myscriptTextWebElement.candidates[eventDetail.rawResult.result.textSegmentResult.selectedCandidateIdx].selected = true; // FIXME: ugly hack to mark selected candidate
-            textUpdateCandidatesCustomLabel(myscriptTextWebElement);
+            myscriptTextWebElement.resultlabel = myscriptTextWebElement.result.textSegmentResult.candidates[myscriptTextWebElement.result.textSegmentResult.selectedCandidateIdx].label;
+            myscriptTextWebElement.candidates = myscriptTextWebElement.result.textSegmentResult.candidates;
         }
     }
 
@@ -168,73 +194,12 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
         }
     }
 
-    /**
-     * Update custom label of candidates by theirs owns properties
-     */
-    function textUpdateCandidatesCustomLabel(myscriptTextWebElement) {
-      var result = myscriptTextWebElement.result;
-      result.textSegmentResult.candidates.forEach(function (candidate) {
-          var textClasses = ['text', 'myscript-text-web'];
-          var textFlags = myscriptTextWebElement._getFlagsClasses(candidate);
-          if (textFlags) {
-              textClasses.push(textFlags);
-          }
-          var textLabel = '<span class="' + textClasses.join(' ') + '">';
-          if (result.wordSegments && result.wordSegments.length > -1) {
-              candidate.children.forEach(function(textChild) {
-                  var wordCandidateIndex = textChild.selectedCandidateIdx;
-                  var wordInkRanges = textChild.inkRanges;
-                  result.wordSegments.forEach(function (wordSegment) {
-                      if (wordSegment.inkRanges === wordInkRanges) {
-                              var wordCandidate = wordSegment.candidates[wordCandidateIndex];
-                              if (wordCandidate) {
-                                  var wordClasses = ['word', 'myscript-text-web'];
-                                  var wordFlags = myscriptTextWebElement._getFlagsClasses(candidate);
-                                  if (wordFlags) {
-                                      wordClasses.push(wordFlags);
-                                  }
-                                  var wordLabel = '<span class="' + wordClasses.join(' ') + '">';
-                                  if (!result.charSegments || result.charSegments.length <= 0) {
-                                      wordLabel += wordCandidate.label;
-                                  } else {
-                                      wordCandidate.children.forEach(function(charSegmentItem, index) {
-                                          var charClasses = ['char', 'myscript-text-web'];
-                                          var charFlags = myscriptTextWebElement._getFlagsClasses(candidate);
-//                                          if (charFlags) {
-//                                              charClasses.push(charFlags);
-//                                          }
-                                          var charLabel = '<span class="' + charClasses.join(' ') + '">';
-                                          if (!(charSegmentItem.inkRanges && charSegmentItem.inkRanges.length > 0)) {
-                                              if (wordCandidate.flags.indexOf('PREDICTED') > -1) {
-                                                  charLabel = '<span class="char predicted myscript-text-web">';
-                                              } else if (wordCandidate.flags.indexOf('COMPLETED') > -1) {
-                                                  charLabel = '<span class="char completed myscript-text-web">';
-                                              }
-                                          }
-                                          charLabel += wordCandidate.label.charAt(index);
-                                          charLabel += '</span>';
-                                          wordLabel += charLabel;
-                                      });
-                                  }
-                                  wordLabel += '</span>';
-                                  textLabel += wordLabel;
-                              }
-                      }
-                  });
-              });
-          }
-          candidate.customlabel = textLabel + '</span>';
-      });
-    }
-
     function textAttachElementToDom(myscriptTextWebElement) {
         if (myscriptTextWebElement.unloaded !== true && myscriptTextWebElement.connected === true) {
 
             myscriptTextWebElement.myscriptcommonelement = textQsWrapper(myscriptTextWebElement).querySelector('myscript-common-element');
-            //myscriptTextWebElement.myscriptcommonelement.unloaded = false;
             myscriptTextWebElement.myscriptcommonelement.options = { recognitionParams: { textParameter: textBuildOptionsFromTextParam(myscriptTextWebElement) } };
             myscriptTextWebElement.myscriptcommonelement.removeAttribute('unloaded');
-            myscriptTextWebElement.hideresultChanged(myscriptTextWebElement.hideresult);
 
             myscriptTextWebElement.myscriptcommonelement.addEventListener('myscript-common-element-change', function (event) {
                 LOG("text change intercepted", event);
@@ -495,8 +460,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                      */
                     hideresult: {
                         type: Boolean,
-                        value: false,
-                        observer: 'hideresultChanged'
+                        value: false
                     },
                     /**
                      * The recognition language used by the recognition process.
@@ -521,7 +485,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                      */
                     resultdetail: {
                         type: String,
-                        value: 'CHARACTER'
+                        value: 'WORD'
                     },
                     /**
                      * The content types to use for the recognition.
@@ -548,7 +512,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                         value: []
                     },
                     /**
-                     * List of user resources to use for recognitions. Thoses user ressources have to be attached to the user account where application is declare.
+                     * List of user resources to use for recognitions. Theses user resources have to be attached to the user account where application is declare.
                      * @type {Array}
                      */
                     userresources: {
@@ -561,7 +525,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                      */
                     textcandidatelistsize: {
                       type: Number,
-                      value: 3
+                      value: 1
                     },
                     /**
                      * The size of the candidate lists that will be provided at the word level in the recognition result.
@@ -577,7 +541,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                      */
                     wordpredictionlistsize: {
                         type: Number,
-                        value: 1
+                        value: 0
                     },
                     /**
                      * The size of the candidate completion lists that will be provided at the word level in the recognition result.
@@ -585,7 +549,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                      */
                     wordcompletionlistsize: {
                         type: Number,
-                        value: 1
+                        value: 0
                     },
                     /**
                      * The size of the candidate lists that will be provided at the character level in the recognition result.
@@ -720,18 +684,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                 //-----------------------------------------------------------------------
                 //---------  Wrapping END                                    ------------
                 //-----------------------------------------------------------------------
-                /**
-                 *
-                 */
-                hideresultChanged: function (hideresult) {
-                    if (this.myscriptcommonelement) {
-                        if (hideresult) {
-                            this.myscriptcommonelement.classList.remove('result');
-                        } else {
-                            this.myscriptcommonelement.classList.add('result');
-                        }
-                    }
-                },
                 unloadedChanged: function (newUnloadValue) {
                     LOG('text unloaded changed', newUnloadValue);
                     this.unloaded = newUnloadValue;
@@ -765,56 +717,58 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                     this.result = {};
                     this.result = result;
                 },
-                /**
-                 * Determine if the candidate is selected
-                 * @param candidate
-                 * @param result
-                 * @returns {boolean}
-                 * @private
-                 */
-                _isSelected: function (candidate, result) {
-                    if (result && result.textSegmentResult) {
-                        return (candidate === result.textSegmentResult.candidates[result.textSegmentResult.selectedCandidateIdx]);
-                    }
-                    return false;
+                _isSelected: function (index, selectedIndex) {
+                    return index === selectedIndex;
                 },
-                _getWordCandidates: function (candidate, result) {
-                    var wordCandidates = undefined;
-                    if (result.wordSegments && result.wordSegments.length > -1) {
-                        wordCandidates = [];
-                        candidate.children.forEach(function (textChild) {
-                            var wordCandidateIndex = textChild.selectedCandidateIdx;
-                            var wordInkRanges = textChild.inkRanges;
-                            result.wordSegments.forEach(function (wordSegment) {
-                                if (wordSegment.inkRanges === wordInkRanges) {
-                                    wordCandidates.push(wordSegment.candidates[wordCandidateIndex])
+                _getChildSegments: function (candidate, result, type) {
+                    var segments = [];
+
+                    function addSegment(child, segment) {
+                        if (segment.inkRanges === child.inkRanges) {
+                            segment.selectedCandidateIdx = child.selectedCandidateIdx;
+                            segments.push(segment);
+                        }
+                    }
+
+                    if (candidate.children) {
+                        candidate.children.forEach(function (child, index) {
+                            if (type === 'text' && result.wordSegments && result.wordSegments.length > -1) {
+                                result.wordSegments.forEach(function (segment) {
+                                    addSegment(child, segment);
+                                });
+                            } else if (type === 'word' && result.charSegments && result.charSegments.length > -1) {
+                                if (!child.inkRanges) {
+                                    var seg = {
+                                        candidates: [{
+                                            label: candidate.label.charAt(index),
+                                            flags: candidate.flags
+                                        }],
+                                        selectedCandidateIdx: 0
+                                    };
+                                    segments.push(seg);
+                                } else {
+                                    result.charSegments.forEach(function (segment) {
+                                        addSegment(child, segment);
+                                    });
                                 }
-                            });
+                            }
                         });
                     }
-                    return wordCandidates;
+                    return segments;
                 },
-                _getCharCandidates: function (candidate, result) {
-                    var charCandidates = undefined;
-                    if (result.wordSegments && result.wordSegments.length > -1) {
-                        charCandidates = [];
-                        candidate.children.forEach(function (wordChild) {
-                            var charCandidateIndex = wordChild.selectedCandidateIdx;
-                            var charInkRanges = wordChild.inkRanges;
-                            result.charSegments.forEach(function (charSegment) {
-                                if (charSegment.inkRanges === charInkRanges) {
-                                    charCandidates.push(charSegment.candidates[charCandidateIndex])
-                                }
-                            });
+                _getChildCandidates: function (candidate, result, type) {
+                    var candidates = [];
+                    this._getChildSegments(candidate, result, type)
+                        .forEach(function (segment) {
+                            candidates.push(segment.candidates[segment.selectedCandidateIdx]);
                         });
-                    }
-                    return charCandidates;
+                    return candidates;
                 },
-                _getFlagsClasses: function (candidate) {
+                _getCandidateFlags: function (candidate) {
                     if (candidate.flags) {
                         return candidate.flags.join(' ').toLowerCase();
                     }
-                    return false;
+                    return '';
                 }
             })
     ;
