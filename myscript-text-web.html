@@ -171,6 +171,10 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
         myscriptTextWebElement.result = {};
         myscriptTextWebElement.resultlabel = '';
         myscriptTextWebElement.candidates = [];
+
+        if (eventDetail.recognitionResult && eventDetail.recognitionResult['text/plain']) {
+            myscriptTextWebElement.resultlabel = eventDetail.recognitionResult['text/plain'];
+        }
         if (eventDetail.rawResult &&
             eventDetail.rawResult.result &&
             eventDetail.rawResult.result.textSegmentResult &&
