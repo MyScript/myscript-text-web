@@ -27,10 +27,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
         }
 
         myscript-common-element {
-            height: 100%;
-        }
-
-        myscript-common-element.result {
             height: calc(100% - 100px);
         }
 
@@ -40,6 +36,10 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             font-size: xx-large;
             min-height: 95px;
             max-height: 95px;
+        }
+
+        .resultField[hidden] + myscript-common-element {
+            height: 100%;
         }
 
         .text {
@@ -198,10 +198,8 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
         if (myscriptTextWebElement.unloaded !== true && myscriptTextWebElement.connected === true) {
 
             myscriptTextWebElement.myscriptcommonelement = textQsWrapper(myscriptTextWebElement).querySelector('myscript-common-element');
-            //myscriptTextWebElement.myscriptcommonelement.unloaded = false;
             myscriptTextWebElement.myscriptcommonelement.options = { recognitionParams: { textParameter: textBuildOptionsFromTextParam(myscriptTextWebElement) } };
             myscriptTextWebElement.myscriptcommonelement.removeAttribute('unloaded');
-            myscriptTextWebElement.hideresultChanged(myscriptTextWebElement.hideresult);
 
             myscriptTextWebElement.myscriptcommonelement.addEventListener('myscript-common-element-change', function (event) {
                 LOG("text change intercepted", event);
@@ -462,8 +460,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                      */
                     hideresult: {
                         type: Boolean,
-                        value: false,
-                        observer: 'hideresultChanged'
+                        value: false
                     },
                     /**
                      * The recognition language used by the recognition process.
@@ -687,18 +684,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                 //-----------------------------------------------------------------------
                 //---------  Wrapping END                                    ------------
                 //-----------------------------------------------------------------------
-                /**
-                 *
-                 */
-                hideresultChanged: function (hideresult) {
-                    if (this.myscriptcommonelement) {
-                        if (hideresult) {
-                            this.myscriptcommonelement.classList.remove('result');
-                        } else {
-                            this.myscriptcommonelement.classList.add('result');
-                        }
-                    }
-                },
                 unloadedChanged: function (newUnloadValue) {
                     LOG('text unloaded changed', newUnloadValue);
                     this.unloaded = newUnloadValue;
