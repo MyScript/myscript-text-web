@@ -71,19 +71,26 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
     </style>
     <template>
         <div class="resultField" hidden="[[ displayResultZone(hideresult, unloaded) ]]">
-            <template is="dom-repeat" id="textCandidateList" items="[[ candidates ]]" as="textCandidate" index-as="textIndex">
-                <span class$="text {{ _getCandidateFlags(candidate) }}" selected$="[[ _isSelected(textIndex, result.textSegmentResult.selectedCandidateIdx) ]]" on-tap="_select">
+            <template is="dom-repeat" id="textCandidateList" items="[[ candidates ]]" as="textCandidate"
+                      index-as="textIndex">
+                <span class$="text {{ _getCandidateFlags(candidate) }}"
+                      selected$="[[ _isSelected(textIndex, result.textSegmentResult.selectedCandidateIdx) ]]"
+                      on-tap="_select">
                     <template is="dom-if" if="[[ !textCandidate.children ]]">
                             {{ textCandidate.label }}
                     </template>
                     <template is="dom-if" if="[[ textCandidate.children ]]"><!--WARN: templates needs to be inline to avoid carriage return after span-->
-                        <template is="dom-repeat" id="wordCandidateList" items="[[ _getChildCandidates(textCandidate, result, 'text') ]]" as="wordCandidate">
+                        <template is="dom-repeat" id="wordCandidateList"
+                                  items="[[ _getChildCandidates(textCandidate, result, 'text') ]]" as="wordCandidate">
                             <span class$="word {{ _getCandidateFlags(wordCandidate) }}">
                                 <template is="dom-if" if="[[ !wordCandidate.children ]]">
                                     {{ wordCandidate.label }}
                                 </template>
                                 <template is="dom-if" if="[[ wordCandidate.children ]]">
-                                    <template is="dom-repeat" id="charCandidateList" items="[[ _getChildCandidates(wordCandidate, result, 'word') ]]" as="charCandidate"><span class$="char {{ _getCandidateFlags(charCandidate) }}">{{ charCandidate.label }}</span></template>
+                                    <template is="dom-repeat" id="charCandidateList"
+                                              items="[[ _getChildCandidates(wordCandidate, result, 'word') ]]"
+                                              as="charCandidate"><span
+                                        class$="char {{ _getCandidateFlags(charCandidate) }}">{{ charCandidate.label }}</span></template>
                                 </template>
                             </span>
                          </template>
@@ -96,7 +103,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             applicationkey="{{ applicationkey }}"
             hidebuttons="{{ hidebuttons }}"
             hmackey="{{ hmackey }}"
-            options="[[ options ]]"
+            configuration="[[ configuration ]]"
             protocol="{{ protocol }}"
             host="{{ host }}"
             recognitiontriggerdelay="{{recognitiontriggerdelay}}"
@@ -104,7 +111,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             strokecolor="{{ strokecolor }}"
             strokewidth="{{ strokewidth }}"
             timeout="{{ timeout }}"
-            unloaded
+            unloaded="{{ unloaded }}"
             type="TEXT"
             disableclear="{{ disableclear }}"
             disablerecognize="{{ disablerecognize }}"
@@ -136,7 +143,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
      *
      * @param myscriptTextWebElement
      */
-    function textBuildOptionsFromTextParam(myscriptTextWebElement) {
+    function textBuildRecognitionParamsFromTextParam(myscriptTextWebElement) {
         const textParameter = {};
         textParameter.language = myscriptTextWebElement.language;
         textParameter.textInputMode = myscriptTextWebElement.textinputmode;
@@ -158,7 +165,9 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
         textParameter.textProperties.enableTagger = myscriptTextWebElement.enabletagger;
         textParameter.textProperties.spellingDistortion = myscriptTextWebElement.spellingdistortion;
 
-        return textParameter;
+        const recognitionParams = {};
+        recognitionParams[myscriptTextWebElement.apiversion.toLowerCase()] = textParameter;
+        return recognitionParams;
     }
 
     /**
@@ -172,8 +181,8 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
         myscriptTextWebElement.resultlabel = '';
         myscriptTextWebElement.candidates = [];
 
-        if (eventDetail.recognitionResult && eventDetail.recognitionResult['text/plain']) {
-            myscriptTextWebElement.resultlabel = eventDetail.recognitionResult['text/plain'];
+        if (eventDetail.recognitionResult && eventDetail.recognitionResult.TEXT) {
+            myscriptTextWebElement.resultlabel = eventDetail.recognitionResult.TEXT;
         }
         if (eventDetail.rawResult &&
             eventDetail.rawResult.result &&
@@ -195,31 +204,56 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
     }
 
     function textAttachElementToDom(myscriptTextWebElement) {
-        if (myscriptTextWebElement.unloaded !== true && myscriptTextWebElement.connected === true) {
+        myscriptTextWebElement.myscriptcommonelement = textQsWrapper(myscriptTextWebElement).querySelector('myscript-common-element');
+        myscriptTextWebElement.myscriptcommonelement.configuration = {
+            recognitionParams: textBuildRecognitionParamsFromTextParam(myscriptTextWebElement)
+        };
 
-            myscriptTextWebElement.myscriptcommonelement = textQsWrapper(myscriptTextWebElement).querySelector('myscript-common-element');
-            myscriptTextWebElement.myscriptcommonelement.options = { recognitionParams: { textParameter: textBuildOptionsFromTextParam(myscriptTextWebElement) } };
-            myscriptTextWebElement.myscriptcommonelement.removeAttribute('unloaded');
-
-            myscriptTextWebElement.myscriptcommonelement.addEventListener('myscript-common-element-change', function (event) {
-                LOG("text change intercepted", event);
-                myscriptTextWebElement.dispatchEvent(new CustomEvent('myscript-text-web-change', { detail: event.detail }));
-            });
-            myscriptTextWebElement.myscriptcommonelement.addEventListener('myscript-common-element-error', function (event) {
-                LOG("text error intercepted", event);
-                myscriptTextWebElement.dispatchEvent(new CustomEvent('myscript-text-web-error', { detail: event.detail }));
-            });
-            myscriptTextWebElement.myscriptcommonelement.addEventListener('myscript-common-element-result', function (event) {
-                LOG("text result intercepted", event);
-                textManageResultEvent(myscriptTextWebElement, event.detail);
-                myscriptTextWebElement.dispatchEvent(new CustomEvent('myscript-text-web-result', { detail: { result: myscriptTextWebElement.result, srcDetail: event.detail } }));
-            });
-            myscriptTextWebElement.myscriptcommonelement.addEventListener('myscript-common-element-clear', function (event) {
-                LOG("text clear intercepted", event);
-                textManageClearEvent(myscriptTextWebElement, event.detail);
-                myscriptTextWebElement.dispatchEvent(new CustomEvent('myscript-text-web-clear', { detail: event.detail }));
-            });
+        // Manage clear events
+        function clearListener(event) {
+            LOG('text ' + event.type + ' event intercepted', event);
+            textManageResultEvent(myscriptTextWebElement, event.detail);
+            myscriptTextWebElement.dispatchEvent(new CustomEvent('myscript-text-web-' + event.type, { detail: event.detail }));
         }
+
+        // Manage result events
+        function resultListener(event) {
+            LOG('text ' + event.type + ' event intercepted', event);
+            // Just forwarding event there.
+            textManageResultEvent(myscriptTextWebElement, event.detail);
+            var detail = event.detail;
+            detail.result = myscriptTextWebElement.result;
+            myscriptTextWebElement.dispatchEvent(new CustomEvent('myscript-text-web-' + event.type, { detail: detail }));
+        }
+
+        // Manage other events
+        function defaultListener(event) {
+            LOG('text ' + event.type + ' event intercepted', event);
+            // Just forwarding event there.
+            myscriptTextWebElement.dispatchEvent(new CustomEvent('myscript-text-web-' + event.type, { detail: event.detail }));
+        }
+
+        myscriptTextWebElement.currentListeners = {};
+        ['myscript-common-element-result'].forEach(function (type) {
+            myscriptTextWebElement.currentListeners[type] = resultListener;
+        });
+        ['myscript-common-element-clear'].forEach(function (type) {
+            myscriptTextWebElement.currentListeners[type] = clearListener;
+        });
+        ['myscript-common-element-undo', 'myscript-common-element-redo', 'myscript-common-element-typeset', 'myscript-common-element-recognize', 'myscript-common-element-change', 'myscript-common-element-error']
+            .forEach(function (type) {
+                myscriptTextWebElement.currentListeners[type] = defaultListener;
+            });
+        Object.keys(myscriptTextWebElement.currentListeners).forEach(function (type) {
+            myscriptTextWebElement.myscriptcommonelement.addEventListener(type, myscriptTextWebElement.currentListeners[type])
+        });
+    }
+
+    /** Remove listeners when common element is unloaded. */
+    function textDetachElementFromDom(myscriptTextWebElement) {
+        Object.keys(myscriptTextWebElement.currentListeners).forEach(function (type) {
+            myscriptTextWebElement.myscriptcommonelement.removeEventListener(type, myscriptTextWebElement.currentListeners[type])
+        });
     }
 
     Polymer({
@@ -346,11 +380,11 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                         observer: 'unloadedChanged'
                     },
                     /**
-                     * Set the additional options used to feed MyScript ink Paper (Structure of object as defined in MyScriptjs MyScriptJSOptions.js file)
+                     * Set the additional configuration used to feed MyScript ink Paper (Structure of object as defined in MyScriptjs MyScriptJSOptions.js file)
                      * Options values are taken into account when myscript-common-element is attach to the dom and when detached is set to false.
-                     * Options values are not reflected to myscript-common-element attributes plus attributes values are always taken into account before options values (see demo/programmatic-init.html for a better understanding).
+                     * Options values are not reflected to myscript-common-element attributes plus attributes values are always taken into account before configuration values (see demo/programmatic-init.html for a better understanding).
                      */
-                    options: {
+                    configuration: {
                         type: Object,
                         notify: true
                     },
@@ -524,8 +558,8 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                      * This value must be between `1` and `20`.
                      */
                     textcandidatelistsize: {
-                      type: Number,
-                      value: 1
+                        type: Number,
+                        value: 1
                     },
                     /**
                      * The size of the candidate lists that will be provided at the word level in the recognition result.
