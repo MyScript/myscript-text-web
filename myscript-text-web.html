@@ -208,6 +208,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
         myscriptTextWebElement.myscriptcommonelement.configuration = {
             recognitionParams: textBuildRecognitionParamsFromTextParam(myscriptTextWebElement)
         };
+        myscriptTextWebElement.myscriptcommonelement.removeAttribute('unloaded');
 
         // Manage clear events
         function clearListener(event) {
