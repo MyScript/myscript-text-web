@@ -32,8 +32,7 @@
     "myscript-common-element": "https://scm.corp.myscript.com/scm/ws/webcomponents-myscript-common-element.git#2.0.0-alpha1"
   },
   "devDependencies": {
-    "iron-component-page": "PolymerElements/iron-component-page#1.1.x",
-    "iron-ajax": "PolymerElements/iron-ajax#1.2.x"
+    "iron-component-page": "PolymerElements/iron-component-page#1.1.x"
   },
   "resolutions": {
     "myscript": "https://scm.corp.myscript.com/scm/ws/myscriptjs.git#2.0.0-alpha1",

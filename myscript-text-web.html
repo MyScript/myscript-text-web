@@ -756,6 +756,9 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                     this.initializing = true;
                     LOG('text-web attached callback');
                     attachTextElementToDom(this);
+                    // FIXME: Ugly hack to apply configuration
+                    this.myscriptcommonelement.unloaded = true;
+                    this.myscriptcommonelement.unloaded = false;
                     this.initializing = false;
                 },
                 detached: function () {

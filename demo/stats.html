@@ -18,13 +18,14 @@
     }
 </style>
 <body touch-action="none">
-<paper-toast id="result" class="fit-top"></paper-toast>
-<!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
-<myscript-text-web
-    host="webdemoapi.myscript.com"
-    applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
-    hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad">
-</myscript-text-web>
+    <paper-toast id="result" class="fit-top"></paper-toast>
+    <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
+    <myscript-text-web
+        host="webdemoapi.myscript.com"
+        applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
+        hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad">
+    </myscript-text-web>
+</body>
 <script>
     document.querySelector('myscript-text-web').addEventListener('myscript-text-web-change', function (event) {
         const paperToast = document.querySelector('#result');
@@ -32,5 +33,4 @@
         paperToast.fitIn = paperToast.show();
     });
 </script>
-</body>
 </html>

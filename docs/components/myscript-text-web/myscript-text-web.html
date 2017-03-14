@@ -754,16 +754,19 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                 // Will be renamed connected with pure custom element support
                 attached: function () {
                     this.initializing = true;
-                    LOG('text attached callback');
+                    LOG('text-web attached callback');
                     attachTextElementToDom(this);
+                    // FIXME: Ugly hack to apply configuration
+                    this.myscriptcommonelement.unloaded = true;
+                    this.myscriptcommonelement.unloaded = false;
                     this.initializing = false;
                 },
                 detached: function () {
-                    LOG('text detached callback');
+                    LOG('text-web detached callback');
                     detachTextElementFromDom(this);
                 },
                 displayResultZone: function (hideResultValue, unloadedValue) {
-                    LOG('shouldLoadCommonElement', hideResultValue, unloadedValue);
+                    LOG('text-web shouldLoadCommonElement', hideResultValue, unloadedValue);
                     // Common element should not be attached if the unload attribute of myscript-math-web element is set to true and if he is not already connected to the dom.
                     return hideResultValue && ( unloadedValue || unloadedValue !== true);
                 },

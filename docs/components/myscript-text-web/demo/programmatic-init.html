@@ -11,12 +11,13 @@
     <link rel="import" href="../myscript-text-web.html">
     <link rel="stylesheet" href="demo.css">
 </head>
-<body touch-action="none" unresolved>
-<div id="waiting">myscript-text-web will be loaded in 3 seconds with customs params.</div>
-
-<!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
-<myscript-text-web unloaded host="webdemoapi.myscript.com">
-</myscript-text-web>
+<body touch-action="none">
+    <div id="waiting">myscript-text-web will be loaded in 3 seconds with customs params.</div>
+    <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
+    <myscript-text-web
+        host="webdemoapi.myscript.com">
+    </myscript-text-web>
+</body>
 <script>
     window.addEventListener("load", function (event) {
         window.setTimeout(function () {
@@ -30,6 +31,7 @@
                 language: 'zh_CN'
             };
             var myscriptTextWebElement = document.querySelector('myscript-text-web');
+            myscriptTextWebElement.unloaded = true;
             // Testing if attributes binding via DOM, setAttribute or direct object manipulation is working.
             myscriptTextWebElement.setAttribute('applicationkey', mycustomconfiguration.applicationKey);
             myscriptTextWebElement.hmackey = mycustomconfiguration.hmacKey;
@@ -50,6 +52,5 @@
         }, 3000);
     });
 </script>
-</body>
 </html>
 
