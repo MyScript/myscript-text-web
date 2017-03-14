@@ -103,15 +103,14 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             applicationkey="{{ applicationkey }}"
             hidebuttons="{{ hidebuttons }}"
             hmackey="{{ hmackey }}"
-            configuration="[[ configuration ]]"
+            configuration="{{ configuration }}"
             protocol="{{ protocol }}"
             host="{{ host }}"
-            recognitiontriggerdelay="{{recognitiontriggerdelay}}"
-            recognitionprocessdelay="{{recognitionprocessdelay}}"
+            recognitiontriggerdelay="{{ recognitiontriggerdelay }}"
+            recognitionprocessdelay="{{ recognitionprocessdelay }}"
             strokecolor="{{ strokecolor }}"
             strokewidth="{{ strokewidth }}"
             timeout="{{ timeout }}"
-            unloaded="{{ unloaded }}"
             type="TEXT"
             disableclear="{{ disableclear }}"
             disablerecognize="{{ disablerecognize }}"
@@ -143,31 +142,38 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
      *
      * @param myscriptTextWebElement
      */
-    function textBuildRecognitionParamsFromTextParam(myscriptTextWebElement) {
-        const textParameter = {};
-        textParameter.language = myscriptTextWebElement.language;
-        textParameter.textInputMode = myscriptTextWebElement.textinputmode;
-        textParameter.resultDetail = myscriptTextWebElement.resultdetail;
-        textParameter.contentTypes = myscriptTextWebElement.contenttypes;
-        textParameter.subsetKnowledges = myscriptTextWebElement.subsetknowledges;
-        textParameter.userLkWords = myscriptTextWebElement.userlkwords;
-        textParameter.userResources = myscriptTextWebElement.userresources;
-        textParameter.textProperties = {};
-        textParameter.textProperties.textCandidateListSize = myscriptTextWebElement.textcandidatelistsize;
-        textParameter.textProperties.wordCandidateListSize = myscriptTextWebElement.wordcandidatelistsize;
-        textParameter.textProperties.wordPredictionListSize = myscriptTextWebElement.wordpredictionlistsize;
-        textParameter.textProperties.wordCompletionListSize = myscriptTextWebElement.wordcompletionlistsize;
-        textParameter.textProperties.characterCandidateListSize = myscriptTextWebElement.charactercandidatelistsize;
-        textParameter.textProperties.enableOutOfLexicon = myscriptTextWebElement.enableoutoflexicon;
-        textParameter.textProperties.discardCaseVariations = myscriptTextWebElement.discardcasevariations;
-        textParameter.textProperties.discardAccentuationVariations = myscriptTextWebElement.discardaccentuationvariations;
-        textParameter.textProperties.glyphDistortion = myscriptTextWebElement.glyphdistortion;
-        textParameter.textProperties.enableTagger = myscriptTextWebElement.enabletagger;
-        textParameter.textProperties.spellingDistortion = myscriptTextWebElement.spellingdistortion;
-
-        const recognitionParams = {};
-        recognitionParams[myscriptTextWebElement.apiversion.toLowerCase()] = textParameter;
-        return recognitionParams;
+    function buildTextConfiguration(myscriptTextWebElement) {
+        if (!myscriptTextWebElement.configuration) {
+            myscriptTextWebElement.configuration = {};
+        }
+        if (!myscriptTextWebElement.configuration.recognitionParams) {
+            myscriptTextWebElement.configuration.recognitionParams = {};
+        }
+        myscriptTextWebElement.configuration.recognitionParams[myscriptTextWebElement.apiversion.toLowerCase()] = {
+            textParameter: {
+                language: myscriptTextWebElement.language,
+                textInputMode: myscriptTextWebElement.textinputmode,
+                resultDetail: myscriptTextWebElement.resultdetail,
+                contentTypes: myscriptTextWebElement.contenttypes,
+                subsetKnowledges: myscriptTextWebElement.subsetknowledges,
+                userLkWords: myscriptTextWebElement.userlkwords,
+                userResources: myscriptTextWebElement.userresources,
+                textProperties: {
+                    textCandidateListSize: myscriptTextWebElement.textcandidatelistsize,
+                    wordCandidateListSize: myscriptTextWebElement.wordcandidatelistsize,
+                    wordPredictionListSize: myscriptTextWebElement.wordpredictionlistsize,
+                    wordCompletionListSize: myscriptTextWebElement.wordcompletionlistsize,
+                    characterCandidateListSize: myscriptTextWebElement.charactercandidatelistsize,
+                    enableOutOfLexicon: myscriptTextWebElement.enableoutoflexicon,
+                    discardCaseVariations: myscriptTextWebElement.discardcasevariations,
+                    discardAccentuationVariations: myscriptTextWebElement.discardaccentuationvariations,
+                    glyphDistortion: myscriptTextWebElement.glyphdistortion,
+                    enableTagger: myscriptTextWebElement.enabletagger,
+                    spellingDistortion: myscriptTextWebElement.spellingdistortion
+                }
+            }
+        };
+        return myscriptTextWebElement.configuration;
     }
 
     /**
@@ -203,12 +209,17 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
         }
     }
 
-    function textAttachElementToDom(myscriptTextWebElement) {
+    /**
+     * @param myscriptTextWebElement
+     */
+    function changeTextConfiguration(myscriptTextWebElement) {
+        if (myscriptTextWebElement.myscriptcommonelement) {
+            myscriptTextWebElement.myscriptcommonelement.configuration = buildTextConfiguration(myscriptTextWebElement);
+        }
+    }
+
+    function attachTextElementToDom(myscriptTextWebElement) {
         myscriptTextWebElement.myscriptcommonelement = textQsWrapper(myscriptTextWebElement).querySelector('myscript-common-element');
-        myscriptTextWebElement.myscriptcommonelement.configuration = {
-            recognitionParams: textBuildRecognitionParamsFromTextParam(myscriptTextWebElement)
-        };
-        myscriptTextWebElement.myscriptcommonelement.removeAttribute('unloaded');
 
         // Manage clear events
         function clearListener(event) {
@@ -248,13 +259,18 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
         Object.keys(myscriptTextWebElement.currentListeners).forEach(function (type) {
             myscriptTextWebElement.myscriptcommonelement.addEventListener(type, myscriptTextWebElement.currentListeners[type])
         });
+        myscriptTextWebElement.configuration = buildTextConfiguration(myscriptTextWebElement);
+        myscriptTextWebElement.unloaded = false;
+        LOG('text-web attached');
     }
 
     /** Remove listeners when common element is unloaded. */
-    function textDetachElementFromDom(myscriptTextWebElement) {
+    function detachTextElementFromDom(myscriptTextWebElement) {
         Object.keys(myscriptTextWebElement.currentListeners).forEach(function (type) {
             myscriptTextWebElement.myscriptcommonelement.removeEventListener(type, myscriptTextWebElement.currentListeners[type])
         });
+        myscriptTextWebElement.unloaded = true;
+        LOG('text-web detached');
     }
 
     Polymer({
@@ -495,7 +511,8 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                      */
                     hideresult: {
                         type: Boolean,
-                        value: false
+                        value: false,
+                        reflectToAttribute: true
                     },
                     /**
                      * The recognition language used by the recognition process.
@@ -504,6 +521,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                     language: {
                         type: String,
                         notify: true,
+                        reflectToAttribute: true,
                         value: 'en_US'
                     },
                     /**
@@ -512,7 +530,8 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                      */
                     textinputmode: {
                         type: String,
-                        value: 'CURSIVE'
+                        value: 'CURSIVE',
+                        reflectToAttribute: true
                     },
                     /**
                      * The resultdetail is an entry property that conditioning result depth output. To use (TEXT, WORD or CHARACTER).
@@ -520,7 +539,8 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                      */
                     resultdetail: {
                         type: String,
-                        value: 'WORD'
+                        value: 'WORD',
+                        reflectToAttribute: true
                     },
                     /**
                      * The content types to use for the recognition.
@@ -560,7 +580,8 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                      */
                     textcandidatelistsize: {
                         type: Number,
-                        value: 1
+                        value: 1,
+                        reflectToAttribute: true
                     },
                     /**
                      * The size of the candidate lists that will be provided at the word level in the recognition result.
@@ -719,26 +740,30 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                 //-----------------------------------------------------------------------
                 //---------  Wrapping END                                    ------------
                 //-----------------------------------------------------------------------
-                unloadedChanged: function (newUnloadValue) {
-                    LOG('text unloaded changed', newUnloadValue);
-                    this.unloaded = newUnloadValue;
-                    if (this.myscriptcommonelement && newUnloadValue !== false) {
-                        this.myscriptcommonelement.setAttribute('unloaded', true);
+                unloadedChanged: function (newValue) {
+                    LOG('text unloaded changed', newValue);
+                    if (this.myscriptcommonelement && !this.initializing && newValue !== true) {
                         this.result = {};
                         this.candidates = [];
                         this.resultlabel = undefined;
+                        this.myscriptcommonelement.unloaded = true;
+                        changeTextConfiguration(this);
+                        this.myscriptcommonelement.unloaded = false;
                     }
-                    textAttachElementToDom(this);
                 },
-                //Will be renamed connected with pure custom element support
+                // Will be renamed connected with pure custom element support
                 attached: function () {
-                    LOG('text attached');
-                    this.myscriptcommonelement = this.querySelector('myscript-common-element');
-                    this.connected = true;
-                    textAttachElementToDom(this);
+                    this.initializing = true;
+                    LOG('text-web attached callback');
+                    attachTextElementToDom(this);
+                    this.initializing = false;
+                },
+                detached: function () {
+                    LOG('text-web detached callback');
+                    detachTextElementFromDom(this);
                 },
                 displayResultZone: function (hideResultValue, unloadedValue) {
-                    LOG('shouldLoadCommonElement', hideResultValue, unloadedValue);
+                    LOG('text-web shouldLoadCommonElement', hideResultValue, unloadedValue);
                     // Common element should not be attached if the unload attribute of myscript-math-web element is set to true and if he is not already connected to the dom.
                     return hideResultValue && ( unloadedValue || unloadedValue !== true);
                 },

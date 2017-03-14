@@ -34,12 +34,14 @@
             myscriptTextWebElement.setAttribute('applicationkey', mycustomconfiguration.applicationKey);
             myscriptTextWebElement.hmackey = mycustomconfiguration.hmacKey;
             // Testing if options are taken into account
-            myscriptTextWebElement.options = {
+            myscriptTextWebElement.configuration = {
+                timestampFloatPrecision: 2,
                 recognitionParams: {
-                    textParameter: {
-                        language: 'fr_FR'
-                    },
-                    timestampFloatPrecision: 2
+                    v3: {
+                        textParameter: {
+                            language: 'fr_FR'
+                        }
+                    }
                 }
             };
             myscriptTextWebElement.language = mycustomconfiguration.language;

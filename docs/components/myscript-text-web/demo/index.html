@@ -68,7 +68,7 @@
         host="webdemoapi.myscript.com"
         applicationkey="22eda92c-10af-40d8-abea-fd4093c17d81"
         hmackey="a1fa759f-b3ce-4091-9fd4-d34bb870c601"
-        language="{{ language }}">
+        language="fr_FR">
     </myscript-text-web>
 </template>
 </body>
@@ -97,7 +97,7 @@
                 var waitingDiv = document.querySelector('#waiting');
                 waitingDiv.parentNode.removeChild(waitingDiv);
                 console.log("All resources finished loading! Starting to init myscript-text-web");
-                select('fr_FR');
+                select('fr_CA');
                 console.log("myscript-text-web should be displayed");
             }, 3000);
         });
