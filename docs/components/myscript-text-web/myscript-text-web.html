@@ -199,6 +199,10 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             myscriptTextWebElement.resultlabel = myscriptTextWebElement.result.textSegmentResult.candidates[myscriptTextWebElement.result.textSegmentResult.selectedCandidateIdx].label;
             myscriptTextWebElement.candidates = myscriptTextWebElement.result.textSegmentResult.candidates;
         }
+        eventDetail.result = myscriptTextWebElement.result;
+        eventDetail.resultlabel = myscriptTextWebElement.resultlabel;
+        eventDetail.candidates = myscriptTextWebElement.candidates;
+        return eventDetail;
     }
 
     function textManageClearEvent(myscriptTextWebElement, eventDetail) {
@@ -224,25 +228,23 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
         // Manage clear events
         function clearListener(event) {
             LOG('text ' + event.type + ' event intercepted', event);
-            textManageResultEvent(myscriptTextWebElement, event.detail);
-            myscriptTextWebElement.dispatchEvent(new CustomEvent('myscript-text-web-' + event.type, { detail: event.detail }));
+            textManageClearEvent(myscriptTextWebElement, event.detail);
+            myscriptTextWebElement.dispatchEvent(new CustomEvent(event.type.replace('myscript-common-element-', 'myscript-text-web-'), { detail: event.detail }));
         }
 
         // Manage result events
         function resultListener(event) {
             LOG('text ' + event.type + ' event intercepted', event);
             // Just forwarding event there.
-            textManageResultEvent(myscriptTextWebElement, event.detail);
-            var detail = event.detail;
-            detail.result = myscriptTextWebElement.result;
-            myscriptTextWebElement.dispatchEvent(new CustomEvent('myscript-text-web-' + event.type, { detail: detail }));
+            var enrichedEventDetail = textManageResultEvent(myscriptTextWebElement, event.detail);
+            myscriptTextWebElement.dispatchEvent(new CustomEvent(event.type.replace('myscript-common-element-', 'myscript-text-web-'), { detail: enrichedEventDetail }));
         }
 
         // Manage other events
         function defaultListener(event) {
             LOG('text ' + event.type + ' event intercepted', event);
             // Just forwarding event there.
-            myscriptTextWebElement.dispatchEvent(new CustomEvent('myscript-text-web-' + event.type, { detail: event.detail }));
+            myscriptTextWebElement.dispatchEvent(new CustomEvent(event.type.replace('myscript-common-element-', 'myscript-text-web-'), { detail: event.detail }));
         }
 
         myscriptTextWebElement.currentListeners = {};
