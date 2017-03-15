@@ -742,9 +742,9 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                 //-----------------------------------------------------------------------
                 //---------  Wrapping END                                    ------------
                 //-----------------------------------------------------------------------
-                unloadedChanged: function (newValue) {
-                    LOG('text unloaded changed', newValue);
-                    if (this.myscriptcommonelement && !this.initializing && newValue !== true) {
+                unloadedChanged: function (unloaded) {
+                    LOG('text unloaded changed', unloaded);
+                    if (this.myscriptcommonelement && !this.initializing && unloaded !== true) {
                         this.result = {};
                         this.candidates = [];
                         this.resultlabel = undefined;
