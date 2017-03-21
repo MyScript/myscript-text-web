@@ -71,7 +71,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
     </style>
     <template>
         <div class="resultField" hidden="[[ displayResultZone(hideresult, unloaded) ]]">
-            <template is="dom-repeat" id="textCandidateList" items="[[ candidates ]]" as="textCandidate"
+            <template is="dom-repeat" id="textCandidateList" items="[[ result.textSegmentResult.candidates ]]" as="textCandidate"
                       index-as="textIndex">
                 <span class$="text {{ _getCandidateFlags(candidate) }}"
                       selected$="[[ _isSelected(textIndex, result.textSegmentResult.selectedCandidateIdx) ]]"
