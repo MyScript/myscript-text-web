@@ -12,44 +12,43 @@
     <link rel="stylesheet" href="demo.css">
 </head>
 <body touch-action="none">
-    <div id="waiting">myscript-text-web will be loaded in 3 seconds with customs params.</div>
     <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
     <myscript-text-web
         host="webdemoapi.myscript.com">
     </myscript-text-web>
 </body>
 <script>
-    window.addEventListener("load", function (event) {
-        window.setTimeout(function () {
-            var waitingDiv = document.querySelector('#waiting');
-            waitingDiv.parentNode.removeChild(waitingDiv);
-            console.log("All resources finished loading! Starting to init myscript-text-web");
-            var mycustomconfiguration = {
-                // Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account
-                applicationKey: '515131ab-35fa-411c-bb4d-3917e00faf60',
-                hmacKey: '54b2ca8a-6752-469d-87dd-553bb450e9ad',
-                language: 'zh_CN'
-            };
-            var myscriptTextWebElement = document.querySelector('myscript-text-web');
-            myscriptTextWebElement.unloaded = true;
-            // Testing if attributes binding via DOM, setAttribute or direct object manipulation is working.
-            myscriptTextWebElement.setAttribute('applicationkey', mycustomconfiguration.applicationKey);
-            myscriptTextWebElement.hmackey = mycustomconfiguration.hmacKey;
-            // Testing if options are taken into account
-            myscriptTextWebElement.configuration = {
-                timestampFloatPrecision: 2,
-                recognitionParams: {
-                    v3: {
-                        textParameter: {
-                            language: 'fr_FR'
+    window.addEventListener("load", function () {
+        var configurationChanged = false;
+        var myscriptTextWebElement = document.querySelector('myscript-text-web');
+        myscriptTextWebElement.addEventListener("myscript-text-web-load", function () {
+            if (!configurationChanged) {
+                console.log("All resources finished loading! Starting to init myscript-text-web");
+                var mycustomconfiguration = {
+                    // Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account
+                    applicationKey: '515131ab-35fa-411c-bb4d-3917e00faf60',
+                    hmacKey: '54b2ca8a-6752-469d-87dd-553bb450e9ad',
+                    language: 'zh_CN'
+                };
+                // Testing if attributes binding via DOM, setAttribute or direct object manipulation is working.
+                myscriptTextWebElement.setAttribute('applicationkey', mycustomconfiguration.applicationKey);
+                myscriptTextWebElement.hmackey = mycustomconfiguration.hmacKey;
+                // Testing if options are taken into account
+                myscriptTextWebElement.configuration = {
+                    timestampFloatPrecision: 2,
+                    recognitionParams: {
+                        v3: {
+                            textParameter: {
+                                language: 'fr_FR'
+                            }
                         }
                     }
-                }
-            };
-            myscriptTextWebElement.language = mycustomconfiguration.language;
-            myscriptTextWebElement.unloaded = false;
-            console.log("myscript-text-web should be displayed");
-        }, 3000);
+                };
+                myscriptTextWebElement.language = mycustomconfiguration.language;
+                myscriptTextWebElement.unloaded = true;
+            }
+            configurationChanged = true;
+        });
     });
 </script>
 </html>
