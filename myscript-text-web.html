@@ -163,17 +163,15 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
         }
     }
 
-    /**
-     * @param myscriptTextWebElement
-     */
-    function changeTextConfiguration(myscriptTextWebElement) {
-        if (myscriptTextWebElement.myscriptcommonelement) {
-            myscriptTextWebElement.myscriptcommonelement.configuration = buildTextConfiguration(myscriptTextWebElement);
-        }
-    }
-
     function attachTextElementToDom(myscriptTextWebElement) {
         myscriptTextWebElement.myscriptcommonelement = textQsWrapper(myscriptTextWebElement).querySelector('myscript-common-element');
+
+        // Manage load events
+        function loadListener(event) {
+            LOG('text ' + event.type + ' event intercepted', event);
+            myscriptTextWebElement.unloaded = false;
+            myscriptTextWebElement.dispatchEvent(new CustomEvent(event.type.replace('myscript-common-element-', 'myscript-text-web-'), { detail: event.detail }));
+        }
 
         // Manage clear events
         function clearListener(event) {
@@ -198,6 +196,9 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
         }
 
         myscriptTextWebElement.currentListeners = {};
+        ['myscript-common-element-load'].forEach(function (type) {
+            myscriptTextWebElement.currentListeners[type] = loadListener;
+        });
         ['myscript-common-element-result'].forEach(function (type) {
             myscriptTextWebElement.currentListeners[type] = resultListener;
         });
@@ -211,8 +212,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
         Object.keys(myscriptTextWebElement.currentListeners).forEach(function (type) {
             myscriptTextWebElement.myscriptcommonelement.addEventListener(type, myscriptTextWebElement.currentListeners[type])
         });
-        myscriptTextWebElement.configuration = buildTextConfiguration(myscriptTextWebElement);
-        myscriptTextWebElement.unloaded = false;
         LOG('text-web attached');
     }
 
@@ -221,7 +220,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
         Object.keys(myscriptTextWebElement.currentListeners).forEach(function (type) {
             myscriptTextWebElement.myscriptcommonelement.removeEventListener(type, myscriptTextWebElement.currentListeners[type])
         });
-        myscriptTextWebElement.unloaded = true;
         LOG('text-web detached');
     }
 
@@ -343,7 +341,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
              */
             unloaded: {
                 type: Boolean,
-                value: false,
+                value: true,
                 notify: true,
                 reflectToAttribute: true,
                 observer: 'unloadedChanged'
@@ -694,13 +692,14 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
         //-----------------------------------------------------------------------
         unloadedChanged: function (unloaded) {
             LOG('text unloaded changed', unloaded);
-            if (this.myscriptcommonelement && !this.initializing && unloaded !== true) {
-                this.result = {};
-                this.candidates = [];
-                this.resultlabel = undefined;
-                this.myscriptcommonelement.unloaded = true;
-                changeTextConfiguration(this);
-                this.myscriptcommonelement.unloaded = false;
+            this.result = {};
+            this.candidates = [];
+            this.resultlabel = undefined;
+            buildTextConfiguration(this);
+            if (unloaded === true) {
+                if (this.myscriptcommonelement && !this.initializing) {
+                    this.myscriptcommonelement.unloaded = true;
+                }
             }
         },
         // Will be renamed connected with pure custom element support
@@ -708,9 +707,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             this.initializing = true;
             LOG('text-web attached callback');
             attachTextElementToDom(this);
-            // FIXME: Ugly hack to apply configuration
-            this.myscriptcommonelement.unloaded = true;
-            this.myscriptcommonelement.unloaded = false;
             this.initializing = false;
         },
         detached: function () {
