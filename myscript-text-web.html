@@ -31,7 +31,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             height: calc(100% - 100px);
         }
 
-        .resultField {
+        .exports {
             overflow: auto;
             text-align: center;
             font-size: xx-large;
@@ -39,14 +39,14 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             max-height: 95px;
         }
 
-        .resultField[hidden] + myscript-common-element {
+        .exports[hidden] + myscript-common-element {
             height: 100%;
         }
     </style>
     <template>
-        <myscript-text-candidates-element class="resultField"
-                                          hidden="[[ displayResultZone(hideresult, unloaded) ]]"
-                                          result="{{ result }}">
+        <myscript-text-candidates-element class="exports"
+                                          hidden="[[ displayExports(hideexports, unloaded) ]]"
+                                          rawresult="{{ rawresult }}">
         </myscript-text-candidates-element>
         <myscript-common-element
             apiversion="{{ apiversion }}"
@@ -68,6 +68,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             canclear="[[ canclear ]]"
             canredo="[[ canredo ]]"
             canundo="[[ canundo ]]"
+            exports="[[ exports ]]"
             scheme="{{ scheme }}">
         </myscript-common-element>
     </template>
@@ -132,8 +133,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
      * @private
      * @method _onSuccess
      */
-    function textManageResultEvent(myscriptTextWebElement, eventDetail) {
-        myscriptTextWebElement.result = {};
+    function manageExports(myscriptTextWebElement, eventDetail) {
         myscriptTextWebElement.resultlabel = '';
         myscriptTextWebElement.candidates = [];
 
@@ -145,19 +145,16 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             eventDetail.rawResult.result.textSegmentResult &&
             eventDetail.rawResult.result.textSegmentResult.candidates) {
 
-            myscriptTextWebElement.result = eventDetail.rawResult.result;
-            myscriptTextWebElement.resultlabel = myscriptTextWebElement.result.textSegmentResult.candidates[myscriptTextWebElement.result.textSegmentResult.selectedCandidateIdx].label;
-            myscriptTextWebElement.candidates = myscriptTextWebElement.result.textSegmentResult.candidates;
+            myscriptTextWebElement.rawresult = eventDetail.rawResult;
+            myscriptTextWebElement.resultlabel = myscriptTextWebElement.rawresult.result.textSegmentResult.candidates[myscriptTextWebElement.rawresult.result.textSegmentResult.selectedCandidateIdx].label;
+            myscriptTextWebElement.candidates = myscriptTextWebElement.rawresult.result.textSegmentResult.candidates;
         }
-        eventDetail.result = myscriptTextWebElement.result;
-        eventDetail.resultlabel = myscriptTextWebElement.resultlabel;
-        eventDetail.candidates = myscriptTextWebElement.candidates;
-        return eventDetail;
     }
 
-    function textManageClearEvent(myscriptTextWebElement, eventDetail) {
+    function manageClear(myscriptTextWebElement, eventDetail) {
         if (myscriptTextWebElement.myscriptcommonelement) {
-            myscriptTextWebElement.result = {};
+            myscriptTextWebElement.exports = {};
+            myscriptTextWebElement.rawresult = {};
             myscriptTextWebElement.resultlabel = undefined;
             myscriptTextWebElement.candidates = [];
         }
@@ -166,48 +163,30 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
     function attachTextElementToDom(myscriptTextWebElement) {
         myscriptTextWebElement.myscriptcommonelement = textQsWrapper(myscriptTextWebElement).querySelector('myscript-common-element');
 
-        // Manage load events
-        function loadListener(event) {
-            LOG('text ' + event.type + ' event intercepted', event);
-            myscriptTextWebElement.unloaded = false;
-            myscriptTextWebElement.dispatchEvent(new CustomEvent(event.type.replace('myscript-common-element-', 'myscript-text-web-'), { detail: event.detail }));
-        }
-
-        // Manage clear events
-        function clearListener(event) {
-            LOG('text ' + event.type + ' event intercepted', event);
-            textManageClearEvent(myscriptTextWebElement, event.detail);
-            myscriptTextWebElement.dispatchEvent(new CustomEvent(event.type.replace('myscript-common-element-', 'myscript-text-web-'), { detail: event.detail }));
-        }
-
-        // Manage result events
-        function resultListener(event) {
-            LOG('text ' + event.type + ' event intercepted', event);
-            // Just forwarding event there.
-            var enrichedEventDetail = textManageResultEvent(myscriptTextWebElement, event.detail);
-            myscriptTextWebElement.dispatchEvent(new CustomEvent(event.type.replace('myscript-common-element-', 'myscript-text-web-'), { detail: enrichedEventDetail }));
-        }
-
         // Manage other events
-        function defaultListener(event) {
+        function commonElementListener(event) {
             LOG('text ' + event.type + ' event intercepted', event);
+            switch (event.type) {
+                case 'myscript-common-element-load':
+                    myscriptTextWebElement.unloaded = false;
+                    break;
+                case 'myscript-common-element-exported':
+                    manageExports(myscriptTextWebElement, event.detail);
+                    break;
+                case 'myscript-common-element-clear':
+                    manageClear(myscriptTextWebElement, event.detail);
+                    break;
+                default:
+                    break;
+            }
             // Just forwarding event there.
             myscriptTextWebElement.dispatchEvent(new CustomEvent(event.type.replace('myscript-common-element-', 'myscript-text-web-'), { detail: event.detail }));
         }
 
         myscriptTextWebElement.currentListeners = {};
-        ['myscript-common-element-load'].forEach(function (type) {
-            myscriptTextWebElement.currentListeners[type] = loadListener;
-        });
-        ['myscript-common-element-result'].forEach(function (type) {
-            myscriptTextWebElement.currentListeners[type] = resultListener;
-        });
-        ['myscript-common-element-clear'].forEach(function (type) {
-            myscriptTextWebElement.currentListeners[type] = clearListener;
-        });
-        ['myscript-common-element-undo', 'myscript-common-element-redo', 'myscript-common-element-typeset', 'myscript-common-element-recognize', 'myscript-common-element-change', 'myscript-common-element-error']
+        ['myscript-common-element-load', 'myscript-common-element-exported', 'myscript-common-element-undo', 'myscript-common-element-redo', 'myscript-common-element-clear', 'myscript-common-element-convert', 'myscript-common-element-export', 'myscript-common-element-change', 'myscript-common-element-error']
             .forEach(function (type) {
-                myscriptTextWebElement.currentListeners[type] = defaultListener;
+                myscriptTextWebElement.currentListeners[type] = commonElementListener;
             });
         Object.keys(myscriptTextWebElement.currentListeners).forEach(function (type) {
             myscriptTextWebElement.myscriptcommonelement.addEventListener(type, myscriptTextWebElement.currentListeners[type])
@@ -459,7 +438,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
              * If set to true, hide the result div tag.
              * @type Boolean
              */
-            hideresult: {
+            hideexports: {
                 type: Boolean,
                 value: false,
                 reflectToAttribute: true
@@ -619,11 +598,17 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                 type: Number
             },
             /**
-             * Recognition result.
-             * @attribute result
+             * Exports.
              * @type {Object<String, Object>} Attributes depends on recognition type already configured.
              */
-            result: {
+            exports: {
+                type: Object,
+                notify: true
+            },
+            /**
+             * The export rawResult
+             */
+            rawresult: {
                 type: Object,
                 notify: true
             },
@@ -692,7 +677,8 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
         //-----------------------------------------------------------------------
         unloadedChanged: function (unloaded) {
             LOG('text unloaded changed', unloaded);
-            this.result = {};
+            this.exports = {};
+            this.rawresult = {};
             this.candidates = [];
             this.resultlabel = undefined;
             buildTextConfiguration(this);
@@ -713,10 +699,10 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             LOG('text-web detached callback');
             detachTextElementFromDom(this);
         },
-        displayResultZone: function (hideResultValue, unloadedValue) {
-            LOG('text-web shouldLoadCommonElement', hideResultValue, unloadedValue);
+        displayExports: function (hideExports, unloaded) {
+            LOG('text-web should display exports', hideExports, unloaded);
             // Common element should not be attached if the unload attribute of myscript-math-web element is set to true and if he is not already connected to the dom.
-            return hideResultValue && ( unloadedValue || unloadedValue !== true);
+            return hideExports && ( unloaded || unloaded !== true);
         }
     });
 </script>
