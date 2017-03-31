@@ -60,7 +60,7 @@
     var currentLanguage = myscriptTextWebElement.getAttribute('language');
 
     var languageSelect = document.getElementById('languageList');
-    document.querySelector('myscript-languages-element').addEventListener('myscript-languages-element-result', function (evt) {
+    document.querySelector('myscript-languages-element').addEventListener('change', function (evt) {
         evt.detail.forEach(function (language) {
             var selected = currentLanguage === language.value;
             languageSelect.options[languageSelect.options.length] = new Option(language.description, language.value, selected, selected);
@@ -69,9 +69,8 @@
     });
 
     function select(lang) {
-        myscriptTextWebElement.unloaded = true;
         myscriptTextWebElement.language = lang;
-        myscriptTextWebElement.unloaded = false;
+        myscriptTextWebElement.unloaded = true;
     }
 </script>
 </html>

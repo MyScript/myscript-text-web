@@ -612,24 +612,24 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                     function commonElementListener(event) {
                         LOG('text ' + event.type + ' event intercepted', event);
                         switch (event.type) {
-                            case 'myscript-common-element-' + MyScript.Constants.EventType.LOADED:
+                            case MyScript.Constants.EventType.LOADED:
                                 myscriptTextWebElement.unloaded = false;
                                 break;
-                            case 'myscript-common-element-' + MyScript.Constants.EventType.EXPORTED:
+                            case MyScript.Constants.EventType.EXPORTED:
                                 myscriptTextWebElement.manageExports(event, myscriptTextWebElement);
                                 break;
-                            case 'myscript-common-element-' + MyScript.Constants.EventType.CLEAR:
+                            case MyScript.Constants.EventType.CLEAR:
                                 myscriptTextWebElement.manageClear(event, myscriptTextWebElement);
                                 break;
                             default:
                                 break;
                         }
                         // Just forwarding event there.
-                        myscriptTextWebElement.dispatchEvent(new CustomEvent(event.type.replace('myscript-common-element-', 'myscript-text-web-'), { detail: event.detail }));
+                        myscriptTextWebElement.dispatchEvent(new CustomEvent(event.type, { detail: event.detail }));
                     }
 
                     const eventTypes = Object.keys(MyScript.Constants.EventType).map(function (key) {
-                        return 'myscript-common-element-' + MyScript.Constants.EventType[key];
+                        return MyScript.Constants.EventType[key];
                     });
 
                     myscriptTextWebElement.currentListeners = {};

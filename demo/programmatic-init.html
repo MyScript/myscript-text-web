@@ -21,7 +21,7 @@
     window.addEventListener("load", function () {
         var configurationChanged = false;
         var myscriptTextWebElement = document.querySelector('myscript-text-web');
-        myscriptTextWebElement.addEventListener("myscript-text-web-load", function () {
+        myscriptTextWebElement.addEventListener("load", function () {
             if (!configurationChanged) {
                 console.log("All resources finished loading! Starting to init myscript-text-web");
                 var mycustomconfiguration = {

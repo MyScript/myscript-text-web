@@ -93,7 +93,7 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
             rawresult.result.textSegmentResult.selectedCandidateIdx = this.$.textCandidateList.indexForElement(e.target);
             this.rawresult = {};
             this.rawresult = rawresult;
-            this.dispatchEvent(new CustomEvent('myscript-text-candidates-element-change'), { detail: this.rawresult });
+            this.dispatchEvent(new CustomEvent('change'), { detail: this.rawresult });
         },
         _isSelected: function (index, selectedIndex) {
             return index === selectedIndex;
