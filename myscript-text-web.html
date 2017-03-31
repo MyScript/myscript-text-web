@@ -564,7 +564,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                 //-----------------------------------------------------------------------
                 unloadedChanged: function (unloaded) {
                     LOG('text unloaded changed', unloaded);
-                    this.exports = {};
                     this.rawresult = {};
                     this.candidates = [];
                     this.resultlabel = undefined;
@@ -656,7 +655,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                  * @private
                  */
                 manageClear: function (event, myscriptTextWebElement) {
-                    myscriptTextWebElement.exports = {};
                     myscriptTextWebElement.rawresult = {};
                     myscriptTextWebElement.resultlabel = undefined;
                     myscriptTextWebElement.candidates = [];
