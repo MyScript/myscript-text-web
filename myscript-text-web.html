@@ -75,17 +75,17 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
 </dom-module>
 
 <script>
-
     /**
-     * Function returning the root dom element whatever shadow or shady dom is used.
-     * @param domElement
-     * @returns {*}
+     * Uncomment the function body during development. Should not be activated in production.
+     * @param string
+     * @param object
+     * @constructor
      */
-    function qsWrapper(domElement) {
-        if (domElement.shadowRoot) {
-            return domElement.shadowRoot;
+    function LOG(string, object) {
+        if (object) {
+            console.log(string, object);
         } else {
-            return domElement;
+            console.log(string);
         }
     }
 
@@ -568,7 +568,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                     this.rawresult = {};
                     this.candidates = [];
                     this.resultlabel = undefined;
-                    this.buildTextConfiguration(this);
+                    this.buildConfiguration();
                     if (unloaded === true) {
                         if (this.myscriptcommonelement && !this.initializing) {
                             this.myscriptcommonelement.unloaded = true;
@@ -577,23 +577,39 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                 },
                 // Will be renamed connected with pure custom element support
                 attached: function () {
+
+                    /**
+                     * Function returning the root dom element whatever shadow or shady dom is used.
+                     * @param domElement
+                     * @returns {*}
+                     */
+                    function qsWrapper(domElement) {
+                        if (domElement.shadowRoot) {
+                            return domElement.shadowRoot;
+                        } else {
+                            return domElement;
+                        }
+                    }
+
                     this.initializing = true;
                     LOG('text-web attached callback');
-                    this.attachTextElementToDom(this);
+                    myscriptTextWebElement.myscriptcommonelement = qsWrapper(myscriptTextWebElement).querySelector('myscript-common-element');
+
+                    this.attachListener(this);
+
+                    LOG('text-web attached');
                     this.initializing = false;
                 },
                 detached: function () {
                     LOG('text-web detached callback');
-                    this.detachTextElementFromDom(this);
+                    this.detachListener(this);
+                    LOG('text-web detached');
                 },
 
                 /**
                  * @private
                  */
-                attachTextElementToDom: function (myscriptTextWebElement) {
-                    myscriptTextWebElement.myscriptcommonelement = qsWrapper(myscriptTextWebElement).querySelector('myscript-common-element');
-
-                    // Manage other events
+                attachListener: function (myscriptTextWebElement) {
                     function commonElementListener(event) {
                         LOG('text ' + event.type + ' event intercepted', event);
                         switch (event.type) {
@@ -601,10 +617,10 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                                 myscriptTextWebElement.unloaded = false;
                                 break;
                             case 'myscript-common-element-' + MyScript.Constants.EventType.EXPORTED:
-                                myscriptTextWebElement.manageExports(myscriptTextWebElement, event.detail);
+                                myscriptTextWebElement.manageExports(event, myscriptTextWebElement);
                                 break;
                             case 'myscript-common-element-' + MyScript.Constants.EventType.CLEAR:
-                                myscriptTextWebElement.manageClear(myscriptTextWebElement, event.detail);
+                                myscriptTextWebElement.manageClear(event, myscriptTextWebElement);
                                 break;
                             default:
                                 break;
@@ -624,100 +640,90 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                     Object.keys(myscriptTextWebElement.currentListeners).forEach(function (type) {
                         myscriptTextWebElement.myscriptcommonelement.addEventListener(type, myscriptTextWebElement.currentListeners[type])
                     });
-                    LOG('text-web attached');
                 },
 
                 /**
                  * Remove listeners when common element is unloaded.
                  * @private
                  */
-                detachTextElementFromDom: function (myscriptTextWebElement) {
+                detachListener: function (myscriptTextWebElement) {
                     Object.keys(myscriptTextWebElement.currentListeners).forEach(function (type) {
                         myscriptTextWebElement.myscriptcommonelement.removeEventListener(type, myscriptTextWebElement.currentListeners[type])
                     });
-                    LOG('text-web detached');
                 },
 
                 /**
                  * @private
-                 * @param myscriptTextWebElement
-                 * @param eventDetail
                  */
-                manageClear: function (myscriptTextWebElement, eventDetail) {
-                    if (myscriptTextWebElement.myscriptcommonelement) {
-                        myscriptTextWebElement.exports = {};
-                        myscriptTextWebElement.rawresult = {};
-                        myscriptTextWebElement.resultlabel = undefined;
-                        myscriptTextWebElement.candidates = [];
-                    }
+                manageClear: function (event, myscriptTextWebElement) {
+                    myscriptTextWebElement.exports = {};
+                    myscriptTextWebElement.rawresult = {};
+                    myscriptTextWebElement.resultlabel = undefined;
+                    myscriptTextWebElement.candidates = [];
                 },
 
                 /**
-                 * Recognition success listener.
                  * @private
-                 * @method _onSuccess
                  */
-                manageExports: function (myscriptTextWebElement, eventDetail) {
+                manageExports: function (event, myscriptTextWebElement) {
+                    myscriptTextWebElement.rawResult = {};
                     myscriptTextWebElement.resultlabel = '';
                     myscriptTextWebElement.candidates = [];
+                    if (event.detail) {
+                        if (event.detail.exports && event.detail.exports.TEXT) {
+                            myscriptTextWebElement.resultlabel = event.detail.exports.TEXT;
+                        }
+                        if (event.detail.rawResult &&
+                            event.detail.rawResult.result &&
+                            event.detail.rawResult.result.textSegmentResult &&
+                            event.detail.rawResult.result.textSegmentResult.candidates) {
 
-                    if (eventDetail.recognitionResult && eventDetail.recognitionResult.TEXT) {
-                        myscriptTextWebElement.resultlabel = eventDetail.recognitionResult.TEXT;
-                    }
-                    if (eventDetail.rawResult &&
-                        eventDetail.rawResult.result &&
-                        eventDetail.rawResult.result.textSegmentResult &&
-                        eventDetail.rawResult.result.textSegmentResult.candidates) {
-
-                        myscriptTextWebElement.rawresult = eventDetail.rawResult;
-                        myscriptTextWebElement.resultlabel = myscriptTextWebElement.rawresult.result.textSegmentResult.candidates[myscriptTextWebElement.rawresult.result.textSegmentResult.selectedCandidateIdx].label;
-                        myscriptTextWebElement.candidates = myscriptTextWebElement.rawresult.result.textSegmentResult.candidates;
+                            myscriptTextWebElement.rawresult = event.detail.rawResult;
+                            myscriptTextWebElement.resultlabel = myscriptTextWebElement.rawresult.result.textSegmentResult.candidates[myscriptTextWebElement.rawresult.result.textSegmentResult.selectedCandidateIdx].label;
+                            myscriptTextWebElement.candidates = myscriptTextWebElement.rawresult.result.textSegmentResult.candidates;
+                        }
                     }
                 },
 
                 /**
                  * @private
-                 * @param myscriptTextWebElement
                  */
-                buildTextConfiguration: function (myscriptTextWebElement) {
-                    if (!myscriptTextWebElement.configuration) {
-                        myscriptTextWebElement.configuration = {};
+                buildConfiguration: function () {
+                    if (!this.configuration) {
+                        this.configuration = {};
                     }
-                    if (!myscriptTextWebElement.configuration.recognitionParams) {
-                        myscriptTextWebElement.configuration.recognitionParams = {};
+                    if (!this.configuration.recognitionParams) {
+                        this.configuration.recognitionParams = {};
                     }
-                    myscriptTextWebElement.configuration.recognitionParams[myscriptTextWebElement.apiversion.toLowerCase()] = {
+                    this.configuration.recognitionParams[this.apiversion.toLowerCase()] = {
                         textParameter: {
-                            language: myscriptTextWebElement.language,
-                            textInputMode: myscriptTextWebElement.textinputmode,
-                            resultDetail: myscriptTextWebElement.resultdetail,
-                            contentTypes: myscriptTextWebElement.contenttypes,
-                            subsetKnowledges: myscriptTextWebElement.subsetknowledges,
-                            userLkWords: myscriptTextWebElement.userlkwords,
-                            userResources: myscriptTextWebElement.userresources,
+                            language: this.language,
+                            textInputMode: this.textinputmode,
+                            resultDetail: this.resultdetail,
+                            contentTypes: this.contenttypes,
+                            subsetKnowledges: this.subsetknowledges,
+                            userLkWords: this.userlkwords,
+                            userResources: this.userresources,
                             textProperties: {
-                                textCandidateListSize: myscriptTextWebElement.textcandidatelistsize,
-                                wordCandidateListSize: myscriptTextWebElement.wordcandidatelistsize,
-                                wordPredictionListSize: myscriptTextWebElement.wordpredictionlistsize,
-                                wordCompletionListSize: myscriptTextWebElement.wordcompletionlistsize,
-                                characterCandidateListSize: myscriptTextWebElement.charactercandidatelistsize,
-                                enableOutOfLexicon: myscriptTextWebElement.enableoutoflexicon,
-                                discardCaseVariations: myscriptTextWebElement.discardcasevariations,
-                                discardAccentuationVariations: myscriptTextWebElement.discardaccentuationvariations,
-                                glyphDistortion: myscriptTextWebElement.glyphdistortion,
-                                enableTagger: myscriptTextWebElement.enabletagger,
-                                spellingDistortion: myscriptTextWebElement.spellingdistortion
+                                textCandidateListSize: this.textcandidatelistsize,
+                                wordCandidateListSize: this.wordcandidatelistsize,
+                                wordPredictionListSize: this.wordpredictionlistsize,
+                                wordCompletionListSize: this.wordcompletionlistsize,
+                                characterCandidateListSize: this.charactercandidatelistsize,
+                                enableOutOfLexicon: this.enableoutoflexicon,
+                                discardCaseVariations: this.discardcasevariations,
+                                discardAccentuationVariations: this.discardaccentuationvariations,
+                                glyphDistortion: this.glyphdistortion,
+                                enableTagger: this.enabletagger,
+                                spellingDistortion: this.spellingdistortion
                             }
                         }
                     };
-                    return myscriptTextWebElement.configuration;
+                    return this.configuration;
                 },
 
                 /**
                  * @private
-                 * @param hideExports
-                 * @param unloaded
-                 * @return {*|boolean}
                  */
                 displayExports: function (hideExports, unloaded) {
                     LOG('text-web should display exports', hideExports, unloaded);
