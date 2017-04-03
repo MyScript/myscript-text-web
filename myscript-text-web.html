@@ -21,6 +21,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
 <dom-module id="myscript-text-web">
     <style>
         :host {
+            box-sizing: border-box;
             display: block;
             --myscript-common-element-button-background: var(--myscript-text-web-button-background);
             --myscript-common-element-button-focus-background: var(--myscript-text-web-button-focus-background);
@@ -68,7 +69,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             canclear="[[ canclear ]]"
             canredo="[[ canredo ]]"
             canundo="[[ canundo ]]"
-            exports="[[ exports ]]"
+            exports="{{ exports }}"
             scheme="{{ scheme }}">
         </myscript-common-element>
     </template>
@@ -664,7 +665,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                  * @private
                  */
                 manageExports: function (event, myscriptTextWebElement) {
-                    myscriptTextWebElement.rawResult = {};
+                    myscriptTextWebElement.rawresult = {};
                     myscriptTextWebElement.resultlabel = '';
                     myscriptTextWebElement.candidates = [];
                     if (event.detail) {
