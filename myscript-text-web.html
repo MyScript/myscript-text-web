@@ -597,7 +597,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
 
                     this.initializing = true;
                     LOG('text-web attached callback');
-                    myscriptTextWebElement.myscriptcommonelement = qsWrapper(myscriptTextWebElement).querySelector('myscript-common-element');
+                    this.myscriptcommonelement = qsWrapper(this).querySelector('myscript-common-element');
 
                     this.attachListener(this);
 
