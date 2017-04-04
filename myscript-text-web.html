@@ -46,7 +46,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
     </style>
     <template>
         <myscript-text-candidates-element class="exports"
-                                          hidden="[[ displayExports(hideexports, unloaded) ]]"
+                                          hidden="[[ !displayExports(hideexports, unloaded) ]]"
                                           rawresult="{{ rawresult }}">
         </myscript-text-candidates-element>
         <myscript-common-element
