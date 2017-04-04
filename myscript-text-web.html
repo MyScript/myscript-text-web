@@ -727,7 +727,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                 displayExports: function (hideExports, unloaded) {
                     LOG('text-web should display exports', hideExports, unloaded);
                     // Common element should not be attached if the unload attribute of myscript-math-web element is set to true and if he is not already connected to the dom.
-                    return hideExports && ( unloaded || unloaded !== true);
+                    return !hideExports && ( unloaded || unloaded !== true);
                 }
             }
     );
