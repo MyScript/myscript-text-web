@@ -4,7 +4,7 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 -->
 <link rel="import" href="../polymer/polymer.html">
 
-<dom-module id="myscript-text-candidates-element">
+<dom-module id="myscript-text-candidates">
     <style>
         :host {
             display: block;
@@ -16,8 +16,8 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
         }
 
         .text {
-            color: #1580CD;
-            background-color: #EDF0F2;
+            color: var(--myscript-text-candidates-color, #1580CD);
+            background-color: var(--myscript-text-candidates-background-color, #EDF0F2);
             font-size: 1.75rem;
             padding: .5rem .75rem;
             border-radius: 3px;
@@ -25,8 +25,8 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
         }
 
         .text[selected] {
-            color: #FFFFFF;
-            background-color: #1580CD;
+            color: var(--myscript-text-candidates-selected-color, #FFFFFF);
+            background-color: var(--myscript-text-candidates-selected-background-color, #1580CD);
         }
 
         .candidate[selected] * {
@@ -35,11 +35,11 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
         }
 
         .char.predicted {
-            color: #73818C;
+            color: var(--myscript-text-candidates-predicted-color, #73818C);
         }
 
         .char.completed {
-            color: #1A9FFF;
+            color: var(--myscript-text-candidates-completed-color, #1A9FFF);
         }
     </style>
     <template>
@@ -77,7 +77,7 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 
 <script>
     Polymer({
-        is: 'myscript-text-candidates-element',
+        is: 'myscript-text-candidates',
         properties: {
             rawresult: {
                 type: Object,

@@ -4,7 +4,7 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 -->
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../myscript-common-element/myscript-common-element.html">
-<link rel="import" href="./myscript-text-candidates-element.html">
+<link rel="import" href="myscript-text-candidates.html">
 
 <!--
 The `myscript-text-web` is a turnkey solution for those who need to quickly implement MyScript Text recognition.
@@ -28,6 +28,10 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             --myscript-common-element-button-disabled-background: var(--myscript-text-web-button-disabled-background);
         }
 
+        [hidden] {
+            display: none;
+        }
+
         myscript-common-element {
             height: calc(100% - 100px);
         }
@@ -45,10 +49,10 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
         }
     </style>
     <template>
-        <myscript-text-candidates-element class="exports"
-                                          hidden="[[ !displayExports(hideexports, unloaded) ]]"
-                                          rawresult="{{ rawresult }}">
-        </myscript-text-candidates-element>
+        <myscript-text-candidates class="exports"
+                                  hidden="[[ !displayExports(hideexports, unloaded) ]]"
+                                  rawresult="{{ rawresult }}">
+        </myscript-text-candidates>
         <myscript-common-element
             apiversion="{{ apiversion }}"
             applicationkey="{{ applicationkey }}"
