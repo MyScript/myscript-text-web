@@ -36,15 +36,12 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
             height: calc(100% - 100px);
         }
 
-        .exports {
+        myscript-text-candidates {
+            height: 100px;
             overflow: auto;
-            text-align: center;
-            font-size: xx-large;
-            min-height: 95px;
-            max-height: 95px;
         }
 
-        .exports[hidden] + myscript-common-element {
+        myscript-text-candidates[hidden] + myscript-common-element {
             height: 100%;
         }
     </style>
