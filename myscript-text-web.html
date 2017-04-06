@@ -4,7 +4,7 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 -->
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../myscript-common-element/myscript-common-element.html">
-<link rel="import" href="myscript-text-candidates.html">
+<link rel="import" href="./myscript-text-candidates.html">
 
 <!--
 The `myscript-text-web` is a turnkey solution for those who need to quickly implement MyScript Text recognition.
@@ -23,22 +23,23 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
         :host {
             box-sizing: border-box;
             display: block;
-            --myscript-common-element-button-background: var(--myscript-text-web-button-background);
-            --myscript-common-element-button-focus-background: var(--myscript-text-web-button-focus-background);
-            --myscript-common-element-button-disabled-background: var(--myscript-text-web-button-disabled-background);
+            color: var(--myscript-text-web-button-background, #1A9FFF);
+            --myscript-common-element-button-background: var(--myscript-text-web-button-background, #1A9FFF);
+            --myscript-common-element-button-focus-background: var(--myscript-text-web-button-focus-background, #1A9FFF);
+            --myscript-common-element-button-disabled-background: var(--myscript-text-web-button-disabled-background, #F5F6F7);
         }
 
         [hidden] {
             display: none;
         }
 
-        myscript-common-element {
-            height: calc(100% - 100px);
-        }
-
         myscript-text-candidates {
             height: 100px;
             overflow: auto;
+        }
+
+        myscript-common-element {
+            height: calc(100% - 100px);
         }
 
         myscript-text-candidates[hidden] + myscript-common-element {
@@ -51,27 +52,27 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                                   rawresult="{{ rawresult }}">
         </myscript-text-candidates>
         <myscript-common-element
-            apiversion="{{ apiversion }}"
-            applicationkey="{{ applicationkey }}"
-            hidebuttons="{{ hidebuttons }}"
-            hmackey="{{ hmackey }}"
-            configuration="{{ configuration }}"
+            type="TEXT"
             protocol="{{ protocol }}"
+            apiversion="{{ apiversion }}"
             host="{{ host }}"
+            scheme="{{ scheme }}"
+            applicationkey="{{ applicationkey }}"
+            hmackey="{{ hmackey }}"
             recognitiontriggerdelay="{{ recognitiontriggerdelay }}"
             recognitionprocessdelay="{{ recognitionprocessdelay }}"
+            configuration="{{ configuration }}"
             strokecolor="{{ strokecolor }}"
             strokewidth="{{ strokewidth }}"
-            timeout="{{ timeout }}"
-            type="TEXT"
+            hidebuttons="{{ hidebuttons }}"
             disableclear="{{ disableclear }}"
-            disablerecognize="{{ disablerecognize }}"
             disableundoredo="{{ disableundoredo }}"
+            disableexport="{{ disableexport }}"
+            disableconvert="{{ disableconvert }}"
             canclear="[[ canclear ]]"
             canredo="[[ canredo ]]"
             canundo="[[ canundo ]]"
-            exports="{{ exports }}"
-            scheme="{{ scheme }}">
+            exports="{{ exports }}">
         </myscript-common-element>
     </template>
 </dom-module>
@@ -93,20 +94,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
 
     Polymer({
                 is: 'myscript-text-web',
-                /**
-                 * Fired when state of canundo / canredo / canclear / canrecognize
-                 *
-                 * @event myscript-text-web-change
-                 */
-                /**
-                 * Fired when the delete action is done.
-                 *
-                 * @event myscript-text-web-result
-                 */
-                /**
-                 * Fired when a recognition error occurred.
-                 * @event myscript-text-web-error
-                 */
                 properties: {
                     // ----------------------------------------------------------------------------------------------
                     // The following section is a recopy of myscript-common-element attributes
@@ -114,8 +101,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                     // ----------------------------------------------------------------------------------------------
                     /**
                      * The current recognition protocol (WEBSOCKET or REST). We strongly recommend using WEBSOCKET.
-                     * @type String
-                     * @default 'WEBSOCKET'
                      */
                     protocol: {
                         type: String,
@@ -124,9 +109,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                     },
                     /**
                      * Scheme to use to connect to MyScript Cloud or Server. (https or http)
-                     * @private
-                     * @type Boolean
-                     * @default true
                      */
                     scheme: {
                         type: String,
@@ -135,8 +117,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                     },
                     /**
                      * The current recognition service host.
-                     * @type String
-                     * @default 'cloud.myscript.com'
                      */
                     host: {
                         type: String,
@@ -144,9 +124,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                         value: 'cloud.myscript.com'
                     },
                     /**
-                     * Recogntion API version to use (eg V3 or V4)
-                     * @type String
-                     * @default 'V3'
+                     * Cloud API version to use (eg V3 or V4)
                      */
                     apiversion: {
                         type: String,
@@ -155,8 +133,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                     },
                     /**
                      * Delay without any user input before asking for recognition, only use in REST mode.
-                     * @type Number
-                     * @default 2000
                      */
                     recognitiontriggerdelay: {
                         type: Number,
@@ -165,8 +141,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                     },
                     /**
                      * Delay without any recognition result received before processing the last one received, only use in WEBSOCKET mode.
-                     * @type Number
-                     * @default 2000
                      */
                     recognitionprocessdelay: {
                         type: Number,
@@ -175,8 +149,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                     },
                     /**
                      * The recognition timeout, only use in REST mode.
-                     * @type Number
-                     * @default 2000
                      */
                     timeout: {
                         type: Number,
@@ -187,7 +159,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                      * Application key to use for recognition on MyScript handwriting recognition server.<br />
                      * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.<br /><br />
                      * <b>Warning</b>: This parameter is <b>mandatory</b> and its value should be a string.
-                     * @type String
                      */
                     applicationkey: {
                         type: String,
@@ -197,7 +168,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                      * HMAC key to use for recognition on MyScript handwriting recognition server.<br />
                      * You have to create your own HMAC key corresponding to your own application key in your account at http://cloud.myscript.com.<br /><br />
                      * <b>Warning</b>: This parameter may be <b>mandatory</b> if HMAC signature security is enabled for your application. The value should be a string.
-                     * @type String
                      */
                     hmackey: {
                         type: String,
@@ -224,8 +194,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                         notify: true
                     },
                     /**
-                     * Set the stroke color
-                     * @type String
+                     * Color of the stroke
                      */
                     strokecolor: {
                         type: String,
@@ -233,8 +202,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                         reflectToAttribute: true
                     },
                     /**
-                     * Set the stroke width
-                     * @type String
+                     * Width of the stroke
                      */
                     strokewidth: {
                         type: Number,
@@ -244,8 +212,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                     /**
                      * True if undo is available
                      * @private
-                     * @type Boolean
-                     * @default false
                      */
                     canundo: {
                         type: Boolean,
@@ -256,8 +222,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                     /**
                      * True if redo is available
                      * @private
-                     * @type Boolean
-                     * @default false
                      */
                     canredo: {
                         type: Boolean,
@@ -268,8 +232,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                     /**
                      * True if there is something to clear
                      * @private
-                     * @type Boolean
-                     * @default false
                      */
                     canclear: {
                         type: Boolean,
@@ -279,8 +241,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                     },
                     /**
                      * If set to true, hide the buttons (Trash, Undo, Redo).
-                     * @type Boolean
-                     * @default false
                      */
                     hidebuttons: {
                         type: Boolean,
@@ -325,7 +285,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                     },
                     /**
                      * If set to true, hide the result div tag.
-                     * @type Boolean
                      */
                     hideexports: {
                         type: Boolean,
@@ -334,7 +293,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                     },
                     /**
                      * The recognition language used by the recognition process.
-                     * @type String
                      */
                     language: {
                         type: String,
@@ -344,7 +302,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                     },
                     /**
                      * The text input mode to use (CURSIVE, ISOLATED, SUPERIMPOSED or VERTICAL).
-                     * @type String
                      */
                     textinputmode: {
                         type: String,
@@ -353,7 +310,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                     },
                     /**
                      * The resultdetail is an entry property that conditioning result depth output. To use (TEXT, WORD or CHARACTER).
-                     * @type String
                      */
                     resultdetail: {
                         type: String,

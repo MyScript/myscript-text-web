@@ -11,16 +11,9 @@
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="../../myscript-common-element/myscript-languages-element.html">
     <link rel="import" href="../myscript-text-web.html">
-
-    <style is="custom-style" include="iron-flex"></style>
+    <link rel="stylesheet" href="demo.css">
 </head>
 <style>
-    body {
-        margin: 0;
-        height: 100vh;
-        text-align: center;
-        line-height: 60px;
-    }
     myscript-text-web {
         height: calc(100% - 60px);
     }
@@ -44,11 +37,13 @@
     }
 </style>
 <body touch-action="none">
-    <myscript-languages-element scheme="https"
-                                host="cloud-internal-stable.visionobjects.com"
-                                applicationKey="a8f991e2-994d-4f36-b61d-55f7ddf6f85d">
-    </myscript-languages-element>
-    <select id="languageList" onchange="select(this.value)" disabled></select>
+    <nav>
+        <myscript-languages-element scheme="https"
+                                    host="cloud-internal-stable.visionobjects.com"
+                                    applicationKey="a8f991e2-994d-4f36-b61d-55f7ddf6f85d">
+        </myscript-languages-element>
+        <select id="languageList" onchange="select(this.value)" disabled></select>
+    </nav>
     <myscript-text-web id="text-input"
                        host="webdemoapi.myscript.com"
                        applicationkey="22eda92c-10af-40d8-abea-fd4093c17d81"
@@ -63,7 +58,7 @@
     var currentLanguage = myscriptTextWebElement.getAttribute('language');
 
     var languageSelect = document.getElementById('languageList');
-    document.querySelector('myscript-languages-element').addEventListener('myscript-languages-element-result', function (evt) {
+    document.querySelector('myscript-languages-element').addEventListener('change', function (evt) {
         evt.detail.forEach(function (language) {
             var selected = currentLanguage === language.value;
             languageSelect.options[languageSelect.options.length] = new Option(language.description, language.value, selected, selected);
@@ -72,9 +67,8 @@
     });
 
     function select(lang) {
-        myscriptTextWebElement.unloaded = true;
         myscriptTextWebElement.language = lang;
-        myscriptTextWebElement.unloaded = false;
+        myscriptTextWebElement.unloaded = true;
     }
 </script>
 </html>

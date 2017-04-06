@@ -21,13 +21,13 @@
     window.addEventListener("load", function () {
         var configurationChanged = false;
         var myscriptTextWebElement = document.querySelector('myscript-text-web');
-        myscriptTextWebElement.addEventListener("myscript-text-web-load", function () {
+        myscriptTextWebElement.addEventListener("load", function () {
             if (!configurationChanged) {
                 console.log("All resources finished loading! Starting to init myscript-text-web");
                 var mycustomconfiguration = {
                     // Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account
-                    applicationKey: '515131ab-35fa-411c-bb4d-3917e00faf60',
-                    hmacKey: '54b2ca8a-6752-469d-87dd-553bb450e9ad',
+                    applicationKey: '22eda92c-10af-40d8-abea-fd4093c17d81',
+                    hmacKey: 'a1fa759f-b3ce-4091-9fd4-d34bb870c601',
                     language: 'zh_CN'
                 };
                 // Testing if attributes binding via DOM, setAttribute or direct object manipulation is working.
