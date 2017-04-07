@@ -548,6 +548,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                     this.initializing = true;
                     LOG('text-web attached callback');
                     this.myscriptcommonelement = qsWrapper(this).querySelector('myscript-common-element');
+                    this.candidatelistelement = qsWrapper(this).querySelector('myscript-text-candidates');
 
                     this.attachListener(this);
 
@@ -564,6 +565,25 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                  * @private
                  */
                 attachListener: function (myscriptTextWebElement) {
+                    function textCandidateListListener(event) {
+                        LOG('text candidates ' + event.type + ' event intercepted', event);
+                        switch (event.type) {
+                            case 'change':
+                                myscriptTextWebElement.manageExports(event, myscriptTextWebElement);
+                                myscriptTextWebElement.dispatchEvent(new CustomEvent(MyScript.Constants.EventType.EXPORTED, { detail: event.detail }));
+                                break;
+                            default:
+                                // Just forwarding event there.
+                                myscriptTextWebElement.dispatchEvent(new CustomEvent(event.type, { detail: event.detail }));
+                                break;
+                        }
+                    }
+                    myscriptTextWebElement.candidateListListeners = {};
+                    myscriptTextWebElement.candidateListListeners['change'] = textCandidateListListener;
+                    Object.keys(myscriptTextWebElement.candidateListListeners).forEach(function (type) {
+                        myscriptTextWebElement.candidatelistelement.addEventListener(type, myscriptTextWebElement.candidateListListeners[type])
+                    });
+
                     function commonElementListener(event) {
                         LOG('text ' + event.type + ' event intercepted', event);
                         switch (event.type) {
@@ -600,6 +620,9 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                 detachListener: function (myscriptTextWebElement) {
                     Object.keys(myscriptTextWebElement.currentListeners).forEach(function (type) {
                         myscriptTextWebElement.myscriptcommonelement.removeEventListener(type, myscriptTextWebElement.currentListeners[type])
+                    });
+                    Object.keys(myscriptTextWebElement.candidateListListeners).forEach(function (type) {
+                        myscriptTextWebElement.candidatelistelement.removeEventListener(type, myscriptTextWebElement.candidateListListeners[type])
                     });
                 },
 
