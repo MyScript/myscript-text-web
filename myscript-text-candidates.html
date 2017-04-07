@@ -159,7 +159,7 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
                     return candidates;
                 },
                 _getCandidateFlags: function (candidate) {
-                    if (candidate.flags) {
+                    if (candidate && candidate.flags) {
                         return candidate.flags.join(' ').toLowerCase();
                     }
                     return '';
