@@ -1,9 +1,8 @@
-myscript-text-web
-=================
+# myscript-text-web
 
 The easy way to integrate text handwriting recognition in your web app.
 
-<a href="https://myscript.github.io/myscript-text-web/components/myscript-text-web/demo/"><img src="text.gif" /></a>
+![myscript-text-web preview](./preview.gif)
 
 ```html
 <html>
@@ -15,7 +14,7 @@ The easy way to integrate text handwriting recognition in your web app.
     <myscript-text-web 
         applicationkey="#PUT YOUR MYSCRIPT CDK APPLICATION KEY HERE#" 
         hmackey="#PUT YOUR MYSCRIPT CDK HMAC KEY HERE#" 
-        language="ja_JP">
+        language="en_US">
     </myscript-text-web>
 </body>
 </html>
@@ -56,15 +55,13 @@ The API Reference is available here: [https://myscript.github.io/myscript-text-w
 
 ## Contribute
 
-If you wish to contribute to myscript-text-web, feel free to fork it, fire `bower install` and use [polyserve](https://github.com/PolymerLabs/polyserve) as an HTTP server. The demo page (in `demo` directory) can help you make your first experimentation.
-
+If you wish to contribute to myscript-text-web, feel free to fork it!
 Please sign our [Contributor License Agreement](CONTRIBUTING.md) before submitting your pull request.
 
 ## Share your feedback
 
-Made a cool app with myscript-text-web? We would love to hear about it!
-
-We plan to showcase apps, so let us know by writing to [myapp@myscript.com](mailto://myapp@myscript.com)
+Made a cool app with myscript-text-web? We would love to hear about you!
+We’re planning to showcase apps using it so let us know by sending a quick mail to [myapp@myscript.com](mailto://myapp@myscript.com)
 
 ## License
 
