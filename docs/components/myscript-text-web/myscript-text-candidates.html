@@ -92,10 +92,16 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
                  */
                 _select: function (e) {
                     var rawresult = this.rawresult;
-                    rawresult.result.textSegmentResult.selectedCandidateIdx = this.$.textCandidateList.indexForElement(e.target);
+                    rawresult.result.textSegmentResult.selectedCandidateIdx = e.model.textIndex;
                     this.rawresult = {};
                     this.rawresult = rawresult;
-                    this.dispatchEvent(new CustomEvent('change'), { detail: this.rawresult });
+                    var eventDetail = {
+                        rawResult: rawresult,
+                        exports: {
+                            TEXT: rawresult.result.textSegmentResult.candidates[rawresult.result.textSegmentResult.selectedCandidateIdx].label
+                        }
+                    };
+                    this.dispatchEvent(new CustomEvent('change', { detail: eventDetail}));
                 },
                 _isSelected: function (index, selectedIndex) {
                     return index === selectedIndex;
@@ -153,7 +159,7 @@ LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
                     return candidates;
                 },
                 _getCandidateFlags: function (candidate) {
-                    if (candidate.flags) {
+                    if (candidate && candidate.flags) {
                         return candidate.flags.join(' ').toLowerCase();
                     }
                     return '';

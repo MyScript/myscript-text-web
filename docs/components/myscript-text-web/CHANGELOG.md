@@ -1,28 +1,26 @@
-# Change Log
+# [v1.2.3](https://github.com/MyScript/myscript-text-web/tree/v1.2.3)
 
-## [v1.2.3](https://github.com/MyScript/myscript-text-web/tree/v1.2.3)
-
-### Features
+## Features
 - Change colors to fit the new MyScript Developer theme
 
-## [v1.2.2](https://github.com/MyScript/myscript-text-web/tree/v1.2.2)
+# [v1.2.2](https://github.com/MyScript/myscript-text-web/tree/v1.2.2)
 
-### Features
+## Features
 - New `strokecolor` attribute to setup/change stroke color settings
 - New `strokewidth` attribute to setup/change stroke width settings
 
-### Bugs
+## Bugs
 - See [MyScriptJS v1.2.2](https://github.com/MyScript/MyScriptJS/tree/v1.2.2) for fixes
 
-## [v1.2.1](https://github.com/MyScript/myscript-text-web/tree/v1.2.1)
+# [v1.2.1](https://github.com/MyScript/myscript-text-web/tree/v1.2.1)
 
-### Bugs
+## Bugs
 - Improve documentation of superimposed options
 - See [MyScriptJS v1.2.1](https://github.com/MyScript/MyScriptJS/tree/v1.2.1) for fixes
 
-## [v1.2.0](https://github.com/MyScript/myscript-text-web/tree/v1.2.0)
+# [v1.2.0](https://github.com/MyScript/myscript-text-web/tree/v1.2.0)
 
-### Features
+## Features
 - Mutable `host` attribute
 - Mutable `protocol` attribute
 - New `resultdetail` attribute 
@@ -40,7 +38,6 @@
 - Add docs/demo buttons on component page
 - Add getStats method to get various stats relative to ink in order to help evaluate the myscript cdk usage
 
-
-### Bugs
+## Bugs
 - Fixes issue on resize due to CSS
 - Explicit default values on documentation 

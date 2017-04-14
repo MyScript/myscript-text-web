@@ -501,11 +501,11 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                     }
                 },
                 /**
-                 * Launch recognition
+                 * Launch export
                  */
-                recognize: function () {
+                askForExport: function (exports) {
                     if (this.myscriptcommonelement) {
-                        this.myscriptcommonelement.recognize();
+                        this.myscriptcommonelement.askForExport(exports);
                     }
                 },
                 /**
@@ -522,9 +522,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                 //-----------------------------------------------------------------------
                 unloadedChanged: function (unloaded) {
                     LOG('text unloaded changed', unloaded);
-                    this.rawresult = {};
-                    this.candidates = [];
-                    this.resultlabel = undefined;
                     this.buildConfiguration();
                     if (unloaded === true) {
                         if (this.myscriptcommonelement && !this.initializing) {
@@ -551,6 +548,7 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                     this.initializing = true;
                     LOG('text-web attached callback');
                     this.myscriptcommonelement = qsWrapper(this).querySelector('myscript-common-element');
+                    this.candidatelistelement = qsWrapper(this).querySelector('myscript-text-candidates');
 
                     this.attachListener(this);
 
@@ -567,6 +565,25 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                  * @private
                  */
                 attachListener: function (myscriptTextWebElement) {
+                    function textCandidateListListener(event) {
+                        LOG('text candidates ' + event.type + ' event intercepted', event);
+                        switch (event.type) {
+                            case 'change':
+                                myscriptTextWebElement.manageExports(event, myscriptTextWebElement);
+                                myscriptTextWebElement.dispatchEvent(new CustomEvent(MyScript.Constants.EventType.EXPORTED, { detail: event.detail }));
+                                break;
+                            default:
+                                // Just forwarding event there.
+                                myscriptTextWebElement.dispatchEvent(new CustomEvent(event.type, { detail: event.detail }));
+                                break;
+                        }
+                    }
+                    myscriptTextWebElement.candidateListListeners = {};
+                    myscriptTextWebElement.candidateListListeners['change'] = textCandidateListListener;
+                    Object.keys(myscriptTextWebElement.candidateListListeners).forEach(function (type) {
+                        myscriptTextWebElement.candidatelistelement.addEventListener(type, myscriptTextWebElement.candidateListListeners[type])
+                    });
+
                     function commonElementListener(event) {
                         LOG('text ' + event.type + ' event intercepted', event);
                         switch (event.type) {
@@ -575,9 +592,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                                 break;
                             case MyScript.Constants.EventType.EXPORTED:
                                 myscriptTextWebElement.manageExports(event, myscriptTextWebElement);
-                                break;
-                            case MyScript.Constants.EventType.CLEAR:
-                                myscriptTextWebElement.manageClear(event, myscriptTextWebElement);
                                 break;
                             default:
                                 break;
@@ -607,15 +621,9 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                     Object.keys(myscriptTextWebElement.currentListeners).forEach(function (type) {
                         myscriptTextWebElement.myscriptcommonelement.removeEventListener(type, myscriptTextWebElement.currentListeners[type])
                     });
-                },
-
-                /**
-                 * @private
-                 */
-                manageClear: function (event, myscriptTextWebElement) {
-                    myscriptTextWebElement.rawresult = {};
-                    myscriptTextWebElement.resultlabel = undefined;
-                    myscriptTextWebElement.candidates = [];
+                    Object.keys(myscriptTextWebElement.candidateListListeners).forEach(function (type) {
+                        myscriptTextWebElement.candidatelistelement.removeEventListener(type, myscriptTextWebElement.candidateListListeners[type])
+                    });
                 },
 
                 /**
@@ -635,7 +643,6 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                             event.detail.rawResult.result.textSegmentResult.candidates) {
 
                             myscriptTextWebElement.rawresult = event.detail.rawResult;
-                            myscriptTextWebElement.resultlabel = myscriptTextWebElement.rawresult.result.textSegmentResult.candidates[myscriptTextWebElement.rawresult.result.textSegmentResult.selectedCandidateIdx].label;
                             myscriptTextWebElement.candidates = myscriptTextWebElement.rawresult.result.textSegmentResult.candidates;
                         }
                     }
@@ -651,30 +658,35 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                     if (!this.configuration.recognitionParams) {
                         this.configuration.recognitionParams = {};
                     }
-                    this.configuration.recognitionParams[this.apiversion.toLowerCase()] = {
-                        textParameter: {
-                            language: this.language,
-                            textInputMode: this.textinputmode,
-                            resultDetail: this.resultdetail,
-                            contentTypes: this.contenttypes,
-                            subsetKnowledges: this.subsetknowledges,
-                            userLkWords: this.userlkwords,
-                            userResources: this.userresources,
-                            textProperties: {
-                                textCandidateListSize: this.textcandidatelistsize,
-                                wordCandidateListSize: this.wordcandidatelistsize,
-                                wordPredictionListSize: this.wordpredictionlistsize,
-                                wordCompletionListSize: this.wordcompletionlistsize,
-                                characterCandidateListSize: this.charactercandidatelistsize,
-                                enableOutOfLexicon: this.enableoutoflexicon,
-                                discardCaseVariations: this.discardcasevariations,
-                                discardAccentuationVariations: this.discardaccentuationvariations,
-                                glyphDistortion: this.glyphdistortion,
-                                enableTagger: this.enabletagger,
-                                spellingDistortion: this.spellingdistortion
-                            }
-                        }
-                    };
+
+                    if (!this.configuration.recognitionParams.v3) {
+                        this.configuration.recognitionParams.v3 = {};
+                    }
+                    if (!this.configuration.recognitionParams.v3.textParameter) {
+                        this.configuration.recognitionParams.v3.textParameter = {};
+                    }
+                    if (!this.configuration.recognitionParams.v3.textParameter.textProperties) {
+                        this.configuration.recognitionParams.v3.textParameter.textProperties = {};
+                    }
+
+                    this.configuration.recognitionParams.v3.textParameter.language = this.language;
+                    this.configuration.recognitionParams.v3.textParameter.textInputMode = this.textinputmode;
+                    this.configuration.recognitionParams.v3.textParameter.resultDetail = this.resultdetail;
+                    this.configuration.recognitionParams.v3.textParameter.contentTypes = this.contenttypes;
+                    this.configuration.recognitionParams.v3.textParameter.subsetKnowledges = this.subsetknowledges;
+                    this.configuration.recognitionParams.v3.textParameter.userLkWords = this.userlkwords;
+                    this.configuration.recognitionParams.v3.textParameter.userResources = this.userresources;
+                    this.configuration.recognitionParams.v3.textParameter.textProperties.textCandidateListSize = this.textcandidatelistsize;
+                    this.configuration.recognitionParams.v3.textParameter.textProperties.wordCandidateListSize = this.wordcandidatelistsize;
+                    this.configuration.recognitionParams.v3.textParameter.textProperties.wordPredictionListSize = this.wordpredictionlistsize;
+                    this.configuration.recognitionParams.v3.textParameter.textProperties.wordCompletionListSize = this.wordcompletionlistsize;
+                    this.configuration.recognitionParams.v3.textParameter.textProperties.characterCandidateListSize = this.charactercandidatelistsize;
+                    this.configuration.recognitionParams.v3.textParameter.textProperties.enableOutOfLexicon = this.enableoutoflexicon;
+                    this.configuration.recognitionParams.v3.textParameter.textProperties.discardCaseVariations = this.discardcasevariations;
+                    this.configuration.recognitionParams.v3.textParameter.textProperties.discardAccentuationVariations = this.discardaccentuationvariations;
+                    this.configuration.recognitionParams.v3.textParameter.textProperties.glyphDistortion = this.glyphdistortion;
+                    this.configuration.recognitionParams.v3.textParameter.textProperties.enableTagger = this.enabletagger;
+                    this.configuration.recognitionParams.v3.textParameter.textProperties.spellingDistortion = this.spellingdistortion;
                     return this.configuration;
                 },
 
@@ -682,9 +694,10 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                  * @private
                  */
                 displayExports: function (hideExports, unloaded) {
-                    LOG('text-web should display exports', hideExports, unloaded);
+                    var display = !hideExports && ( !unloaded || unloaded === true);
+                    LOG('text-web should display exports', display);
                     // Common element should not be attached if the unload attribute of myscript-math-web element is set to true and if he is not already connected to the dom.
-                    return !hideExports && ( unloaded || unloaded !== true);
+                    return display;
                 }
             }
     );
