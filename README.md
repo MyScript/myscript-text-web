@@ -18,7 +18,17 @@ The easy way to integrate text handwriting recognition in your web app.
     </myscript-text-web>
 </body>
 </html>
-```    
+```
+
+## Examples
+
+* [Simple text demo](./demo/index.html)
+* [Superimposed demo](./demo/superimposed.html)
+* [Programmatic init](./demo/programmatic-init.html)
+* [Customize style](./demo/customstyle.html)
+* [Customize candidates output](./demo/customcandidates.html)
+* [Error handling](./demo/init-error.html)
+* [Get statistics](./demo/stats.html)
 
 [Test it live](https://myscript.github.io/myscript-text-web/components/myscript-text-web/demo/)!
 
