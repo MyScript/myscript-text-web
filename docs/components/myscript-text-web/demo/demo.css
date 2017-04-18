@@ -34,3 +34,8 @@ select {
     border-radius: 3px;
     -webkit-tap-highlight-color: transparent;
 }
+
+paper-toast {
+    --paper-toast-background-color: #1A9FFF;
+    --paper-toast-color: white;
+}
