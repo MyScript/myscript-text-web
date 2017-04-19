@@ -1,17 +1,14 @@
-<!--
-Copyright © MyScript.
-LICENSE: [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
--->
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../myscript-common-element/myscript-common-element.html">
 <link rel="import" href="./myscript-text-candidates.html">
 
 <!--
-The `myscript-text-web` is a turnkey solution for those who need to quickly implement MyScript Text recognition.
+`myscript-text-web` is a turnkey solution for those who need to quickly implement MyScript Text recognition.
 
     <myscript-text-web
-        applicationkey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
-        hmackey="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+        host="webdemoapi.myscript.com"
+        applicationkey="22eda92c-10af-40d8-abea-fd4093c17d81"
+        hmackey="a1fa759f-b3ce-4091-9fd4-d34bb870c601"
         language="en_US">
     </myscript-text-web>
 
@@ -101,6 +98,57 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
 
     Polymer({
                 is: 'myscript-text-web',
+
+                /**
+                 * Fired when element is fully loaded.
+                 * @event load
+                 */
+
+                /**
+                 * Fired when undo is triggered.
+                 * @event undo
+                 */
+
+                /**
+                 * Fired when redo is triggered.
+                 * @event redo
+                 */
+
+                /**
+                 * Fired when clear is triggered.
+                 * @event clear
+                 */
+
+                /**
+                 * Fired when export is triggered.
+                 * @event export
+                 */
+
+                /**
+                 * Fired when conversion is triggered.
+                 * @event convert
+                 */
+
+                /**
+                 * Fired when editor state changed.
+                 * @event change
+                 */
+
+                /**
+                 * Fired when export is done.
+                 * @event exported
+                 */
+
+                /**
+                 * Fired when conversion is done.
+                 * @event converted
+                 */
+
+                /**
+                 * Fired on error.
+                 * @event error
+                 */
+
                 properties: {
                     // ----------------------------------------------------------------------------------------------
                     // The following section is a recopy of myscript-common-element attributes
@@ -524,9 +572,10 @@ The `myscript-text-web` is a turnkey solution for those who need to quickly impl
                         return this.myscriptcommonelement.getStats();
                     }
                 },
-                //-----------------------------------------------------------------------
-                //---------  Wrapping END                                    ------------
-                //-----------------------------------------------------------------------
+                /**
+                 * @param unloaded
+                 * @private
+                 */
                 unloadedChanged: function (unloaded) {
                     LOG('text unloaded changed', unloaded);
                     this.buildConfiguration();

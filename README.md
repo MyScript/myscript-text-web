@@ -12,13 +12,20 @@ The easy way to integrate text handwriting recognition in your web app.
 </head>
 <body>
     <myscript-text-web 
-        applicationkey="#PUT YOUR MYSCRIPT CDK APPLICATION KEY HERE#" 
-        hmackey="#PUT YOUR MYSCRIPT CDK HMAC KEY HERE#" 
+        host="webdemoapi.myscript.com"
+        applicationkey="22eda92c-10af-40d8-abea-fd4093c17d81"
+        hmackey="a1fa759f-b3ce-4091-9fd4-d34bb870c601"
         language="en_US">
     </myscript-text-web>
 </body>
 </html>
 ```
+## What is it about?
+
+`myscript-text-web` is a web component that can be used in every web application (whatever the JavaScript library you are using) to bring handwriting recognition. It integrates all you need:  
+* Signal capture,
+* Nice digital ink rendering,
+* Plug with MyScript CDK to bring handwriting recognition.
 
 ## Examples
 
@@ -31,13 +38,6 @@ The easy way to integrate text handwriting recognition in your web app.
 * [Get statistics](./demo/stats.html)
 
 [Test it live](https://myscript.github.io/myscript-text-web/components/myscript-text-web/demo/)!
-
-## What is it about?
-
-myscript-text-web is a web component that can be used in every web application (whatever the JavaScript library you are using) to bring handwriting recognition. It integrates all you need:  
-* Signal capture,
-* Nice digital ink rendering,
-* Plug with MyScript CDK to bring handwriting recognition.
 
 ## Installation
 
@@ -65,7 +65,7 @@ The API Reference is available here: [https://myscript.github.io/myscript-text-w
 
 ## Contribute
 
-If you wish to contribute to myscript-text-web, feel free to fork it!
+We welcome your contributions: If you would like to extend `myscript-text-web` for your needs, feel free to fork it!
 Please sign our [Contributor License Agreement](CONTRIBUTING.md) before submitting your pull request.
 
 ## Share your feedback
