@@ -4,28 +4,47 @@ The easy way to integrate text handwriting recognition in your web app.
 
 ![myscript-text-web preview](./preview.gif)
 
-```html
-<html>
-<head>
-    <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-    <link rel="import" href="bower_components/myscript-text-web/myscript-text-web.html">
-</head>
-<body>
-    <myscript-text-web 
-        host="webdemoapi.myscript.com"
-        applicationkey="22eda92c-10af-40d8-abea-fd4093c17d81"
-        hmackey="a1fa759f-b3ce-4091-9fd4-d34bb870c601"
-        language="en_US">
-    </myscript-text-web>
-</body>
-</html>
-```
 ## What is it about?
 
-`myscript-text-web` is a web component that can be used in every web application (whatever the JavaScript library you are using) to bring handwriting recognition. It integrates all you need:  
+myscript-text-web is a web component that can be used in every web application (whatever javascript framework you are using) to bring handwriting recognition. It integrates all you need:  
 * Signal capture,
 * Nice digital ink rendering,
 * Plug with MyScript CDK to bring handwriting recognition.
+
+## Prerequisites
+
+1. Have a MyScript developer account. You can create one [here](https://dev.myscript.com/).
+2. Get an application key and HMAC key for your application.
+3. Import webcomponents polyfill on your webapp.
+
+```html
+    <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+```
+ 
+## Installation
+
+1. Download it.
+
+       bower install myscript-text-web
+
+2. Import it on your webapp.
+
+```html
+    <link rel="import" href="bower_components/myscript-text-web/myscript-text-web.html">
+```
+
+3. Configure it.
+
+```html
+    <myscript-text-web
+        applicationkey="YOUR MYSCRIPT CDK APPLICATION KEY"
+        hmackey="YOUR MYSCRIPT CDK HMAC KEY">
+    </myscript-text-web>
+```
+   
+4. Use it!
+
+[Test it live](https://myscript.github.io/myscript-text-web/components/myscript-text-web/demo/)!
 
 ## Examples
 
@@ -36,28 +55,6 @@ The easy way to integrate text handwriting recognition in your web app.
 * [Customize candidates output](./demo/customcandidates.html)
 * [Error handling](./demo/init-error.html)
 * [Get statistics](./demo/stats.html)
-
-[Test it live](https://myscript.github.io/myscript-text-web/components/myscript-text-web/demo/)!
-
-## Installation
-
-**Bower**: `bower install myscript-text-web`
-
-## Start using myscript-text-web
-
-1. Create an account on the [Developer portal](https://dev.myscript.com/), which will allow you to generate an application key and HMAC key.  
-
-2. Import Web Components' polyfill
-
-    `<script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>`
-
-3. Import Custom Element
-
-    `<link rel="import" href="bower_components/myscript-text-web/myscript-text-web.html">`
-
-3. Use it
-
-    `<myscript-text-web applicationkey="#PUT YOUR MYSCRIPT CDK APPLICATION KEY HERE#" hmackey="#PUT YOUR MYSCRIPT CDK HMAC KEY HERE#" language="ja_JP"></myscript-text-web>`
     
 ## Documentation 
 
@@ -65,7 +62,8 @@ The API Reference is available here: [https://myscript.github.io/myscript-text-w
 
 ## Contribute
 
-We welcome your contributions: If you would like to extend `myscript-text-web` for your needs, feel free to fork it!
+We welcome your contributions:
+If you would like to extend myscript-text-web for your needs, feel free to fork it!
 Please sign our [Contributor License Agreement](CONTRIBUTING.md) before submitting your pull request.
 
 ## Share your feedback
