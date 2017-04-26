@@ -112,7 +112,7 @@
                     },
                     // Will be renamed connected with pure custom element support
                     attached: function () {
-                        this.logger = MyScript.DebugConfig.loggerConfig.default.getLogger('languages-element');
+                        this.logger = MyScript.LoggerConfig.getLogger('languages-element');
                         this.logger.setLevel(this.debug ? 'TRACE' : 'ERROR', false);
 
                         this.logger.info('attached callback');

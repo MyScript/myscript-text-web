@@ -594,7 +594,7 @@
                         }
                     }
 
-                    this.logger = MyScript.DebugConfig.loggerConfig.default.getLogger('text-web');
+                    this.logger = MyScript.LoggerConfig.getLogger('text-web');
                     this.logger.setLevel(this.debug ? 'TRACE' : 'ERROR', false);
 
                     this.initializing = true;

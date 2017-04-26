@@ -39,11 +39,11 @@
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#1.1.x"
   },
-  "_release": "a0d2789612",
+  "_release": "34b036eb0a",
   "_resolution": {
     "type": "branch",
     "branch": "2.0.0-alpha1",
-    "commit": "a0d27896128132422a94f0f8255949954d0034d4"
+    "commit": "34b036eb0a70f8980a7f689c797ab29d27ec3d6b"
   },
   "_source": "https://github.com/MyScript/myscript-common-element.git",
   "_target": "2.0.0-alpha1",
