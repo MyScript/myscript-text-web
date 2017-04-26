@@ -5,16 +5,17 @@
     <meta name="viewport"
           content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no, shrink-to-fit=no">
 
-    <title>WEBSOCKET Diagram iink</title>
+    <title>WEBSOCKET Text iink</title>
 
-    <link rel="prefetch" href="../dist/fonts/stix/STIXGeneral-Bold.otf">
-    <link rel="prefetch" href="../dist/fonts/stix/STIXGeneral-BoldItalic.otf">
-    <link rel="prefetch" href="../dist/fonts/stix/STIXGeneral-Italic.otf">
-    <link rel="prefetch" href="../dist/fonts/stix/STIXGeneral-Regular.otf">
-    <link rel="prefetch" href="../dist/fonts/stix/STIXSizeThreeSym-Bold.otf">
-    <link rel="prefetch" href="../dist/fonts/stix/STIXSizeThreeSym-Regular.otf">
-    <link rel="prefetch" href="../dist/fonts/diagram/segoeui.otf">
+    <link rel="prefetch" href="../../dist/fonts/stix/STIXGeneral-Bold.otf">
+    <link rel="prefetch" href="../../dist/fonts/stix/STIXGeneral-BoldItalic.otf">
+    <link rel="prefetch" href="../../dist/fonts/stix/STIXGeneral-Italic.otf">
+    <link rel="prefetch" href="../../dist/fonts/stix/STIXGeneral-Regular.otf">
+    <link rel="prefetch" href="../../dist/fonts/stix/STIXSizeThreeSym-Bold.otf">
+    <link rel="prefetch" href="../../dist/fonts/stix/STIXSizeThreeSym-Regular.otf">
+    <link rel="prefetch" href="../../dist/fonts/diagram/segoeui.otf">
 
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans" >
     <link rel="stylesheet" href="../../dist/myscript.min.css"/>
     <link rel="stylesheet" href="../samples.css">
 
@@ -30,6 +31,7 @@
         <button id="clear" disabled></button>
         <button id="undo" disabled></button>
         <button id="redo" disabled></button>
+        <button id="export" disabled></button>
         <button id="convert" disabled></button>
     </div>
     <div id="editor"></div>
@@ -40,9 +42,11 @@
   var undoElement = document.getElementById('undo');
   var redoElement = document.getElementById('redo');
   var clearElement = document.getElementById('clear');
+  var exportElement = document.getElementById('export');
   var convertElement = document.getElementById('convert');
 
   editorElement.addEventListener('load', function () {
+    exportElement.disabled = false;
     convertElement.disabled = false;
   });
 
@@ -52,12 +56,12 @@
     redoElement.disabled = !evt.detail.canRedo;
   });
   editorElement.addEventListener('exported', function (evt) {
-//    var exports = evt.detail.exports;
-//    if (exports && exports['application/x-latex']) {
-//      resultElement.innerHTML = '<span>' + exports['application/x-latex'] + '</span>';
-//    } else {
-//      resultElement.innerHTML = '';
-//    }
+    var exports = evt.detail.exports;
+    if (exports && exports['text/plain']) {
+      resultElement.innerHTML = '<span>' + exports['text/plain'] + '</span>';
+    } else {
+      resultElement.innerHTML = '';
+    }
   });
   undoElement.addEventListener('pointerdown', function () {
     editorElement['data-myscript-editor'].undo();
@@ -68,8 +72,11 @@
   clearElement.addEventListener('pointerdown', function () {
     editorElement['data-myscript-editor'].clear();
   });
+  exportElement.addEventListener('pointerdown', function () {
+    editorElement['data-myscript-editor'].askForExport('text/plain');
+  });
   convertElement.addEventListener('pointerdown', function () {
-      editorElement['data-myscript-editor'].convert();
+    editorElement['data-myscript-editor'].convert();
   });
 
   /**
@@ -78,9 +85,8 @@
    * @param {Object} The recognition parameters
    */
   MyScript.register(editorElement, {
-    recognitionProcessDelay: 0,
     recognitionParams: {
-      type: 'DIAGRAM',
+      type: 'TEXT',
       protocol: 'WEBSOCKET',
       apiVersion: 'V4',
       server: {
@@ -93,6 +99,10 @@
         }
       },
       v4: {
+        lang: 'en_US',
+        text: {
+          mimeTypes: ['text/plain']
+        },
         renderer: {
           debug: {
             'draw-text-boxes': true

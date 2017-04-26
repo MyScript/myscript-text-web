@@ -51,7 +51,8 @@
     <template>
         <myscript-text-candidates class="exports"
                                   hidden="[[ !displayExports(hideexports, unloaded) ]]"
-                                  rawresult="{{ rawresult }}">
+                                  rawresult="{{ rawresult }}"
+                                  debug="{{ debug }}">
         </myscript-text-candidates>
         <myscript-common-element
             type="TEXT"
@@ -74,26 +75,13 @@
             canclear="[[ canclear ]]"
             canredo="[[ canredo ]]"
             canundo="[[ canundo ]]"
-            exports="{{ exports }}">
+            exports="{{ exports }}"
+            debug="{{ debug }}">
         </myscript-common-element>
     </template>
 </dom-module>
 
 <script>
-    /**
-     * Uncomment the function body during development. Should not be activated in production.
-     * @param string
-     * @param object
-     * @constructor
-     */
-    function LOG(string, object) {
-        if (object) {
-            console.log(string, object);
-        } else {
-            console.log(string);
-        }
-    }
-
     Polymer({
                 is: 'myscript-text-web',
 
@@ -524,6 +512,14 @@
                     candidates: {
                         type: Array,
                         notify: true
+                    },
+                    /**
+                     * True to display console output, false otherwise.
+                     */
+                    debug: {
+                        type: Boolean,
+                        value: false,
+                        reflectToAttribute: true
                     }
                 },
                 //-----------------------------------------------------------------------
@@ -575,7 +571,6 @@
                  * @private
                  */
                 unloadedChanged: function (unloaded) {
-                    LOG('text unloaded changed', unloaded);
                     this.buildConfiguration();
                     if (unloaded === true) {
                         if (this.myscriptcommonelement && !this.initializing) {
@@ -599,20 +594,23 @@
                         }
                     }
 
+                    this.logger = MyScript.DebugConfig.loggerConfig.default.getLogger('text-web');
+                    this.logger.setLevel(this.debug ? 'TRACE' : 'ERROR', false);
+
                     this.initializing = true;
-                    LOG('text-web attached callback');
+                    this.logger.info('attached callback');
                     this.myscriptcommonelement = qsWrapper(this).querySelector('myscript-common-element');
                     this.candidatelistelement = qsWrapper(this).querySelector('myscript-text-candidates');
 
                     this.attachListener(this);
 
-                    LOG('text-web attached');
+                    this.logger.info('attached');
                     this.initializing = false;
                 },
                 detached: function () {
-                    LOG('text-web detached callback');
+                    this.logger.info('detached callback');
                     this.detachListener(this);
-                    LOG('text-web detached');
+                    this.logger.info('detached');
                 },
 
                 /**
@@ -620,7 +618,7 @@
                  */
                 attachListener: function (myscriptTextWebElement) {
                     function textCandidateListListener(event) {
-                        LOG('text candidates ' + event.type + ' event intercepted', event);
+                        myscriptTextWebElement.logger.trace('candidates ' + event.type + ' event intercepted', event);
                         switch (event.type) {
                             case 'change':
                                 myscriptTextWebElement.manageExports(event, myscriptTextWebElement);
@@ -639,7 +637,7 @@
                     });
 
                     function commonElementListener(event) {
-                        LOG('text ' + event.type + ' event intercepted', event);
+                        this.logger.trace(event.type + ' event intercepted', event);
                         switch (event.type) {
                             case MyScript.Constants.EventType.LOADED:
                                 myscriptTextWebElement.unloaded = false;
@@ -749,7 +747,6 @@
                  */
                 displayExports: function (hideExports, unloaded) {
                     var display = !hideExports && ( !unloaded || unloaded === true);
-                    LOG('text-web should display exports', display);
                     // Common element should not be attached if the unload attribute of myscript-math-web element is set to true and if he is not already connected to the dom.
                     return display;
                 }
