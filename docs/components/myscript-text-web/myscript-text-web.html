@@ -1,6 +1,6 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../myscript-common-element/myscript-common-element.html">
-<link rel="import" href="./myscript-text-candidates.html">
+<link rel="import" href="myscript-text-exports.html">
 <!--
 `myscript-text-web` is a turnkey solution for those who need to quickly implement MyScript Text recognition.
 
@@ -595,7 +595,7 @@
                     }
 
                     this.logger = MyScript.LoggerConfig.getLogger('text-web');
-                    this.logger.setLevel(this.debug ? 'TRACE' : 'ERROR', false);
+                    this.logger.setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
 
                     this.initializing = true;
                     this.logger.info('attached callback');
