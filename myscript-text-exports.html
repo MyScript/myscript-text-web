@@ -53,7 +53,7 @@
         }
     </style>
     <template>
-        <div id="plaintext">{{ exports.TEXT }}</div>
+        <div id="plaintext">{{ _getPlainText(exports) }}</div>
         <div id="candidates">
             <template is="dom-if" if="[[ exports.CANDIDATES ]]">
                 <!--WARN: templates needs to be inline to avoid carriage return after span-->
@@ -104,14 +104,25 @@
                         notify: true
                     }
                 },
+                _getPlainText: function (exports) {
+                  if (exports) {
+                      if (exports.TEXT) {
+                          return exports.TEXT;
+                      }
+                      return exports['text/plain'];
+                  }
+                  return undefined;
+                },
                 /**
                  * Select a new candidate
                  * @param e
                  */
                 _select: function (e) {
                     var exports = this.exports;
-                    exports.CANDIDATES.textSegmentResult.selectedCandidateIdx = e.model.textIndex;
-                    exports.TEXT = exports.CANDIDATES.textSegmentResult.candidates[exports.CANDIDATES.textSegmentResult.selectedCandidateIdx].label;
+                    if (exports.CANDIDATES) {
+                        exports.CANDIDATES.textSegmentResult.selectedCandidateIdx = e.model.textIndex;
+                        exports.TEXT = exports.CANDIDATES.textSegmentResult.candidates[exports.CANDIDATES.textSegmentResult.selectedCandidateIdx].label;
+                    }
                     this.exports = {};
                     this.exports = exports;
                     var eventDetail = {

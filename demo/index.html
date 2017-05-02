@@ -20,24 +20,24 @@
         height: calc(100% - 60px);
     }
 </style>
-<body touch-action="none">
-    <nav>
-        <myscript-languages-element host="webdemoapi.myscript.com"
-                                    applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
-                                    hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad">
-        </myscript-languages-element>
-        <select id="languageList" onchange="select(this.value)" disabled></select>
-    </nav>
-    <myscript-text-web
-        apiversion="V4"
-        id="text-input"
-        host="iinkpreview.myscript.com"
-        applicationkey="7d223f9e-a3cb-4213-ba4b-85e930605f8b"
-        hmackey="f35a21d1-aae3-4b98-8c5e-11e146e82130"
-        strokecolor="#000000"
-        strokewidth="2"
-        language="fr_FR">
-    </myscript-text-web>
+<body>
+<nav>
+    <myscript-languages-element host="iinkpreview.myscript.com"
+                                applicationkey="7d223f9e-a3cb-4213-ba4b-85e930605f8b"
+                                hmackey="f35a21d1-aae3-4b98-8c5e-11e146e82130">
+    </myscript-languages-element>
+    <select id="languageList" onchange="select(this.value)" disabled></select>
+</nav>
+<myscript-text-web
+    apiversion="V4"
+    id="text-input"
+    host="iinkpreview.myscript.com"
+    applicationkey="7d223f9e-a3cb-4213-ba4b-85e930605f8b"
+    hmackey="f35a21d1-aae3-4b98-8c5e-11e146e82130"
+    strokecolor="#000000"
+    strokewidth="2"
+    language="fr_FR">
+</myscript-text-web>
 </body>
 <script>
     var myscriptTextWebElement = document.querySelector('myscript-text-web');
