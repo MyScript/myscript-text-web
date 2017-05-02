@@ -341,6 +341,14 @@
                         value: 'en_US'
                     },
                     /**
+                     * Text export types (text/plain, ...).
+                     * @type {Array<String>}
+                     */
+                    mimetypes: {
+                        type: Array,
+                        value: ['text/plain']
+                    },
+                    /**
                      * The text input mode to use (CURSIVE, ISOLATED, SUPERIMPOSED or VERTICAL).
                      */
                     textinputmode: {
@@ -599,6 +607,7 @@
                     this.initializing = true;
                     this.logger.info('attached callback');
                     this.myscriptcommonelement = qsWrapper(this).querySelector('myscript-common-element');
+                    this.myscriptcommonelement.configuration = this.buildConfiguration();
                     this.candidatelistelement = qsWrapper(this).querySelector('myscript-text-exports');
 
                     this.attachListener(this);
@@ -720,24 +729,14 @@
                         this.configuration.recognitionParams.v3.textParameter.textProperties = {};
                     }
 
-                    this.configuration.recognitionParams.v3.textParameter.language = this.language;
-                    this.configuration.recognitionParams.v3.textParameter.textInputMode = this.textinputmode;
-                    this.configuration.recognitionParams.v3.textParameter.resultDetail = this.resultdetail;
-                    this.configuration.recognitionParams.v3.textParameter.contentTypes = this.contenttypes;
-                    this.configuration.recognitionParams.v3.textParameter.subsetKnowledges = this.subsetknowledges;
-                    this.configuration.recognitionParams.v3.textParameter.userLkWords = this.userlkwords;
-                    this.configuration.recognitionParams.v3.textParameter.userResources = this.userresources;
-                    this.configuration.recognitionParams.v3.textParameter.textProperties.textCandidateListSize = this.textcandidatelistsize;
-                    this.configuration.recognitionParams.v3.textParameter.textProperties.wordCandidateListSize = this.wordcandidatelistsize;
-                    this.configuration.recognitionParams.v3.textParameter.textProperties.wordPredictionListSize = this.wordpredictionlistsize;
-                    this.configuration.recognitionParams.v3.textParameter.textProperties.wordCompletionListSize = this.wordcompletionlistsize;
-                    this.configuration.recognitionParams.v3.textParameter.textProperties.characterCandidateListSize = this.charactercandidatelistsize;
-                    this.configuration.recognitionParams.v3.textParameter.textProperties.enableOutOfLexicon = this.enableoutoflexicon;
-                    this.configuration.recognitionParams.v3.textParameter.textProperties.discardCaseVariations = this.discardcasevariations;
-                    this.configuration.recognitionParams.v3.textParameter.textProperties.discardAccentuationVariations = this.discardaccentuationvariations;
-                    this.configuration.recognitionParams.v3.textParameter.textProperties.glyphDistortion = this.glyphdistortion;
-                    this.configuration.recognitionParams.v3.textParameter.textProperties.enableTagger = this.enabletagger;
-                    this.configuration.recognitionParams.v3.textParameter.textProperties.spellingDistortion = this.spellingdistortion;
+                    if (!this.configuration.recognitionParams.v4) {
+                        this.configuration.recognitionParams.v4 = {};
+                    }
+                    if (!this.configuration.recognitionParams.v4.text) {
+                        this.configuration.recognitionParams.v4.text = {};
+                    }
+
+                    this.configuration.recognitionParams.v4.text.mimeTypes = this.mimetypes;
                     return this.configuration;
                 },
 
