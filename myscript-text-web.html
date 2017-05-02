@@ -23,37 +23,36 @@
             --myscript-common-element-focus-background-color: var(--myscript-text-web-focus-background-color, #1A9FFF);
             --myscript-common-element-disabled-background-color: var(--myscript-text-web-disabled-background-color, #F5F6F7);
 
-            --myscript-text-candidates-color: #1580CD;
-            --myscript-text-candidates-background-color: #EDF0F2;
-            --myscript-text-candidates-selected-color: #FFFFFF;
-            --myscript-text-candidates-selected-background-color: #1580CD;
-            --myscript-text-candidates-predicted-color: #73818C;
-            --myscript-text-candidates-completed-color: #1A9FFF;
+            --myscript-text-exports-color: #1580CD;
+            --myscript-text-exports-background-color: #EDF0F2;
+            --myscript-text-exports-selected-color: #FFFFFF;
+            --myscript-text-exports-selected-background-color: #1580CD;
+            --myscript-text-exports-predicted-color: #73818C;
+            --myscript-text-exports-completed-color: #1A9FFF;
         }
 
         [hidden] {
             display: none;
         }
 
-        myscript-text-candidates {
+        myscript-text-exports {
             height: 100px;
-            overflow: auto;
         }
 
         myscript-common-element {
             height: calc(100% - 100px);
         }
 
-        myscript-text-candidates[hidden] + myscript-common-element {
+        myscript-text-exports[hidden] + myscript-common-element {
             height: 100%;
         }
     </style>
     <template>
-        <myscript-text-candidates class="exports"
+        <myscript-text-exports class="exports"
                                   hidden="[[ !displayExports(hideexports, unloaded) ]]"
-                                  rawresult="{{ rawresult }}"
+                                  exports="{{ exports }}"
                                   debug="{{ debug }}">
-        </myscript-text-candidates>
+        </myscript-text-exports>
         <myscript-common-element
             type="TEXT"
             protocol="{{ protocol }}"
@@ -600,7 +599,7 @@
                     this.initializing = true;
                     this.logger.info('attached callback');
                     this.myscriptcommonelement = qsWrapper(this).querySelector('myscript-common-element');
-                    this.candidatelistelement = qsWrapper(this).querySelector('myscript-text-candidates');
+                    this.candidatelistelement = qsWrapper(this).querySelector('myscript-text-exports');
 
                     this.attachListener(this);
 
