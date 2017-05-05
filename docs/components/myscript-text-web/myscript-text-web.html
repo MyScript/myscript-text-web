@@ -17,6 +17,7 @@
     <style>
         :host {
             box-sizing: border-box;
+            touch-action: none;
             display: block;
             --myscript-common-element-color: var(--myscript-text-web-color, #FFFFFF);
             --myscript-common-element-background-color: var(--myscript-text-web-background-color, #1A9FFF);
@@ -306,12 +307,20 @@
                         value: false
                     },
                     /**
-                     * True if the recognize feature is disabled, false otherwise
+                     * True if the export feature is disabled, false otherwise
                      */
-                    disablerecognize: {
+                    disableexport: {
                         type: Boolean,
                         reflectToAttribute: true,
-                        value: true
+                        value: false
+                    },
+                    /**
+                     * True if the typeset feature is disabled, false otherwise
+                     */
+                    disableconvert: {
+                        type: Boolean,
+                        reflectToAttribute: true,
+                        value: false
                     },
 
                     //------------------------------------------------------------------------------

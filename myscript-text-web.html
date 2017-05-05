@@ -307,12 +307,20 @@
                         value: false
                     },
                     /**
-                     * True if the recognize feature is disabled, false otherwise
+                     * True if the export feature is disabled, false otherwise
                      */
-                    disablerecognize: {
+                    disableexport: {
                         type: Boolean,
                         reflectToAttribute: true,
-                        value: true
+                        value: false
+                    },
+                    /**
+                     * True if the typeset feature is disabled, false otherwise
+                     */
+                    disableconvert: {
+                        type: Boolean,
+                        reflectToAttribute: true,
+                        value: false
                     },
 
                     //------------------------------------------------------------------------------
