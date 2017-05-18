@@ -35,7 +35,7 @@
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#1.1.x"
   },
-  "_source": "/home/fxg/projects/webcomponents/myscript-text-web",
+  "_source": "/home/mathieur/Projets/webcomponents/myscript-text-web",
   "_target": "*",
   "_originalSource": "../../myscript-text-web",
   "_direct": true
