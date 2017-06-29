@@ -7,14 +7,6 @@
 
   <title>WEBSOCKET Math iink</title>
 
-  <link rel="prefetch" href="../../dist/fonts/stix/STIXGeneral-Bold.otf">
-  <link rel="prefetch" href="../../dist/fonts/stix/STIXGeneral-BoldItalic.otf">
-  <link rel="prefetch" href="../../dist/fonts/stix/STIXGeneral-Italic.otf">
-  <link rel="prefetch" href="../../dist/fonts/stix/STIXGeneral-Regular.otf">
-  <link rel="prefetch" href="../../dist/fonts/stix/STIXSizeThreeSym-Bold.otf">
-  <link rel="prefetch" href="../../dist/fonts/stix/STIXSizeThreeSym-Regular.otf">
-  <link rel="prefetch" href="../../dist/fonts/diagram/segoeui.otf">
-
   <link rel="stylesheet" href="../../dist/myscript.min.css"/>
   <link rel="stylesheet" href="../samples.css">
 
@@ -85,11 +77,12 @@
   });
   closeElement.addEventListener('pointerdown', function () {
     var editor = editorElement['data-myscript-editor'];
-    editor.recognizer.close(editor.configuration, editor.model, editor.recognizerContext, function (err, res) {
-      console.log('Closed', res);
-      editor.recognizerContext.websocket.autoReconnect = true;
-    });
+    editor.recognizer.close(editor.configuration, editor.model, editor.recognizerContext, function (err, res) {});
   });
+
+  Object.keys(MyScript.Constants.Logger)
+    .filter(key => ['MODEL', 'RECOGNIZER'].includes(key))
+    .forEach(key => MyScript.LoggerConfig.getLogger(MyScript.Constants.Logger[key]).setLevel('DEBUG', false));
 
   /**
    * Attach an editor to the document
@@ -103,8 +96,8 @@
       protocol: 'WEBSOCKET',
       apiVersion: 'V4',
       server: {
-        scheme: 'http',
-        host: 'localhost:8897',
+        scheme: 'https',
+        host: 'newcloud.myscript.com',
         applicationKey: '7d223f9e-a3cb-4213-ba4b-85e930605f8b',
         hmacKey: '5ab1935e-529a-4d48-a695-158450e52b13',
         websocket: {
@@ -113,6 +106,9 @@
         }
       },
       v4: {
+        math: {
+          mimeTypes: ['application/x-latex']
+        },
         renderer: {
           debug: {
             'draw-text-boxes': true
