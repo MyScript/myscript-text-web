@@ -1,4 +1,4 @@
-<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../polymer/polymer-element.html">
 <link rel="import" href="../myscript-common-element/myscript-common-element.html">
 <link rel="import" href="myscript-text-exports.html">
 <!--
@@ -10,64 +10,70 @@
         language="en_US">
     </myscript-text-web>
 
+@demo demo/customcandidates.html
+@demo demo/customstyle.html
+@demo demo/debug.html
 @demo demo/index.html
+@demo demo/init-error.html
+@demo demo/legacy.html
+@demo demo/programmatic-init.html
+@demo demo/stats.html
 @demo demo/superimposed.html
 -->
 <dom-module id="myscript-text-web">
-    <style>
-        :host {
-            --myscript-text-web-background: none;
-            --myscript-text-web-color: #FFFFFF;
-            --myscript-text-web-line-pattern: url(data:image/svg+xml;charset=utf8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij4KICA8cGF0aCBzdHJva2U9IiNGNUY2RjciIGQ9Ik0wLjUsMCBMMC41LDE4IE0wLDAuNSBMMTgsMC41Ii8+Cjwvc3ZnPgo=);
-            --myscript-text-web-loader-background: #1A9FFF;
-            --myscript-text-web-loader-color: #F5F6F7;
-            --myscript-text-web-button-background: #1A9FFF;
-            --myscript-text-web-button-focus-background: #1A9FFF;
-            --myscript-text-web-button-disabled-background: #F5F6F7;
-
-            --myscript-common-element-background: var(--myscript-text-web-background);
-            --myscript-common-element-color: var(--myscript-text-web-color);
-            --myscript-common-element-line-pattern: var(--myscript-text-web-line-pattern);
-            --myscript-common-element-loader-background: var(--myscript-text-web-loader-background);
-            --myscript-common-element-loader-color: var(--myscript-text-web-loader-color);
-            --myscript-common-element-button-background: var(--myscript-text-web-button-background);
-            --myscript-common-element-button-focus-background: var(--myscript-text-web-button-focus-background);
-            --myscript-common-element-button-disabled-background: var(--myscript-text-web-button-disabled-background);
-
-            --myscript-text-exports-color: #1580CD;
-            --myscript-text-exports-background-color: #EDF0F2;
-            --myscript-text-exports-selected-color: #FFFFFF;
-            --myscript-text-exports-selected-background-color: #1580CD;
-            --myscript-text-exports-predicted-color: #73818C;
-            --myscript-text-exports-completed-color: #1A9FFF;
-
-
-            box-sizing: border-box;
-            touch-action: none;
-            display: block;
-        }
-
-        [hidden] {
-            display: none;
-        }
-
-        myscript-text-exports {
-            height: 100px;
-        }
-
-        myscript-common-element {
-            height: calc(100% - 100px);
-        }
-
-        myscript-text-exports[hidden] + myscript-common-element {
-            height: 100%;
-        }
-    </style>
     <template>
+        <style>
+            :host {
+                --myscript-text-web-background: none;
+                --myscript-text-web-color: #FFFFFF;
+                --myscript-text-web-line-pattern: url(data:image/svg+xml;charset=utf8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij4KICA8cGF0aCBzdHJva2U9IiNGNUY2RjciIGQ9Ik0wLjUsMCBMMC41LDE4IE0wLDAuNSBMMTgsMC41Ii8+Cjwvc3ZnPgo=);
+                --myscript-text-web-loader-background: #1A9FFF;
+                --myscript-text-web-loader-color: #F5F6F7;
+                --myscript-text-web-button-background: #1A9FFF;
+                --myscript-text-web-button-focus-background: #1A9FFF;
+                --myscript-text-web-button-disabled-background: #F5F6F7;
+
+                --myscript-common-element-background: var(--myscript-text-web-background);
+                --myscript-common-element-color: var(--myscript-text-web-color);
+                --myscript-common-element-line-pattern: var(--myscript-text-web-line-pattern);
+                --myscript-common-element-loader-background: var(--myscript-text-web-loader-background);
+                --myscript-common-element-loader-color: var(--myscript-text-web-loader-color);
+                --myscript-common-element-button-background: var(--myscript-text-web-button-background);
+                --myscript-common-element-button-focus-background: var(--myscript-text-web-button-focus-background);
+                --myscript-common-element-button-disabled-background: var(--myscript-text-web-button-disabled-background);
+
+                --myscript-text-exports-color: #1580CD;
+                --myscript-text-exports-background-color: #EDF0F2;
+                --myscript-text-exports-selected-color: #FFFFFF;
+                --myscript-text-exports-selected-background-color: #1580CD;
+                --myscript-text-exports-predicted-color: #73818C;
+                --myscript-text-exports-completed-color: #1A9FFF;
+
+                box-sizing: border-box;
+                touch-action: none;
+                display: block;
+            }
+
+            [hidden] {
+                display: none;
+            }
+
+            myscript-text-exports {
+                height: 100px;
+            }
+
+            myscript-common-element {
+                height: calc(100% - 100px);
+            }
+
+            myscript-text-exports[hidden] + myscript-common-element {
+                height: 100%;
+            }
+        </style>
         <myscript-text-exports class="exports"
-                                  hidden="[[ !displayExports(hideexports, unloaded) ]]"
-                                  exports="{{ exports }}"
-                                  debug="{{ debug }}">
+                               hidden="[[ !_displayExports(hideexports, unloaded) ]]"
+                               exports="{{ exports }}"
+                               debug="{{ debug }}">
         </myscript-text-exports>
         <myscript-common-element
             type="TEXT"
@@ -94,63 +100,15 @@
             debug="{{ debug }}">
         </myscript-common-element>
     </template>
-</dom-module>
+    <script>
+        class MyScriptTextWeb extends Polymer.Element {
 
-<script>
-    Polymer({
-                is: 'myscript-text-web',
+            static get is() {
+                return 'myscript-text-web'
+            }
 
-                /**
-                 * Fired when element is fully loaded.
-                 * @event load
-                 */
-
-                /**
-                 * Fired when undo is triggered.
-                 * @event undo
-                 */
-
-                /**
-                 * Fired when redo is triggered.
-                 * @event redo
-                 */
-
-                /**
-                 * Fired when clear is triggered.
-                 * @event clear
-                 */
-
-                /**
-                 * Fired when export is triggered.
-                 * @event export
-                 */
-
-                /**
-                 * Fired when conversion is triggered.
-                 * @event convert
-                 */
-
-                /**
-                 * Fired when editor state changed.
-                 * @event change
-                 */
-
-                /**
-                 * Fired when export is done.
-                 * @event exported
-                 */
-
-                /**
-                 * Fired when conversion is done.
-                 * @event converted
-                 */
-
-                /**
-                 * Fired on error.
-                 * @event error
-                 */
-
-                properties: {
+            static get properties() {
+                return {
                     // ----------------------------------------------------------------------------------------------
                     // The following section is a recopy of myscript-common-element attributes
                     // Polymer documentation generation prevent from reusing attributes from another element.
@@ -238,7 +196,7 @@
                         value: true,
                         notify: true,
                         reflectToAttribute: true,
-                        observer: 'unloadedChanged'
+                        observer: '_unloadedChanged'
                     },
                     /**
                      * Set the additional configuration used to feed MyScript ink Paper (Structure of object as defined in MyScriptjs MyScriptJSOptions.js file)
@@ -552,246 +510,211 @@
                         value: false,
                         reflectToAttribute: true
                     }
-                },
-                //-----------------------------------------------------------------------
-                //---------  Wrapping of myscript-common-element  methods    ------------
-                //-----------------------------------------------------------------------
-                /**
-                 * Clear all context
-                 */
-                clear: function () {
-                    if (this.myscriptcommonelement) {
-                        this.myscriptcommonelement.clear();
-                    }
-                },
-                /**
-                 * Undo action, and launch recognition if timeout is set
-                 */
-                undo: function () {
-                    if (this.myscriptcommonelement) {
-                        this.myscriptcommonelement.undo();
-                    }
-                },
-                /**
-                 * Redo action, and launch recognition if timeout is set
-                 */
-                redo: function () {
-                    if (this.myscriptcommonelement) {
-                        this.myscriptcommonelement.redo();
-                    }
-                },
-                /**
-                 * Launch export
-                 */
-                askForExport: function (exports) {
-                    if (this.myscriptcommonelement) {
-                        this.myscriptcommonelement.askForExport(exports);
-                    }
-                },
-                /**
-                 * Return the stats allowing to monitor what ink size is send to the server.
-                 * Stats objects format {strokesCount : 0, pointsCount : 0, byteSize : 0, humanSize : 0, humanUnit : 'BYTE'} humanUnit could have the values BYTE, BYTES, KiB, MiB
-                 */
-                getStats: function () {
-                    if (this.myscriptcommonelement) {
-                        return this.myscriptcommonelement.getStats();
-                    }
-                },
-                /**
-                 * @param unloaded
-                 * @private
-                 */
-                unloadedChanged: function (unloaded) {
-                    this.buildConfiguration();
-                    if (unloaded === true) {
-                        if (this.myscriptcommonelement && !this.initializing) {
-                            this.myscriptcommonelement.unloaded = true;
-                        }
-                    }
-                },
-                // Will be renamed connected with pure custom element support
-                attached: function () {
+                }
+            }
 
-                    /**
-                     * Function returning the root dom element whatever shadow or shady dom is used.
-                     * @param domElement
-                     * @returns {*}
-                     */
-                    function qsWrapper(domElement) {
-                        if (domElement.shadowRoot) {
-                            return domElement.shadowRoot;
-                        } else {
-                            return domElement;
-                        }
+            //-----------------------------------------------------------------------
+            //---------  Wrapping of myscript-common-element  methods    ------------
+            //-----------------------------------------------------------------------
+            /**
+             * Clear all context
+             */
+            clear() {
+                if (this.myscriptcommonelement) {
+                    this.myscriptcommonelement.clear();
+                }
+            }
+
+            /**
+             * Undo action, and launch recognition if timeout is set
+             */
+            undo() {
+                if (this.myscriptcommonelement) {
+                    this.myscriptcommonelement.undo();
+                }
+            }
+
+            /**
+             * Redo action, and launch recognition if timeout is set
+             */
+            redo() {
+                if (this.myscriptcommonelement) {
+                    this.myscriptcommonelement.redo();
+                }
+            }
+
+            /**
+             * Launch export
+             */
+            askForExport(exports) {
+                if (this.myscriptcommonelement) {
+                    this.myscriptcommonelement.askForExport(exports);
+                }
+            }
+
+            /**
+             * Return the stats allowing to monitor what ink size is send to the server.
+             * Stats objects format {strokesCount : 0, pointsCount : 0, byteSize : 0, humanSize : 0, humanUnit : 'BYTE'} humanUnit could have the values BYTE, BYTES, KiB, MiB
+             */
+            getStats() {
+                if (this.myscriptcommonelement) {
+                    return this.myscriptcommonelement.getStats();
+                }
+            }
+
+            _unloadedChanged(unloaded) {
+                this._buildConfiguration();
+                if (unloaded === true) {
+                    if (this.myscriptcommonelement && !this.initializing) {
+                        this.myscriptcommonelement.unloaded = true;
                     }
+                }
+            }
 
-                    this.logger = MyScript.LoggerConfig.getLogger('text-web');
-                    this.logger.setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
+            connectedCallback() {
+                super.connectedCallback();
 
-                    this.initializing = true;
-                    this.logger.info('attached callback');
-                    this.myscriptcommonelement = qsWrapper(this).querySelector('myscript-common-element');
-                    this.myscriptcommonelement.configuration = this.buildConfiguration();
-                    this.candidatelistelement = qsWrapper(this).querySelector('myscript-text-exports');
+                this.logger = MyScript.LoggerConfig.getLogger('text-web');
+                this.logger.setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
 
-                    this.attachListener(this);
+                this.initializing = true;
+                this.logger.info('attached callback');
+                this.myscriptcommonelement = this.shadowRoot.querySelector('myscript-common-element');
+                this.myscriptcommonelement.configuration = this._buildConfiguration();
+                this.candidatelistelement = this.shadowRoot.querySelector('myscript-text-exports');
 
-                    this.logger.info('attached');
-                    this.initializing = false;
-                },
-                detached: function () {
-                    this.logger.info('detached callback');
-                    this.detachListener(this);
-                    this.logger.info('detached');
-                },
-
-                /**
-                 * @private
-                 */
-                attachListener: function (myscriptTextWebElement) {
-                    function textCandidateListListener(event) {
-                        myscriptTextWebElement.logger.trace('candidates ' + event.type + ' event intercepted', event);
-                        switch (event.type) {
-                            case 'change':
-                                myscriptTextWebElement.manageExports(event, myscriptTextWebElement);
-                                myscriptTextWebElement.dispatchEvent(new CustomEvent(MyScript.Constants.EventType.EXPORTED, { detail: event.detail }));
-                                break;
-                            default:
-                                // Just forwarding event there.
-                                myscriptTextWebElement.dispatchEvent(new CustomEvent(event.type, { detail: event.detail }));
-                                break;
-                        }
+                this.candidateListListeners = {};
+                this.candidateListListeners['change'] = (event) => {
+                    this.logger.trace('candidates ' + event.type + ' event intercepted', event);
+                    switch (event.type) {
+                        case 'change':
+                            this._manageExports(event, this);
+                            this.dispatchEvent(new CustomEvent(MyScript.Constants.EventType.EXPORTED, { detail: event.detail }));
+                            break;
+                        default:
+                            // Just forwarding event there.
+                            this.dispatchEvent(new CustomEvent(event.type, { detail: event.detail }));
+                            break;
                     }
-                    myscriptTextWebElement.candidateListListeners = {};
-                    myscriptTextWebElement.candidateListListeners['change'] = textCandidateListListener;
-                    Object.keys(myscriptTextWebElement.candidateListListeners).forEach(function (type) {
-                        myscriptTextWebElement.candidatelistelement.addEventListener(type, myscriptTextWebElement.candidateListListeners[type])
-                    });
+                };
+                Object
+                    .keys(this.candidateListListeners)
+                    .forEach(type => this.candidatelistelement.addEventListener(type, this.candidateListListeners[type]));
 
-                    function commonElementListener(event) {
+                this.currentListeners = {};
+                Object
+                    .keys(MyScript.Constants.EventType)
+                    .map(key => MyScript.Constants.EventType[key])
+                    .forEach(type => this.currentListeners[type] = (event) => {
                         this.logger.trace(event.type + ' event intercepted', event);
                         switch (event.type) {
                             case MyScript.Constants.EventType.LOADED:
-                                myscriptTextWebElement.unloaded = false;
+                                this.unloaded = false;
                                 break;
                             case MyScript.Constants.EventType.EXPORTED:
-                                myscriptTextWebElement.manageExports(event, myscriptTextWebElement);
+                                this._manageExports(event, this);
                                 break;
                             default:
                                 break;
                         }
                         // Just forwarding event there.
-                        myscriptTextWebElement.dispatchEvent(new CustomEvent(event.type, { detail: event.detail }));
-                    }
-
-                    const eventTypes = Object.keys(MyScript.Constants.EventType).map(function (key) {
-                        return MyScript.Constants.EventType[key];
+                        this.dispatchEvent(new CustomEvent(event.type, { detail: event.detail }));
                     });
 
-                    myscriptTextWebElement.currentListeners = {};
-                    eventTypes.forEach(function (type) {
-                        myscriptTextWebElement.currentListeners[type] = commonElementListener;
-                    });
-                    Object.keys(myscriptTextWebElement.currentListeners).forEach(function (type) {
-                        myscriptTextWebElement.myscriptcommonelement.addEventListener(type, myscriptTextWebElement.currentListeners[type])
-                    });
-                },
+                Object
+                    .keys(this.currentListeners)
+                    .forEach(type => this.myscriptcommonelement.addEventListener(type, this.currentListeners[type]));
 
-                /**
-                 * Remove listeners when common element is unloaded.
-                 * @private
-                 */
-                detachListener: function (myscriptTextWebElement) {
-                    Object.keys(myscriptTextWebElement.currentListeners).forEach(function (type) {
-                        myscriptTextWebElement.myscriptcommonelement.removeEventListener(type, myscriptTextWebElement.currentListeners[type])
-                    });
-                    Object.keys(myscriptTextWebElement.candidateListListeners).forEach(function (type) {
-                        myscriptTextWebElement.candidatelistelement.removeEventListener(type, myscriptTextWebElement.candidateListListeners[type])
-                    });
-                },
+                this.logger.info('attached');
+                this.initializing = false;
+            }
 
-                /**
-                 * @private
-                 */
-                manageExports: function (event, myscriptTextWebElement) {
-                    myscriptTextWebElement.rawresult = {};
-                    myscriptTextWebElement.resultlabel = '';
-                    myscriptTextWebElement.candidates = [];
-                    if (event.detail) {
-                        if (event.detail.exports && event.detail.exports.TEXT) {
-                            myscriptTextWebElement.resultlabel = event.detail.exports.TEXT;
-                        }
-                        if (event.detail.rawResult &&
-                            event.detail.rawResult.result &&
-                            event.detail.rawResult.result.textSegmentResult &&
-                            event.detail.rawResult.result.textSegmentResult.candidates) {
+            disconnectedCallback() {
+                super.disconnectedCallback();
 
-                            myscriptTextWebElement.rawresult = event.detail.rawResult;
-                            myscriptTextWebElement.candidates = myscriptTextWebElement.rawresult.result.textSegmentResult.candidates;
-                        }
+                this.logger.info('detached callback');
+                Object
+                    .keys(this.currentListeners)
+                    .forEach(type => this.myscriptcommonelement.removeEventListener(type, this.currentListeners[type]));
+                Object
+                    .keys(this.candidateListListeners)
+                    .forEach(type => this.candidatelistelement.removeEventListener(type, this.candidateListListeners[type]));
+                this.logger.info('detached');
+            }
+
+            _manageExports(event) {
+                this.rawresult = {};
+                this.resultlabel = '';
+                this.candidates = [];
+                if (event.detail) {
+                    if (event.detail.exports && event.detail.exports.TEXT) {
+                        this.resultlabel = event.detail.exports.TEXT;
                     }
-                },
+                    if (event.detail.rawResult &&
+                        event.detail.rawResult.result &&
+                        event.detail.rawResult.result.textSegmentResult &&
+                        event.detail.rawResult.result.textSegmentResult.candidates) {
 
-                /**
-                 * @private
-                 */
-                buildConfiguration: function () {
-                    if (!this.configuration) {
-                        this.configuration = {};
+                        this.rawresult = event.detail.rawResult;
+                        this.candidates = this.rawresult.result.textSegmentResult.candidates;
                     }
-                    if (!this.configuration.recognitionParams) {
-                        this.configuration.recognitionParams = {};
-                    }
-
-                    if (!this.configuration.recognitionParams.v3) {
-                        this.configuration.recognitionParams.v3 = {};
-                    }
-                    if (!this.configuration.recognitionParams.v3.textParameter) {
-                        this.configuration.recognitionParams.v3.textParameter = {};
-                    }
-                    if (!this.configuration.recognitionParams.v3.textParameter.textProperties) {
-                        this.configuration.recognitionParams.v3.textParameter.textProperties = {};
-                    }
-
-                    this.configuration.recognitionParams.v3.textParameter.language = this.language;
-                    this.configuration.recognitionParams.v3.textParameter.textInputMode = this.textinputmode;
-                    this.configuration.recognitionParams.v3.textParameter.resultDetail = this.resultdetail;
-                    this.configuration.recognitionParams.v3.textParameter.contentTypes = this.contenttypes;
-                    this.configuration.recognitionParams.v3.textParameter.subsetKnowledges = this.subsetknowledges;
-                    this.configuration.recognitionParams.v3.textParameter.userLkWords = this.userlkwords;
-                    this.configuration.recognitionParams.v3.textParameter.userResources = this.userresources;
-                    this.configuration.recognitionParams.v3.textParameter.textProperties.textCandidateListSize = this.textcandidatelistsize;
-                    this.configuration.recognitionParams.v3.textParameter.textProperties.wordCandidateListSize = this.wordcandidatelistsize;
-                    this.configuration.recognitionParams.v3.textParameter.textProperties.wordPredictionListSize = this.wordpredictionlistsize;
-                    this.configuration.recognitionParams.v3.textParameter.textProperties.wordCompletionListSize = this.wordcompletionlistsize;
-                    this.configuration.recognitionParams.v3.textParameter.textProperties.characterCandidateListSize = this.charactercandidatelistsize;
-                    this.configuration.recognitionParams.v3.textParameter.textProperties.enableOutOfLexicon = this.enableoutoflexicon;
-                    this.configuration.recognitionParams.v3.textParameter.textProperties.discardCaseVariations = this.discardcasevariations;
-                    this.configuration.recognitionParams.v3.textParameter.textProperties.discardAccentuationVariations = this.discardaccentuationvariations;
-                    this.configuration.recognitionParams.v3.textParameter.textProperties.glyphDistortion = this.glyphdistortion;
-                    this.configuration.recognitionParams.v3.textParameter.textProperties.enableTagger = this.enabletagger;
-                    this.configuration.recognitionParams.v3.textParameter.textProperties.spellingDistortion = this.spellingdistortion;
-
-                    if (!this.configuration.recognitionParams.v4) {
-                        this.configuration.recognitionParams.v4 = {};
-                    }
-                    if (!this.configuration.recognitionParams.v4.text) {
-                        this.configuration.recognitionParams.v4.text = {};
-                    }
-
-                    this.configuration.recognitionParams.v4.lang = this.language;
-                    this.configuration.recognitionParams.v4.text.mimeTypes = this.mimetypes;
-                    return this.configuration;
-                },
-
-                /**
-                 * @private
-                 */
-                displayExports: function (hideExports, unloaded) {
-                    var display = !hideExports && ( !unloaded || unloaded === true);
-                    // Common element should not be attached if the unload attribute of myscript-math-web element is set to true and if he is not already connected to the dom.
-                    return display;
                 }
             }
-    );
-</script>
+
+            _buildConfiguration() {
+                if (!this.configuration) {
+                    this.configuration = {};
+                }
+                if (!this.configuration.recognitionParams) {
+                    this.configuration.recognitionParams = {};
+                }
+
+                if (!this.configuration.recognitionParams.v3) {
+                    this.configuration.recognitionParams.v3 = {};
+                }
+                if (!this.configuration.recognitionParams.v3.textParameter) {
+                    this.configuration.recognitionParams.v3.textParameter = {};
+                }
+                if (!this.configuration.recognitionParams.v3.textParameter.textProperties) {
+                    this.configuration.recognitionParams.v3.textParameter.textProperties = {};
+                }
+
+                this.configuration.recognitionParams.v3.textParameter.language = this.language;
+                this.configuration.recognitionParams.v3.textParameter.textInputMode = this.textinputmode;
+                this.configuration.recognitionParams.v3.textParameter.resultDetail = this.resultdetail;
+                this.configuration.recognitionParams.v3.textParameter.contentTypes = this.contenttypes;
+                this.configuration.recognitionParams.v3.textParameter.subsetKnowledges = this.subsetknowledges;
+                this.configuration.recognitionParams.v3.textParameter.userLkWords = this.userlkwords;
+                this.configuration.recognitionParams.v3.textParameter.userResources = this.userresources;
+                this.configuration.recognitionParams.v3.textParameter.textProperties.textCandidateListSize = this.textcandidatelistsize;
+                this.configuration.recognitionParams.v3.textParameter.textProperties.wordCandidateListSize = this.wordcandidatelistsize;
+                this.configuration.recognitionParams.v3.textParameter.textProperties.wordPredictionListSize = this.wordpredictionlistsize;
+                this.configuration.recognitionParams.v3.textParameter.textProperties.wordCompletionListSize = this.wordcompletionlistsize;
+                this.configuration.recognitionParams.v3.textParameter.textProperties.characterCandidateListSize = this.charactercandidatelistsize;
+                this.configuration.recognitionParams.v3.textParameter.textProperties.enableOutOfLexicon = this.enableoutoflexicon;
+                this.configuration.recognitionParams.v3.textParameter.textProperties.discardCaseVariations = this.discardcasevariations;
+                this.configuration.recognitionParams.v3.textParameter.textProperties.discardAccentuationVariations = this.discardaccentuationvariations;
+                this.configuration.recognitionParams.v3.textParameter.textProperties.glyphDistortion = this.glyphdistortion;
+                this.configuration.recognitionParams.v3.textParameter.textProperties.enableTagger = this.enabletagger;
+                this.configuration.recognitionParams.v3.textParameter.textProperties.spellingDistortion = this.spellingdistortion;
+
+                if (!this.configuration.recognitionParams.v4) {
+                    this.configuration.recognitionParams.v4 = {};
+                }
+                if (!this.configuration.recognitionParams.v4.text) {
+                    this.configuration.recognitionParams.v4.text = {};
+                }
+
+                this.configuration.recognitionParams.v4.lang = this.language;
+                this.configuration.recognitionParams.v4.text.mimeTypes = this.mimetypes;
+                return this.configuration;
+            }
+
+            _displayExports(hideExports, unloaded) {
+                // Common element should not be attached if the unload attribute of myscript-math-web element is set to true and if he is not already connected to the dom.
+                return !hideExports && ( !unloaded || unloaded === true);
+            }
+        }
+        customElements.define(MyScriptTextWeb.is, MyScriptTextWeb);
+    </script>
+</dom-module>

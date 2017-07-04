@@ -23,8 +23,10 @@
     "*",
     "!*.svg",
     "!LICENSE",
-    "!myscript-text-candidates.html",
+    "!myscript-text-exports.html",
     "!myscript-text-web.html",
+    "!index.html",
+    "!analysis.json",
     "!bower.json",
     "!demo/**/*"
   ],
