@@ -14,13 +14,32 @@
         hmackey="YOUR MYSCRIPT CDK HMAC KEY">
     </myscript-common-element>
 
-@demo
+@demo demo/customstyle.html Customize your component
+@demo demo/debug.html Debug your component
+@demo demo/iink_preview.html IInk preview
+@demo demo/index.html Get started
+@demo demo/init-error.html Display initialization error
+@demo demo/programmatic-init.html Programmatic initialization
+@demo demo/stats.html Get statistics
+
+### Styling
+
+`<myscript-common-element>` provides the following custom properties for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--myscript-common-element-background` | Background of the editor | none
+`--myscript-common-element-color` | Color of the editor | #FFFFFF
+`--myscript-common-element-line-pattern` | Line pattern to apply on the editor | Classic notebook pattern
+`--myscript-common-element-loader-background` | Primary background color of the loader | #1A9FFF
+`--myscript-common-element-loader-color` | Secondary background color of the loader | #F5F6F7
+`--myscript-common-element-button-background` | Buttons background color | #1A9FFF
+`--myscript-common-element-button-focus-background` | Buttons focus background color | #1A9FFF
+`--myscript-common-element-button-disabled-background` | Buttons disabled background color | #F5F6F7
 -->
 <dom-module id="myscript-common-element">
     <template>
         <style>
-            @import url(https://fonts.googleapis.com/css?family=Open+Sans);
-
             :host {
                 --myscript-common-element-background: none;
                 --myscript-common-element-color: #FFFFFF;
@@ -170,6 +189,56 @@
                 return 'myscript-common-element'
             }
 
+            /**
+             * Fired when element is fully loaded.
+             * @event load
+             */
+
+            /**
+             * Fired when undo is triggered.
+             * @event undo
+             */
+
+            /**
+             * Fired when redo is triggered.
+             * @event redo
+             */
+
+            /**
+             * Fired when clear is triggered.
+             * @event clear
+             */
+
+            /**
+             * Fired when export is triggered.
+             * @event export
+             */
+
+            /**
+             * Fired when conversion is triggered.
+             * @event convert
+             */
+
+            /**
+             * Fired when editor state changed.
+             * @event change
+             */
+
+            /**
+             * Fired when export is done.
+             * @event exported
+             */
+
+            /**
+             * Fired when conversion is done.
+             * @event converted
+             */
+
+            /**
+             * Fired on error.
+             * @event error
+             */
+
             static get properties() {
                 return {
                     /**
@@ -293,7 +362,6 @@
                     },
                     /**
                      * True if undo is available
-                     * @private
                      */
                     canundo: {
                         type: Boolean,
@@ -303,7 +371,6 @@
                     },
                     /**
                      * True if redo is available
-                     * @private
                      */
                     canredo: {
                         type: Boolean,
@@ -313,7 +380,6 @@
                     },
                     /**
                      * True if there is something to clear
-                     * @private
                      */
                     canclear: {
                         type: Boolean,
@@ -323,7 +389,6 @@
                     },
                     /**
                      * True if export button could be displayed.
-                     * @private
                      */
                     canexport: {
                         type: Boolean,
@@ -333,7 +398,6 @@
                     },
                     /**
                      * True if convert button could be displayed.
-                     * @private
                      */
                     canconvert: {
                         type: Boolean,
@@ -511,36 +575,55 @@
                 this.logger.info('common-element detached');
             }
 
+            /**
+             * Clear all context
+             */
             clear() {
                 if (this.editor) {
                     this.editor.clear();
                 }
             }
 
+            /**
+             * Undo action
+             */
             undo() {
                 if (this.editor) {
                     this.editor.undo();
                 }
             }
 
+            /**
+             * Redo action
+             */
             redo() {
                 if (this.editor) {
                     this.editor.redo();
                 }
             }
 
+            /**
+             * Trigger export
+             */
             askForExport(exports) {
                 if (this.editor) {
                     this.editor.askForExport(exports);
                 }
             }
 
+            /**
+             * Trigger convert
+             */
             convert() {
                 if (this.editor) {
                     this.editor.convert();
                 }
             }
 
+            /**
+             * Return the stats allowing to monitor what ink size is send to the server.
+             * Stats objects format {strokesCount : 0, pointsCount : 0, byteSize : 0, humanSize : 0, humanUnit : 'BYTE'} humanUnit could have the values BYTE, BYTES, KiB, MiB
+             */
             getStats() {
                 if (this.editor) {
                     return this.editor.stats;

@@ -6,11 +6,26 @@
         exports="myscript-text-web.exports">
     </myscript-text-exports>
 
+Custom property | Description | Default
+----------------|-------------|----------
+`--myscript-text-exports-color` | Text candidates color | #1580CD
+`--myscript-text-exports-background-color` | Text candidates background color | #EDF0F2
+`--myscript-text-exports-selected-color` | Selected candidate color | #FFFFFF
+`--myscript-text-exports-selected-background-color` | Selected candidate background color | #1580CD
+`--myscript-text-exports-predicted-color` | Candidate predicted part color | #73818C
+`--myscript-text-exports-completed-color` | Candidate completed part color | #1A9FFF
 -->
 <dom-module id="myscript-text-exports">
     <template>
         <style>
             :host {
+                --myscript-text-exports-color: #1580CD;
+                --myscript-text-exports-background-color: #EDF0F2;
+                --myscript-text-exports-selected-color: #FFFFFF;
+                --myscript-text-exports-selected-background-color: #1580CD;
+                --myscript-text-exports-predicted-color: #73818C;
+                --myscript-text-exports-completed-color: #1A9FFF;
+
                 box-sizing: border-box;
                 display: flex;
                 flex-direction: column;
@@ -34,8 +49,8 @@
             }
 
             .text {
-                color: var(--myscript-text-exports-color, #1580CD);
-                background-color: var(--myscript-text-exports-background-color, #EDF0F2);
+                color: var(--myscript-text-exports-color);
+                background-color: var(--myscript-text-exports-background-color);
                 padding: .5rem .75rem;
                 margin: 0 .125rem;
                 border-radius: 3px;
@@ -44,8 +59,8 @@
             }
 
             .text[selected] {
-                color: var(--myscript-text-exports-selected-color, #FFFFFF);
-                background: var(--myscript-text-exports-selected-background-color, #1580CD);
+                color: var(--myscript-text-exports-selected-color);
+                background: var(--myscript-text-exports-selected-background-color);
             }
 
             .candidate[selected] * {

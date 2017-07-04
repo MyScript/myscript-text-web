@@ -10,15 +10,36 @@
         language="en_US">
     </myscript-text-web>
 
-@demo demo/customcandidates.html
-@demo demo/customstyle.html
-@demo demo/debug.html
-@demo demo/index.html
-@demo demo/init-error.html
-@demo demo/legacy.html
-@demo demo/programmatic-init.html
-@demo demo/stats.html
-@demo demo/superimposed.html
+### Styling
+
+`<myscript-common-element>` provides the following custom properties for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--myscript-text-web-background` | Background of the editor | none
+`--myscript-text-web-color` | Color of the editor | #FFFFFF
+`--myscript-text-web-line-pattern` | Line pattern to apply on the editor | Classic notebook pattern
+`--myscript-text-web-loader-background` | Background of the loader | #1A9FFF
+`--myscript-text-web-loader-color` | Color of the loader | #F5F6F7
+`--myscript-text-web-button-background` | Buttons background | #1A9FFF
+`--myscript-text-web-button-focus-background` | Buttons focus background | #1A9FFF
+`--myscript-text-web-button-disabled-background` | Buttons disabled background | #F5F6F7
+`--myscript-text-web-exports-color` | Text candidates color | #1580CD
+`--myscript-text-web-exports-background-color` | Text candidates background color | #EDF0F2
+`--myscript-text-web-exports-selected-color` | Selected candidate color | #FFFFFF
+`--myscript-text-web-exports-selected-background-color` | Selected candidate background color | #1580CD
+`--myscript-text-web-exports-predicted-color` | Candidate predicted part color | #73818C
+`--myscript-text-web-exports-completed-color` | Candidate completed part color | #1A9FFF
+
+@demo demo/customcandidates.html Display predicted and completed candidates
+@demo demo/customstyle.html Customize your component
+@demo demo/debug.html Debug your component
+@demo demo/index.html Get started
+@demo demo/init-error.html Display initialization error
+@demo demo/legacy.html Use legacy API
+@demo demo/programmatic-init.html Programmatic initialization
+@demo demo/stats.html Get statistics
+@demo demo/superimposed.html Setup superimposed input mode
 -->
 <dom-module id="myscript-text-web">
     <template>
@@ -32,22 +53,12 @@
                 --myscript-text-web-button-background: #1A9FFF;
                 --myscript-text-web-button-focus-background: #1A9FFF;
                 --myscript-text-web-button-disabled-background: #F5F6F7;
-
-                --myscript-common-element-background: var(--myscript-text-web-background);
-                --myscript-common-element-color: var(--myscript-text-web-color);
-                --myscript-common-element-line-pattern: var(--myscript-text-web-line-pattern);
-                --myscript-common-element-loader-background: var(--myscript-text-web-loader-background);
-                --myscript-common-element-loader-color: var(--myscript-text-web-loader-color);
-                --myscript-common-element-button-background: var(--myscript-text-web-button-background);
-                --myscript-common-element-button-focus-background: var(--myscript-text-web-button-focus-background);
-                --myscript-common-element-button-disabled-background: var(--myscript-text-web-button-disabled-background);
-
-                --myscript-text-exports-color: #1580CD;
-                --myscript-text-exports-background-color: #EDF0F2;
-                --myscript-text-exports-selected-color: #FFFFFF;
-                --myscript-text-exports-selected-background-color: #1580CD;
-                --myscript-text-exports-predicted-color: #73818C;
-                --myscript-text-exports-completed-color: #1A9FFF;
+                --myscript-text-web-exports-color: #1580CD;
+                --myscript-text-web-exports-background-color: #EDF0F2;
+                --myscript-text-web-exports-selected-color: #FFFFFF;
+                --myscript-text-web-exports-selected-background-color: #1580CD;
+                --myscript-text-web-exports-predicted-color: #73818C;
+                --myscript-text-web-exports-completed-color: #1A9FFF;
 
                 box-sizing: border-box;
                 touch-action: none;
@@ -59,10 +70,26 @@
             }
 
             myscript-text-exports {
+                --myscript-text-exports-color: var(--myscript-text-web-exports-color);
+                --myscript-text-exports-background-color: var(--myscript-text-web-exports-background-color);
+                --myscript-text-exports-selected-color: var(--myscript-text-web-exports-selected-color);
+                --myscript-text-exports-selected-background-color: var(--myscript-text-web-exports-selected-background-color);
+                --myscript-text-exports-predicted-color: var(--myscript-text-web-exports-predicted-color);
+                --myscript-text-exports-completed-color: var(--myscript-text-web-exports-completed-color);
+
                 height: 100px;
             }
 
             myscript-common-element {
+                --myscript-common-element-background: var(--myscript-text-web-background);
+                --myscript-common-element-color: var(--myscript-text-web-color);
+                --myscript-common-element-line-pattern: var(--myscript-text-web-line-pattern);
+                --myscript-common-element-loader-background: var(--myscript-text-web-loader-background);
+                --myscript-common-element-loader-color: var(--myscript-text-web-loader-color);
+                --myscript-common-element-button-background: var(--myscript-text-web-button-background);
+                --myscript-common-element-button-focus-background: var(--myscript-text-web-button-focus-background);
+                --myscript-common-element-button-disabled-background: var(--myscript-text-web-button-disabled-background);
+
                 height: calc(100% - 100px);
             }
 

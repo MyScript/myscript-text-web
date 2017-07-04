@@ -11,24 +11,28 @@
 
     <link rel="stylesheet" href="demo.css">
 
-    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
     <link rel="import" href="../myscript-text-web.html">
+    <custom-style>
+        <style>
+            myscript-text-web {
+                --myscript-text-web-background: url(https://farm6.staticflickr.com/5526/10976824044_aebaebdb12_z_d.jpg);
+                --myscript-text-web-line-pattern: none;
+                --myscript-text-web-loader-background: #ff7314;
+                --myscript-text-web-loader-color: #F5F6F7;
+                --myscript-text-web-button-background: #ff7314;
+                --myscript-text-web-button-focus-background: #ff7314;
+                --myscript-text-web-button-disabled-background: #060903;
+                --myscript-text-web-exports-color: #FF9917;
+                --myscript-text-web-exports-background-color: #EDF0F2;
+                --myscript-text-web-exports-selected-color: #FFFFFF;
+                --myscript-text-web-exports-selected-background-color: #FF9917;
+                --myscript-text-web-exports-predicted-color: #73818C;
+                --myscript-text-web-exports-completed-color: #ff7314;
+            }
+        </style>
+    </custom-style>
 </head>
-<style is="custom-style">
-    .ms-editor canvas.ms-rendering-canvas {
-        z-index: 10;
-        background: no-repeat url(https://farm6.staticflickr.com/5526/10976824044_aebaebdb12_z_d.jpg);
-        background-size: cover;
-    }
-
-    myscript-text-web {
-        --myscript-text-web-background-color: #ff7314;
-        --myscript-text-web-focus-background-color: #ff7314;
-        --myscript-text-web-disabled-background-color: #060903;
-        --myscript-text-exports-color: #ff7314;
-        --myscript-text-exports-selected-background-color: #ff7314;
-    }
-</style>
 <body>
 <myscript-text-web id="text-input"
                    host="webdemoapi.myscript.com"
