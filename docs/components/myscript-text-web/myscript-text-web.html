@@ -31,15 +31,17 @@ Custom property | Description | Default
 `--myscript-text-web-exports-predicted-color` | Candidate predicted part color | #73818C
 `--myscript-text-web-exports-completed-color` | Candidate completed part color | #1A9FFF
 
-@demo demo/customcandidates.html Display predicted and completed candidates
-@demo demo/customstyle.html Customize your component
+
+@demo demo/get_started.html Get started
+@demo demo/v4_configuration.html Use interactive ink api (v4)
+@demo demo/handle_error.html Handle error
+@demo demo/styling.html Customize your component style
+@demo demo/programmatic_init.html Programmatic initialization
+@demo demo/get_stats.html Get statistics
 @demo demo/debug.html Debug your component
-@demo demo/index.html Get started
-@demo demo/init-error.html Display initialization error
-@demo demo/legacy.html Use legacy API
-@demo demo/programmatic-init.html Programmatic initialization
-@demo demo/stats.html Get statistics
-@demo demo/superimposed.html Setup superimposed input mode
+@demo demo/get_languages.html Get available languages
+@demo demo/prediction_completion.html Use prediction and completion
+@demo demo/superimposed.html Use superimposed input mode
 -->
 <dom-module id="myscript-text-web">
     <template>
@@ -216,7 +218,7 @@ Custom property | Description | Default
                     },
                     /**
                      * Properties to set when you wish to set attributes in javascript. unloaded attributes shoudl be removed once all properties are set.
-                     * (see demo/programmatic-init.html for a better understanding)
+                     * (see demo/programmatic_init.html for a better understanding)
                      */
                     unloaded: {
                         type: Boolean,
@@ -228,7 +230,7 @@ Custom property | Description | Default
                     /**
                      * Set the additional configuration used to feed MyScript ink Paper (Structure of object as defined in MyScriptjs MyScriptJSOptions.js file)
                      * Options values are taken into account when myscript-common-element is attach to the dom and when detached is set to false.
-                     * Options values are not reflected to myscript-common-element attributes plus attributes values are always taken into account before configuration values (see demo/programmatic-init.html for a better understanding).
+                     * Options values are not reflected to myscript-common-element attributes plus attributes values are always taken into account before configuration values (see demo/programmatic_init.html for a better understanding).
                      */
                     configuration: {
                         type: Object,

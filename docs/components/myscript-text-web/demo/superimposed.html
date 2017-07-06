@@ -7,32 +7,20 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="HandheldFriendly" content="true"/>
 
-    <title>MyScript text web demo</title>
+    <title>Superimposed input</title>
 
     <link rel="stylesheet" href="demo.css">
 
     <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
-    <link rel="import" href="../../myscript-common-element/myscript-languages-element.html">
     <link rel="import" href="../myscript-text-web.html">
 </head>
 <style>
-    myscript-text-web {
-        height: calc(100% - 60px);
-    }
     canvas.ms-capture-canvas.ms-canvas {
         background-color: rgba(255,255,255,0.50);
     }
 </style>
 <body>
-    <nav>
-        <myscript-languages-element scheme="https"
-                                    host="webdemoapi.myscript.com"
-                                    applicationkey="22eda92c-10af-40d8-abea-fd4093c17d81"
-                                    hmackey="a1fa759f-b3ce-4091-9fd4-d34bb870c601">
-        </myscript-languages-element>
-        <select id="languageList" onchange="select(this.value)" disabled></select>
-    </nav>
-    <myscript-text-web id="text-input"
+    <myscript-text-web scheme="https"
                        host="webdemoapi.myscript.com"
                        applicationkey="22eda92c-10af-40d8-abea-fd4093c17d81"
                        hmackey="a1fa759f-b3ce-4091-9fd4-d34bb870c601"
@@ -41,22 +29,4 @@
                        textcandidatelistsize="3">
     </myscript-text-web>
 </body>
-<script>
-    var myscriptTextWebElement = document.querySelector('myscript-text-web');
-    var currentLanguage = myscriptTextWebElement.getAttribute('language');
-
-    var languageSelect = document.getElementById('languageList');
-    document.querySelector('myscript-languages-element').addEventListener('change', function (evt) {
-        evt.detail.forEach(function (language) {
-            var selected = currentLanguage === language.value;
-            languageSelect.options[languageSelect.options.length] = new Option(language.description, language.value, selected, selected);
-        });
-        languageSelect.disabled = false;
-    });
-
-    function select(lang) {
-        myscriptTextWebElement.language = lang;
-        myscriptTextWebElement.unloaded = true;
-    }
-</script>
 </html>

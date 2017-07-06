@@ -18,7 +18,7 @@ myscript-text-web is a web component that can be used in every web application (
 3. Import webcomponents polyfill on your webapp.
 
 ```html
-    <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
 ```
  
 ## Installation
@@ -48,13 +48,16 @@ myscript-text-web is a web component that can be used in every web application (
 
 ## Examples
 
-* [Simple text demo](./demo/index.html)
-* [Superimposed demo](./demo/superimposed.html)
-* [Programmatic init](./demo/programmatic-init.html)
-* [Customize style](./demo/customstyle.html)
-* [Customize candidates output](./demo/customcandidates.html)
-* [Error handling](./demo/init-error.html)
-* [Get statistics](./demo/stats.html)
+- [demo/get_started.html](demo/get_started.html) Get started
+- [demo/v4_configuration.html](demo/v4_configuration.html) Use interactive ink api (v4)
+- [demo/handle_error.html](demo/handle_error.html) Handle error
+- [demo/styling.html](demo/styling.html) Customize your component style
+- [demo/programmatic_init.html](demo/programmatic_init.html) Programmatic initialization
+- [demo/get_stats.html](demo/get_stats.html) Get statistics
+- [demo/debug.html](demo/debug.html) Debug your component
+- [demo/get_languages.html](demo/get_languages.html) Get available languages
+- [demo/prediction_completion.html](demo/prediction_completion.html) Use prediction and completion
+- [demo/superimposed.html](demo/superimposed.html) Use superimposed input mode
     
 ## Documentation 
 
