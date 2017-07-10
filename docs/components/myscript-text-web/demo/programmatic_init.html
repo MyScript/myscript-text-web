@@ -14,39 +14,39 @@
     <link rel="import" href="../myscript-text-web.html">
 </head>
 <body>
-    <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
-    <myscript-text-web
-        host="webdemoapi.myscript.com">
-    </myscript-text-web>
+    <myscript-text-web />
 </body>
 <script>
-    window.addEventListener("load", function () {
-        var configurationChanged = false;
-        var myscriptTextWebElement = document.querySelector('myscript-text-web');
-        myscriptTextWebElement.addEventListener("load", function () {
+    window.addEventListener('load', () => {
+        let configurationChanged = false;
+        const myscriptTextWebElement = document.querySelector('myscript-text-web');
+        myscriptTextWebElement.addEventListener('load', () => {
             if (!configurationChanged) {
-                console.log("All resources finished loading! Starting to init myscript-text-web");
-                var mycustomconfiguration = {
-                    // Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account
+                console.log('All resources finished loading! Starting to init myscript-text-web');
+                // Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account
+                const configuration = {
+                    scheme: 'https',
+                    host: 'webdemoapi.myscript.com',
                     applicationKey: '22eda92c-10af-40d8-abea-fd4093c17d81',
                     hmacKey: 'a1fa759f-b3ce-4091-9fd4-d34bb870c601',
                     language: 'zh_CN'
                 };
                 // Testing if attributes binding via DOM, setAttribute or direct object manipulation is working.
-                myscriptTextWebElement.setAttribute('applicationkey', mycustomconfiguration.applicationKey);
-                myscriptTextWebElement.hmackey = mycustomconfiguration.hmacKey;
+                myscriptTextWebElement.setAttribute('scheme', configuration.scheme);
+                myscriptTextWebElement.setAttribute('host', configuration.host);
+                myscriptTextWebElement.applicationkey = configuration.applicationKey;
+                myscriptTextWebElement.hmackey = configuration.hmacKey;
                 // Testing if options are taken into account
                 myscriptTextWebElement.configuration = {
-                    timestampFloatPrecision: 2,
                     recognitionParams: {
                         v3: {
                             textParameter: {
-                                language: 'fr_FR'
+                                language: configuration.language
                             }
                         }
                     }
                 };
-                myscriptTextWebElement.language = mycustomconfiguration.language;
+                // Force the component to reload with the new configuration
                 myscriptTextWebElement.unloaded = true;
             }
             configurationChanged = true;

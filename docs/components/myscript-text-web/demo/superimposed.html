@@ -13,12 +13,14 @@
 
     <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
     <link rel="import" href="../myscript-text-web.html">
+    <custom-style>
+        <style>
+            myscript-text-web {
+                --myscript-text-web-capture-background: rgba(255,255,255,0.50);
+            }
+        </style>
+    </custom-style>
 </head>
-<style>
-    canvas.ms-capture-canvas.ms-canvas {
-        background-color: rgba(255,255,255,0.50);
-    }
-</style>
 <body>
     <myscript-text-web scheme="https"
                        host="webdemoapi.myscript.com"
@@ -26,7 +28,9 @@
                        hmackey="a1fa759f-b3ce-4091-9fd4-d34bb870c601"
                        language="fr_FR"
                        textinputmode="SUPERIMPOSED"
-                       textcandidatelistsize="3">
+                       textcandidatelistsize="3"
+                       disableexportcontrol
+                       disableconvertcontrol>
     </myscript-text-web>
 </body>
 </html>

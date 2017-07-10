@@ -24,7 +24,7 @@
 <script>
     const paperToast = document.querySelector('paper-toast');
     document.querySelector('myscript-text-web').addEventListener('error', function (event) {
-        paperToast.text = 'Error : ' + JSON.stringify(event.detail);
+        paperToast.text = `Error : ${JSON.stringify(event.detail)}`;
         paperToast.fitIn = paperToast.show();
     });
 </script>
