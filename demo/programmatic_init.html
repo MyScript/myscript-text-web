@@ -19,8 +19,8 @@
 <script>
     window.addEventListener('load', () => {
         let configurationChanged = false;
-        const myscriptTextWebElement = document.querySelector('myscript-text-web');
-        myscriptTextWebElement.addEventListener('load', () => {
+        const textElement = document.querySelector('myscript-text-web');
+        textElement.addEventListener('load', () => {
             if (!configurationChanged) {
                 console.log('All resources finished loading! Starting to init myscript-text-web');
                 // Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account
@@ -32,12 +32,12 @@
                     language: 'zh_CN'
                 };
                 // Testing if attributes binding via DOM, setAttribute or direct object manipulation is working.
-                myscriptTextWebElement.setAttribute('scheme', configuration.scheme);
-                myscriptTextWebElement.setAttribute('host', configuration.host);
-                myscriptTextWebElement.applicationkey = configuration.applicationKey;
-                myscriptTextWebElement.hmackey = configuration.hmacKey;
+                textElement.setAttribute('scheme', configuration.scheme);
+                textElement.setAttribute('host', configuration.host);
+                textElement.applicationkey = configuration.applicationKey;
+                textElement.hmackey = configuration.hmacKey;
                 // Testing if options are taken into account
-                myscriptTextWebElement.configuration = {
+                textElement.configuration = {
                     recognitionParams: {
                         v3: {
                             textParameter: {
@@ -47,7 +47,7 @@
                     }
                 };
                 // Force the component to reload with the new configuration
-                myscriptTextWebElement.unloaded = true;
+                textElement.unloaded = true;
             }
             configurationChanged = true;
         });

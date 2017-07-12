@@ -10,11 +10,3 @@ myscript-text-web {
 myscript-text-candidates {
     font-size: x-large;
 }
-
-nav {
-    height: 60px;
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    align-items: center;
-}
