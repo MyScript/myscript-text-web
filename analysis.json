@@ -3024,9 +3024,9 @@
           }
         },
         {
-          "name": "strokecolor",
+          "name": "pencolor",
           "type": "string",
-          "description": "Color of the stroke",
+          "description": "Color (supported formats rgb() rgba() hsl() hsla() #rgb #rgba #rrggbb #rrggbbaa)",
           "privacy": "public",
           "sourceRange": {
             "start": {
@@ -3044,9 +3044,9 @@
           "defaultValue": "\"#1580CD\""
         },
         {
-          "name": "strokewidth",
+          "name": "penwidth",
           "type": "number",
-          "description": "Width of the stroke",
+          "description": "Width of strokes and primitives in mm (no other unit is supported yet)",
           "privacy": "public",
           "sourceRange": {
             "start": {
@@ -3061,7 +3061,7 @@
           "metadata": {
             "polymer": {}
           },
-          "defaultValue": "4"
+          "defaultValue": "1"
         },
         {
           "name": "canundo",
@@ -6734,8 +6734,8 @@
           "type": "Object"
         },
         {
-          "name": "strokecolor",
-          "description": "Color of the stroke",
+          "name": "pencolor",
+          "description": "Color (supported formats rgb() rgba() hsl() hsla() #rgb #rgba #rrggbb #rrggbbaa)",
           "sourceRange": {
             "start": {
               "line": 243,
@@ -6750,8 +6750,8 @@
           "type": "string"
         },
         {
-          "name": "strokewidth",
-          "description": "Width of the stroke",
+          "name": "penwidth",
+          "description": "Width of strokes and primitives in mm (no other unit is supported yet)",
           "sourceRange": {
             "start": {
               "line": 251,

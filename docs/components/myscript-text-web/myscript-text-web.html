@@ -122,8 +122,8 @@ Custom property | Description | Default
             canundo="[[ canundo ]]"
             exports="{{ exports }}"
             debug="{{ debug }}"
-            strokecolor="{{ strokecolor }}"
-            strokewidth="{{ strokewidth }}"
+            pencolor="{{ pencolor }}"
+            penwidth="{{ penwidth }}"
             disablecontrols="{{ disablecontrols }}"
             disableclearcontrol="{{ disableclearcontrol }}"
             disableundoredocontrol="{{ disableundoredocontrol }}"
@@ -239,19 +239,19 @@ Custom property | Description | Default
                         notify: true
                     },
                     /**
-                     * Color of the stroke
+                     * Color (supported formats rgb() rgba() hsl() hsla() #rgb #rgba #rrggbb #rrggbbaa)
                      */
-                    strokecolor: {
+                    pencolor: {
                         type: String,
                         value: '#1580CD',
                         reflectToAttribute: true
                     },
                     /**
-                     * Width of the stroke
+                     * Width of strokes and primitives in mm (no other unit is supported yet)
                      */
-                    strokewidth: {
+                    penwidth: {
                         type: Number,
-                        value: 4,
+                        value: 1,
                         reflectToAttribute: true
                     },
                     /**
