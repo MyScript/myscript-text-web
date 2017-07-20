@@ -35,7 +35,8 @@
     "myscript-common-element": "2.0.0-alpha1"
   },
   "devDependencies": {
-    "iron-component-page": "PolymerElements/iron-component-page#^3.0.0"
+    "iron-component-page": "PolymerElements/iron-component-page#^3.0.0",
+    "webcomponentsjs": "^1.0.1"
   },
   "_source": "/home/fxg/projects/webcomponents/myscript-text-web",
   "_target": "*",

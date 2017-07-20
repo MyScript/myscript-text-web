@@ -124,6 +124,8 @@ Custom property | Description | Default
             debug="{{ debug }}"
             pencolor="{{ pencolor }}"
             penwidth="{{ penwidth }}"
+            fontfamily="{{ fontfamily }}"
+            fontsize="{{ fontsize }}"
             disablecontrols="{{ disablecontrols }}"
             disableclearcontrol="{{ disableclearcontrol }}"
             disableundoredocontrol="{{ disableundoredocontrol }}"
@@ -252,6 +254,22 @@ Custom property | Description | Default
                     penwidth: {
                         type: Number,
                         value: 1,
+                        reflectToAttribute: true
+                    },
+                    /**
+                     * font-family used to render text conversion
+                     */
+                    fontfamily: {
+                        type: String,
+                        value: 'Open Sans',
+                        reflectToAttribute: true
+                    },
+                    /**
+                     * font-size used to render text conversion
+                     */
+                    fontsize: {
+                        type: Number,
+                        value: 10.0,
                         reflectToAttribute: true
                     },
                     /**
@@ -544,6 +562,43 @@ Custom property | Description | Default
                 }
             }
 
+            static _generateTextConfiguration(language, mimetypes, textinputmode, resultdetail, contenttypes, subsetknowledges, userlkwords, userresources, textcandidatelistsize, wordcandidatelistsize, wordpredictionlistsize, wordcompletionlistsize, charactercandidatelistsize, enableoutoflexicon, discardcasevariations, discardaccentuationvariations, glyphdistortion, enabletagger, spellingdistortion) {
+                return {
+                    recognitionParams: {
+                        v3: {
+                            textParameter: {
+                                language,
+                                textInputMode: textinputmode,
+                                resultDetail: resultdetail,
+                                contentTypes: contenttypes,
+                                subsetKnowledges: subsetknowledges,
+                                userLkWords: userlkwords,
+                                userResources: userresources,
+                                textProperties: {
+                                    textCandidateListSize: textcandidatelistsize,
+                                    wordCandidateListSize: wordcandidatelistsize,
+                                    wordPredictionListSize: wordpredictionlistsize,
+                                    wordCompletionListSize: wordcompletionlistsize,
+                                    characterCandidateListSize: charactercandidatelistsize,
+                                    enableOutOfLexicon: enableoutoflexicon,
+                                    discardCaseVariations: discardcasevariations,
+                                    discardAccentuationVariations: discardaccentuationvariations,
+                                    glyphDistortion: glyphdistortion,
+                                    enableTagger: enabletagger,
+                                    spellingDistortion: spellingdistortion
+                                }
+                            }
+                        },
+                        v4: {
+                            lang: language,
+                            text: {
+                                mimeTypes: mimetypes
+                            }
+                        }
+                    }
+                };
+            }
+
             //-----------------------------------------------------------------------
             //---------  Wrapping of myscript-common-element  methods    ------------
             //-----------------------------------------------------------------------
@@ -696,48 +751,27 @@ Custom property | Description | Default
                 if (!this.configuration) {
                     this.configuration = {};
                 }
-                if (!this.configuration.recognitionParams) {
-                    this.configuration.recognitionParams = {};
-                }
-
-                if (!this.configuration.recognitionParams.v3) {
-                    this.configuration.recognitionParams.v3 = {};
-                }
-                if (!this.configuration.recognitionParams.v3.textParameter) {
-                    this.configuration.recognitionParams.v3.textParameter = {};
-                }
-                if (!this.configuration.recognitionParams.v3.textParameter.textProperties) {
-                    this.configuration.recognitionParams.v3.textParameter.textProperties = {};
-                }
-
-                this.configuration.recognitionParams.v3.textParameter.language = this.language;
-                this.configuration.recognitionParams.v3.textParameter.textInputMode = this.textinputmode;
-                this.configuration.recognitionParams.v3.textParameter.resultDetail = this.resultdetail;
-                this.configuration.recognitionParams.v3.textParameter.contentTypes = this.contenttypes;
-                this.configuration.recognitionParams.v3.textParameter.subsetKnowledges = this.subsetknowledges;
-                this.configuration.recognitionParams.v3.textParameter.userLkWords = this.userlkwords;
-                this.configuration.recognitionParams.v3.textParameter.userResources = this.userresources;
-                this.configuration.recognitionParams.v3.textParameter.textProperties.textCandidateListSize = this.textcandidatelistsize;
-                this.configuration.recognitionParams.v3.textParameter.textProperties.wordCandidateListSize = this.wordcandidatelistsize;
-                this.configuration.recognitionParams.v3.textParameter.textProperties.wordPredictionListSize = this.wordpredictionlistsize;
-                this.configuration.recognitionParams.v3.textParameter.textProperties.wordCompletionListSize = this.wordcompletionlistsize;
-                this.configuration.recognitionParams.v3.textParameter.textProperties.characterCandidateListSize = this.charactercandidatelistsize;
-                this.configuration.recognitionParams.v3.textParameter.textProperties.enableOutOfLexicon = this.enableoutoflexicon;
-                this.configuration.recognitionParams.v3.textParameter.textProperties.discardCaseVariations = this.discardcasevariations;
-                this.configuration.recognitionParams.v3.textParameter.textProperties.discardAccentuationVariations = this.discardaccentuationvariations;
-                this.configuration.recognitionParams.v3.textParameter.textProperties.glyphDistortion = this.glyphdistortion;
-                this.configuration.recognitionParams.v3.textParameter.textProperties.enableTagger = this.enabletagger;
-                this.configuration.recognitionParams.v3.textParameter.textProperties.spellingDistortion = this.spellingdistortion;
-
-                if (!this.configuration.recognitionParams.v4) {
-                    this.configuration.recognitionParams.v4 = {};
-                }
-                if (!this.configuration.recognitionParams.v4.text) {
-                    this.configuration.recognitionParams.v4.text = {};
-                }
-
-                this.configuration.recognitionParams.v4.lang = this.language;
-                this.configuration.recognitionParams.v4.text.mimeTypes = this.mimetypes;
+                Object.assign(this.configuration, MyScriptTextWeb._generateTextConfiguration(
+                    this.language,
+                    this.mimetypes,
+                    this.textinputmode,
+                    this.resultdetail,
+                    this.contenttypes,
+                    this.subsetknowledges,
+                    this.userlkwords,
+                    this.userresources,
+                    this.textcandidatelistsize,
+                    this.wordcandidatelistsize,
+                    this.wordpredictionlistsize,
+                    this.wordcompletionlistsize,
+                    this.wordcompletionlistsize,
+                    this.charactercandidatelistsize,
+                    this.enableoutoflexicon,
+                    this.discardcasevariations,
+                    this.discardaccentuationvariations,
+                    this.glyphdistortion,
+                    this.enabletagger,
+                    this.spellingdistortion));
                 return this.configuration;
             }
 
