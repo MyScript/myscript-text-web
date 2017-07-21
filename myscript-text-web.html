@@ -288,10 +288,7 @@ Custom property | Description | Default
                      */
                     configuration: {
                         type: Object,
-                        notify: true,
-                        value() {
-                            return this._buildConfiguration();
-                        }
+                        notify: true
                     },
                     /**
                      * Color (supported formats rgb() rgba() hsl() hsla() #rgb #rgba #rrggbb #rrggbbaa)
@@ -720,6 +717,11 @@ Custom property | Description | Default
                     this.glyphdistortion,
                     this.enabletagger,
                     this.spellingdistortion);
+            }
+
+            constructor() {
+                super();
+                this.configuration = this._buildConfiguration(); // Build default configuration to use in common element
             }
 
             //-----------------------------------------------------------------------
