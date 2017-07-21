@@ -140,6 +140,56 @@ Custom property | Description | Default
                 return 'myscript-text-web'
             }
 
+            /**
+             * Fired when element is fully loaded.
+             * @event load
+             */
+
+            /**
+             * Fired when undo is triggered.
+             * @event undo
+             */
+
+            /**
+             * Fired when redo is triggered.
+             * @event redo
+             */
+
+            /**
+             * Fired when clear is triggered.
+             * @event clear
+             */
+
+            /**
+             * Fired when export is triggered.
+             * @event export
+             */
+
+            /**
+             * Fired when conversion is triggered.
+             * @event convert
+             */
+
+            /**
+             * Fired when editor state changed.
+             * @event change
+             */
+
+            /**
+             * Fired when export is done.
+             * @event exported
+             */
+
+            /**
+             * Fired when conversion is done.
+             * @event converted
+             */
+
+            /**
+             * Fired on error.
+             * @event error
+             */
+
             static get properties() {
                 return {
                     // ----------------------------------------------------------------------------------------------
@@ -238,7 +288,10 @@ Custom property | Description | Default
                      */
                     configuration: {
                         type: Object,
-                        notify: true
+                        notify: true,
+                        value() {
+                            return this._buildConfiguration();
+                        }
                     },
                     /**
                      * Color (supported formats rgb() rgba() hsl() hsla() #rgb #rgba #rrggbb #rrggbbaa)
@@ -562,41 +615,111 @@ Custom property | Description | Default
                 }
             }
 
-            static _generateTextConfiguration(language, mimetypes, textinputmode, resultdetail, contenttypes, subsetknowledges, userlkwords, userresources, textcandidatelistsize, wordcandidatelistsize, wordpredictionlistsize, wordcompletionlistsize, charactercandidatelistsize, enableoutoflexicon, discardcasevariations, discardaccentuationvariations, glyphdistortion, enabletagger, spellingdistortion) {
-                return {
-                    recognitionParams: {
-                        v3: {
-                            textParameter: {
-                                language,
-                                textInputMode: textinputmode,
-                                resultDetail: resultdetail,
-                                contentTypes: contenttypes,
-                                subsetKnowledges: subsetknowledges,
-                                userLkWords: userlkwords,
-                                userResources: userresources,
-                                textProperties: {
-                                    textCandidateListSize: textcandidatelistsize,
-                                    wordCandidateListSize: wordcandidatelistsize,
-                                    wordPredictionListSize: wordpredictionlistsize,
-                                    wordCompletionListSize: wordcompletionlistsize,
-                                    characterCandidateListSize: charactercandidatelistsize,
-                                    enableOutOfLexicon: enableoutoflexicon,
-                                    discardCaseVariations: discardcasevariations,
-                                    discardAccentuationVariations: discardaccentuationvariations,
-                                    glyphDistortion: glyphdistortion,
-                                    enableTagger: enabletagger,
-                                    spellingDistortion: spellingdistortion
-                                }
-                            }
-                        },
-                        v4: {
-                            lang: language,
-                            text: {
-                                mimeTypes: mimetypes
-                            }
-                        }
-                    }
-                };
+            static _generateTextConfiguration(configuration, language, mimetypes, textinputmode, resultdetail, contenttypes, subsetknowledges, userlkwords, userresources, textcandidatelistsize, wordcandidatelistsize, wordpredictionlistsize, wordcompletionlistsize, charactercandidatelistsize, enableoutoflexicon, discardcasevariations, discardaccentuationvariations, glyphdistortion, enabletagger, spellingdistortion) {
+                // FIXME: find a way to do a proper deep merge
+                const conf = Object.assign({}, configuration);
+                if (!conf.recognitionParams) {
+                    conf.recognitionParams = {};
+                }
+                if (!conf.recognitionParams.v3) {
+                    conf.recognitionParams.v3 = {};
+                }
+                if (!conf.recognitionParams.v3.textParameter) {
+                    conf.recognitionParams.v3.textParameter = {};
+                }
+                if (!conf.recognitionParams.v3.textParameter.textProperties) {
+                    conf.recognitionParams.v3.textParameter.textProperties = {};
+                }
+                if (!conf.recognitionParams.v4) {
+                    conf.recognitionParams.v4 = {};
+                }
+                if (!conf.recognitionParams.v4.text) {
+                    conf.recognitionParams.v4.text = {};
+                }
+                if (language) {
+                    conf.recognitionParams.v3.textParameter.language = language;
+                    conf.recognitionParams.v4.lang = language;
+                }
+                if (mimetypes) {
+                    conf.recognitionParams.v4.text.mimeTypes = mimetypes;
+                }
+                if (textinputmode) {
+                    conf.recognitionParams.v3.textParameter.textInputMode = textinputmode;
+                }
+                if (resultdetail) {
+                    conf.recognitionParams.v3.textParameter.resultDetail = resultdetail;
+                }
+                if (contenttypes) {
+                    conf.recognitionParams.v3.textParameter.contentTypes = contenttypes;
+                }
+                if (subsetknowledges) {
+                    conf.recognitionParams.v3.textParameter.subsetKnowledges = subsetknowledges;
+                }
+                if (userlkwords) {
+                    conf.recognitionParams.v3.textParameter.userLkWords = userlkwords;
+                }
+                if (userresources) {
+                    conf.recognitionParams.v3.textParameter.userResources = userresources;
+                }
+                if (textcandidatelistsize) {
+                    conf.recognitionParams.v3.textParameter.textProperties.textCandidateListSize = textcandidatelistsize;
+                }
+                if (wordcandidatelistsize) {
+                    conf.recognitionParams.v3.textParameter.textProperties.wordCandidateListSize = wordcandidatelistsize;
+                }
+                if (wordpredictionlistsize) {
+                    conf.recognitionParams.v3.textParameter.textProperties.wordPredictionListSize = wordpredictionlistsize;
+                }
+                if (wordcompletionlistsize) {
+                    conf.recognitionParams.v3.textParameter.textProperties.wordCompletionListSize = wordcompletionlistsize;
+                }
+                if (charactercandidatelistsize) {
+                    conf.recognitionParams.v3.textParameter.textProperties.characterCandidateListSize = charactercandidatelistsize;
+                }
+                if (enableoutoflexicon) {
+                    conf.recognitionParams.v3.textParameter.textProperties.enableOutOfLexicon = enableoutoflexicon;
+                }
+                if (discardcasevariations) {
+                    conf.recognitionParams.v3.textParameter.textProperties.discardCaseVariations = discardcasevariations;
+                }
+                if (discardaccentuationvariations) {
+                    conf.recognitionParams.v3.textParameter.textProperties.discardAccentuationVariations = discardaccentuationvariations;
+                }
+                if (glyphdistortion) {
+                    conf.recognitionParams.v3.textParameter.textProperties.glyphDistortion = glyphdistortion;
+                }
+                if (enabletagger) {
+                    conf.recognitionParams.v3.textParameter.textProperties.enableTagger = enabletagger;
+                }
+                if (spellingdistortion) {
+                    conf.recognitionParams.v3.textParameter.textProperties.spellingDistortion = spellingdistortion;
+                }
+                return conf;
+            }
+
+            _buildConfiguration() {
+                return MyScriptTextWeb._generateTextConfiguration(
+                    this.configuration,
+                    this.language,
+                    this.mimetypes,
+                    this.textinputmode,
+                    this.resultdetail,
+                    this.contenttypes,
+                    this.subsetknowledges,
+                    this.userlkwords,
+                    this.userresources,
+                    this.textcandidatelistsize,
+                    this.wordcandidatelistsize,
+                    this.wordpredictionlistsize,
+                    this.wordcompletionlistsize,
+                    this.wordcompletionlistsize,
+                    this.charactercandidatelistsize,
+                    this.enableoutoflexicon,
+                    this.discardcasevariations,
+                    this.discardaccentuationvariations,
+                    this.glyphdistortion,
+                    this.enabletagger,
+                    this.spellingdistortion);
             }
 
             //-----------------------------------------------------------------------
@@ -649,9 +772,9 @@ Custom property | Description | Default
             }
 
             _unloadedChanged(unloaded) {
-                this._buildConfiguration();
                 if (unloaded === true) {
                     if (this.myscriptcommonelement && !this.initializing) {
+                        this.myscriptcommonelement.configuration = this._buildConfiguration();
                         this.myscriptcommonelement.unloaded = true;
                     }
                 }
@@ -666,7 +789,6 @@ Custom property | Description | Default
                 this.initializing = true;
                 this.logger.info('attached callback');
                 this.myscriptcommonelement = this.shadowRoot.querySelector('myscript-common-element');
-                this.myscriptcommonelement.configuration = this._buildConfiguration();
                 this.candidatelistelement = this.shadowRoot.querySelector('myscript-text-exports');
 
                 this.candidateListListeners = {};
@@ -747,39 +869,12 @@ Custom property | Description | Default
                 }
             }
 
-            _buildConfiguration() {
-                if (!this.configuration) {
-                    this.configuration = {};
-                }
-                Object.assign(this.configuration, MyScriptTextWeb._generateTextConfiguration(
-                    this.language,
-                    this.mimetypes,
-                    this.textinputmode,
-                    this.resultdetail,
-                    this.contenttypes,
-                    this.subsetknowledges,
-                    this.userlkwords,
-                    this.userresources,
-                    this.textcandidatelistsize,
-                    this.wordcandidatelistsize,
-                    this.wordpredictionlistsize,
-                    this.wordcompletionlistsize,
-                    this.wordcompletionlistsize,
-                    this.charactercandidatelistsize,
-                    this.enableoutoflexicon,
-                    this.discardcasevariations,
-                    this.discardaccentuationvariations,
-                    this.glyphdistortion,
-                    this.enabletagger,
-                    this.spellingdistortion));
-                return this.configuration;
-            }
-
             _displayExports(hideExports, unloaded) {
                 // Common element should not be attached if the unload attribute of myscript-math-web element is set to true and if he is not already connected to the dom.
                 return !hideExports && ( !unloaded || unloaded === true);
             }
         }
+
         customElements.define(MyScriptTextWeb.is, MyScriptTextWeb);
     </script>
 </dom-module>

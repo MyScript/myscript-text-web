@@ -28,24 +28,13 @@
                     scheme: 'https',
                     host: 'webdemoapi.myscript.com',
                     applicationKey: '22eda92c-10af-40d8-abea-fd4093c17d81',
-                    hmacKey: 'a1fa759f-b3ce-4091-9fd4-d34bb870c601',
-                    language: 'zh_CN'
+                    hmacKey: 'a1fa759f-b3ce-4091-9fd4-d34bb870c601'
                 };
                 // Testing if attributes binding via DOM, setAttribute or direct object manipulation is working.
                 textElement.setAttribute('scheme', configuration.scheme);
                 textElement.setAttribute('host', configuration.host);
                 textElement.applicationkey = configuration.applicationKey;
                 textElement.hmackey = configuration.hmacKey;
-                // Testing if options are taken into account
-                textElement.configuration = {
-                    recognitionParams: {
-                        v3: {
-                            textParameter: {
-                                language: configuration.language
-                            }
-                        }
-                    }
-                };
                 // Force the component to reload with the new configuration
                 textElement.unloaded = true;
             }
