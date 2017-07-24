@@ -757,9 +757,9 @@ Custom property | Description | Default
             /**
              * Launch export
              */
-            askForExport(exports) {
+            exportContent(exports) {
                 if (this.myscriptcommonelement) {
-                    this.myscriptcommonelement.askForExport(exports);
+                    this.myscriptcommonelement.exportContent(exports);
                 }
             }
 
@@ -774,21 +774,23 @@ Custom property | Description | Default
             }
 
             _unloadedChanged(unloaded) {
-                if (unloaded === true) {
-                    if (this.myscriptcommonelement && !this.initializing) {
+                if (this.myscriptcommonelement) {
+                    this.logger.trace('unloaded changed', unloaded);
+                    if (unloaded === true) {
                         this.myscriptcommonelement.configuration = this._buildConfiguration();
                         this.myscriptcommonelement.unloaded = true;
                     }
                 }
             }
 
-            connectedCallback() {
-                super.connectedCallback();
-
+            constructor() {
+                super();
                 this.logger = MyScript.LoggerConfig.getLogger('text-web');
                 this.logger.setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
+            }
 
-                this.initializing = true;
+            connectedCallback() {
+                super.connectedCallback();
                 this.logger.info('attached callback');
                 this.myscriptcommonelement = this.shadowRoot.querySelector('myscript-common-element');
                 this.candidatelistelement = this.shadowRoot.querySelector('myscript-text-exports');
@@ -836,7 +838,6 @@ Custom property | Description | Default
                     .forEach(type => this.myscriptcommonelement.addEventListener(type, this.currentListeners[type]));
 
                 this.logger.info('attached');
-                this.initializing = false;
             }
 
             disconnectedCallback() {
