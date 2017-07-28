@@ -1,6 +1,6 @@
 <link rel="import" href="../polymer/polymer-element.html">
 <link rel="import" href="../myscript-common-element/myscript-common-element.html">
-<link rel="import" href="myscript-text-exports.html">
+<link rel="import" href="./myscript-text-exports.html">
 <!--
 `myscript-text-web` is a turnkey solution for those who need to quickly implement MyScript Text recognition.
 
@@ -32,16 +32,16 @@ Custom property | Description | Default
 `--myscript-text-web-exports-completed-color` | Candidate completed part color | #1A9FFF
 
 
-@demo demo/get_started.html Get started
-@demo demo/v4_configuration.html Use interactive ink api (v4)
-@demo demo/handle_error.html Handle error
-@demo demo/styling.html Customize your component style
-@demo demo/programmatic_init.html Programmatic initialization
-@demo demo/get_stats.html Get statistics
-@demo demo/debug.html Debug your component
-@demo demo/get_languages.html Get available languages
-@demo demo/prediction_completion.html Use prediction and completion
-@demo demo/superimposed.html Use superimposed input mode
+@demo examples/get_started.html Get started
+@demo examples/v4_configuration.html Use interactive ink api (v4)
+@demo examples/handle_error.html Handle error
+@demo examples/styling.html Customize your component style
+@demo examples/programmatic_init.html Programmatic initialization
+@demo examples/get_stats.html Get statistics
+@demo examples/debug.html Debug your component
+@demo examples/get_languages.html Get available languages
+@demo examples/prediction_completion.html Use prediction and completion
+@demo examples/superimposed.html Use superimposed input mode
 -->
 <dom-module id="myscript-text-web">
     <template>
@@ -49,7 +49,7 @@ Custom property | Description | Default
             :host {
                 --myscript-text-web-background: none;
                 --myscript-text-web-color: #1A9FFF;
-                --myscript-text-web-line-pattern: url(data:image/svg+xml;charset=utf8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDE4IDE4Ij4KICA8cGF0aCBzdHJva2U9IiNGNUY2RjciIGQ9Ik0wLjUsMCBMMC41LDE4IE0wLDAuNSBMMTgsMC41Ii8+Cjwvc3ZnPgo=);
+                --myscript-text-web-line-pattern: repeating-linear-gradient(to bottom, #F5F6F7, #F5F6F7 .5px, transparent 1px, transparent 72px);
                 --myscript-text-web-capture-background: none;
                 --myscript-text-web-loader-background: #1A9FFF;
                 --myscript-text-web-loader-color: #F5F6F7;
@@ -114,8 +114,9 @@ Custom property | Description | Default
             scheme="{{ scheme }}"
             applicationkey="{{ applicationkey }}"
             hmackey="{{ hmackey }}"
-            recognitiontriggerdelay="{{ recognitiontriggerdelay }}"
-            recognitionprocessdelay="{{ recognitionprocessdelay }}"
+            triggerdelay="{{ triggerdelay }}"
+            processdelay="{{ processdelay }}"
+            ondemand="{{ ondemand }}"
             configuration="{{ configuration }}"
             canclear="[[ canclear ]]"
             canredo="[[ canredo ]]"
@@ -231,7 +232,7 @@ Custom property | Description | Default
                     /**
                      * Delay without any user input before asking for recognition, only use in REST mode.
                      */
-                    recognitiontriggerdelay: {
+                    triggerdelay: {
                         type: Number,
                         reflectToAttribute: true,
                         value: 2000
@@ -239,10 +240,18 @@ Custom property | Description | Default
                     /**
                      * Delay without any recognition result received before processing the last one received, only use in WEBSOCKET mode.
                      */
-                    recognitionprocessdelay: {
+                    processdelay: {
                         type: Number,
                         reflectToAttribute: true,
                         value: 1000
+                    },
+                    /**
+                     * True if export should be done on-demand, false otherwise
+                     */
+                    ondemand: {
+                        type: Boolean,
+                        reflectToAttribute: true,
+                        value: false
                     },
                     /**
                      * The recognition timeout, only use in REST mode.
@@ -272,7 +281,7 @@ Custom property | Description | Default
                     },
                     /**
                      * Properties to set when you wish to set attributes in javascript. unloaded attributes shoudl be removed once all properties are set.
-                     * (see demo/programmatic_init.html for a better understanding)
+                     * (see examples/programmatic_init.html for a better understanding)
                      */
                     unloaded: {
                         type: Boolean,
@@ -284,7 +293,7 @@ Custom property | Description | Default
                     /**
                      * Set the additional configuration used to feed MyScript ink Paper (Structure of object as defined in MyScriptjs MyScriptJSOptions.js file)
                      * Options values are taken into account when myscript-common-element is attach to the dom and when detached is set to false.
-                     * Options values are not reflected to myscript-common-element attributes plus attributes values are always taken into account before configuration values (see demo/programmatic_init.html for a better understanding).
+                     * Options values are not reflected to myscript-common-element attributes plus attributes values are always taken into account before configuration values (see examples/programmatic_init.html for a better understanding).
                      */
                     configuration: {
                         type: Object,
@@ -757,9 +766,9 @@ Custom property | Description | Default
             /**
              * Launch export
              */
-            exportContent(exports) {
+            exportContent() {
                 if (this.myscriptcommonelement) {
-                    this.myscriptcommonelement.exportContent(exports);
+                    this.myscriptcommonelement.exportContent();
                 }
             }
 

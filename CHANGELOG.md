@@ -5,7 +5,7 @@
 - New `unloaded` flag to control component state. `load` event will be trigger once the editor will be fully loaded.
 - New **not mutable** `configuration` attribute. Changing the configuration will clear the underlying editor, all currents strokes and results will be lost. To do it, set `unloaded=true` after changing configuration, and wait for a `load` event.
 - New **read-only** `editor` property that allow you to access to the underlying editor object (see [MyScriptJS documentation]() for more details).
-- New CSS variables to customize the web-component. See [demo/styling.html](demo/styling.html) as an example.
+- New CSS variables to customize the web-component. See [examples/styling.html](examples/styling.html) as an example.
  
 ## Breaking changes
 - Complete rewrite of the underlying javascript library with ES6 syntax
@@ -19,7 +19,7 @@
 - `getAvailableLanguages()` have been replaced by a new web-component. You can use it to retrieve the list of available languages for your configuration.
 
 ## Bugs
-- User can no longer write when an unrecoverable error is detected forcing him to reload the page. See [demo/handle_error.html](demo/handle_error.html) to see how it works.
+- User can no longer write when an unrecoverable error is detected forcing him to reload the page. See [examples/handle_error.html](examples/handle_error.html) to see how it works.
 
 For more details about attributes, look at the [documentation](docs/index.html).
 

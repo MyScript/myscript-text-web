@@ -44,20 +44,20 @@ myscript-text-web is a web component that can be used in every web application (
    
 4. Use it!
 
-[Test it live](https://myscript.github.io/myscript-text-web/components/myscript-text-web/demo/)!
+[Test it live](https://myscript.github.io/myscript-text-web/components/myscript-text-web/examples/)!
 
 ## Examples
 
-- [demo/get_started.html](demo/get_started.html) Get started
-- [demo/v4_configuration.html](demo/v4_configuration.html) Use interactive ink api (v4)
-- [demo/handle_error.html](demo/handle_error.html) Handle error
-- [demo/styling.html](demo/styling.html) Customize your component style
-- [demo/programmatic_init.html](demo/programmatic_init.html) Programmatic initialization
-- [demo/get_stats.html](demo/get_stats.html) Get statistics
-- [demo/debug.html](demo/debug.html) Debug your component
-- [demo/get_languages.html](demo/get_languages.html) Get available languages
-- [demo/prediction_completion.html](demo/prediction_completion.html) Use prediction and completion
-- [demo/superimposed.html](demo/superimposed.html) Use superimposed input mode
+- [examples/get_started.html](examples/get_started.html) Get started
+- [examples/v4_configuration.html](examples/v4_configuration.html) Use interactive ink api (v4)
+- [examples/handle_error.html](examples/handle_error.html) Handle error
+- [examples/styling.html](examples/styling.html) Customize your component style
+- [examples/programmatic_init.html](examples/programmatic_init.html) Programmatic initialization
+- [examples/get_stats.html](examples/get_stats.html) Get statistics
+- [examples/debug.html](examples/debug.html) Debug your component
+- [examples/get_languages.html](examples/get_languages.html) Get available languages
+- [examples/prediction_completion.html](examples/prediction_completion.html) Use prediction and completion
+- [examples/superimposed.html](examples/superimposed.html) Use superimposed input mode
     
 ## Documentation 
 

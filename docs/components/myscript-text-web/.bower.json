@@ -28,7 +28,7 @@
     "!index.html",
     "!analysis.json",
     "!bower.json",
-    "!demo/**/*"
+    "!examples/**/*"
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#^2.0.1",
