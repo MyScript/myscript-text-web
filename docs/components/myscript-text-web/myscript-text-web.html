@@ -49,7 +49,7 @@ Custom property | Description | Default
             :host {
                 --myscript-text-web-background: none;
                 --myscript-text-web-color: #1A9FFF;
-                --myscript-text-web-line-pattern: repeating-linear-gradient(to bottom, #F5F6F7, #F5F6F7 .5px, transparent 1px, transparent 72px);
+                --myscript-text-web-line-pattern: repeating-linear-gradient(to bottom, #F5F6F7, #F5F6F7 1px, transparent 1px, transparent 72px);
                 --myscript-text-web-capture-background: none;
                 --myscript-text-web-loader-background: #1A9FFF;
                 --myscript-text-web-loader-color: #F5F6F7;
@@ -104,7 +104,8 @@ Custom property | Description | Default
         <myscript-text-exports class="exports"
                                hidden="[[ disableexportpanel ]]"
                                exports="{{ exports }}"
-                               debug="{{ debug }}">
+                               debug="{{ debug }}"
+                               on-change="_exportChangeListener">
         </myscript-text-exports>
         <myscript-common-element
             type="TEXT"
@@ -131,7 +132,20 @@ Custom property | Description | Default
             disableclearcontrol="{{ disableclearcontrol }}"
             disableundoredocontrol="{{ disableundoredocontrol }}"
             disableexportcontrol="{{ disableexportcontrol }}"
-            disableconvertcontrol="{{ disableconvertcontrol }}">
+            disableconvertcontrol="{{ disableconvertcontrol }}"
+            unloaded="{{ unloaded }}"
+            editor="{{ editor }}"
+            on-load="_loadListener"
+            on-change="_changeListener"
+            on-exported="_exportedListener"
+            on-converted="_convertedListener"
+            on-undo="_undoListener"
+            on-redo="_redoListener"
+            on-clear="_clearListener"
+            on-export="_exportListener"
+            on-convert="_convertListener"
+            on-idle="_idleListener"
+            on-error="_errorListener">
         </myscript-common-element>
     </template>
     <script>
@@ -285,10 +299,17 @@ Custom property | Description | Default
                      */
                     unloaded: {
                         type: Boolean,
-                        value: true,
+                        value: false,
                         notify: true,
                         reflectToAttribute: true,
                         observer: '_unloadedChanged'
+                    },
+                    /**
+                     * The underlying editor created with MyScriptJS. This could allow to access more advanced properties. Mostly used for automatic testing currently.
+                     */
+                    editor: {
+                        type: Object,
+                        notify: true
                     },
                     /**
                      * Set the additional configuration used to feed MyScript ink Paper (Structure of object as defined in MyScriptjs MyScriptJSOptions.js file)
@@ -718,7 +739,6 @@ Custom property | Description | Default
                     this.wordcandidatelistsize,
                     this.wordpredictionlistsize,
                     this.wordcompletionlistsize,
-                    this.wordcompletionlistsize,
                     this.charactercandidatelistsize,
                     this.enableoutoflexicon,
                     this.discardcasevariations,
@@ -728,8 +748,95 @@ Custom property | Description | Default
                     this.spellingdistortion);
             }
 
+            _loadListener(event) {
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
+            }
+
+            _changeListener(event) {
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
+            }
+
+            _exportedListener(event) {
+                this._manageExports(event, this);
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
+            }
+
+            _convertedListener(event) {
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
+            }
+
+            _undoListener(event) {
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
+            }
+
+            _redoListener(event) {
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
+            }
+
+            _clearListener(event) {
+                this.exports = {};
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
+            }
+
+            _exportListener(event) {
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
+            }
+
+            _convertListener(event) {
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
+            }
+
+            _idleListener(event) {
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
+            }
+
+            _errorListener(event) {
+                // Just forwarding event there.
+                this.dispatchEvent(new CustomEvent(event.type, {
+                    detail: event.detail
+                }));
+            }
+
+            _exportChangeListener(event) {
+                this.logger.trace('candidates ' + event.type + ' event intercepted', event);
+                this._manageExports(event, this);
+                this.dispatchEvent(new CustomEvent('exported', { detail: event.detail }));
+            }
+
             constructor() {
                 super();
+                this.logger = MyScript.LoggerConfig.getLogger('text-web');
+                this.logger.setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
                 this.configuration = this._buildConfiguration(); // Build default configuration to use in common element
             }
 
@@ -783,82 +890,21 @@ Custom property | Description | Default
             }
 
             _unloadedChanged(unloaded) {
-                if (this.myscriptcommonelement) {
-                    this.logger.trace('unloaded changed', unloaded);
-                    if (unloaded === true) {
-                        this.myscriptcommonelement.configuration = this._buildConfiguration();
-                        this.myscriptcommonelement.unloaded = true;
-                    }
+                this.logger.trace('unloaded changed', unloaded);
+                if (!unloaded) {
+                    this.configuration = this._buildConfiguration();
                 }
-            }
-
-            constructor() {
-                super();
-                this.logger = MyScript.LoggerConfig.getLogger('text-web');
-                this.logger.setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
             }
 
             connectedCallback() {
                 super.connectedCallback();
-                this.logger.info('attached callback');
                 this.myscriptcommonelement = this.shadowRoot.querySelector('myscript-common-element');
                 this.candidatelistelement = this.shadowRoot.querySelector('myscript-text-exports');
-
-                this.candidateListListeners = {};
-                this.candidateListListeners['change'] = (event) => {
-                    this.logger.trace('candidates ' + event.type + ' event intercepted', event);
-                    switch (event.type) {
-                        case 'change':
-                            this._manageExports(event, this);
-                            this.dispatchEvent(new CustomEvent(MyScript.Constants.EventType.EXPORTED, { detail: event.detail }));
-                            break;
-                        default:
-                            // Just forwarding event there.
-                            this.dispatchEvent(new CustomEvent(event.type, { detail: event.detail }));
-                            break;
-                    }
-                };
-                Object
-                    .keys(this.candidateListListeners)
-                    .forEach(type => this.candidatelistelement.addEventListener(type, this.candidateListListeners[type]));
-
-                this.currentListeners = {};
-                Object
-                    .keys(MyScript.Constants.EventType)
-                    .map(key => MyScript.Constants.EventType[key])
-                    .forEach(type => this.currentListeners[type] = (event) => {
-                        this.logger.trace(event.type + ' event intercepted', event);
-                        switch (event.type) {
-                            case MyScript.Constants.EventType.LOADED:
-                                this.unloaded = false;
-                                break;
-                            case MyScript.Constants.EventType.EXPORTED:
-                                this._manageExports(event, this);
-                                break;
-                            default:
-                                break;
-                        }
-                        // Just forwarding event there.
-                        this.dispatchEvent(new CustomEvent(event.type, { detail: event.detail }));
-                    });
-
-                Object
-                    .keys(this.currentListeners)
-                    .forEach(type => this.myscriptcommonelement.addEventListener(type, this.currentListeners[type]));
-
                 this.logger.info('attached');
             }
 
             disconnectedCallback() {
                 super.disconnectedCallback();
-
-                this.logger.info('detached callback');
-                Object
-                    .keys(this.currentListeners)
-                    .forEach(type => this.myscriptcommonelement.removeEventListener(type, this.currentListeners[type]));
-                Object
-                    .keys(this.candidateListListeners)
-                    .forEach(type => this.candidatelistelement.removeEventListener(type, this.candidateListListeners[type]));
                 this.logger.info('detached');
             }
 

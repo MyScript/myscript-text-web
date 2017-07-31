@@ -14,32 +14,26 @@
     <link rel="import" href="../myscript-text-web.html">
 </head>
 <body>
-    <myscript-text-web />
+    <myscript-text-web unloaded />
 </body>
 <script>
     window.addEventListener('load', () => {
-        let configurationChanged = false;
         const textElement = document.querySelector('myscript-text-web');
-        textElement.addEventListener('load', () => {
-            if (!configurationChanged) {
-                console.log('All resources finished loading! Starting to init myscript-text-web');
-                // Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account
-                const configuration = {
-                    scheme: 'https',
-                    host: 'webdemoapi.myscript.com',
-                    applicationKey: '22eda92c-10af-40d8-abea-fd4093c17d81',
-                    hmacKey: 'a1fa759f-b3ce-4091-9fd4-d34bb870c601'
-                };
-                // Testing if attributes binding via DOM, setAttribute or direct object manipulation is working.
-                textElement.setAttribute('scheme', configuration.scheme);
-                textElement.setAttribute('host', configuration.host);
-                textElement.applicationkey = configuration.applicationKey;
-                textElement.hmackey = configuration.hmacKey;
-                // Force the component to reload with the new configuration
-                textElement.unloaded = true;
-            }
-            configurationChanged = true;
-        });
+        console.log('All resources finished loading! Starting to init myscript-text-web');
+        // Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account
+        const configuration = {
+            scheme: 'https',
+            host: 'webdemoapi.myscript.com',
+            applicationKey: '22eda92c-10af-40d8-abea-fd4093c17d81',
+            hmacKey: 'a1fa759f-b3ce-4091-9fd4-d34bb870c601'
+        };
+        // Testing if attributes binding via DOM, setAttribute or direct object manipulation is working.
+        textElement.setAttribute('scheme', configuration.scheme);
+        textElement.setAttribute('host', configuration.host);
+        textElement.applicationkey = configuration.applicationKey;
+        textElement.hmackey = configuration.hmacKey;
+        // Force the component to reload with the new configuration
+        textElement.unloaded = false;
     });
 </script>
 </html>

@@ -47,7 +47,7 @@ Custom property | Description | Default
             :host {
                 --myscript-common-element-background: none;
                 --myscript-common-element-color: #1A9FFF;
-                --myscript-common-element-line-pattern: repeating-linear-gradient(to bottom, #F5F6F7, #F5F6F7 .5px, transparent 1px, transparent 18px), repeating-linear-gradient(to right, #F5F6F7, #F5F6F7 .5px, transparent 1px, transparent 18px);
+                --myscript-common-element-line-pattern: repeating-linear-gradient(to bottom, #F5F6F7, #F5F6F7 1px, transparent 1px, transparent 18px), repeating-linear-gradient(to right, #F5F6F7, #F5F6F7 1px, transparent 1px, transparent 18px);
                 --myscript-common-element-capture-background: none;
                 --myscript-common-element-loader-background: #1A9FFF;
                 --myscript-common-element-loader-color: #F5F6F7;
@@ -130,7 +130,9 @@ Custom property | Description | Default
             }
 
             .error-msg::after {
-                content: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMTI4cHgiIGhlaWdodD0iMTI4cHgiIHZpZXdCb3g9IjAgMCA2MTIgNjEyIiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPgoJPGcgaWQ9ImNsb3VkLW9mZiIgZmlsbD0iIzFhOWZmZiI+CgkJPHBhdGggZD0iTTQ5NC43LDIyOS41Yy0xNy44NTEtODYuNy05NC4zNTEtMTUzLTE4OC43LTE1M2MtMzguMjUsMC03My45NSwxMC4yLTEwMiwzMC42bDM4LjI1LDM4LjI1ICAgIGMxNy44NS0xMi43NSw0MC44LTE3Ljg1LDYzLjc1LTE3Ljg1Yzc2LjUsMCwxNDAuMjUsNjMuNzUsMTQwLjI1LDE0MC4yNXYxMi43NWgzOC4yNWM0My4zNSwwLDc2LjUsMzMuMTUsNzYuNSw3Ni41ICAgIGMwLDI4LjA1LTE1LjMsNTMuNTUtNDAuOCw2Ni4zbDM4LjI1LDM4LjI1QzU5MS42LDQzOC42LDYxMiw0MDAuMzUsNjEyLDM1N0M2MTIsMjkwLjcsNTU4LjQ1LDIzNC42LDQ5NC43LDIyOS41eiBNNzYuNSwxMDkuNjUgICAgbDcxLjQsNjguODVDNjYuMywxODMuNiwwLDI0OS45LDAsMzMxLjVjMCw4NC4xNSw2OC44NSwxNTMsMTUzLDE1M2gyOTguMzVsNTEsNTFsMzMuMTUtMzMuMTVMMTA5LjY1LDc2LjVMNzYuNSwxMDkuNjV6ICAgICBNMTk2LjM1LDIyOS41bDIwNCwyMDRIMTUzYy01Ni4xLDAtMTAyLTQ1LjktMTAyLTEwMmMwLTU2LjEsNDUuOS0xMDIsMTAyLTEwMkgxOTYuMzV6IiAvPgoJPC9nPgo8L3N2Zz4K);
+                display: block;
+                content: url(data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCA3Ni41IDYxMiA0NTkiIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaW5ZTWluIG1lZXQiPgogICAgPHBhdGggZmlsbD0iIzFBOUZGRiIgZD0iTTQ5NC43LDIyOS41Yy0xNy44NTEtODYuNy05NC4zNTEtMTUzLTE4OC43LTE1M2MtMzguMjUsMC03My45NSwxMC4yLTEwMiwzMC42bDM4LjI1LDM4LjI1IGMxNy44NS0xMi43NSw0MC44LTE3Ljg1LDYzLjc1LTE3Ljg1Yzc2LjUsMCwxNDAuMjUsNjMuNzUsMTQwLjI1LDE0MC4yNXYxMi43NWgzOC4yNWM0My4zNSwwLDc2LjUsMzMuMTUsNzYuNSw3Ni41IGMwLDI4LjA1LTE1LjMsNTMuNTUtNDAuOCw2Ni4zbDM4LjI1LDM4LjI1QzU5MS42LDQzOC42LDYxMiw0MDAuMzUsNjEyLDM1N0M2MTIsMjkwLjcsNTU4LjQ1LDIzNC42LDQ5NC43LDIyOS41eiBNNzYuNSwxMDkuNjUgbDcxLjQsNjguODVDNjYuMywxODMuNiwwLDI0OS45LDAsMzMxLjVjMCw4NC4xNSw2OC44NSwxNTMsMTUzLDE1M2gyOTguMzVsNTEsNTFsMzMuMTUtMzMuMTVMMTA5LjY1LDc2LjVMNzYuNSwxMDkuNjV6IE0xOTYuMzUsMjI5LjVsMjA0LDIwNEgxNTNjLTU2LjEsMC0xMDItNDUuOS0xMDItMTAyYzAtNTYuMSw0NS45LTEwMiwxMDItMTAySDE5Ni4zNXoiIC8+Cjwvc3ZnPgo=);
+                margin-top: 20px;
             }
 
             .loader {
@@ -267,12 +269,12 @@ Custom property | Description | Default
                         value: 'TEXT'
                     },
                     /**
-                     * The current recognition protocol (WebSocket or REST). We strongly recommend using WebSocket.
+                     * The current recognition protocol (WEBSOCKET or REST). We strongly recommend using WebSocket.
                      */
                     protocol: {
                         type: String,
                         reflectToAttribute: true,
-                        value: 'REST'
+                        value: 'WEBSOCKET'
                     },
                     /**
                      * Scheme to use to connect to MyScript Cloud or Server. (https or http)
@@ -299,7 +301,7 @@ Custom property | Description | Default
                         value: 'V3'
                     },
                     /**
-                     * Delay without any user input before asking for recognition, only use with REST protocol.
+                     * Delay without any user input before asking for recognition, only use with REST protocol if not on-demand.
                      */
                     triggerdelay: {
                         type: Number,
@@ -307,7 +309,7 @@ Custom property | Description | Default
                         value: 2000
                     },
                     /**
-                     * Delay without any recognition exports received before processing the last one received, only use with WEBSOCKET protocol.
+                     * Delay without any recognition exports received before processing the last one received, only use with WEBSOCKET protocol if not on-demand.
                      */
                     processdelay: {
                         type: Number,
@@ -355,7 +357,8 @@ Custom property | Description | Default
                      * The underlying editor created with MyScriptJS. This could allow to access more advanced properties. Mostly used for automatic testing currently.
                      */
                     editor: {
-                        type: Object
+                        type: Object,
+                        notify: true
                     },
                     /**
                      * Set the additional configuration used to feed MyScript ink Paper (Structure of object as defined in MyScriptJS DefaultConfiguration.js file)
@@ -596,7 +599,6 @@ Custom property | Description | Default
 
             _loadListener(event) {
                 this.configuration = this.editor.configuration;
-                this.unloaded = false;
                 // Just forwarding event there.
                 this.dispatchEvent(new CustomEvent(event.type, {
                     detail: event.detail
@@ -701,27 +703,18 @@ Custom property | Description | Default
             }
 
             connectedCallback() {
-                this.logger.info('common-element attached callback');
                 super.connectedCallback();
                 this.addEventListener('iron-resize', this._resizeListener);
-
                 this.editorDomElement = this.shadowRoot.querySelector('#editorDomElement');
                 this.paperToast = this.shadowRoot.querySelector('paper-toast');
-
-                Polymer.RenderStatus.beforeNextRender(this, () => {
-                    this.editor = MyScript.register(this.editorDomElement,
-                                                    this._buildConfiguration(),
-                                                    MyScriptCommonElement._generatePenStyle(this.pencolor, this.penwidth),
-                                                    MyScriptCommonElement._generateTheme(this.fontfamily, this.fontsize));
-                    this.logger.info('common-element attached');
-                })
+                this._unloadedChanged(this.unloaded);
+                this.logger.info('common-element connected');
             }
 
             disconnectedCallback() {
-                this.logger.info('common-element detached callback');
                 super.disconnectedCallback();
                 this.removeEventListener('iron-resize', this._resizeListener);
-                this.logger.info('common-element detached');
+                this.logger.info('common-element disconnected');
             }
 
             /**
@@ -795,10 +788,17 @@ Custom property | Description | Default
 
             _unloadedChanged(unloaded) {
                 this.exports = undefined;
-                if (this.editor) {
-                    this.logger.trace('unloaded changed', unloaded);
-                    if (unloaded === true) {
+                this.logger.trace('unloaded changed', unloaded);
+                if (unloaded === false && this.editorDomElement) {
+                    if (this.editor) {
                         this.editor.configuration = this._buildConfiguration();
+                    } else {
+                        Polymer.RenderStatus.beforeNextRender(this, () => {
+                            this.editor = MyScript.register(this.editorDomElement,
+                                                            this._buildConfiguration(),
+                                                            MyScriptCommonElement._generatePenStyle(this.pencolor, this.penwidth),
+                                                            MyScriptCommonElement._generateTheme(this.fontfamily, this.fontsize));
+                        });
                     }
                 }
             }
