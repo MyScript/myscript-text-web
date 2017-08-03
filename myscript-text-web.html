@@ -33,7 +33,8 @@ Custom property | Description | Default
 
 
 @demo examples/get_started.html Get started
-@demo examples/v4_configuration.html Use interactive ink api (v4)
+@demo examples/v4/v4_configuration.html Use interactive ink api (v4)
+@demo examples/v4/change_language.html Change language implementation (iink SDK web)
 @demo examples/handle_error.html Handle error
 @demo examples/styling.html Customize your component style
 @demo examples/programmatic_init.html Programmatic initialization
@@ -123,7 +124,7 @@ Custom property | Description | Default
             editor="{{ editor }}"
             exports="{{ exports }}"
             initialized="{{ initialized }}"
-            unloaded="{{ unloaded }}"
+            unloaded="[[ commonunloaded ]]"
             pencolor="[[ pencolor ]]"
             penwidth="[[ penwidth ]]"
             fontfamily="[[ fontfamily ]]"
@@ -289,15 +290,21 @@ Custom property | Description | Default
                         reflectToAttribute: true
                     },
                     /**
-                     * Properties to set when you wish to set attributes in javascript. unloaded attributes shoudl be removed once all properties are set.
+                     * Properties to set when you wish to set attributes in javascript. unloaded attributes should be removed once all properties are set.
                      * (see examples/programmatic_init.html for a better understanding)
                      */
                     unloaded: {
                         type: Boolean,
                         value: false,
                         notify: true,
-                        reflectToAttribute: true,
-                        observer: '_unloadedChanged'
+                        reflectToAttribute: true
+                    },
+                    /**
+                     * @private
+                     */
+                    commonunloaded: {
+                        type: Boolean,
+                        computed: '_computeCommonUnloaded(unloaded)'
                     },
                     /**
                      * True if editor is initialized
@@ -457,7 +464,6 @@ Custom property | Description | Default
                     },
                     /**
                      * Text export types (text/plain, ...).
-                     * @type {Array<String>}
                      */
                     mimetypes: {
                         type: Array,
@@ -481,7 +487,6 @@ Custom property | Description | Default
                     },
                     /**
                      * The content types to use for the recognition.
-                     * @type {Array<String>}
                      */
                     contenttypes: {
                         type: Array,
@@ -489,7 +494,6 @@ Custom property | Description | Default
                     },
                     /**
                      * The subset knowledges to use for the recognition.
-                     * @type {Array<String>}
                      */
                     subsetknowledges: {
                         type: Array,
@@ -497,7 +501,6 @@ Custom property | Description | Default
                     },
                     /**
                      * The user lk words to use for the recognition.
-                     * @type {Array<String>}
                      */
                     userlkwords: {
                         type: Array,
@@ -505,7 +508,6 @@ Custom property | Description | Default
                     },
                     /**
                      * List of user resources to use for recognitions. Theses user resources have to be attached to the user account where application is declare.
-                     * @type {Array}
                      */
                     userresources: {
                         type: Array,
@@ -886,17 +888,17 @@ Custom property | Description | Default
                 }
             }
 
-            _unloadedChanged(unloaded) {
+            _computeCommonUnloaded(unloaded) {
                 this.logger.trace('unloaded changed', unloaded);
-                if (!unloaded) {
+                if (unloaded === false) {
                     this.configuration = this._buildConfiguration();
                 }
+                return unloaded;
             }
 
             connectedCallback() {
                 super.connectedCallback();
                 this.myscriptcommonelement = this.shadowRoot.querySelector('myscript-common-element');
-                this.candidatelistelement = this.shadowRoot.querySelector('myscript-text-exports');
                 this.logger.info('attached');
             }
 

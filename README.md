@@ -49,7 +49,7 @@ myscript-text-web is a web component that can be used in every web application (
 ## Examples
 
 - [examples/get_started.html](examples/get_started.html) Get started
-- [examples/v4_configuration.html](examples/v4_configuration.html) Use interactive ink api (v4)
+- [examples/v4_configuration.html](examples/v4/v4_configuration.html) Use interactive ink api (v4)
 - [examples/handle_error.html](examples/handle_error.html) Handle error
 - [examples/styling.html](examples/styling.html) Customize your component style
 - [examples/programmatic_init.html](examples/programmatic_init.html) Programmatic initialization
