@@ -5678,11 +5678,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 898,
+              "line": 907,
               "column": 12
             },
             "end": {
-              "line": 902,
+              "line": 911,
               "column": 13
             }
           },
@@ -5695,11 +5695,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 904,
+              "line": 913,
               "column": 12
             },
             "end": {
-              "line": 907,
+              "line": 916,
               "column": 13
             }
           },
@@ -6111,16 +6111,33 @@
           "params": []
         },
         {
+          "name": "convert",
+          "description": "Launch convert",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 883,
+              "column": 12
+            },
+            "end": {
+              "line": 887,
+              "column": 13
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
           "name": "getStats",
           "description": "Return the stats allowing to monitor what ink size is send to the server.\nStats objects format {strokesCount : 0, pointsCount : 0, byteSize : 0, humanSize : 0, humanUnit : 'BYTE'} humanUnit could have the values BYTE, BYTES, KiB, MiB",
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 884,
+              "line": 893,
               "column": 12
             },
             "end": {
-              "line": 888,
+              "line": 897,
               "column": 13
             }
           },
@@ -6133,11 +6150,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 890,
+              "line": 899,
               "column": 12
             },
             "end": {
-              "line": 896,
+              "line": 905,
               "column": 13
             }
           },
@@ -6154,11 +6171,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 909,
+              "line": 918,
               "column": 12
             },
             "end": {
-              "line": 926,
+              "line": 935,
               "column": 13
             }
           },
@@ -6175,11 +6192,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 928,
+              "line": 937,
               "column": 12
             },
             "end": {
-              "line": 931,
+              "line": 940,
               "column": 13
             }
           },
@@ -6943,7 +6960,7 @@
           "column": 8
         },
         "end": {
-          "line": 932,
+          "line": 941,
           "column": 9
         }
       },
