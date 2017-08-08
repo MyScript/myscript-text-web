@@ -2072,702 +2072,6 @@
           ]
         }
       ],
-      "staticMethods": [
-        {
-          "name": "_parseTemplate",
-          "description": "Scans a template to produce template metadata.\n\nTemplate-specific metadata are stored in the object returned, and node-\nspecific metadata are stored in objects in its flattened `nodeInfoList`\narray.  Only nodes in the template that were parsed as nodes of\ninterest contain an object in `nodeInfoList`.  Each `nodeInfo` object\ncontains an `index` (`childNodes` index in parent) and optionally\n`parent`, which points to node info of its parent (including its index).\n\nThe template metadata object returned from this method has the following\nstructure (many fields optional):\n\n```js\n  {\n    // Flattened list of node metadata (for nodes that generated metadata)\n    nodeInfoList: [\n      {\n        // `id` attribute for any nodes with id's for generating `$` map\n        id: {string},\n        // `on-event=\"handler\"` metadata\n        events: [\n          {\n            name: {string},   // event name\n            value: {string},  // handler method name\n          }, ...\n        ],\n        // Notes when the template contained a `<slot>` for shady DOM\n        // optimization purposes\n        hasInsertionPoint: {boolean},\n        // For nested `<template>`` nodes, nested template metadata\n        templateInfo: {object}, // nested template metadata\n        // Metadata to allow efficient retrieval of instanced node\n        // corresponding to this metadata\n        parentInfo: {number},   // reference to parent nodeInfo>\n        parentIndex: {number},  // index in parent's `childNodes` collection\n        infoIndex: {number},    // index of this `nodeInfo` in `templateInfo.nodeInfoList`\n      },\n      ...\n    ],\n    // When true, the template had the `strip-whitespace` attribute\n    // or was nested in a template with that setting\n    stripWhitespace: {boolean},\n    // For nested templates, nested template content is moved into\n    // a document fragment stored here; this is an optimization to\n    // avoid the cost of nested template cloning\n    content: {DocumentFragment}\n  }\n```\n\nThis method kicks off a recursive treewalk as follows:\n\n```\n   _parseTemplate <---------------------+\n     _parseTemplateContent              |\n       _parseTemplateNode  <------------|--+\n         _parseTemplateNestedTemplate --+  |\n         _parseTemplateChildNodes ---------+\n         _parseTemplateNodeAttributes\n           _parseTemplateNodeAttribute\n\n```\n\nThese methods may be overridden to add custom metadata about templates\nto either `templateInfo` or `nodeInfo`.\n\nNote that this method may be destructive to the template, in that\ne.g. event annotations may be removed after being noted in the\ntemplate metadata.",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "bower_components/polymer/lib/mixins/template-stamp.html",
-            "start": {
-              "line": 197,
-              "column": 6
-            },
-            "end": {
-              "line": 208,
-              "column": 7
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "template",
-              "type": "!HTMLTemplateElement",
-              "description": "Template to parse"
-            },
-            {
-              "name": "outerTemplateInfo",
-              "type": "TemplateInfo=",
-              "description": "Template metadata from the outer\n  template, for parsing nested templates"
-            }
-          ],
-          "return": {
-            "type": "!TemplateInfo",
-            "desc": "Parsed template metadata"
-          },
-          "inheritedFrom": "Polymer.TemplateStamp"
-        },
-        {
-          "name": "_parseTemplateContent",
-          "description": "Overrides `PropertyAccessors` to add map of dynamic functions on\ntemplate info, for consumption by `PropertyEffects` template binding\ncode. This map determines which method templates should have accessors\ncreated for them.",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "bower_components/polymer/lib/mixins/element-mixin.html",
-            "start": {
-              "line": 759,
-              "column": 6
-            },
-            "end": {
-              "line": 762,
-              "column": 7
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "template"
-            },
-            {
-              "name": "templateInfo"
-            },
-            {
-              "name": "nodeInfo"
-            }
-          ],
-          "inheritedFrom": "Polymer.ElementMixin"
-        },
-        {
-          "name": "_parseTemplateNode",
-          "description": "Overrides default `TemplateStamp` implementation to add support for\nparsing bindings from `TextNode`'s' `textContent`.  A `bindings`\narray is added to `nodeInfo` and populated with binding metadata\nwith information capturing the binding target, and a `parts` array\nwith one or more metadata objects capturing the source(s) of the\nbinding.",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "bower_components/polymer/lib/mixins/property-effects.html",
-            "start": {
-              "line": 2394,
-              "column": 6
-            },
-            "end": {
-              "line": 2408,
-              "column": 7
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "node",
-              "type": "Node",
-              "description": "Node to parse"
-            },
-            {
-              "name": "templateInfo",
-              "type": "TemplateInfo",
-              "description": "Template metadata for current template"
-            },
-            {
-              "name": "nodeInfo",
-              "type": "NodeInfo",
-              "description": "Node metadata for current template node"
-            }
-          ],
-          "return": {
-            "type": "boolean",
-            "desc": "`true` if the visited node added node-specific\n  metadata to `nodeInfo`"
-          },
-          "inheritedFrom": "Polymer.PropertyEffects"
-        },
-        {
-          "name": "_parseTemplateChildNodes",
-          "description": "Parses template child nodes for the given root node.\n\nThis method also wraps whitelisted legacy template extensions\n(`is=\"dom-if\"` and `is=\"dom-repeat\"`) with their equivalent element\nwrappers, collapses text nodes, and strips whitespace from the template\nif the `templateInfo.stripWhitespace` setting was provided.",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "bower_components/polymer/lib/mixins/template-stamp.html",
-            "start": {
-              "line": 257,
-              "column": 6
-            },
-            "end": {
-              "line": 291,
-              "column": 7
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "root",
-              "type": "Node",
-              "description": "Root node whose `childNodes` will be parsed"
-            },
-            {
-              "name": "templateInfo",
-              "type": "!TemplateInfo",
-              "description": "Template metadata for current template"
-            },
-            {
-              "name": "nodeInfo",
-              "type": "!NodeInfo",
-              "description": "Node metadata for current template."
-            }
-          ],
-          "inheritedFrom": "Polymer.TemplateStamp"
-        },
-        {
-          "name": "_parseTemplateNestedTemplate",
-          "description": "Overrides default `TemplateStamp` implementation to add support for\nbinding the properties that a nested template depends on to the template\nas `_host_<property>`.",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "bower_components/polymer/lib/mixins/property-effects.html",
-            "start": {
-              "line": 2479,
-              "column": 6
-            },
-            "end": {
-              "line": 2489,
-              "column": 7
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "node",
-              "type": "Node",
-              "description": "Node to parse"
-            },
-            {
-              "name": "templateInfo",
-              "type": "TemplateInfo",
-              "description": "Template metadata for current template"
-            },
-            {
-              "name": "nodeInfo",
-              "type": "NodeInfo",
-              "description": "Node metadata for current template node"
-            }
-          ],
-          "return": {
-            "type": "boolean",
-            "desc": "`true` if the visited node added node-specific\n  metadata to `nodeInfo`"
-          },
-          "inheritedFrom": "Polymer.PropertyEffects"
-        },
-        {
-          "name": "_parseTemplateNodeAttributes",
-          "description": "Parses template node attributes and adds node metadata to `nodeInfo`\nfor nodes of interest.",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "bower_components/polymer/lib/mixins/template-stamp.html",
-            "start": {
-              "line": 329,
-              "column": 6
-            },
-            "end": {
-              "line": 338,
-              "column": 7
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "node",
-              "type": "Element",
-              "description": "Node to parse"
-            },
-            {
-              "name": "templateInfo",
-              "type": "TemplateInfo",
-              "description": "Template metadata for current template"
-            },
-            {
-              "name": "nodeInfo",
-              "type": "NodeInfo",
-              "description": "Node metadata for current template."
-            }
-          ],
-          "return": {
-            "type": "boolean",
-            "desc": "`true` if the visited node added node-specific\n  metadata to `nodeInfo`"
-          },
-          "inheritedFrom": "Polymer.TemplateStamp"
-        },
-        {
-          "name": "_parseTemplateNodeAttribute",
-          "description": "Overrides default `TemplateStamp` implementation to add support for\nparsing bindings from attributes.  A `bindings`\narray is added to `nodeInfo` and populated with binding metadata\nwith information capturing the binding target, and a `parts` array\nwith one or more metadata objects capturing the source(s) of the\nbinding.",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "bower_components/polymer/lib/mixins/property-effects.html",
-            "start": {
-              "line": 2427,
-              "column": 6
-            },
-            "end": {
-              "line": 2463,
-              "column": 7
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "node",
-              "type": "Element",
-              "description": "Node to parse"
-            },
-            {
-              "name": "templateInfo",
-              "type": "TemplateInfo",
-              "description": "Template metadata for current template"
-            },
-            {
-              "name": "nodeInfo",
-              "type": "NodeInfo",
-              "description": "Node metadata for current template node"
-            },
-            {
-              "name": "name"
-            },
-            {
-              "name": "value"
-            }
-          ],
-          "return": {
-            "type": "boolean",
-            "desc": "`true` if the visited node added node-specific\n  metadata to `nodeInfo`"
-          },
-          "inheritedFrom": "Polymer.PropertyEffects"
-        },
-        {
-          "name": "_contentForTemplate",
-          "description": "Returns the `content` document fragment for a given template.\n\nFor nested templates, Polymer performs an optimization to cache nested\ntemplate content to avoid the cost of cloning deeply nested templates.\nThis method retrieves the cached content for a given template.",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "bower_components/polymer/lib/mixins/template-stamp.html",
-            "start": {
-              "line": 384,
-              "column": 6
-            },
-            "end": {
-              "line": 387,
-              "column": 7
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "template",
-              "type": "HTMLTemplateElement",
-              "description": "Template to retrieve `content` for"
-            }
-          ],
-          "return": {
-            "type": "DocumentFragment",
-            "desc": "Content fragment"
-          },
-          "inheritedFrom": "Polymer.TemplateStamp"
-        },
-        {
-          "name": "createPropertiesForAttributes",
-          "description": "Generates property accessors for all attributes in the standard\nstatic `observedAttributes` array.\n\nAttribute names are mapped to property names using the `dash-case` to\n`camelCase` convention",
-          "privacy": "public",
-          "sourceRange": {
-            "file": "bower_components/polymer/lib/mixins/property-accessors.html",
-            "start": {
-              "line": 113,
-              "column": 6
-            },
-            "end": {
-              "line": 118,
-              "column": 7
-            }
-          },
-          "metadata": {},
-          "params": [],
-          "inheritedFrom": "Polymer.PropertyAccessors"
-        },
-        {
-          "name": "addPropertyEffect",
-          "description": "Ensures an accessor exists for the specified property, and adds\nto a list of \"property effects\" that will run when the accessor for\nthe specified property is set.  Effects are grouped by \"type\", which\nroughly corresponds to a phase in effect processing.  The effect\nmetadata should be in the following form:\n\n  {\n    fn: effectFunction, // Reference to function to call to perform effect\n    info: { ... }       // Effect metadata passed to function\n    trigger: {          // Optional triggering metadata; if not provided\n      name: string      // the property is treated as a wildcard\n      structured: boolean\n      wildcard: boolean\n    }\n  }\n\nEffects are called from `_propertiesChanged` in the following order by\ntype:\n\n1. COMPUTE\n2. PROPAGATE\n3. REFLECT\n4. OBSERVE\n5. NOTIFY\n\nEffect functions are called with the following signature:\n\n  effectFunction(inst, path, props, oldProps, info, hasPaths)",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "bower_components/polymer/lib/mixins/property-effects.html",
-            "start": {
-              "line": 2123,
-              "column": 6
-            },
-            "end": {
-              "line": 2125,
-              "column": 7
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "property",
-              "type": "string",
-              "description": "Property that should trigger the effect"
-            },
-            {
-              "name": "type",
-              "type": "string",
-              "description": "Effect type, from this.PROPERTY_EFFECT_TYPES"
-            },
-            {
-              "name": "effect",
-              "type": "Object=",
-              "description": "Effect metadata object"
-            }
-          ],
-          "inheritedFrom": "Polymer.PropertyEffects"
-        },
-        {
-          "name": "createPropertyObserver",
-          "description": "Creates a single-property observer for the given property.",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "bower_components/polymer/lib/mixins/property-effects.html",
-            "start": {
-              "line": 2136,
-              "column": 6
-            },
-            "end": {
-              "line": 2138,
-              "column": 7
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "property",
-              "type": "string",
-              "description": "Property name"
-            },
-            {
-              "name": "methodName",
-              "type": "string",
-              "description": "Name of observer method to call"
-            },
-            {
-              "name": "dynamicFn",
-              "type": "boolean=",
-              "description": "Whether the method name should be included as\n  a dependency to the effect."
-            }
-          ],
-          "inheritedFrom": "Polymer.PropertyEffects"
-        },
-        {
-          "name": "createMethodObserver",
-          "description": "Creates a multi-property \"method observer\" based on the provided\nexpression, which should be a string in the form of a normal Javascript\nfunction signature: `'methodName(arg1, [..., argn])'`.  Each argument\nshould correspond to a property or path in the context of this\nprototype (or instance), or may be a literal string or number.",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "bower_components/polymer/lib/mixins/property-effects.html",
-            "start": {
-              "line": 2152,
-              "column": 6
-            },
-            "end": {
-              "line": 2154,
-              "column": 7
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "expression",
-              "type": "string",
-              "description": "Method expression"
-            },
-            {
-              "name": "dynamicFn",
-              "type": "(boolean|Object)=",
-              "description": "Boolean or object map indicating\n  whether method names should be included as a dependency to the effect."
-            }
-          ],
-          "inheritedFrom": "Polymer.PropertyEffects"
-        },
-        {
-          "name": "createNotifyingProperty",
-          "description": "Causes the setter for the given property to dispatch `<property>-changed`\nevents to notify of changes to the property.",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "bower_components/polymer/lib/mixins/property-effects.html",
-            "start": {
-              "line": 2163,
-              "column": 6
-            },
-            "end": {
-              "line": 2165,
-              "column": 7
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "property",
-              "type": "string",
-              "description": "Property name"
-            }
-          ],
-          "inheritedFrom": "Polymer.PropertyEffects"
-        },
-        {
-          "name": "createReadOnlyProperty",
-          "description": "Creates a read-only accessor for the given property.\n\nTo set the property, use the protected `_setProperty` API.\nTo create a custom protected setter (e.g. `_setMyProp()` for\nproperty `myProp`), pass `true` for `protectedSetter`.\n\nNote, if the property will have other property effects, this method\nshould be called first, before adding other effects.",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "bower_components/polymer/lib/mixins/property-effects.html",
-            "start": {
-              "line": 2182,
-              "column": 6
-            },
-            "end": {
-              "line": 2184,
-              "column": 7
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "property",
-              "type": "string",
-              "description": "Property name"
-            },
-            {
-              "name": "protectedSetter",
-              "type": "boolean=",
-              "description": "Creates a custom protected setter\n  when `true`."
-            }
-          ],
-          "inheritedFrom": "Polymer.PropertyEffects"
-        },
-        {
-          "name": "createReflectedProperty",
-          "description": "Causes the setter for the given property to reflect the property value\nto a (dash-cased) attribute of the same name.",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "bower_components/polymer/lib/mixins/property-effects.html",
-            "start": {
-              "line": 2193,
-              "column": 6
-            },
-            "end": {
-              "line": 2195,
-              "column": 7
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "property",
-              "type": "string",
-              "description": "Property name"
-            }
-          ],
-          "inheritedFrom": "Polymer.PropertyEffects"
-        },
-        {
-          "name": "createComputedProperty",
-          "description": "Creates a computed property whose value is set to the result of the\nmethod described by the given `expression` each time one or more\narguments to the method changes.  The expression should be a string\nin the form of a normal Javascript function signature:\n`'methodName(arg1, [..., argn])'`",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "bower_components/polymer/lib/mixins/property-effects.html",
-            "start": {
-              "line": 2210,
-              "column": 6
-            },
-            "end": {
-              "line": 2212,
-              "column": 7
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "property",
-              "type": "string",
-              "description": "Name of computed property to set"
-            },
-            {
-              "name": "expression",
-              "type": "string",
-              "description": "Method expression"
-            },
-            {
-              "name": "dynamicFn",
-              "type": "(boolean|Object)=",
-              "description": "Boolean or object map indicating whether\n  method names should be included as a dependency to the effect."
-            }
-          ],
-          "inheritedFrom": "Polymer.PropertyEffects"
-        },
-        {
-          "name": "bindTemplate",
-          "description": "Parses the provided template to ensure binding effects are created\nfor them, and then ensures property accessors are created for any\ndependent properties in the template.  Binding effects for bound\ntemplates are stored in a linked list on the instance so that\ntemplates can be efficiently stamped and unstamped.",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "bower_components/polymer/lib/mixins/property-effects.html",
-            "start": {
-              "line": 2226,
-              "column": 6
-            },
-            "end": {
-              "line": 2228,
-              "column": 7
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "template",
-              "type": "HTMLTemplateElement",
-              "description": "Template containing binding\n  bindings"
-            }
-          ],
-          "return": {
-            "type": "Object",
-            "desc": "Template metadata object"
-          },
-          "inheritedFrom": "Polymer.PropertyEffects"
-        },
-        {
-          "name": "_addTemplatePropertyEffect",
-          "description": "Adds a property effect to the given template metadata, which is run\nat the \"propagate\" stage of `_propertiesChanged` when the template\nhas been bound to the element via `_bindTemplate`.\n\nThe `effect` object should match the format in `_addPropertyEffect`.",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "bower_components/polymer/lib/mixins/property-effects.html",
-            "start": {
-              "line": 2291,
-              "column": 6
-            },
-            "end": {
-              "line": 2297,
-              "column": 7
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "templateInfo",
-              "type": "Object",
-              "description": "Template metadata to add effect to"
-            },
-            {
-              "name": "prop",
-              "type": "string",
-              "description": "Property that should trigger the effect"
-            },
-            {
-              "name": "effect",
-              "type": "Object=",
-              "description": "Effect metadata object"
-            }
-          ],
-          "inheritedFrom": "Polymer.PropertyEffects"
-        },
-        {
-          "name": "_parseBindings",
-          "description": "Called to parse text in a template (either attribute values or\ntextContent) into binding metadata.\n\nAny overrides of this method should return an array of binding part\nmetadata  representing one or more bindings found in the provided text\nand any \"literal\" text in between.  Any non-literal parts will be passed\nto `_evaluateBinding` when any dependencies change.  The only required\nfields of each \"part\" in the returned array are as follows:\n\n- `dependencies` - Array containing trigger metadata for each property\n  that should trigger the binding to update\n- `literal` - String containing text if the part represents a literal;\n  in this case no `dependencies` are needed\n\nAdditional metadata for use by `_evaluateBinding` may be provided in\neach part object as needed.\n\nThe default implementation handles the following types of bindings\n(one or more may be intermixed with literal strings):\n- Property binding: `[[prop]]`\n- Path binding: `[[object.prop]]`\n- Negated property or path bindings: `[[!prop]]` or `[[!object.prop]]`\n- Two-way property or path bindings (supports negation):\n  `{{prop}}`, `{{object.prop}}`, `{{!prop}}` or `{{!object.prop}}`\n- Inline computed method (supports negation):\n  `[[compute(a, 'literal', b)]]`, `[[!compute(a, 'literal', b)]]`",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "bower_components/polymer/lib/mixins/property-effects.html",
-            "start": {
-              "line": 2524,
-              "column": 6
-            },
-            "end": {
-              "line": 2589,
-              "column": 7
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "text",
-              "type": "string",
-              "description": "Text to parse from attribute or textContent"
-            },
-            {
-              "name": "templateInfo",
-              "type": "Object",
-              "description": "Current template metadata"
-            }
-          ],
-          "return": {
-            "type": "Array.<!BindingPart>",
-            "desc": "Array of binding part metadata"
-          },
-          "inheritedFrom": "Polymer.PropertyEffects"
-        },
-        {
-          "name": "_evaluateBinding",
-          "description": "Called to evaluate a previously parsed binding part based on a set of\none or more changed dependencies.",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "bower_components/polymer/lib/mixins/property-effects.html",
-            "start": {
-              "line": 2605,
-              "column": 6
-            },
-            "end": {
-              "line": 2622,
-              "column": 7
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "inst",
-              "type": "this",
-              "description": "Element that should be used as scope for\n  binding dependencies"
-            },
-            {
-              "name": "part",
-              "type": "BindingPart",
-              "description": "Binding part metadata"
-            },
-            {
-              "name": "path",
-              "type": "string",
-              "description": "Property/path that triggered this effect"
-            },
-            {
-              "name": "props",
-              "type": "Object",
-              "description": "Bag of current property changes"
-            },
-            {
-              "name": "oldProps",
-              "type": "Object",
-              "description": "Bag of previous values for changed properties"
-            },
-            {
-              "name": "hasPaths",
-              "type": "boolean",
-              "description": "True with `props` contains one or more paths"
-            }
-          ],
-          "return": {
-            "type": "*",
-            "desc": "Value the binding part evaluated to"
-          },
-          "inheritedFrom": "Polymer.PropertyEffects"
-        },
-        {
-          "name": "finalize",
-          "description": "Called automatically when the first element instance is created to\nensure that class finalization work has been completed.\nMay be called by users to eagerly perform class finalization work\nprior to the creation of the first element instance.\n\nClass finalization work generally includes meta-programming such as\ncreating property accessors and any property effect metadata needed for\nthe features used.",
-          "privacy": "public",
-          "sourceRange": {
-            "file": "bower_components/polymer/lib/mixins/element-mixin.html",
-            "start": {
-              "line": 471,
-              "column": 6
-            },
-            "end": {
-              "line": 475,
-              "column": 7
-            }
-          },
-          "metadata": {},
-          "params": [],
-          "inheritedFrom": "Polymer.ElementMixin"
-        }
-      ],
       "demos": [],
       "metadata": {},
       "sourceRange": {
@@ -2781,7 +2085,6 @@
         }
       },
       "privacy": "public",
-      "superclass": "HTMLElement",
       "name": "MyScriptTextExports",
       "attributes": [
         {
@@ -2814,7 +2117,8 @@
         "selectors": []
       },
       "slots": [],
-      "tagname": "myscript-text-exports"
+      "tagname": "myscript-text-exports",
+      "superclass": "HTMLElement"
     },
     {
       "description": "`myscript-text-web` is a turnkey solution for those who need to quickly implement MyScript Text recognition.\n\n    <myscript-text-web\n        applicationkey=\"YOUR MYSCRIPT CDK APPLICATION KEY\"\n        hmackey=\"YOUR MYSCRIPT CDK HMAC KEY\"\n        language=\"en_US\">\n    </myscript-text-web>\n\n### Styling\n\n`<myscript-common-element>` provides the following custom properties for styling:\n\nCustom property | Description | Default\n----------------|-------------|----------\n`--myscript-text-web-background` | Background of the editor | none\n`--myscript-text-web-color` | Color of the editor | #FFFFFF\n`--myscript-text-web-line-pattern` | Line pattern to apply on the editor | Classic notebook pattern\n`--myscript-text-web-loader-background` | Background of the loader | #1A9FFF\n`--myscript-text-web-loader-color` | Color of the loader | #F5F6F7\n`--myscript-text-web-button-background` | Buttons background | #1A9FFF\n`--myscript-text-web-button-focus-background` | Buttons focus background | #1A9FFF\n`--myscript-text-web-button-disabled-background` | Buttons disabled background | #F5F6F7\n`--myscript-text-web-exports-color` | Text candidates color | #1580CD\n`--myscript-text-web-exports-background-color` | Text candidates background color | #EDF0F2\n`--myscript-text-web-exports-selected-color` | Selected candidate color | #FFFFFF\n`--myscript-text-web-exports-selected-background-color` | Selected candidate background color | #1580CD\n`--myscript-text-web-exports-predicted-color` | Candidate predicted part color | #73818C\n`--myscript-text-web-exports-completed-color` | Candidate completed part color | #1A9FFF",
@@ -2828,11 +2132,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 212,
+              "line": 207,
               "column": 20
             },
             "end": {
-              "line": 216,
+              "line": 211,
               "column": 21
             }
           },
@@ -2848,11 +2152,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 220,
+              "line": 215,
               "column": 20
             },
             "end": {
-              "line": 224,
+              "line": 219,
               "column": 21
             }
           },
@@ -2868,11 +2172,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 228,
+              "line": 223,
               "column": 20
             },
             "end": {
-              "line": 232,
+              "line": 227,
               "column": 21
             }
           },
@@ -2888,11 +2192,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 236,
+              "line": 231,
               "column": 20
             },
             "end": {
-              "line": 240,
+              "line": 235,
               "column": 21
             }
           },
@@ -2908,11 +2212,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 244,
+              "line": 239,
               "column": 20
             },
             "end": {
-              "line": 248,
+              "line": 243,
               "column": 21
             }
           },
@@ -2928,11 +2232,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 252,
+              "line": 247,
               "column": 20
             },
             "end": {
-              "line": 256,
+              "line": 251,
               "column": 21
             }
           },
@@ -2948,11 +2252,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 260,
+              "line": 255,
               "column": 20
             },
             "end": {
-              "line": 264,
+              "line": 259,
               "column": 21
             }
           },
@@ -2968,11 +2272,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 268,
+              "line": 263,
               "column": 20
             },
             "end": {
-              "line": 272,
+              "line": 267,
               "column": 21
             }
           },
@@ -2988,11 +2292,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 278,
+              "line": 273,
               "column": 20
             },
             "end": {
-              "line": 281,
+              "line": 276,
               "column": 21
             }
           },
@@ -3007,11 +2311,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 287,
+              "line": 282,
               "column": 20
             },
             "end": {
-              "line": 290,
+              "line": 285,
               "column": 21
             }
           },
@@ -3026,11 +2330,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 295,
+              "line": 290,
               "column": 20
             },
             "end": {
-              "line": 300,
+              "line": 295,
               "column": 21
             }
           },
@@ -3048,11 +2352,11 @@
           "privacy": "private",
           "sourceRange": {
             "start": {
-              "line": 304,
+              "line": 299,
               "column": 20
             },
             "end": {
-              "line": 307,
+              "line": 302,
               "column": 21
             }
           },
@@ -3069,11 +2373,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 311,
+              "line": 306,
               "column": 20
             },
             "end": {
-              "line": 316,
+              "line": 311,
               "column": 21
             }
           },
@@ -3091,11 +2395,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 320,
+              "line": 315,
               "column": 20
             },
             "end": {
-              "line": 323,
+              "line": 318,
               "column": 21
             }
           },
@@ -3112,11 +2416,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 329,
+              "line": 324,
               "column": 20
             },
             "end": {
-              "line": 332,
+              "line": 327,
               "column": 21
             }
           },
@@ -3133,11 +2437,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 336,
+              "line": 331,
               "column": 20
             },
             "end": {
-              "line": 340,
+              "line": 335,
               "column": 21
             }
           },
@@ -3153,11 +2457,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 344,
+              "line": 339,
               "column": 20
             },
             "end": {
-              "line": 348,
+              "line": 343,
               "column": 21
             }
           },
@@ -3173,11 +2477,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 352,
+              "line": 347,
               "column": 20
             },
             "end": {
-              "line": 356,
+              "line": 351,
               "column": 21
             }
           },
@@ -3193,11 +2497,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 360,
+              "line": 355,
               "column": 20
             },
             "end": {
-              "line": 364,
+              "line": 359,
               "column": 21
             }
           },
@@ -3213,11 +2517,11 @@
           "privacy": "private",
           "sourceRange": {
             "start": {
-              "line": 369,
+              "line": 364,
               "column": 20
             },
             "end": {
-              "line": 374,
+              "line": 369,
               "column": 21
             }
           },
@@ -3235,11 +2539,11 @@
           "privacy": "private",
           "sourceRange": {
             "start": {
-              "line": 379,
+              "line": 374,
               "column": 20
             },
             "end": {
-              "line": 384,
+              "line": 379,
               "column": 21
             }
           },
@@ -3257,11 +2561,11 @@
           "privacy": "private",
           "sourceRange": {
             "start": {
-              "line": 389,
+              "line": 384,
               "column": 20
             },
             "end": {
-              "line": 394,
+              "line": 389,
               "column": 21
             }
           },
@@ -3279,11 +2583,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 398,
+              "line": 393,
               "column": 20
             },
             "end": {
-              "line": 403,
+              "line": 398,
               "column": 21
             }
           },
@@ -3301,11 +2605,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 408,
+              "line": 403,
               "column": 20
             },
             "end": {
-              "line": 412,
+              "line": 407,
               "column": 21
             }
           },
@@ -3321,11 +2625,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 416,
+              "line": 411,
               "column": 20
             },
             "end": {
-              "line": 420,
+              "line": 415,
               "column": 21
             }
           },
@@ -3341,11 +2645,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 424,
+              "line": 419,
               "column": 20
             },
             "end": {
-              "line": 428,
+              "line": 423,
               "column": 21
             }
           },
@@ -3361,11 +2665,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 432,
+              "line": 427,
               "column": 20
             },
             "end": {
-              "line": 436,
+              "line": 431,
               "column": 21
             }
           },
@@ -3381,11 +2685,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 444,
+              "line": 439,
               "column": 20
             },
             "end": {
-              "line": 446,
+              "line": 441,
               "column": 21
             }
           },
@@ -3400,11 +2704,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 450,
+              "line": 445,
               "column": 20
             },
             "end": {
-              "line": 454,
+              "line": 449,
               "column": 21
             }
           },
@@ -3420,11 +2724,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 458,
+              "line": 453,
               "column": 20
             },
             "end": {
-              "line": 463,
+              "line": 458,
               "column": 21
             }
           },
@@ -3442,11 +2746,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 467,
+              "line": 462,
               "column": 20
             },
             "end": {
-              "line": 470,
+              "line": 465,
               "column": 21
             }
           },
@@ -3462,11 +2766,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 474,
+              "line": 469,
               "column": 20
             },
             "end": {
-              "line": 478,
+              "line": 473,
               "column": 21
             }
           },
@@ -3482,11 +2786,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 482,
+              "line": 477,
               "column": 20
             },
             "end": {
-              "line": 486,
+              "line": 481,
               "column": 21
             }
           },
@@ -3502,11 +2806,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 490,
+              "line": 485,
               "column": 20
             },
             "end": {
-              "line": 493,
+              "line": 488,
               "column": 21
             }
           },
@@ -3522,11 +2826,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 497,
+              "line": 492,
               "column": 20
             },
             "end": {
-              "line": 500,
+              "line": 495,
               "column": 21
             }
           },
@@ -3542,11 +2846,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 504,
+              "line": 499,
               "column": 20
             },
             "end": {
-              "line": 507,
+              "line": 502,
               "column": 21
             }
           },
@@ -3562,11 +2866,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 511,
+              "line": 506,
               "column": 20
             },
             "end": {
-              "line": 514,
+              "line": 509,
               "column": 21
             }
           },
@@ -3582,11 +2886,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 519,
+              "line": 514,
               "column": 20
             },
             "end": {
-              "line": 523,
+              "line": 518,
               "column": 21
             }
           },
@@ -3602,11 +2906,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 529,
+              "line": 524,
               "column": 20
             },
             "end": {
-              "line": 531,
+              "line": 526,
               "column": 21
             }
           },
@@ -3621,11 +2925,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 536,
+              "line": 531,
               "column": 20
             },
             "end": {
-              "line": 539,
+              "line": 534,
               "column": 21
             }
           },
@@ -3641,11 +2945,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 544,
+              "line": 539,
               "column": 20
             },
             "end": {
-              "line": 547,
+              "line": 542,
               "column": 21
             }
           },
@@ -3661,11 +2965,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 553,
+              "line": 548,
               "column": 20
             },
             "end": {
-              "line": 555,
+              "line": 550,
               "column": 21
             }
           },
@@ -3680,11 +2984,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 559,
+              "line": 554,
               "column": 20
             },
             "end": {
-              "line": 562,
+              "line": 557,
               "column": 21
             }
           },
@@ -3700,11 +3004,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 566,
+              "line": 561,
               "column": 20
             },
             "end": {
-              "line": 569,
+              "line": 564,
               "column": 21
             }
           },
@@ -3720,11 +3024,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 573,
+              "line": 568,
               "column": 20
             },
             "end": {
-              "line": 576,
+              "line": 571,
               "column": 21
             }
           },
@@ -3736,15 +3040,15 @@
         {
           "name": "glyphdistortion",
           "type": "number",
-          "description": "",
+          "description": "Glyphdistortion is only valid with ISOLATED mode\n\nThe value of the <code>GlyphDistortion</code> property that controls the amount of glyph distortion.\nA value between <code>0</code> and <code>255</code>.\n\n<code>0</code> means no distortion.\n<code>255</code> means maximum supported distortion.",
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 587,
+              "line": 582,
               "column": 20
             },
             "end": {
-              "line": 589,
+              "line": 584,
               "column": 21
             }
           },
@@ -3759,11 +3063,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 593,
+              "line": 588,
               "column": 20
             },
             "end": {
-              "line": 596,
+              "line": 591,
               "column": 21
             }
           },
@@ -3779,11 +3083,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 606,
+              "line": 601,
               "column": 20
             },
             "end": {
-              "line": 608,
+              "line": 603,
               "column": 21
             }
           },
@@ -3798,11 +3102,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 613,
+              "line": 608,
               "column": 20
             },
             "end": {
-              "line": 616,
+              "line": 611,
               "column": 21
             }
           },
@@ -3819,11 +3123,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 620,
+              "line": 615,
               "column": 20
             },
             "end": {
-              "line": 623,
+              "line": 618,
               "column": 21
             }
           },
@@ -3840,11 +3144,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 627,
+              "line": 622,
               "column": 20
             },
             "end": {
-              "line": 630,
+              "line": 625,
               "column": 21
             }
           },
@@ -3861,11 +3165,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 635,
+              "line": 630,
               "column": 20
             },
             "end": {
-              "line": 638,
+              "line": 633,
               "column": 21
             }
           },
@@ -3882,11 +3186,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 642,
+              "line": 637,
               "column": 20
             },
             "end": {
-              "line": 646,
+              "line": 641,
               "column": 21
             }
           },
@@ -5678,11 +4982,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 907,
+              "line": 839,
               "column": 12
             },
             "end": {
-              "line": 911,
+              "line": 843,
               "column": 13
             }
           },
@@ -5695,11 +4999,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 913,
+              "line": 845,
               "column": 12
             },
             "end": {
-              "line": 916,
+              "line": 848,
               "column": 13
             }
           },
@@ -5800,11 +5104,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 732,
+              "line": 727,
               "column": 12
             },
             "end": {
-              "line": 754,
+              "line": 749,
               "column": 13
             }
           },
@@ -5812,205 +5116,16 @@
           "params": []
         },
         {
-          "name": "_changeListener",
+          "name": "_forwardListener",
           "description": "",
           "privacy": "protected",
           "sourceRange": {
             "start": {
+              "line": 751,
+              "column": 12
+            },
+            "end": {
               "line": 756,
-              "column": 12
-            },
-            "end": {
-              "line": 761,
-              "column": 13
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "event"
-            }
-          ]
-        },
-        {
-          "name": "_exportedListener",
-          "description": "",
-          "privacy": "protected",
-          "sourceRange": {
-            "start": {
-              "line": 763,
-              "column": 12
-            },
-            "end": {
-              "line": 769,
-              "column": 13
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "event"
-            }
-          ]
-        },
-        {
-          "name": "_convertedListener",
-          "description": "",
-          "privacy": "protected",
-          "sourceRange": {
-            "start": {
-              "line": 771,
-              "column": 12
-            },
-            "end": {
-              "line": 776,
-              "column": 13
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "event"
-            }
-          ]
-        },
-        {
-          "name": "_undoListener",
-          "description": "",
-          "privacy": "protected",
-          "sourceRange": {
-            "start": {
-              "line": 778,
-              "column": 12
-            },
-            "end": {
-              "line": 783,
-              "column": 13
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "event"
-            }
-          ]
-        },
-        {
-          "name": "_redoListener",
-          "description": "",
-          "privacy": "protected",
-          "sourceRange": {
-            "start": {
-              "line": 785,
-              "column": 12
-            },
-            "end": {
-              "line": 790,
-              "column": 13
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "event"
-            }
-          ]
-        },
-        {
-          "name": "_clearListener",
-          "description": "",
-          "privacy": "protected",
-          "sourceRange": {
-            "start": {
-              "line": 792,
-              "column": 12
-            },
-            "end": {
-              "line": 798,
-              "column": 13
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "event"
-            }
-          ]
-        },
-        {
-          "name": "_exportListener",
-          "description": "",
-          "privacy": "protected",
-          "sourceRange": {
-            "start": {
-              "line": 800,
-              "column": 12
-            },
-            "end": {
-              "line": 805,
-              "column": 13
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "event"
-            }
-          ]
-        },
-        {
-          "name": "_convertListener",
-          "description": "",
-          "privacy": "protected",
-          "sourceRange": {
-            "start": {
-              "line": 807,
-              "column": 12
-            },
-            "end": {
-              "line": 812,
-              "column": 13
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "event"
-            }
-          ]
-        },
-        {
-          "name": "_idleListener",
-          "description": "",
-          "privacy": "protected",
-          "sourceRange": {
-            "start": {
-              "line": 814,
-              "column": 12
-            },
-            "end": {
-              "line": 819,
-              "column": 13
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "event"
-            }
-          ]
-        },
-        {
-          "name": "_errorListener",
-          "description": "",
-          "privacy": "protected",
-          "sourceRange": {
-            "start": {
-              "line": 821,
-              "column": 12
-            },
-            "end": {
-              "line": 826,
               "column": 13
             }
           },
@@ -6027,11 +5142,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 828,
+              "line": 758,
               "column": 12
             },
             "end": {
-              "line": 832,
+              "line": 764,
               "column": 13
             }
           },
@@ -6048,11 +5163,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 847,
+              "line": 779,
               "column": 12
             },
             "end": {
-              "line": 851,
+              "line": 783,
               "column": 13
             }
           },
@@ -6065,11 +5180,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 856,
+              "line": 788,
               "column": 12
             },
             "end": {
-              "line": 860,
+              "line": 792,
               "column": 13
             }
           },
@@ -6082,11 +5197,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 865,
+              "line": 797,
               "column": 12
             },
             "end": {
-              "line": 869,
+              "line": 801,
               "column": 13
             }
           },
@@ -6099,11 +5214,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 874,
+              "line": 806,
               "column": 12
             },
             "end": {
-              "line": 878,
+              "line": 810,
               "column": 13
             }
           },
@@ -6116,11 +5231,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 883,
+              "line": 815,
               "column": 12
             },
             "end": {
-              "line": 887,
+              "line": 819,
               "column": 13
             }
           },
@@ -6133,11 +5248,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 893,
+              "line": 825,
               "column": 12
             },
             "end": {
-              "line": 897,
+              "line": 829,
               "column": 13
             }
           },
@@ -6150,11 +5265,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 899,
+              "line": 831,
               "column": 12
             },
             "end": {
-              "line": 905,
+              "line": 837,
               "column": 13
             }
           },
@@ -6171,11 +5286,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 918,
+              "line": 850,
               "column": 12
             },
             "end": {
-              "line": 935,
+              "line": 867,
               "column": 13
             }
           },
@@ -6192,11 +5307,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 937,
+              "line": 869,
               "column": 12
             },
             "end": {
-              "line": 940,
+              "line": 872,
               "column": 13
             }
           },
@@ -6211,761 +5326,44 @@
           ]
         }
       ],
-      "staticMethods": [
-        {
-          "name": "_parseTemplate",
-          "description": "Scans a template to produce template metadata.\n\nTemplate-specific metadata are stored in the object returned, and node-\nspecific metadata are stored in objects in its flattened `nodeInfoList`\narray.  Only nodes in the template that were parsed as nodes of\ninterest contain an object in `nodeInfoList`.  Each `nodeInfo` object\ncontains an `index` (`childNodes` index in parent) and optionally\n`parent`, which points to node info of its parent (including its index).\n\nThe template metadata object returned from this method has the following\nstructure (many fields optional):\n\n```js\n  {\n    // Flattened list of node metadata (for nodes that generated metadata)\n    nodeInfoList: [\n      {\n        // `id` attribute for any nodes with id's for generating `$` map\n        id: {string},\n        // `on-event=\"handler\"` metadata\n        events: [\n          {\n            name: {string},   // event name\n            value: {string},  // handler method name\n          }, ...\n        ],\n        // Notes when the template contained a `<slot>` for shady DOM\n        // optimization purposes\n        hasInsertionPoint: {boolean},\n        // For nested `<template>`` nodes, nested template metadata\n        templateInfo: {object}, // nested template metadata\n        // Metadata to allow efficient retrieval of instanced node\n        // corresponding to this metadata\n        parentInfo: {number},   // reference to parent nodeInfo>\n        parentIndex: {number},  // index in parent's `childNodes` collection\n        infoIndex: {number},    // index of this `nodeInfo` in `templateInfo.nodeInfoList`\n      },\n      ...\n    ],\n    // When true, the template had the `strip-whitespace` attribute\n    // or was nested in a template with that setting\n    stripWhitespace: {boolean},\n    // For nested templates, nested template content is moved into\n    // a document fragment stored here; this is an optimization to\n    // avoid the cost of nested template cloning\n    content: {DocumentFragment}\n  }\n```\n\nThis method kicks off a recursive treewalk as follows:\n\n```\n   _parseTemplate <---------------------+\n     _parseTemplateContent              |\n       _parseTemplateNode  <------------|--+\n         _parseTemplateNestedTemplate --+  |\n         _parseTemplateChildNodes ---------+\n         _parseTemplateNodeAttributes\n           _parseTemplateNodeAttribute\n\n```\n\nThese methods may be overridden to add custom metadata about templates\nto either `templateInfo` or `nodeInfo`.\n\nNote that this method may be destructive to the template, in that\ne.g. event annotations may be removed after being noted in the\ntemplate metadata.",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "bower_components/polymer/lib/mixins/template-stamp.html",
-            "start": {
-              "line": 197,
-              "column": 6
-            },
-            "end": {
-              "line": 208,
-              "column": 7
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "template",
-              "type": "!HTMLTemplateElement",
-              "description": "Template to parse"
-            },
-            {
-              "name": "outerTemplateInfo",
-              "type": "TemplateInfo=",
-              "description": "Template metadata from the outer\n  template, for parsing nested templates"
-            }
-          ],
-          "return": {
-            "type": "!TemplateInfo",
-            "desc": "Parsed template metadata"
-          },
-          "inheritedFrom": "Polymer.TemplateStamp"
-        },
-        {
-          "name": "_parseTemplateContent",
-          "description": "Overrides `PropertyAccessors` to add map of dynamic functions on\ntemplate info, for consumption by `PropertyEffects` template binding\ncode. This map determines which method templates should have accessors\ncreated for them.",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "bower_components/polymer/lib/mixins/element-mixin.html",
-            "start": {
-              "line": 759,
-              "column": 6
-            },
-            "end": {
-              "line": 762,
-              "column": 7
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "template"
-            },
-            {
-              "name": "templateInfo"
-            },
-            {
-              "name": "nodeInfo"
-            }
-          ],
-          "inheritedFrom": "Polymer.ElementMixin"
-        },
-        {
-          "name": "_parseTemplateNode",
-          "description": "Overrides default `TemplateStamp` implementation to add support for\nparsing bindings from `TextNode`'s' `textContent`.  A `bindings`\narray is added to `nodeInfo` and populated with binding metadata\nwith information capturing the binding target, and a `parts` array\nwith one or more metadata objects capturing the source(s) of the\nbinding.",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "bower_components/polymer/lib/mixins/property-effects.html",
-            "start": {
-              "line": 2394,
-              "column": 6
-            },
-            "end": {
-              "line": 2408,
-              "column": 7
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "node",
-              "type": "Node",
-              "description": "Node to parse"
-            },
-            {
-              "name": "templateInfo",
-              "type": "TemplateInfo",
-              "description": "Template metadata for current template"
-            },
-            {
-              "name": "nodeInfo",
-              "type": "NodeInfo",
-              "description": "Node metadata for current template node"
-            }
-          ],
-          "return": {
-            "type": "boolean",
-            "desc": "`true` if the visited node added node-specific\n  metadata to `nodeInfo`"
-          },
-          "inheritedFrom": "Polymer.PropertyEffects"
-        },
-        {
-          "name": "_parseTemplateChildNodes",
-          "description": "Parses template child nodes for the given root node.\n\nThis method also wraps whitelisted legacy template extensions\n(`is=\"dom-if\"` and `is=\"dom-repeat\"`) with their equivalent element\nwrappers, collapses text nodes, and strips whitespace from the template\nif the `templateInfo.stripWhitespace` setting was provided.",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "bower_components/polymer/lib/mixins/template-stamp.html",
-            "start": {
-              "line": 257,
-              "column": 6
-            },
-            "end": {
-              "line": 291,
-              "column": 7
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "root",
-              "type": "Node",
-              "description": "Root node whose `childNodes` will be parsed"
-            },
-            {
-              "name": "templateInfo",
-              "type": "!TemplateInfo",
-              "description": "Template metadata for current template"
-            },
-            {
-              "name": "nodeInfo",
-              "type": "!NodeInfo",
-              "description": "Node metadata for current template."
-            }
-          ],
-          "inheritedFrom": "Polymer.TemplateStamp"
-        },
-        {
-          "name": "_parseTemplateNestedTemplate",
-          "description": "Overrides default `TemplateStamp` implementation to add support for\nbinding the properties that a nested template depends on to the template\nas `_host_<property>`.",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "bower_components/polymer/lib/mixins/property-effects.html",
-            "start": {
-              "line": 2479,
-              "column": 6
-            },
-            "end": {
-              "line": 2489,
-              "column": 7
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "node",
-              "type": "Node",
-              "description": "Node to parse"
-            },
-            {
-              "name": "templateInfo",
-              "type": "TemplateInfo",
-              "description": "Template metadata for current template"
-            },
-            {
-              "name": "nodeInfo",
-              "type": "NodeInfo",
-              "description": "Node metadata for current template node"
-            }
-          ],
-          "return": {
-            "type": "boolean",
-            "desc": "`true` if the visited node added node-specific\n  metadata to `nodeInfo`"
-          },
-          "inheritedFrom": "Polymer.PropertyEffects"
-        },
-        {
-          "name": "_parseTemplateNodeAttributes",
-          "description": "Parses template node attributes and adds node metadata to `nodeInfo`\nfor nodes of interest.",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "bower_components/polymer/lib/mixins/template-stamp.html",
-            "start": {
-              "line": 329,
-              "column": 6
-            },
-            "end": {
-              "line": 338,
-              "column": 7
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "node",
-              "type": "Element",
-              "description": "Node to parse"
-            },
-            {
-              "name": "templateInfo",
-              "type": "TemplateInfo",
-              "description": "Template metadata for current template"
-            },
-            {
-              "name": "nodeInfo",
-              "type": "NodeInfo",
-              "description": "Node metadata for current template."
-            }
-          ],
-          "return": {
-            "type": "boolean",
-            "desc": "`true` if the visited node added node-specific\n  metadata to `nodeInfo`"
-          },
-          "inheritedFrom": "Polymer.TemplateStamp"
-        },
-        {
-          "name": "_parseTemplateNodeAttribute",
-          "description": "Overrides default `TemplateStamp` implementation to add support for\nparsing bindings from attributes.  A `bindings`\narray is added to `nodeInfo` and populated with binding metadata\nwith information capturing the binding target, and a `parts` array\nwith one or more metadata objects capturing the source(s) of the\nbinding.",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "bower_components/polymer/lib/mixins/property-effects.html",
-            "start": {
-              "line": 2427,
-              "column": 6
-            },
-            "end": {
-              "line": 2463,
-              "column": 7
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "node",
-              "type": "Element",
-              "description": "Node to parse"
-            },
-            {
-              "name": "templateInfo",
-              "type": "TemplateInfo",
-              "description": "Template metadata for current template"
-            },
-            {
-              "name": "nodeInfo",
-              "type": "NodeInfo",
-              "description": "Node metadata for current template node"
-            },
-            {
-              "name": "name"
-            },
-            {
-              "name": "value"
-            }
-          ],
-          "return": {
-            "type": "boolean",
-            "desc": "`true` if the visited node added node-specific\n  metadata to `nodeInfo`"
-          },
-          "inheritedFrom": "Polymer.PropertyEffects"
-        },
-        {
-          "name": "_contentForTemplate",
-          "description": "Returns the `content` document fragment for a given template.\n\nFor nested templates, Polymer performs an optimization to cache nested\ntemplate content to avoid the cost of cloning deeply nested templates.\nThis method retrieves the cached content for a given template.",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "bower_components/polymer/lib/mixins/template-stamp.html",
-            "start": {
-              "line": 384,
-              "column": 6
-            },
-            "end": {
-              "line": 387,
-              "column": 7
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "template",
-              "type": "HTMLTemplateElement",
-              "description": "Template to retrieve `content` for"
-            }
-          ],
-          "return": {
-            "type": "DocumentFragment",
-            "desc": "Content fragment"
-          },
-          "inheritedFrom": "Polymer.TemplateStamp"
-        },
-        {
-          "name": "createPropertiesForAttributes",
-          "description": "Generates property accessors for all attributes in the standard\nstatic `observedAttributes` array.\n\nAttribute names are mapped to property names using the `dash-case` to\n`camelCase` convention",
-          "privacy": "public",
-          "sourceRange": {
-            "file": "bower_components/polymer/lib/mixins/property-accessors.html",
-            "start": {
-              "line": 113,
-              "column": 6
-            },
-            "end": {
-              "line": 118,
-              "column": 7
-            }
-          },
-          "metadata": {},
-          "params": [],
-          "inheritedFrom": "Polymer.PropertyAccessors"
-        },
-        {
-          "name": "addPropertyEffect",
-          "description": "Ensures an accessor exists for the specified property, and adds\nto a list of \"property effects\" that will run when the accessor for\nthe specified property is set.  Effects are grouped by \"type\", which\nroughly corresponds to a phase in effect processing.  The effect\nmetadata should be in the following form:\n\n  {\n    fn: effectFunction, // Reference to function to call to perform effect\n    info: { ... }       // Effect metadata passed to function\n    trigger: {          // Optional triggering metadata; if not provided\n      name: string      // the property is treated as a wildcard\n      structured: boolean\n      wildcard: boolean\n    }\n  }\n\nEffects are called from `_propertiesChanged` in the following order by\ntype:\n\n1. COMPUTE\n2. PROPAGATE\n3. REFLECT\n4. OBSERVE\n5. NOTIFY\n\nEffect functions are called with the following signature:\n\n  effectFunction(inst, path, props, oldProps, info, hasPaths)",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "bower_components/polymer/lib/mixins/property-effects.html",
-            "start": {
-              "line": 2123,
-              "column": 6
-            },
-            "end": {
-              "line": 2125,
-              "column": 7
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "property",
-              "type": "string",
-              "description": "Property that should trigger the effect"
-            },
-            {
-              "name": "type",
-              "type": "string",
-              "description": "Effect type, from this.PROPERTY_EFFECT_TYPES"
-            },
-            {
-              "name": "effect",
-              "type": "Object=",
-              "description": "Effect metadata object"
-            }
-          ],
-          "inheritedFrom": "Polymer.PropertyEffects"
-        },
-        {
-          "name": "createPropertyObserver",
-          "description": "Creates a single-property observer for the given property.",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "bower_components/polymer/lib/mixins/property-effects.html",
-            "start": {
-              "line": 2136,
-              "column": 6
-            },
-            "end": {
-              "line": 2138,
-              "column": 7
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "property",
-              "type": "string",
-              "description": "Property name"
-            },
-            {
-              "name": "methodName",
-              "type": "string",
-              "description": "Name of observer method to call"
-            },
-            {
-              "name": "dynamicFn",
-              "type": "boolean=",
-              "description": "Whether the method name should be included as\n  a dependency to the effect."
-            }
-          ],
-          "inheritedFrom": "Polymer.PropertyEffects"
-        },
-        {
-          "name": "createMethodObserver",
-          "description": "Creates a multi-property \"method observer\" based on the provided\nexpression, which should be a string in the form of a normal Javascript\nfunction signature: `'methodName(arg1, [..., argn])'`.  Each argument\nshould correspond to a property or path in the context of this\nprototype (or instance), or may be a literal string or number.",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "bower_components/polymer/lib/mixins/property-effects.html",
-            "start": {
-              "line": 2152,
-              "column": 6
-            },
-            "end": {
-              "line": 2154,
-              "column": 7
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "expression",
-              "type": "string",
-              "description": "Method expression"
-            },
-            {
-              "name": "dynamicFn",
-              "type": "(boolean|Object)=",
-              "description": "Boolean or object map indicating\n  whether method names should be included as a dependency to the effect."
-            }
-          ],
-          "inheritedFrom": "Polymer.PropertyEffects"
-        },
-        {
-          "name": "createNotifyingProperty",
-          "description": "Causes the setter for the given property to dispatch `<property>-changed`\nevents to notify of changes to the property.",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "bower_components/polymer/lib/mixins/property-effects.html",
-            "start": {
-              "line": 2163,
-              "column": 6
-            },
-            "end": {
-              "line": 2165,
-              "column": 7
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "property",
-              "type": "string",
-              "description": "Property name"
-            }
-          ],
-          "inheritedFrom": "Polymer.PropertyEffects"
-        },
-        {
-          "name": "createReadOnlyProperty",
-          "description": "Creates a read-only accessor for the given property.\n\nTo set the property, use the protected `_setProperty` API.\nTo create a custom protected setter (e.g. `_setMyProp()` for\nproperty `myProp`), pass `true` for `protectedSetter`.\n\nNote, if the property will have other property effects, this method\nshould be called first, before adding other effects.",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "bower_components/polymer/lib/mixins/property-effects.html",
-            "start": {
-              "line": 2182,
-              "column": 6
-            },
-            "end": {
-              "line": 2184,
-              "column": 7
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "property",
-              "type": "string",
-              "description": "Property name"
-            },
-            {
-              "name": "protectedSetter",
-              "type": "boolean=",
-              "description": "Creates a custom protected setter\n  when `true`."
-            }
-          ],
-          "inheritedFrom": "Polymer.PropertyEffects"
-        },
-        {
-          "name": "createReflectedProperty",
-          "description": "Causes the setter for the given property to reflect the property value\nto a (dash-cased) attribute of the same name.",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "bower_components/polymer/lib/mixins/property-effects.html",
-            "start": {
-              "line": 2193,
-              "column": 6
-            },
-            "end": {
-              "line": 2195,
-              "column": 7
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "property",
-              "type": "string",
-              "description": "Property name"
-            }
-          ],
-          "inheritedFrom": "Polymer.PropertyEffects"
-        },
-        {
-          "name": "createComputedProperty",
-          "description": "Creates a computed property whose value is set to the result of the\nmethod described by the given `expression` each time one or more\narguments to the method changes.  The expression should be a string\nin the form of a normal Javascript function signature:\n`'methodName(arg1, [..., argn])'`",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "bower_components/polymer/lib/mixins/property-effects.html",
-            "start": {
-              "line": 2210,
-              "column": 6
-            },
-            "end": {
-              "line": 2212,
-              "column": 7
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "property",
-              "type": "string",
-              "description": "Name of computed property to set"
-            },
-            {
-              "name": "expression",
-              "type": "string",
-              "description": "Method expression"
-            },
-            {
-              "name": "dynamicFn",
-              "type": "(boolean|Object)=",
-              "description": "Boolean or object map indicating whether\n  method names should be included as a dependency to the effect."
-            }
-          ],
-          "inheritedFrom": "Polymer.PropertyEffects"
-        },
-        {
-          "name": "bindTemplate",
-          "description": "Parses the provided template to ensure binding effects are created\nfor them, and then ensures property accessors are created for any\ndependent properties in the template.  Binding effects for bound\ntemplates are stored in a linked list on the instance so that\ntemplates can be efficiently stamped and unstamped.",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "bower_components/polymer/lib/mixins/property-effects.html",
-            "start": {
-              "line": 2226,
-              "column": 6
-            },
-            "end": {
-              "line": 2228,
-              "column": 7
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "template",
-              "type": "HTMLTemplateElement",
-              "description": "Template containing binding\n  bindings"
-            }
-          ],
-          "return": {
-            "type": "Object",
-            "desc": "Template metadata object"
-          },
-          "inheritedFrom": "Polymer.PropertyEffects"
-        },
-        {
-          "name": "_addTemplatePropertyEffect",
-          "description": "Adds a property effect to the given template metadata, which is run\nat the \"propagate\" stage of `_propertiesChanged` when the template\nhas been bound to the element via `_bindTemplate`.\n\nThe `effect` object should match the format in `_addPropertyEffect`.",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "bower_components/polymer/lib/mixins/property-effects.html",
-            "start": {
-              "line": 2291,
-              "column": 6
-            },
-            "end": {
-              "line": 2297,
-              "column": 7
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "templateInfo",
-              "type": "Object",
-              "description": "Template metadata to add effect to"
-            },
-            {
-              "name": "prop",
-              "type": "string",
-              "description": "Property that should trigger the effect"
-            },
-            {
-              "name": "effect",
-              "type": "Object=",
-              "description": "Effect metadata object"
-            }
-          ],
-          "inheritedFrom": "Polymer.PropertyEffects"
-        },
-        {
-          "name": "_parseBindings",
-          "description": "Called to parse text in a template (either attribute values or\ntextContent) into binding metadata.\n\nAny overrides of this method should return an array of binding part\nmetadata  representing one or more bindings found in the provided text\nand any \"literal\" text in between.  Any non-literal parts will be passed\nto `_evaluateBinding` when any dependencies change.  The only required\nfields of each \"part\" in the returned array are as follows:\n\n- `dependencies` - Array containing trigger metadata for each property\n  that should trigger the binding to update\n- `literal` - String containing text if the part represents a literal;\n  in this case no `dependencies` are needed\n\nAdditional metadata for use by `_evaluateBinding` may be provided in\neach part object as needed.\n\nThe default implementation handles the following types of bindings\n(one or more may be intermixed with literal strings):\n- Property binding: `[[prop]]`\n- Path binding: `[[object.prop]]`\n- Negated property or path bindings: `[[!prop]]` or `[[!object.prop]]`\n- Two-way property or path bindings (supports negation):\n  `{{prop}}`, `{{object.prop}}`, `{{!prop}}` or `{{!object.prop}}`\n- Inline computed method (supports negation):\n  `[[compute(a, 'literal', b)]]`, `[[!compute(a, 'literal', b)]]`",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "bower_components/polymer/lib/mixins/property-effects.html",
-            "start": {
-              "line": 2524,
-              "column": 6
-            },
-            "end": {
-              "line": 2589,
-              "column": 7
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "text",
-              "type": "string",
-              "description": "Text to parse from attribute or textContent"
-            },
-            {
-              "name": "templateInfo",
-              "type": "Object",
-              "description": "Current template metadata"
-            }
-          ],
-          "return": {
-            "type": "Array.<!BindingPart>",
-            "desc": "Array of binding part metadata"
-          },
-          "inheritedFrom": "Polymer.PropertyEffects"
-        },
-        {
-          "name": "_evaluateBinding",
-          "description": "Called to evaluate a previously parsed binding part based on a set of\none or more changed dependencies.",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "bower_components/polymer/lib/mixins/property-effects.html",
-            "start": {
-              "line": 2605,
-              "column": 6
-            },
-            "end": {
-              "line": 2622,
-              "column": 7
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "inst",
-              "type": "this",
-              "description": "Element that should be used as scope for\n  binding dependencies"
-            },
-            {
-              "name": "part",
-              "type": "BindingPart",
-              "description": "Binding part metadata"
-            },
-            {
-              "name": "path",
-              "type": "string",
-              "description": "Property/path that triggered this effect"
-            },
-            {
-              "name": "props",
-              "type": "Object",
-              "description": "Bag of current property changes"
-            },
-            {
-              "name": "oldProps",
-              "type": "Object",
-              "description": "Bag of previous values for changed properties"
-            },
-            {
-              "name": "hasPaths",
-              "type": "boolean",
-              "description": "True with `props` contains one or more paths"
-            }
-          ],
-          "return": {
-            "type": "*",
-            "desc": "Value the binding part evaluated to"
-          },
-          "inheritedFrom": "Polymer.PropertyEffects"
-        },
-        {
-          "name": "finalize",
-          "description": "Called automatically when the first element instance is created to\nensure that class finalization work has been completed.\nMay be called by users to eagerly perform class finalization work\nprior to the creation of the first element instance.\n\nClass finalization work generally includes meta-programming such as\ncreating property accessors and any property effect metadata needed for\nthe features used.",
-          "privacy": "public",
-          "sourceRange": {
-            "file": "bower_components/polymer/lib/mixins/element-mixin.html",
-            "start": {
-              "line": 471,
-              "column": 6
-            },
-            "end": {
-              "line": 475,
-              "column": 7
-            }
-          },
-          "metadata": {},
-          "params": [],
-          "inheritedFrom": "Polymer.ElementMixin"
-        }
-      ],
       "demos": [
         {
-          "url": "examples/get_started.html",
-          "description": "Get started"
+          "url": "examples/v4/get_started.html",
+          "description": "Interactive ink hello world [V4]"
         },
         {
-          "url": "examples/v4/v4_configuration.html",
-          "description": "Use interactive ink api (v4)"
+          "url": "examples/v3/get_started.html",
+          "description": "Handwriting hello world [V3]"
         },
         {
-          "url": "examples/v4/change_language.html",
-          "description": "Change language implementation (iink SDK web)"
+          "url": "examples/v3/prediction_completion.html",
+          "description": "Using and configuring prediction and completion [V3]"
         },
         {
-          "url": "examples/handle_error.html",
-          "description": "Handle error"
+          "url": "examples/v3/styling.html",
+          "description": "Customization of style [V3]"
         },
         {
-          "url": "examples/styling.html",
-          "description": "Customize your component style"
+          "url": "examples/v3/superimposed.html",
+          "description": "Superimposed technology [V3]"
         },
         {
-          "url": "examples/programmatic_init.html",
-          "description": "Programmatic initialization"
-        },
-        {
-          "url": "examples/get_stats.html",
-          "description": "Get statistics"
-        },
-        {
-          "url": "examples/debug.html",
-          "description": "Debug your component"
-        },
-        {
-          "url": "examples/get_languages.html",
-          "description": "Get available languages"
-        },
-        {
-          "url": "examples/prediction_completion.html",
-          "description": "Use prediction and completion"
-        },
-        {
-          "url": "examples/superimposed.html",
-          "description": "Use superimposed input mode"
+          "url": "examples/index.html",
+          "description": "Other demos"
         }
       ],
       "metadata": {},
       "sourceRange": {
         "start": {
-          "line": 152,
+          "line": 147,
           "column": 8
         },
         "end": {
-          "line": 941,
+          "line": 873,
           "column": 9
         }
       },
       "privacy": "public",
-      "superclass": "HTMLElement",
       "name": "MyScriptTextWeb",
       "attributes": [
         {
@@ -6973,11 +5371,11 @@
           "description": "The current recognition protocol (WEBSOCKET or REST). We strongly recommend using WEBSOCKET.",
           "sourceRange": {
             "start": {
-              "line": 212,
+              "line": 207,
               "column": 20
             },
             "end": {
-              "line": 216,
+              "line": 211,
               "column": 21
             }
           },
@@ -6989,11 +5387,11 @@
           "description": "Scheme to use to connect to MyScript Cloud or Server. (https or http)",
           "sourceRange": {
             "start": {
-              "line": 220,
+              "line": 215,
               "column": 20
             },
             "end": {
-              "line": 224,
+              "line": 219,
               "column": 21
             }
           },
@@ -7005,11 +5403,11 @@
           "description": "The current recognition service host.",
           "sourceRange": {
             "start": {
-              "line": 228,
+              "line": 223,
               "column": 20
             },
             "end": {
-              "line": 232,
+              "line": 227,
               "column": 21
             }
           },
@@ -7021,11 +5419,11 @@
           "description": "Cloud API version to use (eg V3 or V4)",
           "sourceRange": {
             "start": {
-              "line": 236,
+              "line": 231,
               "column": 20
             },
             "end": {
-              "line": 240,
+              "line": 235,
               "column": 21
             }
           },
@@ -7037,11 +5435,11 @@
           "description": "Delay without any user input before asking for recognition, only use in REST mode.",
           "sourceRange": {
             "start": {
-              "line": 244,
+              "line": 239,
               "column": 20
             },
             "end": {
-              "line": 248,
+              "line": 243,
               "column": 21
             }
           },
@@ -7053,11 +5451,11 @@
           "description": "Delay without any recognition result received before processing the last one received, only use in WEBSOCKET mode.",
           "sourceRange": {
             "start": {
-              "line": 252,
+              "line": 247,
               "column": 20
             },
             "end": {
-              "line": 256,
+              "line": 251,
               "column": 21
             }
           },
@@ -7069,11 +5467,11 @@
           "description": "True if export should be done on-demand, false otherwise",
           "sourceRange": {
             "start": {
-              "line": 260,
+              "line": 255,
               "column": 20
             },
             "end": {
-              "line": 264,
+              "line": 259,
               "column": 21
             }
           },
@@ -7085,11 +5483,11 @@
           "description": "The recognition timeout, only use in REST mode.",
           "sourceRange": {
             "start": {
-              "line": 268,
+              "line": 263,
               "column": 20
             },
             "end": {
-              "line": 272,
+              "line": 267,
               "column": 21
             }
           },
@@ -7101,11 +5499,11 @@
           "description": "Application key to use for recognition on MyScript handwriting recognition server.<br />\nYou have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.<br /><br />\n<b>Warning</b>: This parameter is <b>mandatory</b> and its value should be a string.",
           "sourceRange": {
             "start": {
-              "line": 278,
+              "line": 273,
               "column": 20
             },
             "end": {
-              "line": 281,
+              "line": 276,
               "column": 21
             }
           },
@@ -7117,11 +5515,11 @@
           "description": "HMAC key to use for recognition on MyScript handwriting recognition server.<br />\nYou have to create your own HMAC key corresponding to your own application key in your account at http://cloud.myscript.com.<br /><br />\n<b>Warning</b>: This parameter may be <b>mandatory</b> if HMAC signature security is enabled for your application. The value should be a string.",
           "sourceRange": {
             "start": {
-              "line": 287,
+              "line": 282,
               "column": 20
             },
             "end": {
-              "line": 290,
+              "line": 285,
               "column": 21
             }
           },
@@ -7133,11 +5531,11 @@
           "description": "Properties to set when you wish to set attributes in javascript. unloaded attributes should be removed once all properties are set.\n(see examples/programmatic_init.html for a better understanding)",
           "sourceRange": {
             "start": {
-              "line": 295,
+              "line": 290,
               "column": 20
             },
             "end": {
-              "line": 300,
+              "line": 295,
               "column": 21
             }
           },
@@ -7149,11 +5547,11 @@
           "description": "True if editor is initialized",
           "sourceRange": {
             "start": {
-              "line": 311,
+              "line": 306,
               "column": 20
             },
             "end": {
-              "line": 316,
+              "line": 311,
               "column": 21
             }
           },
@@ -7165,11 +5563,11 @@
           "description": "The underlying editor created with MyScriptJS. This could allow to access more advanced properties. Mostly used for automatic testing currently.",
           "sourceRange": {
             "start": {
-              "line": 320,
+              "line": 315,
               "column": 20
             },
             "end": {
-              "line": 323,
+              "line": 318,
               "column": 21
             }
           },
@@ -7181,11 +5579,11 @@
           "description": "Set the additional configuration used to feed MyScript ink Paper (Structure of object as defined in MyScriptjs MyScriptJSOptions.js file)\nOptions values are taken into account when myscript-common-element is attach to the dom and when detached is set to false.\nOptions values are not reflected to myscript-common-element attributes plus attributes values are always taken into account before configuration values (see examples/programmatic_init.html for a better understanding).",
           "sourceRange": {
             "start": {
-              "line": 329,
+              "line": 324,
               "column": 20
             },
             "end": {
-              "line": 332,
+              "line": 327,
               "column": 21
             }
           },
@@ -7197,11 +5595,11 @@
           "description": "Color (supported formats rgb() rgba() hsl() hsla() #rgb #rgba #rrggbb #rrggbbaa)",
           "sourceRange": {
             "start": {
-              "line": 336,
+              "line": 331,
               "column": 20
             },
             "end": {
-              "line": 340,
+              "line": 335,
               "column": 21
             }
           },
@@ -7213,11 +5611,11 @@
           "description": "Width of strokes and primitives in mm (no other unit is supported yet)",
           "sourceRange": {
             "start": {
-              "line": 344,
+              "line": 339,
               "column": 20
             },
             "end": {
-              "line": 348,
+              "line": 343,
               "column": 21
             }
           },
@@ -7229,11 +5627,11 @@
           "description": "font-family used to render text conversion",
           "sourceRange": {
             "start": {
-              "line": 352,
+              "line": 347,
               "column": 20
             },
             "end": {
-              "line": 356,
+              "line": 351,
               "column": 21
             }
           },
@@ -7245,11 +5643,11 @@
           "description": "font-size used to render text conversion",
           "sourceRange": {
             "start": {
-              "line": 360,
+              "line": 355,
               "column": 20
             },
             "end": {
-              "line": 364,
+              "line": 359,
               "column": 21
             }
           },
@@ -7261,11 +5659,11 @@
           "description": "If set to true, hide the buttons (Trash, Undo, Redo).",
           "sourceRange": {
             "start": {
-              "line": 398,
+              "line": 393,
               "column": 20
             },
             "end": {
-              "line": 403,
+              "line": 398,
               "column": 21
             }
           },
@@ -7277,11 +5675,11 @@
           "description": "True if the undo/redo feature is disabled, false otherwise",
           "sourceRange": {
             "start": {
-              "line": 408,
+              "line": 403,
               "column": 20
             },
             "end": {
-              "line": 412,
+              "line": 407,
               "column": 21
             }
           },
@@ -7293,11 +5691,11 @@
           "description": "True if the clear feature is disabled, false otherwise",
           "sourceRange": {
             "start": {
-              "line": 416,
+              "line": 411,
               "column": 20
             },
             "end": {
-              "line": 420,
+              "line": 415,
               "column": 21
             }
           },
@@ -7309,11 +5707,11 @@
           "description": "True if the export feature is disabled, false otherwise",
           "sourceRange": {
             "start": {
-              "line": 424,
+              "line": 419,
               "column": 20
             },
             "end": {
-              "line": 428,
+              "line": 423,
               "column": 21
             }
           },
@@ -7325,11 +5723,11 @@
           "description": "True if the typeset feature is disabled, false otherwise",
           "sourceRange": {
             "start": {
-              "line": 432,
+              "line": 427,
               "column": 20
             },
             "end": {
-              "line": 436,
+              "line": 431,
               "column": 21
             }
           },
@@ -7341,11 +5739,11 @@
           "description": "The underlying myscriptcommonelement. This could allow to access more advanced properties.",
           "sourceRange": {
             "start": {
-              "line": 444,
+              "line": 439,
               "column": 20
             },
             "end": {
-              "line": 446,
+              "line": 441,
               "column": 21
             }
           },
@@ -7357,11 +5755,11 @@
           "description": "If set to true, hide the export panel.",
           "sourceRange": {
             "start": {
-              "line": 450,
+              "line": 445,
               "column": 20
             },
             "end": {
-              "line": 454,
+              "line": 449,
               "column": 21
             }
           },
@@ -7373,11 +5771,11 @@
           "description": "The recognition language used by the recognition process.",
           "sourceRange": {
             "start": {
-              "line": 458,
+              "line": 453,
               "column": 20
             },
             "end": {
-              "line": 463,
+              "line": 458,
               "column": 21
             }
           },
@@ -7389,11 +5787,11 @@
           "description": "Text export types (text/plain, ...).",
           "sourceRange": {
             "start": {
-              "line": 467,
+              "line": 462,
               "column": 20
             },
             "end": {
-              "line": 470,
+              "line": 465,
               "column": 21
             }
           },
@@ -7405,11 +5803,11 @@
           "description": "The text input mode to use (CURSIVE, ISOLATED, SUPERIMPOSED or VERTICAL).",
           "sourceRange": {
             "start": {
-              "line": 474,
+              "line": 469,
               "column": 20
             },
             "end": {
-              "line": 478,
+              "line": 473,
               "column": 21
             }
           },
@@ -7421,11 +5819,11 @@
           "description": "The resultdetail is an entry property that conditioning result depth output. To use (TEXT, WORD or CHARACTER).",
           "sourceRange": {
             "start": {
-              "line": 482,
+              "line": 477,
               "column": 20
             },
             "end": {
-              "line": 486,
+              "line": 481,
               "column": 21
             }
           },
@@ -7437,11 +5835,11 @@
           "description": "The content types to use for the recognition.",
           "sourceRange": {
             "start": {
-              "line": 490,
+              "line": 485,
               "column": 20
             },
             "end": {
-              "line": 493,
+              "line": 488,
               "column": 21
             }
           },
@@ -7453,11 +5851,11 @@
           "description": "The subset knowledges to use for the recognition.",
           "sourceRange": {
             "start": {
-              "line": 497,
+              "line": 492,
               "column": 20
             },
             "end": {
-              "line": 500,
+              "line": 495,
               "column": 21
             }
           },
@@ -7469,11 +5867,11 @@
           "description": "The user lk words to use for the recognition.",
           "sourceRange": {
             "start": {
-              "line": 504,
+              "line": 499,
               "column": 20
             },
             "end": {
-              "line": 507,
+              "line": 502,
               "column": 21
             }
           },
@@ -7485,11 +5883,11 @@
           "description": "List of user resources to use for recognitions. Theses user resources have to be attached to the user account where application is declare.",
           "sourceRange": {
             "start": {
-              "line": 511,
+              "line": 506,
               "column": 20
             },
             "end": {
-              "line": 514,
+              "line": 509,
               "column": 21
             }
           },
@@ -7501,11 +5899,11 @@
           "description": "The size of the candidate lists that will be provided at the text level in the recognition result.\nThis value must be between `1` and `20`.",
           "sourceRange": {
             "start": {
-              "line": 519,
+              "line": 514,
               "column": 20
             },
             "end": {
-              "line": 523,
+              "line": 518,
               "column": 21
             }
           },
@@ -7517,11 +5915,11 @@
           "description": "The size of the candidate lists that will be provided at the word level in the recognition result.\nThis value must be between `1` and `20`.\nYou can't set a wordCandidateListSize > 0 if depth is not set to WORD or CHARACTER",
           "sourceRange": {
             "start": {
-              "line": 529,
+              "line": 524,
               "column": 20
             },
             "end": {
-              "line": 531,
+              "line": 526,
               "column": 21
             }
           },
@@ -7533,11 +5931,11 @@
           "description": "The size of the candidate prediction lists that will be provided at the word level in the recognition result.\nThis value must be between `0` and `20`.",
           "sourceRange": {
             "start": {
-              "line": 536,
+              "line": 531,
               "column": 20
             },
             "end": {
-              "line": 539,
+              "line": 534,
               "column": 21
             }
           },
@@ -7549,11 +5947,11 @@
           "description": "The size of the candidate completion lists that will be provided at the word level in the recognition result.\nThis value must be between `0` and `20`.",
           "sourceRange": {
             "start": {
-              "line": 544,
+              "line": 539,
               "column": 20
             },
             "end": {
-              "line": 547,
+              "line": 542,
               "column": 21
             }
           },
@@ -7565,11 +5963,11 @@
           "description": "The size of the candidate lists that will be provided at the character level in the recognition result.\nThis value must be between `1` and `20`.\nYou can't set a characterCandidateListSize > 0 if depth is not set to CHARACTER",
           "sourceRange": {
             "start": {
-              "line": 553,
+              "line": 548,
               "column": 20
             },
             "end": {
-              "line": 555,
+              "line": 550,
               "column": 21
             }
           },
@@ -7581,11 +5979,11 @@
           "description": "Property that controls the out of lexicon match.",
           "sourceRange": {
             "start": {
-              "line": 559,
+              "line": 554,
               "column": 20
             },
             "end": {
-              "line": 562,
+              "line": 557,
               "column": 21
             }
           },
@@ -7597,11 +5995,11 @@
           "description": "Property that tells the recognizer to detect the candidates that differ only in case and return the best candidate of that lot.",
           "sourceRange": {
             "start": {
-              "line": 566,
+              "line": 561,
               "column": 20
             },
             "end": {
-              "line": 569,
+              "line": 564,
               "column": 21
             }
           },
@@ -7613,11 +6011,11 @@
           "description": "Property that tells the recognizer to detect the candidates that differ only in accentuation and return the best candidate of that lot.",
           "sourceRange": {
             "start": {
-              "line": 573,
+              "line": 568,
               "column": 20
             },
             "end": {
-              "line": 576,
+              "line": 571,
               "column": 21
             }
           },
@@ -7626,14 +6024,14 @@
         },
         {
           "name": "glyphdistortion",
-          "description": "",
+          "description": "Glyphdistortion is only valid with ISOLATED mode\n\nThe value of the <code>GlyphDistortion</code> property that controls the amount of glyph distortion.\nA value between <code>0</code> and <code>255</code>.\n\n<code>0</code> means no distortion.\n<code>255</code> means maximum supported distortion.",
           "sourceRange": {
             "start": {
-              "line": 587,
+              "line": 582,
               "column": 20
             },
             "end": {
-              "line": 589,
+              "line": 584,
               "column": 21
             }
           },
@@ -7645,11 +6043,11 @@
           "description": "Attach a digital ink tagger to the recognizer",
           "sourceRange": {
             "start": {
-              "line": 593,
+              "line": 588,
               "column": 20
             },
             "end": {
-              "line": 596,
+              "line": 591,
               "column": 21
             }
           },
@@ -7661,11 +6059,11 @@
           "description": "SpellingDistortion is only valid with ISOLATED mode\n\nThe value of the <code>SpellingDistortion</code> property that controls the amount of spelling distortion.\nA value between <code>0</code> and <code>255</code>.\n\n<code>0</code> means no distortion.\n<code>255</code> means maximum supported distortion.",
           "sourceRange": {
             "start": {
-              "line": 606,
+              "line": 601,
               "column": 20
             },
             "end": {
-              "line": 608,
+              "line": 603,
               "column": 21
             }
           },
@@ -7677,11 +6075,11 @@
           "description": "Exports.",
           "sourceRange": {
             "start": {
-              "line": 613,
+              "line": 608,
               "column": 20
             },
             "end": {
-              "line": 616,
+              "line": 611,
               "column": 21
             }
           },
@@ -7693,11 +6091,11 @@
           "description": "The export rawResult",
           "sourceRange": {
             "start": {
-              "line": 620,
+              "line": 615,
               "column": 20
             },
             "end": {
-              "line": 623,
+              "line": 618,
               "column": 21
             }
           },
@@ -7709,11 +6107,11 @@
           "description": "The recognition result selected candidate label",
           "sourceRange": {
             "start": {
-              "line": 627,
+              "line": 622,
               "column": 20
             },
             "end": {
-              "line": 630,
+              "line": 625,
               "column": 21
             }
           },
@@ -7725,11 +6123,11 @@
           "description": "The recognition result candidates",
           "sourceRange": {
             "start": {
-              "line": 635,
+              "line": 630,
               "column": 20
             },
             "end": {
-              "line": 638,
+              "line": 633,
               "column": 21
             }
           },
@@ -7741,11 +6139,11 @@
           "description": "True to display console output, false otherwise.",
           "sourceRange": {
             "start": {
-              "line": 642,
+              "line": 637,
               "column": 20
             },
             "end": {
-              "line": 646,
+              "line": 641,
               "column": 21
             }
           },
@@ -7874,7 +6272,8 @@
         "selectors": []
       },
       "slots": [],
-      "tagname": "myscript-text-web"
+      "tagname": "myscript-text-web",
+      "superclass": "HTMLElement"
     }
   ]
 }

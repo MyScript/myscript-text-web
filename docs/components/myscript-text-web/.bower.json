@@ -38,7 +38,7 @@
     "iron-component-page": "PolymerElements/iron-component-page#^3.0.0",
     "webcomponentsjs": "^1.0.1"
   },
-  "_source": "/home/fxg/projects/webcomponents/myscript-text-web",
+  "_source": "/DEV/projets/webcomponents/myscript-text-web",
   "_target": "*",
   "_originalSource": "../../myscript-text-web",
   "_direct": true
