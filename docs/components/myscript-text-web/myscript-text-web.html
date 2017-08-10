@@ -132,6 +132,7 @@ Custom property | Description | Default
             disableundoredocontrol="[[ disableundoredocontrol ]]"
             disableexportcontrol="[[ disableexportcontrol ]]"
             disableconvertcontrol="[[ disableconvertcontrol ]]"
+            on-loaded="_forwardListener"
             on-change="_forwardListener"
             on-exported="_forwardListener"
             on-converted="_forwardListener"
@@ -150,6 +151,11 @@ Custom property | Description | Default
             static get is() {
                 return 'myscript-text-web'
             }
+
+            /**
+             * Fired when editor is loaded.
+             * @event loaded
+             */
 
             /**
              * Fired when undo is triggered.
