@@ -122,6 +122,8 @@ Custom property | Description | Default
             unloaded="[[ commonunloaded ]]"
             pencolor="[[ pencolor ]]"
             penwidth="[[ penwidth ]]"
+            themecolor="[[ themecolor ]]"
+            themewidth="[[ themewidth ]]"
             fontfamily="[[ fontfamily ]]"
             fontsize="[[ fontsize ]]"
             canclear="[[ canclear ]]"
@@ -324,7 +326,7 @@ Custom property | Description | Default
                         notify: true
                     },
                     /**
-                     * Set the additional configuration used to feed MyScript ink Paper (Structure of object as defined in MyScriptjs MyScriptJSOptions.js file)
+                     * Set the additional configuration used to feed MyScript editor (Structure of object as defined in MyScriptjs MyScriptJSOptions.js file)
                      * Options values are taken into account when myscript-common-element is attach to the dom and when detached is set to false.
                      * Options values are not reflected to myscript-common-element attributes plus attributes values are always taken into account before configuration values (see examples/programmatic_init.html for a better understanding).
                      */
@@ -333,9 +335,23 @@ Custom property | Description | Default
                         notify: true
                     },
                     /**
-                     * Color (supported formats rgb() rgba() hsl() hsla() #rgb #rgba #rrggbb #rrggbbaa)
+                     * Pen color (supported formats rgb() rgba() hsl() hsla() #rgb #rgba #rrggbb #rrggbbaa)
                      */
                     pencolor: {
+                        type: String,
+                        reflectToAttribute: true
+                    },
+                    /**
+                     * Pen width in mm (no other unit is supported yet)
+                     */
+                    penwidth: {
+                        type: Number,
+                        reflectToAttribute: true
+                    },
+                    /**
+                     * Main color used by theme  (supported formats rgb() rgba() hsl() hsla() #rgb #rgba #rrggbb #rrggbbaa)
+                     */
+                    themecolor: {
                         type: String,
                         value: '#1580CD',
                         reflectToAttribute: true
@@ -343,7 +359,7 @@ Custom property | Description | Default
                     /**
                      * Width of strokes and primitives in mm (no other unit is supported yet)
                      */
-                    penwidth: {
+                    themewidth: {
                         type: Number,
                         value: 1,
                         reflectToAttribute: true
