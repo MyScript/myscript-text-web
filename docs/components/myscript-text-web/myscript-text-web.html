@@ -33,6 +33,7 @@ Custom property | Description | Default
 
 
 @demo examples/v4/get_started.html Interactive ink hello world [V4]
+@demo examples/v4/styling.html Customization of style [V4]
 @demo examples/v3/get_started.html Handwriting hello world [V3]
 @demo examples/v3/prediction_completion.html Using and configuring prediction and completion [V3]
 @demo examples/v3/styling.html Customization of style [V3]
@@ -122,10 +123,10 @@ Custom property | Description | Default
             unloaded="[[ commonunloaded ]]"
             pencolor="[[ pencolor ]]"
             penwidth="[[ penwidth ]]"
+            penstyle="[[ penstyle ]]"
             themecolor="[[ themecolor ]]"
             themewidth="[[ themewidth ]]"
-            fontfamily="[[ fontfamily ]]"
-            fontsize="[[ fontsize ]]"
+            theme="[[ commontheme ]]"
             canclear="[[ canclear ]]"
             canredo="[[ canredo ]]"
             canundo="[[ canundo ]]"
@@ -349,6 +350,13 @@ Custom property | Description | Default
                         reflectToAttribute: true
                     },
                     /**
+                     * Set the additional penStyle used to feed MyScript editor (Structure of object as defined in MyScriptJS DefaultPenStyle.js file)
+                     */
+                    penstyle: {
+                        type: Object,
+                        notify: true
+                    },
+                    /**
                      * Main color used by theme  (supported formats rgb() rgba() hsl() hsla() #rgb #rgba #rrggbb #rrggbbaa)
                      */
                     themecolor: {
@@ -379,6 +387,20 @@ Custom property | Description | Default
                         type: Number,
                         value: 10.0,
                         reflectToAttribute: true
+                    },
+                    /**
+                     * Set the additional theme used to feed MyScript editor (Structure of object as defined in MyScriptJS DefaultTheme.js file)
+                     */
+                    theme: {
+                        type: Object,
+                        notify: true
+                    },
+                    /**
+                     * @private
+                     */
+                    commontheme: {
+                        type: Object,
+                        computed: '_computeCommonTheme(theme, fontfamily, fontsize)'
                     },
                     /**
                      * True if undo is available
@@ -665,6 +687,21 @@ Custom property | Description | Default
                 }
             }
 
+            static _generateTextTheme(theme, fontfamily, fontsize) {
+                // FIXME: find a way to do a proper deep merge
+                const stylesheet = Object.assign({}, theme);
+                if (!stylesheet['.text']) {
+                    stylesheet['.text'] = {};
+                }
+                if (fontfamily) {
+                    stylesheet['.text']['font-family'] = fontfamily;
+                }
+                if (fontsize) {
+                    stylesheet['.text']['font-size'] = fontsize;
+                }
+                return stylesheet;
+            }
+
             static _generateTextConfiguration(configuration, language, mimetypes, textinputmode, resultdetail, contenttypes, subsetknowledges, userlkwords, userresources, textcandidatelistsize, wordcandidatelistsize, wordpredictionlistsize, wordcompletionlistsize, charactercandidatelistsize, enableoutoflexicon, discardcasevariations, discardaccentuationvariations, glyphdistortion, enabletagger, spellingdistortion) {
                 // FIXME: find a way to do a proper deep merge
                 const conf = Object.assign({}, configuration);
@@ -857,6 +894,10 @@ Custom property | Description | Default
                     this.configuration = this._buildConfiguration();
                 }
                 return unloaded;
+            }
+
+            _computeCommonTheme(theme, fontfamily, fontsize) {
+                return MyScriptTextWeb._generateTextTheme(theme, fontfamily, fontsize);
             }
 
             connectedCallback() {
