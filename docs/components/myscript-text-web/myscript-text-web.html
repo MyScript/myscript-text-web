@@ -870,6 +870,17 @@ Custom property | Description | Default
             }
 
             /**
+             * Launch import
+             * @param {{x: Number, y: Number}} point Insert point coordinates
+             * @param {Blob} data
+             */
+            importContent(point, data) {
+                if (this.myscriptcommonelement) {
+                    this.myscriptcommonelement.importContent(point, data);
+                }
+            }
+
+            /**
              * Launch convert
              */
             convert() {
