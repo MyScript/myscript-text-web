@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+
+<head>
+    <!-- Those three meta make the capture of handwriting inputs easier on modile devices -->
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <title>Import text</title>
+
+    <link rel="stylesheet" href="../examples.css">
+    <style>
+        nav {
+            height: 60px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        nav span {
+            display: flex;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        myscript-text-web {
+            height: calc(100% - 60px);
+        }
+    </style>
+
+    <!-- As web components are not fully support -->
+    <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
+    <!-- myscript-common-element is import to be used later -->
+    <link rel="import" href="../../myscript-text-web.html">
+    <!-- we use a paper toast for the purpose of this demo -->
+    <link rel="import" href="../../../paper-toast/paper-toast.html">
+</head>
+
+<body>
+<nav>
+    <span>
+            <input type="text" id="text" value="hello world">
+    </span>
+</nav>
+<paper-toast class="fit-top"></paper-toast>
+<!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
+<myscript-text-web apiversion="V4"
+                   protocol="WEBSOCKET"
+                   scheme="https"
+                   host="newcloud.myscript.com"
+                   applicationkey="7d223f9e-a3cb-4213-ba4b-85e930605f8b"
+                   hmackey="5ab1935e-529a-4d48-a695-158450e52b13"
+                   debug>
+</myscript-text-web>
+<script>
+    const paperToast = document.querySelector('paper-toast');
+    const component = document.querySelector('myscript-text-web');
+    const textInput = document.querySelector('#text');
+
+    component.addEventListener('exported', (event) => {
+        paperToast.text = `Recognition object contains : ${JSON.stringify(event.detail)}`;
+        paperToast.fitIn = paperToast.show();
+    });
+
+    textInput.addEventListener('change', function (e) {
+        component.importContent({ x: 0, y: 0 }, new Blob([e.target.value], { type: 'text/plain' }));
+    });
+
+    component.importContent({ x: 0, y: 0 }, new Blob([textInput.value], { type: 'text/plain' }));
+</script>
+</body>
+
+</html>
