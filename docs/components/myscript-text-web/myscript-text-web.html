@@ -130,6 +130,7 @@ Custom property | Description | Default
             canclear="[[ canclear ]]"
             canredo="[[ canredo ]]"
             canundo="[[ canundo ]]"
+            idle="[[ idle ]]"
             disablecontrols="[[ disablecontrols ]]"
             disableclearcontrol="[[ disableclearcontrol ]]"
             disableundoredocontrol="[[ disableundoredocontrol ]]"
@@ -154,6 +155,11 @@ Custom property | Description | Default
             static get is() {
                 return 'myscript-text-web'
             }
+
+            /**
+             * Fired when editor is idle.
+             * @event idle
+             */
 
             /**
              * Fired when editor is loaded.
@@ -668,6 +674,14 @@ Custom property | Description | Default
                      */
                     candidates: {
                         type: Array,
+                        notify: true
+                    },
+                    /**
+                     * True if component is idle
+                     */
+                    idle: {
+                        type: Boolean,
+                        value: true,
                         notify: true
                     },
                     /**
