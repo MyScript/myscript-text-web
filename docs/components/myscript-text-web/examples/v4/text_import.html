@@ -21,10 +21,6 @@
             display: flex;
         }
 
-        .hidden {
-            display: none;
-        }
-
         myscript-text-web {
             height: calc(100% - 60px);
         }
@@ -34,14 +30,13 @@
     <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
     <!-- myscript-common-element is import to be used later -->
     <link rel="import" href="../../myscript-text-web.html">
-    <!-- we use a paper toast for the purpose of this demo -->
-    <link rel="import" href="../../../paper-toast/paper-toast.html">
 </head>
 
 <body>
 <nav>
     <span>
-            <input type="text" id="text" value="hello world">
+        <input type="text" id="text" placeholder="e.g. hello world">
+        <button id="importText">Import</button>
     </span>
 </nav>
 <paper-toast class="fit-top"></paper-toast>
@@ -51,24 +46,15 @@
                    scheme="https"
                    host="newcloud.myscript.com"
                    applicationkey="7d223f9e-a3cb-4213-ba4b-85e930605f8b"
-                   hmackey="5ab1935e-529a-4d48-a695-158450e52b13"
-                   debug>
+                   hmackey="5ab1935e-529a-4d48-a695-158450e52b13">
 </myscript-text-web>
 <script>
-    const paperToast = document.querySelector('paper-toast');
     const component = document.querySelector('myscript-text-web');
-    const textInput = document.querySelector('#text');
+    const textInput = document.getElementById('text');
 
-    component.addEventListener('exported', (event) => {
-        paperToast.text = `Recognition object contains : ${JSON.stringify(event.detail)}`;
-        paperToast.fitIn = paperToast.show();
+    document.getElementById('importText').addEventListener('click', function () {
+        component.importContent({ x: 0, y: 0 }, new Blob([textInput.value], { type: 'text/plain' }));
     });
-
-    textInput.addEventListener('change', function (e) {
-        component.importContent({ x: 0, y: 0 }, new Blob([e.target.value], { type: 'text/plain' }));
-    });
-
-    component.importContent({ x: 0, y: 0 }, new Blob([textInput.value], { type: 'text/plain' }));
 </script>
 </body>
 
