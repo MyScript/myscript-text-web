@@ -1,5 +1,6 @@
 <link rel="import" href="../polymer/polymer-element.html">
 <link rel="import" href="../myscript-common-element/myscript-common-element.html">
+<link rel="import" href="../myscript-common-element/myscript-stylesheet.html">
 <link rel="import" href="./myscript-text-exports.html">
 <!--
 `myscript-text-web` is a turnkey solution for those who need to quickly implement MyScript Text recognition.
@@ -19,11 +20,11 @@ CSS variable | Default
 `--myscript-text-web-background` | none
 `--myscript-text-web-color` | #FFFFFF
 `--myscript-text-web-line-pattern` | Classic notebook line pattern
-`--myscript-text-web-loader-background` | #1A9FFF
-`--myscript-text-web-loader-color` | #F5F6F7
 `--myscript-text-web-button-background` | #1A9FFF
 `--myscript-text-web-button-focus-background` | #1A9FFF
 `--myscript-text-web-button-disabled-background` | #F5F6F7
+`--myscript-text-web-error-background` | Error image
+`--myscript-text-web-loader` | Spinner
 `--myscript-text-web-exports-color` | #1580CD
 `--myscript-text-web-exports-background-color` | #EDF0F2
 `--myscript-text-web-exports-selected-color` | #FFFFFF
@@ -42,17 +43,18 @@ CSS variable | Default
 -->
 <dom-module id="myscript-text-web">
     <template>
-        <style>
+        <style include="myscript-stylesheet">
             :host {
-                --myscript-text-web-background: none;
-                --myscript-text-web-color: #1A9FFF;
+                --myscript-text-web-background: var(--myscript-editor-background);
+                --myscript-text-web-color: var(--myscript-editor-color);
                 --myscript-text-web-line-pattern: repeating-linear-gradient(to bottom, #F5F6F7, #F5F6F7 1px, transparent 1px, transparent 72px);
-                --myscript-text-web-capture-background: none;
-                --myscript-text-web-loader-background: #1A9FFF;
-                --myscript-text-web-loader-color: #F5F6F7;
-                --myscript-text-web-button-background: #1A9FFF;
-                --myscript-text-web-button-focus-background: #1A9FFF;
-                --myscript-text-web-button-disabled-background: #F5F6F7;
+                --myscript-text-web-capture-background: var(--myscript-editor-capture-background);
+                --myscript-text-web-button-background: var(--myscript-editor-button-background);
+                --myscript-text-web-button-focus-background: var(--myscript-editor-focus-background);
+                --myscript-text-web-button-disabled-background: var(--myscript-editor-disabled-background);
+                --myscript-text-web-error-background: var(--myscript-editor-error-background);
+                --myscript-text-web-loader : var(--myscript-editor-loader);
+                --myscript-text-web-error : var(--myscript-editor-error);
                 --myscript-text-web-exports-color: #1580CD;
                 --myscript-text-web-exports-background-color: #EDF0F2;
                 --myscript-text-web-exports-selected-color: #FFFFFF;
@@ -85,11 +87,12 @@ CSS variable | Default
                 --myscript-common-element-color: var(--myscript-text-web-color);
                 --myscript-common-element-line-pattern: var(--myscript-text-web-line-pattern);
                 --myscript-common-element-capture-background: var(--myscript-text-web-capture-background);
-                --myscript-common-element-loader-background: var(--myscript-text-web-loader-background);
-                --myscript-common-element-loader-color: var(--myscript-text-web-loader-color);
                 --myscript-common-element-button-background: var(--myscript-text-web-button-background);
                 --myscript-common-element-button-focus-background: var(--myscript-text-web-button-focus-background);
                 --myscript-common-element-button-disabled-background: var(--myscript-text-web-button-disabled-background);
+                --myscript-common-element-error-background: var(--myscript-text-web-error-background);
+                --myscript-common-element-error: var(--myscript-text-web-error);
+                --myscript-common-element-loader: var(--myscript-text-web-loader);
 
                 height: calc(100% - 100px);
             }

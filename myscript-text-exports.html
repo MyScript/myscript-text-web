@@ -26,6 +26,14 @@ Custom property | Description | Default
                 --myscript-text-exports-predicted-color: #73818C;
                 --myscript-text-exports-completed-color: #1A9FFF;
 
+                --myscript-text-candidate: {
+                    padding: .5rem .75rem;
+                    margin: 0 .125rem;
+                    border-radius: 3px;
+                    cursor: pointer;
+                    flex: 0 0 auto;
+                };
+
                 box-sizing: border-box;
                 display: flex;
                 flex-direction: column;
@@ -51,11 +59,7 @@ Custom property | Description | Default
             .text {
                 color: var(--myscript-text-exports-color);
                 background-color: var(--myscript-text-exports-background-color);
-                padding: .5rem .75rem;
-                margin: 0 .125rem;
-                border-radius: 3px;
-                cursor: pointer;
-                flex: 0 0 auto;
+                @apply --myscript-text-candidate;
             }
 
             .text[selected] {
