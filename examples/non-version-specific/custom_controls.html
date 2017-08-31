@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="HandheldFriendly" content="true"/>
+
+    <title>Custom controls</title>
+
+    <link rel="stylesheet" href="../examples.css">
+    <style>
+        myscript-text-web {
+            height: calc(100% - 2.625rem);
+        }
+    </style>
+
+    <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
+    <link rel="import" href="../../../paper-toast/paper-toast.html">
+    <link rel="import" href="../../myscript-text-web.html">
+</head>
+<body>
+    <button onclick="myscriptTextWeb.undo()">undo</button>
+    <button onclick="myscriptTextWeb.redo()">redo</button>
+    <button onclick="myscriptTextWeb.clear()">clear</button>
+    <button onclick="myscriptTextWeb.exportContent()">export</button>
+    <button onclick="myscriptTextWeb.convert()">convert</button>
+    <paper-toast class="fit-top"></paper-toast>
+    <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
+    <myscript-text-web scheme="https"
+                       host="newcloud.myscript.com"
+                       applicationkey="7d223f9e-a3cb-4213-ba4b-85e930605f8b"
+                       hmackey="5ab1935e-529a-4d48-a695-158450e52b13"
+                       ondemand
+                       disablecontrols>
+    </myscript-text-web>
+    <script>
+        const myscriptTextWeb = document.querySelector('myscript-text-web');
+        const paperToast = document.querySelector('paper-toast');
+        myscriptTextWeb.addEventListener('exported', (event) => {
+            paperToast.text = `Recognition object contains : ${JSON.stringify(event.detail)}`;
+            paperToast.fitIn = paperToast.show();
+        });
+    </script>
+</body>
+</html>

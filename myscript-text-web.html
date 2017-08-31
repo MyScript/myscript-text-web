@@ -32,14 +32,14 @@ CSS variable | Default
 `--myscript-text-web-exports-predicted-color` | #73818C
 `--myscript-text-web-exports-completed-color` | #1A9FFF
 
-
 @demo examples/non-version-specific/get_started.html Get started [V4]
 @demo examples/non-version-specific/customize_style.html Customize style [V4]
+@demo examples/non-version-specific/custom_controls.html Redefining the controls [V4]
 @demo examples/v4/import_content.html Import content [V4]
-@demo examples/v3/get_started_legacy.html Get started [V3]
+@demo examples/v3/rest_text.html Configure component with legacy api [V3]
 @demo examples/v3/prediction_completion.html Prediction and completion [V3]
 @demo examples/v3/superimposed.html Superimposed technology [V3]
-@demo examples/index.html Other demonstrations
+@demo examples/index.html Other examples
 -->
 <dom-module id="myscript-text-web">
     <template>
@@ -137,7 +137,6 @@ CSS variable | Default
             disablecontrols="[[ disablecontrols ]]"
             disableclearcontrol="[[ disableclearcontrol ]]"
             disableundoredocontrol="[[ disableundoredocontrol ]]"
-            disableexportcontrol="[[ disableexportcontrol ]]"
             disableconvertcontrol="[[ disableconvertcontrol ]]"
             on-loaded="_forwardListener"
             on-change="_forwardListener"
@@ -326,6 +325,7 @@ CSS variable | Default
                         type: Boolean,
                         value: false,
                         notify: true,
+                        notify: true,
                         reflectToAttribute: true
                     },
                     /**
@@ -463,14 +463,6 @@ CSS variable | Default
                      * True if the clear feature is disabled, false otherwise
                      */
                     disableclearcontrol: {
-                        type: Boolean,
-                        reflectToAttribute: true,
-                        value: false
-                    },
-                    /**
-                     * True if the export feature is disabled, false otherwise
-                     */
-                    disableexportcontrol: {
                         type: Boolean,
                         reflectToAttribute: true,
                         value: false
