@@ -6896,7 +6896,7 @@
           "description": "Import content [V4]"
         },
         {
-          "url": "examples/v3/rest_text.html",
+          "url": "examples/v3/websocket_text.html",
           "description": "Configure component with legacy api [V3]"
         },
         {

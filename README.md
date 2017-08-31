@@ -49,7 +49,7 @@ myscript-text-web is a web component that can be used in every web application (
 ## Examples
 
 - [examples/non-version-specific/get_started.html](examples/non-version-specific/get_started.html) Get started with iink
-- [examples/v3/rest_text.html](examples/v3/rest_text.html) Get started with legacy api (v3)
+- [examples/v3/websocket_text.html](examples/v3/websocket_text.html) Get started with legacy api (v3)
 - [examples/index.html](examples/index.html) Other demonstrations
     
 ## Documentation 
