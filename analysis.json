@@ -2884,7 +2884,7 @@
         {
           "name": "apiversion",
           "type": "string",
-          "description": "Cloud API version to use (eg V3 or V4)",
+          "description": "Cloud API version to use.",
           "privacy": "public",
           "sourceRange": {
             "start": {
@@ -2899,7 +2899,7 @@
           "metadata": {
             "polymer": {}
           },
-          "defaultValue": "\"V3\""
+          "defaultValue": "\"V4\""
         },
         {
           "name": "triggerdelay",
@@ -6900,24 +6900,24 @@
       ],
       "demos": [
         {
-          "url": "examples/v4/get_started.html",
-          "description": "Interactive ink hello world [V4]"
+          "url": "examples/non-version-specific/get_started.html",
+          "description": "Get started [V4]"
         },
         {
-          "url": "examples/v4/styling.html",
-          "description": "Customization of style [V4]"
+          "url": "examples/non-version-specific/customize_style.html",
+          "description": "Customize style [V4]"
         },
         {
-          "url": "examples/v3/get_started.html",
-          "description": "Handwriting hello world [V3]"
+          "url": "examples/v4/import_content.html",
+          "description": "Import content [V4]"
+        },
+        {
+          "url": "examples/v3/get_started_legacy.html",
+          "description": "Get started [V3]"
         },
         {
           "url": "examples/v3/prediction_completion.html",
-          "description": "Using and configuring prediction and completion [V3]"
-        },
-        {
-          "url": "examples/v3/styling.html",
-          "description": "Customization of style [V3]"
+          "description": "Prediction and completion [V3]"
         },
         {
           "url": "examples/v3/superimposed.html",
@@ -6925,7 +6925,7 @@
         },
         {
           "url": "examples/index.html",
-          "description": "Other demos"
+          "description": "Other demonstrations"
         }
       ],
       "metadata": {},
@@ -6993,7 +6993,7 @@
         },
         {
           "name": "apiversion",
-          "description": "Cloud API version to use (eg V3 or V4)",
+          "description": "Cloud API version to use.",
           "sourceRange": {
             "start": {
               "line": 249,

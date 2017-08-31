@@ -33,13 +33,13 @@ CSS variable | Default
 `--myscript-text-web-exports-completed-color` | #1A9FFF
 
 
-@demo examples/v4/get_started.html Interactive ink hello world [V4]
-@demo examples/v4/styling.html Customization of style [V4]
-@demo examples/v3/get_started.html Handwriting hello world [V3]
-@demo examples/v3/prediction_completion.html Using and configuring prediction and completion [V3]
-@demo examples/v3/styling.html Customization of style [V3]
+@demo examples/non-version-specific/get_started.html Get started [V4]
+@demo examples/non-version-specific/customize_style.html Customize style [V4]
+@demo examples/v4/import_content.html Import content [V4]
+@demo examples/v3/get_started_legacy.html Get started [V3]
+@demo examples/v3/prediction_completion.html Prediction and completion [V3]
 @demo examples/v3/superimposed.html Superimposed technology [V3]
-@demo examples/index.html Other demos
+@demo examples/index.html Other demonstrations
 -->
 <dom-module id="myscript-text-web">
     <template>
@@ -47,7 +47,7 @@ CSS variable | Default
             :host {
                 --myscript-text-web-background: var(--myscript-editor-background);
                 --myscript-text-web-color: var(--myscript-editor-color);
-                --myscript-text-web-line-pattern: repeating-linear-gradient(to bottom, #F5F6F7, #F5F6F7 1px, transparent 1px, transparent 72px);
+                --myscript-text-web-line-pattern: var(--myscript-editor-line-pattern);
                 --myscript-text-web-capture-background: var(--myscript-editor-capture-background);
                 --myscript-text-web-button-background: var(--myscript-editor-button-background);
                 --myscript-text-web-button-focus-background: var(--myscript-editor-focus-background);
@@ -245,12 +245,12 @@ CSS variable | Default
                         value: 'cloud.myscript.com'
                     },
                     /**
-                     * Cloud API version to use (eg V3 or V4)
+                     * Cloud API version to use.
                      */
                     apiversion: {
                         type: String,
                         reflectToAttribute: true,
-                        value: 'V3'
+                        value: 'V4'
                     },
                     /**
                      * Delay without any user input before asking for recognition, only use in REST mode.
