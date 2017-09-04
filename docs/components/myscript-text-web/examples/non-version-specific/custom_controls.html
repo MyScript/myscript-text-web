@@ -1,9 +1,8 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport"
-          content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no, shrink-to-fit=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="HandheldFriendly" content="true"/>
@@ -12,8 +11,11 @@
 
     <link rel="stylesheet" href="../examples.css">
     <style>
+        nav {
+            line-height: 52px;
+        }
         myscript-text-web {
-            height: calc(100% - 2.625rem);
+            height: calc(100% - 52px);
         }
     </style>
 
@@ -22,11 +24,13 @@
     <link rel="import" href="../../myscript-text-web.html">
 </head>
 <body>
-    <button onclick="myscriptTextWeb.undo()">undo</button>
-    <button onclick="myscriptTextWeb.redo()">redo</button>
-    <button onclick="myscriptTextWeb.clear()">clear</button>
-    <button onclick="myscriptTextWeb.exportContent()">export</button>
-    <button onclick="myscriptTextWeb.convert()">convert</button>
+    <nav>
+        <button onclick="myscriptTextWeb.undo()">undo</button>
+        <button onclick="myscriptTextWeb.redo()">redo</button>
+        <button onclick="myscriptTextWeb.clear()">clear</button>
+        <button onclick="myscriptTextWeb.exportContent()">export</button>
+        <button onclick="myscriptTextWeb.convert()">convert</button>
+    </nav>
     <paper-toast class="fit-top"></paper-toast>
     <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
     <myscript-text-web scheme="https"

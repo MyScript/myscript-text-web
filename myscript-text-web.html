@@ -137,18 +137,7 @@ CSS variable | Default
             disablecontrols="[[ disablecontrols ]]"
             disableclearcontrol="[[ disableclearcontrol ]]"
             disableundoredocontrol="[[ disableundoredocontrol ]]"
-            disableconvertcontrol="[[ disableconvertcontrol ]]"
-            on-loaded="_forwardListener"
-            on-change="_forwardListener"
-            on-exported="_forwardListener"
-            on-converted="_forwardListener"
-            on-undo="_forwardListener"
-            on-redo="_forwardListener"
-            on-clear="_forwardListener"
-            on-export="_forwardListener"
-            on-convert="_forwardListener"
-            on-idle="_forwardListener"
-            on-error="_forwardListener">
+            disableconvertcontrol="[[ disableconvertcontrol ]]">
         </myscript-common-element>
     </template>
     <script>
@@ -333,8 +322,7 @@ CSS variable | Default
                      */
                     editor: {
                         type: Object,
-                        notify: true,
-                        observer: '_editorChanged'
+                        notify: true
                     },
                     /**
                      * Set the additional configuration used to feed MyScript editor (Structure of object as defined in MyScriptjs MyScriptJSOptions.js file)
@@ -812,13 +800,6 @@ CSS variable | Default
                     this.spellingdistortion);
             }
 
-            _forwardListener(event) {
-                // Just forwarding event there.
-                this.dispatchEvent(new CustomEvent(event.type, {
-                    detail: event.detail
-                }));
-            }
-
             _exportChangeListener(event) {
                 this.logger.trace('candidates ' + event.type + ' event intercepted', event);
                 this._manageExports(event, this);
@@ -827,23 +808,15 @@ CSS variable | Default
                 }));
             }
 
-            _editorChanged(editor) {
-                if (editor) {
-                    editor.grabber.detach(editor.domElement, editor.grabberContext);
-                    editor.grabberContext = editor.grabber.attach(this, editor, this.shadowRoot.querySelector('myscript-common-element').offsetTop);
-                }
-            }
-
             constructor() {
                 super();
                 this.logger = MyScript.LoggerConfig.getLogger('text-web');
-                this.logger.setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
-                this.configuration = this._buildConfiguration(); // Build default configuration to use in common element
             }
 
-            disconnectedCallback() {
-                super.disconnectedCallback();
-                this.editor.grabber.detach(this, this.editor.grabberContext);
+            connectedCallback() {
+                super.connectedCallback();
+                this.logger.setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
+                this.configuration = this._buildConfiguration(); // Build default configuration to use in common element
             }
 
             //-----------------------------------------------------------------------
