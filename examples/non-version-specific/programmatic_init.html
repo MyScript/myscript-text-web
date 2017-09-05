@@ -34,6 +34,20 @@
         textElement.setAttribute('host', configuration.host);
         textElement.applicationkey = configuration.applicationKey;
         textElement.hmackey = configuration.hmacKey;
+        // Testing if custom configuration is taken into account
+        textElement.configuration = {
+            recognitionParams: {
+                v4: {
+                    text: {
+                        margin: { // margins in millimeters
+                            top: 1,
+                            left: 1,
+                            right: 1
+                        }
+                    }
+                }
+            }
+        };
         // Force the component to reload with the new configuration
         textElement.unloaded = false;
     });
