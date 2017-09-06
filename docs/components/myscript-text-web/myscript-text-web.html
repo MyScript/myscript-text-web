@@ -134,6 +134,7 @@ CSS variable | Default
             canredo="[[ canredo ]]"
             canundo="[[ canundo ]]"
             idle="[[ idle ]]"
+            disableautoreconnect="[[ disableautoreconnect ]]"
             disablecontrols="[[ disablecontrols ]]"
             disableclearcontrol="[[ disableclearcontrol ]]"
             disableundoredocontrol="[[ disableundoredocontrol ]]"
@@ -428,6 +429,15 @@ CSS variable | Default
                         type: Boolean,
                         value: false,
                         reflectToAttribute: true,
+                        notify: true
+                    },
+                    /**
+                     * If set to true, disable the autoReconnect.
+                     */
+                    disableautoreconnect: {
+                        type: Boolean,
+                        reflectToAttribute: true,
+                        value: false,
                         notify: true
                     },
                     /**
