@@ -1,64 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no, shrink-to-fit=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="HandheldFriendly" content="true"/>
 
-    <title>Import content</title>
+    <head>
+        <!-- Those meta make the capture of handwriting inputs easier on mobile devices -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="HandheldFriendly" content="true"/>
 
-    <link rel="stylesheet" href="../examples.css">
-    <style>
-        nav {
-            height: 60px;
-            display: flex;
-            justify-content: space-between;
-        }
+        <title>Import content</title>
 
-        nav span {
-            display: flex;
-            width: 100%;
-        }
+        <link rel="stylesheet" href="../examples.css">
+        <style>
+            nav {
+                height: 60px;
+                display: flex;
+                justify-content: space-between;
+            }
 
-        input {
-            width: 100%;
-        }
+            nav span {
+                display: flex;
+                width: 100%;
+            }
 
-        myscript-text-web {
-            height: calc(100% - 60px);
-        }
-    </style>
+            input {
+                width: 100%;
+            }
 
-    <!-- As web components are not fully support -->
-    <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
-    <!-- myscript-common-element is import to be used later -->
-    <link rel="import" href="../../myscript-text-web.html">
-</head>
+            myscript-text-web {
+                height: calc(100% - 60px);
+            }
+        </style>
 
-<body>
-<nav>
-    <span>
-        <input type="text" id="importContentField" data-type="text/plain" placeholder="e.g. hello world">
-        <button id="importContent">Import</button>
-    </span>
-</nav>
-<paper-toast class="fit-top"></paper-toast>
-<!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
-<myscript-text-web scheme="https"
-                   host="newcloud.myscript.com"
-                   applicationkey="7d223f9e-a3cb-4213-ba4b-85e930605f8b"
-                   hmackey="5ab1935e-529a-4d48-a695-158450e52b13">
-</myscript-text-web>
-<script>
-    const component = document.querySelector('myscript-text-web');
-    const importContent = document.getElementById('importContentField');
+        <!-- As web components are not fully support -->
+        <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
+        <!-- myscript-common-element is import to be used later -->
+        <link rel="import" href="../../myscript-text-web.html">
+    </head>
 
-    document.getElementById('importContent').addEventListener('click', function () {
-        component.importContent({ x: 0, y: 0 }, importContent.value, importContent.dataset.type);
-    });
-</script>
-</body>
+    <body>
+        <nav>
+            <span>
+                <input type="text" id="importContentField" data-type="text/plain" placeholder="e.g. hello world">
+                <button id="importContent">Import</button>
+            </span>
+        </nav>
+        <paper-toast class="fit-top"></paper-toast>
+        <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
+        <myscript-text-web scheme="https"
+                           host="newcloud.myscript.com"
+                           applicationkey="7d223f9e-a3cb-4213-ba4b-85e930605f8b"
+                           hmackey="5ab1935e-529a-4d48-a695-158450e52b13">
+        </myscript-text-web>
+        <script>
+            const component = document.querySelector('myscript-text-web');
+            const importContent = document.getElementById('importContentField');
+
+            document.getElementById('importContent').addEventListener('click', function () {
+                component.importContent({ x: 0, y: 0 }, importContent.value, importContent.dataset.type);
+            });
+        </script>
+    </body>
 
 </html>

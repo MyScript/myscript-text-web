@@ -1,56 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no, shrink-to-fit=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="HandheldFriendly" content="true"/>
 
-    <title>myscript-text-web demo</title>
+    <head>
+        <!-- Those meta make the capture of handwriting inputs easier on mobile devices -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="HandheldFriendly" content="true"/>
 
-    <link rel="stylesheet" href="../examples.css">
+        <title>myscript-text-web demo</title>
 
-    <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
-    <link rel="import" href="../../myscript-text-web.html">
-</head>
+        <link rel="stylesheet" href="../examples.css">
 
-<body>
-    <myscript-text-web unloaded />
-</body>
-<script>
-    window.addEventListener('load', () => {
-        const textElement = document.querySelector('myscript-text-web');
-        console.log('All resources finished loading! Starting to init myscript-text-web');
-        // Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account
-        const configuration = {
-            scheme: 'https',
-            host: 'newcloud.myscript.com',
-            applicationKey: '7d223f9e-a3cb-4213-ba4b-85e930605f8b',
-            hmacKey: '5ab1935e-529a-4d48-a695-158450e52b13'
-        };
-        // Testing if attributes binding via DOM, setAttribute or direct object manipulation is working.
-        textElement.setAttribute('scheme', configuration.scheme);
-        textElement.setAttribute('host', configuration.host);
-        textElement.applicationkey = configuration.applicationKey;
-        textElement.hmackey = configuration.hmacKey;
-        // Testing if custom configuration is taken into account
-        textElement.configuration = {
-            recognitionParams: {
-                v4: {
-                    text: {
-                        margin: { // margins in millimeters
-                            top: 1,
-                            left: 1,
-                            right: 1
+        <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
+        <link rel="import" href="../../myscript-text-web.html">
+    </head>
+
+    <body>
+        <myscript-text-web unloaded>
+        </myscript-text-web>
+        <script>
+            window.addEventListener('load', () => {
+                const textElement = document.querySelector('myscript-text-web');
+                console.log('All resources finished loading! Starting to init myscript-text-web');
+                // Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account
+                const configuration = {
+                    scheme: 'https',
+                    host: 'newcloud.myscript.com',
+                    applicationKey: '7d223f9e-a3cb-4213-ba4b-85e930605f8b',
+                    hmacKey: '5ab1935e-529a-4d48-a695-158450e52b13'
+                };
+                // Testing if attributes binding via DOM, setAttribute or direct object manipulation is working.
+                textElement.setAttribute('scheme', configuration.scheme);
+                textElement.setAttribute('host', configuration.host);
+                textElement.applicationkey = configuration.applicationKey;
+                textElement.hmackey = configuration.hmacKey;
+                // Testing if custom configuration is taken into account
+                textElement.configuration = {
+                    recognitionParams: {
+                        v4: {
+                            text: {
+                                margin: { // margins in millimeters
+                                    top: 1,
+                                    left: 1,
+                                    right: 1
+                                }
+                            }
                         }
                     }
-                }
-            }
-        };
-        // Force the component to reload with the new configuration
-        textElement.unloaded = false;
-    });
-</script>
+                };
+                // Force the component to reload with the new configuration
+                textElement.unloaded = false;
+            });
+        </script>
+    </body>
 
 </html>

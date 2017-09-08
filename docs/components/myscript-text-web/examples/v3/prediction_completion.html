@@ -1,33 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no, shrink-to-fit=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="HandheldFriendly" content="true"/>
 
-    <title>Prediction and completion</title>
+    <head>
+        <!-- Those meta make the capture of handwriting inputs easier on mobile devices -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="HandheldFriendly" content="true"/>
 
-    <link rel="stylesheet" href="../examples.css">
+        <title>Prediction and completion</title>
 
-    <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
-    <link rel="import" href="../../myscript-text-web.html">
-</head>
+        <link rel="stylesheet" href="../examples.css">
 
-<body>
-    <myscript-text-web apiversion="V3"
-                       scheme="https"
-                       host="webdemoapi.myscript.com"
-                       applicationkey="22eda92c-10af-40d8-abea-fd4093c17d81"
-                       hmackey="a1fa759f-b3ce-4091-9fd4-d34bb870c601"
-                       resultdetail="CHARACTER"
-                       textcandidatelistsize="3"
-                       wordcandidatelistsize="3"
-                       wordpredictionlistsize="3"
-                       wordcompletionlistsize="3"
-                       charactercandidatelistsize="3">
-    </myscript-text-web>
-</body>
+        <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
+        <link rel="import" href="../../myscript-text-web.html">
+    </head>
+
+    <body>
+        <myscript-text-web apiversion="V3"
+                           scheme="https"
+                           host="webdemoapi.myscript.com"
+                           applicationkey="22eda92c-10af-40d8-abea-fd4093c17d81"
+                           hmackey="a1fa759f-b3ce-4091-9fd4-d34bb870c601"
+                           resultdetail="CHARACTER"
+                           textcandidatelistsize="3"
+                           wordcandidatelistsize="3"
+                           wordpredictionlistsize="3"
+                           wordcompletionlistsize="3"
+                           charactercandidatelistsize="3">
+        </myscript-text-web>
+    </body>
 
 </html>

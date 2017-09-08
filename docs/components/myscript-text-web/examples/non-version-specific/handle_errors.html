@@ -1,32 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no, shrink-to-fit=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="HandheldFriendly" content="true"/>
 
-    <title>Handle error</title>
+    <head>
+        <!-- Those meta make the capture of handwriting inputs easier on mobile devices -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="HandheldFriendly" content="true"/>
 
-    <link rel="stylesheet" href="../examples.css">
+        <title>Handle error</title>
 
-    <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
-    <link rel="import" href="../../../paper-toast/paper-toast.html">
-    <link rel="import" href="../../myscript-text-web.html">
-</head>
+        <link rel="stylesheet" href="../examples.css">
 
-<body>
-    <paper-toast class="fit-top"></paper-toast>
-    <myscript-text-web host="thisisnotanhost" applicationkey="WRONG">
-    </myscript-text-web>
-</body>
-<script>
-    const paperToast = document.querySelector('paper-toast');
-    document.querySelector('myscript-text-web').addEventListener('error', function(event) {
-        paperToast.text = `Error : ${JSON.stringify(event.detail)}`;
-        paperToast.fitIn = paperToast.show();
-    });
-</script>
+        <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
+        <link rel="import" href="../../../paper-toast/paper-toast.html">
+        <link rel="import" href="../../myscript-text-web.html">
+    </head>
+
+    <body>
+        <paper-toast class="fit-top"></paper-toast>
+        <myscript-text-web host="thisisnotanhost"
+                           applicationkey="WRONG">
+        </myscript-text-web>
+        <script>
+            const paperToast = document.querySelector('paper-toast');
+            document.querySelector('myscript-text-web').addEventListener('error', function (event) {
+                paperToast.text = `Error : ${JSON.stringify(event.detail)}`;
+                paperToast.fitIn = paperToast.show();
+            });
+        </script>
+    </body>
 
 </html>
