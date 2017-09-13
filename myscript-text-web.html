@@ -141,7 +141,8 @@ CSS variable | Default
             disablecontrols="[[ disablecontrols ]]"
             disableclearcontrol="[[ disableclearcontrol ]]"
             disableundoredocontrol="[[ disableundoredocontrol ]]"
-            disableconvertcontrol="[[ disableconvertcontrol ]]">
+            disableconvertcontrol="[[ disableconvertcontrol ]]"
+            touch-action="[[ touch-action ]]">
         </myscript-common-element>
     </template>
     <script>
@@ -688,6 +689,10 @@ CSS variable | Default
                         type: Boolean,
                         value: false,
                         reflectToAttribute: true
+                    },
+                    'touch-action': {
+                        type: String,
+                        value: 'initial'
                     }
                 }
             }
