@@ -1,65 +1,72 @@
-# myscript-text-web
-
-The easy way to integrate text handwriting recognition in your web app.
+:pencil: The easy way to integrate text handwriting recognition in your web app.
 
 ![myscript-text-web preview](./preview.gif)
 
+ 
+<a style="text-align:center; font-size:150%;" href="https://myscript.github.io/myscript-text-web/components/myscript-text-web/examples/">Test it live</a>
+
+
 ## What is it about?
 
-myscript-text-web is a web component that can be used in every web application (whatever javascript framework you are using) to bring handwriting recognition. It integrates all you need:  
+myscript-text-web is a web component that can be used in every web application to bring handwriting recognition and conversion. It integrates all you need:  
 * Signal capture,
 * Nice digital ink rendering,
-* Plug with MyScript CDK to bring handwriting recognition.
+* Rich editing gestures,
+* Conversion,
+* Import (raw text),
+* Exports (HTML and raw text).
 
-## Prerequisites
+## Getting started
 
-1. Have a MyScript developer account. You can create one [here](https://dev.myscript.com/).
-2. Get an application key and HMAC key for your application.
-3. Import webcomponents polyfill on your webapp.
+### Prerequisites
 
-```html
-    <script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
-```
+1. Have [bower](https://bower.io/#install-bower) installed.
+2. Get your keys and the free monthly quota to access MyScript Cloud at [developer.myscript.com](https://developer.myscript.com)
  
 ## Installation
 
-1. Download it.
-
-       bower install myscript-text-web
-
-2. Import it on your webapp.
+1. Download myscript-text-web.
+```shell
+bower install myscript-text-web
+```
+2. Create and edit `index.html` file in the same directory. Add the following line in the head section to import the library.
 
 ```html
-    <link rel="import" href="bower_components/myscript-text-web/myscript-text-web.html">
+<!-- Load the webcomponent polyfill -->
+<script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+<!-- Load myscript-text-web and the related librairies -->
+<link rel="import" href="bower_components/myscript-text-web/myscript-text-web.html">
 ```
 
-3. Configure it.
+3. Use the component in the body section. Use the keys you received by mail.
 
 ```html
-    <myscript-text-web
-        applicationkey="YOUR MYSCRIPT CDK APPLICATION KEY"
-        hmackey="YOUR MYSCRIPT CDK HMAC KEY">
-    </myscript-text-web>
+<myscript-text-web
+  applicationkey="YOUR MYSCRIPT CDK APPLICATION KEY"
+  hmackey="YOUR MYSCRIPT CDK HMAC KEY">
+</myscript-text-web>
 ```
    
-4. Use it!
+4. Launch a local web-server and use it!
 
-[Test it live](https://myscript.github.io/myscript-text-web/components/myscript-text-web/examples/)!
+
 
 ## Examples
 
-- [examples/non-version-specific/get_started.html](examples/non-version-specific/get_started.html) Get started with iink
-- [examples/v3/websocket_text.html](examples/v3/websocket_text.html) Get started with legacy api (v3)
-- [examples/index.html](examples/index.html) Other demonstrations
-    
-## Documentation 
+Browse [the examples hosted on github.io](https://myscript.github.io/myscript-text-web/examples/).
 
-The API Reference is available here: [https://myscript.github.io/myscript-text-web/](https://myscript.github.io/myscript-text-web/) 
+The [directory examples/](/examples) of this git repository contains all the example source code. 
+
+## Documentation
+
+A complete guide is available on [MyScript Developer website](https://developer.myscript.com/docs/interactive-ink/1.0/web/web-components/text-element/).
+
+The API Reference is available in the `docs` directory or on [myscript.github.io/myscript-text-web/ website](https://myscript.github.io/myscript-text-web/).
 
 ## Contribute
 
 We welcome your contributions:
-If you would like to extend myscript-text-web for your needs, feel free to fork it!
+If you wish to contribute to `myscript-text-web`, feel free to fork it!
 Please sign our [Contributor License Agreement](CONTRIBUTING.md) before submitting your pull request.
 
 ## Share your feedback
