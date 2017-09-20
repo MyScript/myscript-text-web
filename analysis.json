@@ -7,6 +7,765 @@
       "path": "myscript-text-exports.html",
       "properties": [
         {
+          "name": "__serializing",
+          "type": "boolean",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-accessors.html",
+            "start": {
+              "line": 123,
+              "column": 8
+            },
+            "end": {
+              "line": 123,
+              "column": 27
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyAccessors"
+        },
+        {
+          "name": "__dataCounter",
+          "type": "number",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1151,
+              "column": 8
+            },
+            "end": {
+              "line": 1151,
+              "column": 27
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__dataEnabled",
+          "type": "boolean",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-accessors.html",
+            "start": {
+              "line": 127,
+              "column": 8
+            },
+            "end": {
+              "line": 127,
+              "column": 27
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyAccessors"
+        },
+        {
+          "name": "__dataReady",
+          "type": "boolean",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-accessors.html",
+            "start": {
+              "line": 129,
+              "column": 8
+            },
+            "end": {
+              "line": 129,
+              "column": 25
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyAccessors"
+        },
+        {
+          "name": "__dataInvalid",
+          "type": "boolean",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-accessors.html",
+            "start": {
+              "line": 131,
+              "column": 8
+            },
+            "end": {
+              "line": 131,
+              "column": 27
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyAccessors"
+        },
+        {
+          "name": "__data",
+          "type": "!Object",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1133,
+              "column": 8
+            },
+            "end": {
+              "line": 1133,
+              "column": 20
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__dataPending",
+          "type": "!Object",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1135,
+              "column": 8
+            },
+            "end": {
+              "line": 1135,
+              "column": 27
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__dataOld",
+          "type": "!Object",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1137,
+              "column": 8
+            },
+            "end": {
+              "line": 1137,
+              "column": 23
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__dataProto",
+          "type": "Object",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-accessors.html",
+            "start": {
+              "line": 139,
+              "column": 8
+            },
+            "end": {
+              "line": 139,
+              "column": 25
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyAccessors"
+        },
+        {
+          "name": "__dataHasAccessor",
+          "type": "Object",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-accessors.html",
+            "start": {
+              "line": 141,
+              "column": 8
+            },
+            "end": {
+              "line": 141,
+              "column": 31
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyAccessors"
+        },
+        {
+          "name": "__dataInstanceProps",
+          "type": "Object",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-accessors.html",
+            "start": {
+              "line": 143,
+              "column": 8
+            },
+            "end": {
+              "line": 143,
+              "column": 33
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyAccessors"
+        },
+        {
+          "name": "__dataClientsReady",
+          "type": "boolean",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1115,
+              "column": 8
+            },
+            "end": {
+              "line": 1115,
+              "column": 32
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__dataPendingClients",
+          "type": "Array",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1117,
+              "column": 8
+            },
+            "end": {
+              "line": 1117,
+              "column": 34
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__dataToNotify",
+          "type": "Object",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1119,
+              "column": 8
+            },
+            "end": {
+              "line": 1119,
+              "column": 28
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__dataLinkedPaths",
+          "type": "Object",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1121,
+              "column": 8
+            },
+            "end": {
+              "line": 1121,
+              "column": 31
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__dataHasPaths",
+          "type": "boolean",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1123,
+              "column": 8
+            },
+            "end": {
+              "line": 1123,
+              "column": 28
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__dataCompoundStorage",
+          "type": "Object",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1125,
+              "column": 8
+            },
+            "end": {
+              "line": 1125,
+              "column": 35
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__dataHost",
+          "type": "Polymer_PropertyEffects",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1127,
+              "column": 8
+            },
+            "end": {
+              "line": 1127,
+              "column": 24
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__dataTemp",
+          "type": "!Object",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1129,
+              "column": 8
+            },
+            "end": {
+              "line": 1129,
+              "column": 24
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__dataClientsInitialized",
+          "type": "boolean",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1131,
+              "column": 8
+            },
+            "end": {
+              "line": 1131,
+              "column": 38
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__computeEffects",
+          "type": "Object",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1139,
+              "column": 8
+            },
+            "end": {
+              "line": 1139,
+              "column": 30
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__reflectEffects",
+          "type": "Object",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1141,
+              "column": 8
+            },
+            "end": {
+              "line": 1141,
+              "column": 30
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__notifyEffects",
+          "type": "Object",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1143,
+              "column": 8
+            },
+            "end": {
+              "line": 1143,
+              "column": 29
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__propagateEffects",
+          "type": "Object",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1145,
+              "column": 8
+            },
+            "end": {
+              "line": 1145,
+              "column": 32
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__observeEffects",
+          "type": "Object",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1147,
+              "column": 8
+            },
+            "end": {
+              "line": 1147,
+              "column": 30
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__readOnly",
+          "type": "Object",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1149,
+              "column": 8
+            },
+            "end": {
+              "line": 1149,
+              "column": 24
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__templateInfo",
+          "type": "!TemplateInfo",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1153,
+              "column": 8
+            },
+            "end": {
+              "line": 1153,
+              "column": 28
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "_template",
+          "type": "HTMLTemplateElement",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/element-mixin.html",
+            "start": {
+              "line": 549,
+              "column": 8
+            },
+            "end": {
+              "line": 549,
+              "column": 23
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.ElementMixin"
+        },
+        {
+          "name": "_importPath",
+          "type": "string",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/element-mixin.html",
+            "start": {
+              "line": 551,
+              "column": 8
+            },
+            "end": {
+              "line": 551,
+              "column": 25
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.ElementMixin"
+        },
+        {
+          "name": "rootPath",
+          "type": "string",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/element-mixin.html",
+            "start": {
+              "line": 553,
+              "column": 8
+            },
+            "end": {
+              "line": 553,
+              "column": 22
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.ElementMixin"
+        },
+        {
+          "name": "importPath",
+          "type": "string",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/element-mixin.html",
+            "start": {
+              "line": 555,
+              "column": 8
+            },
+            "end": {
+              "line": 555,
+              "column": 24
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.ElementMixin"
+        },
+        {
+          "name": "root",
+          "type": "(StampedTemplate|HTMLElement|ShadowRoot)",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/element-mixin.html",
+            "start": {
+              "line": 557,
+              "column": 8
+            },
+            "end": {
+              "line": 557,
+              "column": 18
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.ElementMixin"
+        },
+        {
+          "name": "$",
+          "type": "!Object.<string, !Node>",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/element-mixin.html",
+            "start": {
+              "line": 559,
+              "column": 8
+            },
+            "end": {
+              "line": 559,
+              "column": 15
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.ElementMixin"
+        },
+        {
           "name": "exports",
           "type": "Object.<String, Object>",
           "description": "Exports result.",
@@ -65,11 +824,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/template-stamp.html",
             "start": {
-              "line": 447,
+              "line": 448,
               "column": 6
             },
             "end": {
-              "line": 452,
+              "line": 453,
               "column": 7
             }
           },
@@ -109,11 +868,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/template-stamp.html",
             "start": {
-              "line": 461,
+              "line": 462,
               "column": 6
             },
             "end": {
-              "line": 463,
+              "line": 464,
               "column": 7
             }
           },
@@ -144,11 +903,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/template-stamp.html",
             "start": {
-              "line": 472,
+              "line": 473,
               "column": 6
             },
             "end": {
-              "line": 474,
+              "line": 475,
               "column": 7
             }
           },
@@ -174,16 +933,16 @@
         },
         {
           "name": "attributeChangedCallback",
-          "description": "Provides a default implementation of the standard Custom Elements\n`attributeChangedCallback`.\n\nBy default, attributes declared in `properties` metadata are\ndeserialized using their `type` information to properties of the\nsame name.  \"Dash-cased\" attributes are deserialzed to \"camelCase\"\nproperties.",
+          "description": "Provides a default implementation of the standard Custom Elements\n`attributeChangedCallback`.\n\nBy default, attributes declared in `properties` metadata are\ndeserialized using their `type` information to properties of the\nsame name.  \"Dash-cased\" attributes are deserialized to \"camelCase\"\nproperties.",
           "privacy": "public",
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 699,
+              "line": 715,
               "column": 6
             },
             "end": {
-              "line": 707,
+              "line": 723,
               "column": 7
             }
           },
@@ -214,11 +973,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 557,
+              "line": 573,
               "column": 6
             },
             "end": {
-              "line": 597,
+              "line": 613,
               "column": 7
             }
           },
@@ -561,7 +1320,7 @@
         },
         {
           "name": "_setPendingProperty",
-          "description": "Overrides the `PropertyAccessors` implementation to introduce special\ndirty check logic depending on the property & value being set:\n\n1. Any value set to a path (e.g. 'obj.prop': 42 or 'obj.prop': {...})\n   Stored in `__dataTemp`, dirty checked against `__dataTemp`\n2. Object set to simple property (e.g. 'prop': {...})\n   Stored in `__dataTemp` and `__data`, dirty checked against\n   `__dataTemp` by default implementation of `_shouldPropertyChange`\n3. Primitive value set to simple property (e.g. 'prop': 42)\n   Stored in `__data`, dirty checked against `__data`\n\nThe dirty-check is important to prevent cycles due to two-way\nnotification, but paths and objects are only dirty checked against any\nprevious value set during this turn via a \"temporary cache\" that is\ncleared when the last `_propertiesChaged` exits. This is so:\na. any cached array paths (e.g. 'array.3.prop') may be invalidated\n   due to array mutations like shift/unshift/splice; this is fine\n   since path changes are dirty-checked at user entry points like `set`\nb. dirty-checking for objects only lasts one turn to allow the user\n   to mutate the object in-place and re-set it with the same identity\n   and have all sub-properties re-propagated in a subsequent turn.\n\nThe temp cache is not necessarily sufficient to prevent invalid array\npaths, since a splice can happen during the same turn (with pathological\nuser code); we could introduce a \"fixup\" for temporarily cached array\npaths if needed: https://github.com/Polymer/polymer/issues/4227",
+          "description": "Overrides the `PropertyAccessors` implementation to introduce special\ndirty check logic depending on the property & value being set:\n\n1. Any value set to a path (e.g. 'obj.prop': 42 or 'obj.prop': {...})\n   Stored in `__dataTemp`, dirty checked against `__dataTemp`\n2. Object set to simple property (e.g. 'prop': {...})\n   Stored in `__dataTemp` and `__data`, dirty checked against\n   `__dataTemp` by default implementation of `_shouldPropertyChange`\n3. Primitive value set to simple property (e.g. 'prop': 42)\n   Stored in `__data`, dirty checked against `__data`\n\nThe dirty-check is important to prevent cycles due to two-way\nnotification, but paths and objects are only dirty checked against any\nprevious value set during this turn via a \"temporary cache\" that is\ncleared when the last `_propertiesChanged` exits. This is so:\na. any cached array paths (e.g. 'array.3.prop') may be invalidated\n   due to array mutations like shift/unshift/splice; this is fine\n   since path changes are dirty-checked at user entry points like `set`\nb. dirty-checking for objects only lasts one turn to allow the user\n   to mutate the object in-place and re-set it with the same identity\n   and have all sub-properties re-propagated in a subsequent turn.\n\nThe temp cache is not necessarily sufficient to prevent invalid array\npaths, since a splice can happen during the same turn (with pathological\nuser code); we could introduce a \"fixup\" for temporarily cached array\npaths if needed: https://github.com/Polymer/polymer/issues/4227",
           "privacy": "protected",
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
@@ -691,11 +1450,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 627,
+              "line": 643,
               "column": 6
             },
             "end": {
-              "line": 633,
+              "line": 649,
               "column": 7
             }
           },
@@ -743,7 +1502,7 @@
               "column": 6
             },
             "end": {
-              "line": 613,
+              "line": 609,
               "column": 7
             }
           },
@@ -767,7 +1526,7 @@
           ],
           "return": {
             "type": "boolean",
-            "desc": "Whether the property should be considered a change\n  and enqueue a `_proeprtiesChanged` callback"
+            "desc": "Whether the property should be considered a change\n  and enqueue a `_propertiesChanged` callback"
           },
           "inheritedFrom": "Polymer.PropertyAccessors"
         },
@@ -1140,11 +1899,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 644,
+              "line": 660,
               "column": 6
             },
             "end": {
-              "line": 653,
+              "line": 669,
               "column": 7
             }
           },
@@ -1390,7 +2149,7 @@
           "params": [
             {
               "name": "path",
-              "type": "string",
+              "type": "(string|!Array.<(string|number)>)",
               "description": "Path to array."
             },
             {
@@ -1422,7 +2181,7 @@
           "params": [
             {
               "name": "path",
-              "type": "string",
+              "type": "(string|!Array.<(string|number)>)",
               "description": "Path to array."
             }
           ],
@@ -1451,7 +2210,7 @@
           "params": [
             {
               "name": "path",
-              "type": "string",
+              "type": "(string|!Array.<(string|number)>)",
               "description": "Path to array."
             },
             {
@@ -1493,7 +2252,7 @@
           "params": [
             {
               "name": "path",
-              "type": "string",
+              "type": "(string|!Array.<(string|number)>)",
               "description": "Path to array."
             }
           ],
@@ -1522,7 +2281,7 @@
           "params": [
             {
               "name": "path",
-              "type": "string",
+              "type": "(string|!Array.<(string|number)>)",
               "description": "Path to array."
             },
             {
@@ -1811,11 +2570,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 609,
+              "line": 625,
               "column": 6
             },
             "end": {
-              "line": 614,
+              "line": 630,
               "column": 7
             }
           },
@@ -1830,11 +2589,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 620,
+              "line": 636,
               "column": 6
             },
             "end": {
-              "line": 620,
+              "line": 636,
               "column": 31
             }
           },
@@ -1849,11 +2608,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 667,
+              "line": 683,
               "column": 6
             },
             "end": {
-              "line": 683,
+              "line": 699,
               "column": 7
             }
           },
@@ -1861,12 +2620,12 @@
           "params": [
             {
               "name": "dom",
-              "type": "NodeList",
+              "type": "StampedTemplate",
               "description": "to attach to the element."
             }
           ],
           "return": {
-            "type": "Node",
+            "type": "ShadowRoot",
             "desc": "node to which the dom has been attached."
           },
           "inheritedFrom": "Polymer.ElementMixin"
@@ -1878,11 +2637,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 726,
+              "line": 742,
               "column": 6
             },
             "end": {
-              "line": 730,
+              "line": 746,
               "column": 7
             }
           },
@@ -1903,11 +2662,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 743,
+              "line": 759,
               "column": 6
             },
             "end": {
-              "line": 748,
+              "line": 764,
               "column": 7
             }
           },
@@ -2114,11 +2873,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 759,
+              "line": 775,
               "column": 6
             },
             "end": {
-              "line": 762,
+              "line": 778,
               "column": 7
             }
           },
@@ -2383,7 +3142,7 @@
         },
         {
           "name": "addPropertyEffect",
-          "description": "Ensures an accessor exists for the specified property, and adds\nto a list of \"property effects\" that will run when the accessor for\nthe specified property is set.  Effects are grouped by \"type\", which\nroughly corresponds to a phase in effect processing.  The effect\nmetadata should be in the following form:\n\n  {\n    fn: effectFunction, // Reference to function to call to perform effect\n    info: { ... }       // Effect metadata passed to function\n    trigger: {          // Optional triggering metadata; if not provided\n      name: string      // the property is treated as a wildcard\n      structured: boolean\n      wildcard: boolean\n    }\n  }\n\nEffects are called from `_propertiesChanged` in the following order by\ntype:\n\n1. COMPUTE\n2. PROPAGATE\n3. REFLECT\n4. OBSERVE\n5. NOTIFY\n\nEffect functions are called with the following signature:\n\n  effectFunction(inst, path, props, oldProps, info, hasPaths)",
+          "description": "Ensures an accessor exists for the specified property, and adds\nto a list of \"property effects\" that will run when the accessor for\nthe specified property is set.  Effects are grouped by \"type\", which\nroughly corresponds to a phase in effect processing.  The effect\nmetadata should be in the following form:\n\n    {\n      fn: effectFunction, // Reference to function to call to perform effect\n      info: { ... }       // Effect metadata passed to function\n      trigger: {          // Optional triggering metadata; if not provided\n        name: string      // the property is treated as a wildcard\n        structured: boolean\n        wildcard: boolean\n      }\n    }\n\nEffects are called from `_propertiesChanged` in the following order by\ntype:\n\n1. COMPUTE\n2. PROPAGATE\n3. REFLECT\n4. OBSERVE\n5. NOTIFY\n\nEffect functions are called with the following signature:\n\n    effectFunction(inst, path, props, oldProps, info, hasPaths)",
           "privacy": "protected",
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
@@ -2453,7 +3212,7 @@
         },
         {
           "name": "createMethodObserver",
-          "description": "Creates a multi-property \"method observer\" based on the provided\nexpression, which should be a string in the form of a normal Javascript\nfunction signature: `'methodName(arg1, [..., argn])'`.  Each argument\nshould correspond to a property or path in the context of this\nprototype (or instance), or may be a literal string or number.",
+          "description": "Creates a multi-property \"method observer\" based on the provided\nexpression, which should be a string in the form of a normal JavaScript\nfunction signature: `'methodName(arg1, [..., argn])'`.  Each argument\nshould correspond to a property or path in the context of this\nprototype (or instance), or may be a literal string or number.",
           "privacy": "protected",
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
@@ -2563,7 +3322,7 @@
         },
         {
           "name": "createComputedProperty",
-          "description": "Creates a computed property whose value is set to the result of the\nmethod described by the given `expression` each time one or more\narguments to the method changes.  The expression should be a string\nin the form of a normal Javascript function signature:\n`'methodName(arg1, [..., argn])'`",
+          "description": "Creates a computed property whose value is set to the result of the\nmethod described by the given `expression` each time one or more\narguments to the method changes.  The expression should be a string\nin the form of a normal JavaScript function signature:\n`'methodName(arg1, [..., argn])'`",
           "privacy": "protected",
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
@@ -2821,6 +3580,765 @@
       "summary": "",
       "path": "myscript-text-web.html",
       "properties": [
+        {
+          "name": "__serializing",
+          "type": "boolean",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-accessors.html",
+            "start": {
+              "line": 123,
+              "column": 8
+            },
+            "end": {
+              "line": 123,
+              "column": 27
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyAccessors"
+        },
+        {
+          "name": "__dataCounter",
+          "type": "number",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1151,
+              "column": 8
+            },
+            "end": {
+              "line": 1151,
+              "column": 27
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__dataEnabled",
+          "type": "boolean",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-accessors.html",
+            "start": {
+              "line": 127,
+              "column": 8
+            },
+            "end": {
+              "line": 127,
+              "column": 27
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyAccessors"
+        },
+        {
+          "name": "__dataReady",
+          "type": "boolean",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-accessors.html",
+            "start": {
+              "line": 129,
+              "column": 8
+            },
+            "end": {
+              "line": 129,
+              "column": 25
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyAccessors"
+        },
+        {
+          "name": "__dataInvalid",
+          "type": "boolean",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-accessors.html",
+            "start": {
+              "line": 131,
+              "column": 8
+            },
+            "end": {
+              "line": 131,
+              "column": 27
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyAccessors"
+        },
+        {
+          "name": "__data",
+          "type": "!Object",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1133,
+              "column": 8
+            },
+            "end": {
+              "line": 1133,
+              "column": 20
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__dataPending",
+          "type": "!Object",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1135,
+              "column": 8
+            },
+            "end": {
+              "line": 1135,
+              "column": 27
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__dataOld",
+          "type": "!Object",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1137,
+              "column": 8
+            },
+            "end": {
+              "line": 1137,
+              "column": 23
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__dataProto",
+          "type": "Object",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-accessors.html",
+            "start": {
+              "line": 139,
+              "column": 8
+            },
+            "end": {
+              "line": 139,
+              "column": 25
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyAccessors"
+        },
+        {
+          "name": "__dataHasAccessor",
+          "type": "Object",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-accessors.html",
+            "start": {
+              "line": 141,
+              "column": 8
+            },
+            "end": {
+              "line": 141,
+              "column": 31
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyAccessors"
+        },
+        {
+          "name": "__dataInstanceProps",
+          "type": "Object",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-accessors.html",
+            "start": {
+              "line": 143,
+              "column": 8
+            },
+            "end": {
+              "line": 143,
+              "column": 33
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyAccessors"
+        },
+        {
+          "name": "__dataClientsReady",
+          "type": "boolean",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1115,
+              "column": 8
+            },
+            "end": {
+              "line": 1115,
+              "column": 32
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__dataPendingClients",
+          "type": "Array",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1117,
+              "column": 8
+            },
+            "end": {
+              "line": 1117,
+              "column": 34
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__dataToNotify",
+          "type": "Object",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1119,
+              "column": 8
+            },
+            "end": {
+              "line": 1119,
+              "column": 28
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__dataLinkedPaths",
+          "type": "Object",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1121,
+              "column": 8
+            },
+            "end": {
+              "line": 1121,
+              "column": 31
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__dataHasPaths",
+          "type": "boolean",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1123,
+              "column": 8
+            },
+            "end": {
+              "line": 1123,
+              "column": 28
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__dataCompoundStorage",
+          "type": "Object",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1125,
+              "column": 8
+            },
+            "end": {
+              "line": 1125,
+              "column": 35
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__dataHost",
+          "type": "Polymer_PropertyEffects",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1127,
+              "column": 8
+            },
+            "end": {
+              "line": 1127,
+              "column": 24
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__dataTemp",
+          "type": "!Object",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1129,
+              "column": 8
+            },
+            "end": {
+              "line": 1129,
+              "column": 24
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__dataClientsInitialized",
+          "type": "boolean",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1131,
+              "column": 8
+            },
+            "end": {
+              "line": 1131,
+              "column": 38
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__computeEffects",
+          "type": "Object",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1139,
+              "column": 8
+            },
+            "end": {
+              "line": 1139,
+              "column": 30
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__reflectEffects",
+          "type": "Object",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1141,
+              "column": 8
+            },
+            "end": {
+              "line": 1141,
+              "column": 30
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__notifyEffects",
+          "type": "Object",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1143,
+              "column": 8
+            },
+            "end": {
+              "line": 1143,
+              "column": 29
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__propagateEffects",
+          "type": "Object",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1145,
+              "column": 8
+            },
+            "end": {
+              "line": 1145,
+              "column": 32
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__observeEffects",
+          "type": "Object",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1147,
+              "column": 8
+            },
+            "end": {
+              "line": 1147,
+              "column": 30
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__readOnly",
+          "type": "Object",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1149,
+              "column": 8
+            },
+            "end": {
+              "line": 1149,
+              "column": 24
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__templateInfo",
+          "type": "!TemplateInfo",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1153,
+              "column": 8
+            },
+            "end": {
+              "line": 1153,
+              "column": 28
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "_template",
+          "type": "HTMLTemplateElement",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/element-mixin.html",
+            "start": {
+              "line": 549,
+              "column": 8
+            },
+            "end": {
+              "line": 549,
+              "column": 23
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.ElementMixin"
+        },
+        {
+          "name": "_importPath",
+          "type": "string",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/element-mixin.html",
+            "start": {
+              "line": 551,
+              "column": 8
+            },
+            "end": {
+              "line": 551,
+              "column": 25
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.ElementMixin"
+        },
+        {
+          "name": "rootPath",
+          "type": "string",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/element-mixin.html",
+            "start": {
+              "line": 553,
+              "column": 8
+            },
+            "end": {
+              "line": 553,
+              "column": 22
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.ElementMixin"
+        },
+        {
+          "name": "importPath",
+          "type": "string",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/element-mixin.html",
+            "start": {
+              "line": 555,
+              "column": 8
+            },
+            "end": {
+              "line": 555,
+              "column": 24
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.ElementMixin"
+        },
+        {
+          "name": "root",
+          "type": "(StampedTemplate|HTMLElement|ShadowRoot)",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/element-mixin.html",
+            "start": {
+              "line": 557,
+              "column": 8
+            },
+            "end": {
+              "line": 557,
+              "column": 18
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.ElementMixin"
+        },
+        {
+          "name": "$",
+          "type": "!Object.<string, !Node>",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/element-mixin.html",
+            "start": {
+              "line": 559,
+              "column": 8
+            },
+            "end": {
+              "line": 559,
+              "column": 15
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.ElementMixin"
+        },
         {
           "name": "protocol",
           "type": "string",
@@ -4059,11 +5577,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/template-stamp.html",
             "start": {
-              "line": 447,
+              "line": 448,
               "column": 6
             },
             "end": {
-              "line": 452,
+              "line": 453,
               "column": 7
             }
           },
@@ -4103,11 +5621,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/template-stamp.html",
             "start": {
-              "line": 461,
+              "line": 462,
               "column": 6
             },
             "end": {
-              "line": 463,
+              "line": 464,
               "column": 7
             }
           },
@@ -4138,11 +5656,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/template-stamp.html",
             "start": {
-              "line": 472,
+              "line": 473,
               "column": 6
             },
             "end": {
-              "line": 474,
+              "line": 475,
               "column": 7
             }
           },
@@ -4168,16 +5686,16 @@
         },
         {
           "name": "attributeChangedCallback",
-          "description": "Provides a default implementation of the standard Custom Elements\n`attributeChangedCallback`.\n\nBy default, attributes declared in `properties` metadata are\ndeserialized using their `type` information to properties of the\nsame name.  \"Dash-cased\" attributes are deserialzed to \"camelCase\"\nproperties.",
+          "description": "Provides a default implementation of the standard Custom Elements\n`attributeChangedCallback`.\n\nBy default, attributes declared in `properties` metadata are\ndeserialized using their `type` information to properties of the\nsame name.  \"Dash-cased\" attributes are deserialized to \"camelCase\"\nproperties.",
           "privacy": "public",
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 699,
+              "line": 715,
               "column": 6
             },
             "end": {
-              "line": 707,
+              "line": 723,
               "column": 7
             }
           },
@@ -4208,11 +5726,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 557,
+              "line": 573,
               "column": 6
             },
             "end": {
-              "line": 597,
+              "line": 613,
               "column": 7
             }
           },
@@ -4555,7 +6073,7 @@
         },
         {
           "name": "_setPendingProperty",
-          "description": "Overrides the `PropertyAccessors` implementation to introduce special\ndirty check logic depending on the property & value being set:\n\n1. Any value set to a path (e.g. 'obj.prop': 42 or 'obj.prop': {...})\n   Stored in `__dataTemp`, dirty checked against `__dataTemp`\n2. Object set to simple property (e.g. 'prop': {...})\n   Stored in `__dataTemp` and `__data`, dirty checked against\n   `__dataTemp` by default implementation of `_shouldPropertyChange`\n3. Primitive value set to simple property (e.g. 'prop': 42)\n   Stored in `__data`, dirty checked against `__data`\n\nThe dirty-check is important to prevent cycles due to two-way\nnotification, but paths and objects are only dirty checked against any\nprevious value set during this turn via a \"temporary cache\" that is\ncleared when the last `_propertiesChaged` exits. This is so:\na. any cached array paths (e.g. 'array.3.prop') may be invalidated\n   due to array mutations like shift/unshift/splice; this is fine\n   since path changes are dirty-checked at user entry points like `set`\nb. dirty-checking for objects only lasts one turn to allow the user\n   to mutate the object in-place and re-set it with the same identity\n   and have all sub-properties re-propagated in a subsequent turn.\n\nThe temp cache is not necessarily sufficient to prevent invalid array\npaths, since a splice can happen during the same turn (with pathological\nuser code); we could introduce a \"fixup\" for temporarily cached array\npaths if needed: https://github.com/Polymer/polymer/issues/4227",
+          "description": "Overrides the `PropertyAccessors` implementation to introduce special\ndirty check logic depending on the property & value being set:\n\n1. Any value set to a path (e.g. 'obj.prop': 42 or 'obj.prop': {...})\n   Stored in `__dataTemp`, dirty checked against `__dataTemp`\n2. Object set to simple property (e.g. 'prop': {...})\n   Stored in `__dataTemp` and `__data`, dirty checked against\n   `__dataTemp` by default implementation of `_shouldPropertyChange`\n3. Primitive value set to simple property (e.g. 'prop': 42)\n   Stored in `__data`, dirty checked against `__data`\n\nThe dirty-check is important to prevent cycles due to two-way\nnotification, but paths and objects are only dirty checked against any\nprevious value set during this turn via a \"temporary cache\" that is\ncleared when the last `_propertiesChanged` exits. This is so:\na. any cached array paths (e.g. 'array.3.prop') may be invalidated\n   due to array mutations like shift/unshift/splice; this is fine\n   since path changes are dirty-checked at user entry points like `set`\nb. dirty-checking for objects only lasts one turn to allow the user\n   to mutate the object in-place and re-set it with the same identity\n   and have all sub-properties re-propagated in a subsequent turn.\n\nThe temp cache is not necessarily sufficient to prevent invalid array\npaths, since a splice can happen during the same turn (with pathological\nuser code); we could introduce a \"fixup\" for temporarily cached array\npaths if needed: https://github.com/Polymer/polymer/issues/4227",
           "privacy": "protected",
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
@@ -4685,11 +6203,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 627,
+              "line": 643,
               "column": 6
             },
             "end": {
-              "line": 633,
+              "line": 649,
               "column": 7
             }
           },
@@ -4737,7 +6255,7 @@
               "column": 6
             },
             "end": {
-              "line": 613,
+              "line": 609,
               "column": 7
             }
           },
@@ -4761,7 +6279,7 @@
           ],
           "return": {
             "type": "boolean",
-            "desc": "Whether the property should be considered a change\n  and enqueue a `_proeprtiesChanged` callback"
+            "desc": "Whether the property should be considered a change\n  and enqueue a `_propertiesChanged` callback"
           },
           "inheritedFrom": "Polymer.PropertyAccessors"
         },
@@ -5134,11 +6652,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 644,
+              "line": 660,
               "column": 6
             },
             "end": {
-              "line": 653,
+              "line": 669,
               "column": 7
             }
           },
@@ -5384,7 +6902,7 @@
           "params": [
             {
               "name": "path",
-              "type": "string",
+              "type": "(string|!Array.<(string|number)>)",
               "description": "Path to array."
             },
             {
@@ -5416,7 +6934,7 @@
           "params": [
             {
               "name": "path",
-              "type": "string",
+              "type": "(string|!Array.<(string|number)>)",
               "description": "Path to array."
             }
           ],
@@ -5445,7 +6963,7 @@
           "params": [
             {
               "name": "path",
-              "type": "string",
+              "type": "(string|!Array.<(string|number)>)",
               "description": "Path to array."
             },
             {
@@ -5487,7 +7005,7 @@
           "params": [
             {
               "name": "path",
-              "type": "string",
+              "type": "(string|!Array.<(string|number)>)",
               "description": "Path to array."
             }
           ],
@@ -5516,7 +7034,7 @@
           "params": [
             {
               "name": "path",
-              "type": "string",
+              "type": "(string|!Array.<(string|number)>)",
               "description": "Path to array."
             },
             {
@@ -5839,11 +7357,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 667,
+              "line": 683,
               "column": 6
             },
             "end": {
-              "line": 683,
+              "line": 699,
               "column": 7
             }
           },
@@ -5851,12 +7369,12 @@
           "params": [
             {
               "name": "dom",
-              "type": "NodeList",
+              "type": "StampedTemplate",
               "description": "to attach to the element."
             }
           ],
           "return": {
-            "type": "Node",
+            "type": "ShadowRoot",
             "desc": "node to which the dom has been attached."
           },
           "inheritedFrom": "Polymer.ElementMixin"
@@ -5868,11 +7386,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 726,
+              "line": 742,
               "column": 6
             },
             "end": {
-              "line": 730,
+              "line": 746,
               "column": 7
             }
           },
@@ -5893,11 +7411,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 743,
+              "line": 759,
               "column": 6
             },
             "end": {
-              "line": 748,
+              "line": 764,
               "column": 7
             }
           },
@@ -6249,11 +7767,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 759,
+              "line": 775,
               "column": 6
             },
             "end": {
-              "line": 762,
+              "line": 778,
               "column": 7
             }
           },
@@ -6518,7 +8036,7 @@
         },
         {
           "name": "addPropertyEffect",
-          "description": "Ensures an accessor exists for the specified property, and adds\nto a list of \"property effects\" that will run when the accessor for\nthe specified property is set.  Effects are grouped by \"type\", which\nroughly corresponds to a phase in effect processing.  The effect\nmetadata should be in the following form:\n\n  {\n    fn: effectFunction, // Reference to function to call to perform effect\n    info: { ... }       // Effect metadata passed to function\n    trigger: {          // Optional triggering metadata; if not provided\n      name: string      // the property is treated as a wildcard\n      structured: boolean\n      wildcard: boolean\n    }\n  }\n\nEffects are called from `_propertiesChanged` in the following order by\ntype:\n\n1. COMPUTE\n2. PROPAGATE\n3. REFLECT\n4. OBSERVE\n5. NOTIFY\n\nEffect functions are called with the following signature:\n\n  effectFunction(inst, path, props, oldProps, info, hasPaths)",
+          "description": "Ensures an accessor exists for the specified property, and adds\nto a list of \"property effects\" that will run when the accessor for\nthe specified property is set.  Effects are grouped by \"type\", which\nroughly corresponds to a phase in effect processing.  The effect\nmetadata should be in the following form:\n\n    {\n      fn: effectFunction, // Reference to function to call to perform effect\n      info: { ... }       // Effect metadata passed to function\n      trigger: {          // Optional triggering metadata; if not provided\n        name: string      // the property is treated as a wildcard\n        structured: boolean\n        wildcard: boolean\n      }\n    }\n\nEffects are called from `_propertiesChanged` in the following order by\ntype:\n\n1. COMPUTE\n2. PROPAGATE\n3. REFLECT\n4. OBSERVE\n5. NOTIFY\n\nEffect functions are called with the following signature:\n\n    effectFunction(inst, path, props, oldProps, info, hasPaths)",
           "privacy": "protected",
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
@@ -6588,7 +8106,7 @@
         },
         {
           "name": "createMethodObserver",
-          "description": "Creates a multi-property \"method observer\" based on the provided\nexpression, which should be a string in the form of a normal Javascript\nfunction signature: `'methodName(arg1, [..., argn])'`.  Each argument\nshould correspond to a property or path in the context of this\nprototype (or instance), or may be a literal string or number.",
+          "description": "Creates a multi-property \"method observer\" based on the provided\nexpression, which should be a string in the form of a normal JavaScript\nfunction signature: `'methodName(arg1, [..., argn])'`.  Each argument\nshould correspond to a property or path in the context of this\nprototype (or instance), or may be a literal string or number.",
           "privacy": "protected",
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",
@@ -6698,7 +8216,7 @@
         },
         {
           "name": "createComputedProperty",
-          "description": "Creates a computed property whose value is set to the result of the\nmethod described by the given `expression` each time one or more\narguments to the method changes.  The expression should be a string\nin the form of a normal Javascript function signature:\n`'methodName(arg1, [..., argn])'`",
+          "description": "Creates a computed property whose value is set to the result of the\nmethod described by the given `expression` each time one or more\narguments to the method changes.  The expression should be a string\nin the form of a normal JavaScript function signature:\n`'methodName(arg1, [..., argn])'`",
           "privacy": "protected",
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/property-effects.html",

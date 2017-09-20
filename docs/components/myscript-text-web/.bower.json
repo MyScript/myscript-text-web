@@ -41,7 +41,7 @@
     "paper-toggle-button": "^2.0.0",
     "paper-slider": "^2.0.2"
   },
-  "_source": "/home/fxg/projects/webcomponents/myscript-text-web",
+  "_source": "/home/rcascino/projects/webcomponents/myscript-text-web",
   "_target": "*",
   "_originalSource": "../../myscript-text-web",
   "_direct": true
