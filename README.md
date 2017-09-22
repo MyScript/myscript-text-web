@@ -10,7 +10,7 @@
 
 myscript-text-web is a web component that can be used in every web application to bring handwriting recognition and conversion. It integrates all you need:  
 * Signal capture,
-* Nice digital ink rendering,
+* Digital ink rendering,
 * Rich editing gestures,
 * Conversion,
 * Import (raw text),
@@ -29,33 +29,29 @@ myscript-text-web is a web component that can be used in every web application t
 ```shell
 bower install myscript-text-web
 ```
-2. Create and edit `index.html` file in the same directory. Add the following line in the head section to import the library.
-
+2. Create and edit `index.html` file in the same directory. Add the following line in the `head` section to import the library.  
 ```html
 <!-- Load the webcomponent polyfill -->
 <script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
 <!-- Load myscript-text-web and the related librairies -->
 <link rel="import" href="bower_components/myscript-text-web/myscript-text-web.html">
-```
+```  
 
-3. Use the component in the body section. Use the keys you received by mail.
-
+3. Use the component in the `body` section. Use the keys you received by mail.  
 ```html
 <myscript-text-web
   applicationkey="YOUR MYSCRIPT CDK APPLICATION KEY"
   hmackey="YOUR MYSCRIPT CDK HMAC KEY">
 </myscript-text-web>
 ```
-   
 4. Launch a local web-server and use it!
-
 
 
 ## Examples
 
 Browse [the examples hosted on github.io](https://myscript.github.io/myscript-text-web/examples/).
 
-The [directory examples/](/examples) of this git repository contains all the example source code. 
+The [directory examples/](/examples) of this Git repository contains all the example source codes. 
 
 ## Documentation
 
