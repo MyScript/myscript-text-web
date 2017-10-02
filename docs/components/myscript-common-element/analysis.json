@@ -13,11 +13,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 229,
+              "line": 203,
               "column": 20
             },
             "end": {
-              "line": 233,
+              "line": 207,
               "column": 21
             }
           },
@@ -33,11 +33,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 237,
+              "line": 211,
               "column": 20
             },
             "end": {
-              "line": 241,
+              "line": 215,
               "column": 21
             }
           },
@@ -53,11 +53,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 245,
+              "line": 219,
               "column": 20
             },
             "end": {
-              "line": 249,
+              "line": 223,
               "column": 21
             }
           },
@@ -73,11 +73,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 253,
+              "line": 227,
               "column": 20
             },
             "end": {
-              "line": 257,
+              "line": 231,
               "column": 21
             }
           },
@@ -93,11 +93,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 261,
+              "line": 235,
               "column": 20
             },
             "end": {
-              "line": 265,
+              "line": 239,
               "column": 21
             }
           },
@@ -113,11 +113,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 269,
+              "line": 243,
               "column": 20
             },
             "end": {
-              "line": 273,
+              "line": 247,
               "column": 21
             }
           },
@@ -133,11 +133,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 277,
+              "line": 251,
               "column": 20
             },
             "end": {
-              "line": 281,
+              "line": 255,
               "column": 21
             }
           },
@@ -153,11 +153,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 285,
+              "line": 259,
               "column": 20
             },
             "end": {
-              "line": 289,
+              "line": 263,
               "column": 21
             }
           },
@@ -173,11 +173,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 295,
+              "line": 269,
               "column": 20
             },
             "end": {
-              "line": 298,
+              "line": 272,
               "column": 21
             }
           },
@@ -192,11 +192,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 304,
+              "line": 278,
               "column": 20
             },
             "end": {
-              "line": 307,
+              "line": 281,
               "column": 21
             }
           },
@@ -211,11 +211,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 312,
+              "line": 286,
               "column": 20
             },
             "end": {
-              "line": 318,
+              "line": 292,
               "column": 21
             }
           },
@@ -234,11 +234,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 322,
+              "line": 296,
               "column": 20
             },
             "end": {
-              "line": 328,
+              "line": 302,
               "column": 21
             }
           },
@@ -257,11 +257,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 332,
+              "line": 306,
               "column": 20
             },
             "end": {
-              "line": 335,
+              "line": 309,
               "column": 21
             }
           },
@@ -278,11 +278,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 341,
+              "line": 315,
               "column": 20
             },
             "end": {
-              "line": 344,
+              "line": 318,
               "column": 21
             }
           },
@@ -299,11 +299,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 348,
+              "line": 322,
               "column": 20
             },
             "end": {
-              "line": 351,
+              "line": 325,
               "column": 21
             }
           },
@@ -318,11 +318,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 355,
+              "line": 329,
               "column": 20
             },
             "end": {
-              "line": 358,
+              "line": 332,
               "column": 21
             }
           },
@@ -337,11 +337,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 362,
+              "line": 336,
               "column": 20
             },
             "end": {
-              "line": 365,
+              "line": 339,
               "column": 21
             }
           },
@@ -358,11 +358,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 369,
+              "line": 343,
               "column": 20
             },
             "end": {
-              "line": 373,
+              "line": 347,
               "column": 21
             }
           },
@@ -378,11 +378,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 377,
+              "line": 351,
               "column": 20
             },
             "end": {
-              "line": 381,
+              "line": 355,
               "column": 21
             }
           },
@@ -398,11 +398,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 385,
+              "line": 359,
               "column": 20
             },
             "end": {
-              "line": 388,
+              "line": 362,
               "column": 21
             }
           },
@@ -419,11 +419,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 392,
+              "line": 366,
               "column": 20
             },
             "end": {
-              "line": 397,
+              "line": 371,
               "column": 21
             }
           },
@@ -441,11 +441,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 401,
+              "line": 375,
               "column": 20
             },
             "end": {
-              "line": 406,
+              "line": 380,
               "column": 21
             }
           },
@@ -463,11 +463,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 410,
+              "line": 384,
               "column": 20
             },
             "end": {
-              "line": 415,
+              "line": 389,
               "column": 21
             }
           },
@@ -485,11 +485,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 419,
+              "line": 393,
               "column": 20
             },
             "end": {
-              "line": 424,
+              "line": 398,
               "column": 21
             }
           },
@@ -507,11 +507,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 428,
+              "line": 402,
               "column": 20
             },
             "end": {
-              "line": 433,
+              "line": 407,
               "column": 21
             }
           },
@@ -529,11 +529,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 437,
+              "line": 411,
               "column": 20
             },
             "end": {
-              "line": 442,
+              "line": 416,
               "column": 21
             }
           },
@@ -551,11 +551,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 446,
+              "line": 420,
               "column": 20
             },
             "end": {
-              "line": 451,
+              "line": 425,
               "column": 21
             }
           },
@@ -573,11 +573,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 455,
+              "line": 429,
               "column": 20
             },
             "end": {
-              "line": 459,
+              "line": 433,
               "column": 21
             }
           },
@@ -593,11 +593,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 463,
+              "line": 437,
               "column": 20
             },
             "end": {
-              "line": 467,
+              "line": 441,
               "column": 21
             }
           },
@@ -613,11 +613,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 471,
+              "line": 445,
               "column": 20
             },
             "end": {
-              "line": 475,
+              "line": 449,
               "column": 21
             }
           },
@@ -633,11 +633,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 480,
+              "line": 454,
               "column": 20
             },
             "end": {
-              "line": 483,
+              "line": 457,
               "column": 21
             }
           },
@@ -654,11 +654,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 487,
+              "line": 461,
               "column": 20
             },
             "end": {
-              "line": 491,
+              "line": 465,
               "column": 21
             }
           },
@@ -676,11 +676,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 495,
+              "line": 469,
               "column": 20
             },
             "end": {
-              "line": 499,
+              "line": 473,
               "column": 21
             }
           },
@@ -696,11 +696,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 500,
+              "line": 474,
               "column": 20
             },
             "end": {
-              "line": 503,
+              "line": 477,
               "column": 21
             }
           },
@@ -717,11 +717,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 616,
+              "line": 590,
               "column": 12
             },
             "end": {
-              "line": 630,
+              "line": 604,
               "column": 13
             }
           },
@@ -734,11 +734,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 632,
+              "line": 606,
               "column": 12
             },
             "end": {
-              "line": 637,
+              "line": 611,
               "column": 13
             }
           },
@@ -755,11 +755,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 639,
+              "line": 613,
               "column": 12
             },
             "end": {
-              "line": 648,
+              "line": 622,
               "column": 13
             }
           },
@@ -776,11 +776,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 650,
+              "line": 624,
               "column": 12
             },
             "end": {
-              "line": 654,
+              "line": 628,
               "column": 13
             }
           },
@@ -797,11 +797,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 656,
+              "line": 630,
               "column": 12
             },
             "end": {
-              "line": 658,
+              "line": 634,
               "column": 13
             }
           },
@@ -818,11 +818,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 660,
+              "line": 636,
               "column": 12
             },
             "end": {
-              "line": 666,
+              "line": 642,
               "column": 13
             }
           },
@@ -839,11 +839,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 668,
+              "line": 644,
               "column": 12
             },
             "end": {
-              "line": 758,
+              "line": 734,
               "column": 13
             }
           },
@@ -863,11 +863,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 760,
+              "line": 736,
               "column": 12
             },
             "end": {
-              "line": 771,
+              "line": 747,
               "column": 13
             }
           },
@@ -887,11 +887,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 778,
+              "line": 754,
               "column": 12
             },
             "end": {
-              "line": 793,
+              "line": 769,
               "column": 13
             }
           },
@@ -904,11 +904,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 795,
+              "line": 771,
               "column": 12
             },
             "end": {
-              "line": 799,
+              "line": 775,
               "column": 13
             }
           },
@@ -921,11 +921,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 804,
+              "line": 780,
               "column": 12
             },
             "end": {
-              "line": 808,
+              "line": 784,
               "column": 13
             }
           },
@@ -938,11 +938,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 813,
+              "line": 789,
               "column": 12
             },
             "end": {
-              "line": 817,
+              "line": 793,
               "column": 13
             }
           },
@@ -955,11 +955,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 822,
+              "line": 798,
               "column": 12
             },
             "end": {
-              "line": 826,
+              "line": 802,
               "column": 13
             }
           },
@@ -972,11 +972,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 831,
+              "line": 807,
               "column": 12
             },
             "end": {
-              "line": 835,
+              "line": 811,
               "column": 13
             }
           },
@@ -989,11 +989,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 843,
+              "line": 819,
               "column": 12
             },
             "end": {
-              "line": 847,
+              "line": 823,
               "column": 13
             }
           },
@@ -1020,11 +1020,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 853,
+              "line": 829,
               "column": 12
             },
             "end": {
-              "line": 857,
+              "line": 833,
               "column": 13
             }
           },
@@ -1042,11 +1042,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 862,
+              "line": 838,
               "column": 12
             },
             "end": {
-              "line": 866,
+              "line": 842,
               "column": 13
             }
           },
@@ -1059,11 +1059,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 872,
+              "line": 848,
               "column": 12
             },
             "end": {
-              "line": 876,
+              "line": 852,
               "column": 13
             }
           },
@@ -1076,11 +1076,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 878,
+              "line": 854,
               "column": 12
             },
             "end": {
-              "line": 883,
+              "line": 859,
               "column": 13
             }
           },
@@ -1106,11 +1106,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 885,
+              "line": 861,
               "column": 12
             },
             "end": {
-              "line": 890,
+              "line": 866,
               "column": 13
             }
           },
@@ -1136,11 +1136,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 892,
+              "line": 868,
               "column": 12
             },
             "end": {
-              "line": 896,
+              "line": 872,
               "column": 13
             }
           },
@@ -1157,11 +1157,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 898,
+              "line": 874,
               "column": 12
             },
             "end": {
-              "line": 919,
+              "line": 895,
               "column": 13
             }
           },
@@ -1207,11 +1207,11 @@
       "metadata": {},
       "sourceRange": {
         "start": {
-          "line": 163,
+          "line": 137,
           "column": 8
         },
         "end": {
-          "line": 920,
+          "line": 896,
           "column": 9
         }
       },
@@ -1224,11 +1224,11 @@
           "description": "The current recognition type (e.g. TEXT, SHAPE, MATH, MUSIC or ANALYZER)",
           "sourceRange": {
             "start": {
-              "line": 229,
+              "line": 203,
               "column": 20
             },
             "end": {
-              "line": 233,
+              "line": 207,
               "column": 21
             }
           },
@@ -1240,11 +1240,11 @@
           "description": "The current recognition protocol (WEBSOCKET or REST). We strongly recommend using WebSocket.",
           "sourceRange": {
             "start": {
-              "line": 237,
+              "line": 211,
               "column": 20
             },
             "end": {
-              "line": 241,
+              "line": 215,
               "column": 21
             }
           },
@@ -1256,11 +1256,11 @@
           "description": "Scheme to use to connect to MyScript Cloud or Server. (https or http)",
           "sourceRange": {
             "start": {
-              "line": 245,
+              "line": 219,
               "column": 20
             },
             "end": {
-              "line": 249,
+              "line": 223,
               "column": 21
             }
           },
@@ -1272,11 +1272,11 @@
           "description": "The current recognition service host.",
           "sourceRange": {
             "start": {
-              "line": 253,
+              "line": 227,
               "column": 20
             },
             "end": {
-              "line": 257,
+              "line": 231,
               "column": 21
             }
           },
@@ -1288,11 +1288,11 @@
           "description": "Cloud API version to use.",
           "sourceRange": {
             "start": {
-              "line": 261,
+              "line": 235,
               "column": 20
             },
             "end": {
-              "line": 265,
+              "line": 239,
               "column": 21
             }
           },
@@ -1304,11 +1304,11 @@
           "description": "Delay without any user input before asking for recognition, only use with REST protocol if not on-demand.",
           "sourceRange": {
             "start": {
-              "line": 269,
+              "line": 243,
               "column": 20
             },
             "end": {
-              "line": 273,
+              "line": 247,
               "column": 21
             }
           },
@@ -1320,11 +1320,11 @@
           "description": "Delay without any recognition exports received before processing the last one received, only use with WEBSOCKET protocol if not on-demand.",
           "sourceRange": {
             "start": {
-              "line": 277,
+              "line": 251,
               "column": 20
             },
             "end": {
-              "line": 281,
+              "line": 255,
               "column": 21
             }
           },
@@ -1336,11 +1336,11 @@
           "description": "True if export should be done on-demand, false otherwise",
           "sourceRange": {
             "start": {
-              "line": 285,
+              "line": 259,
               "column": 20
             },
             "end": {
-              "line": 289,
+              "line": 263,
               "column": 21
             }
           },
@@ -1352,11 +1352,11 @@
           "description": "Application key to use for recognition on MyScript handwriting recognition server.<br />\nYou have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.<br /><br />\n<b>Warning</b>: This parameter is <b>mandatory</b> and its value should be a string.",
           "sourceRange": {
             "start": {
-              "line": 295,
+              "line": 269,
               "column": 20
             },
             "end": {
-              "line": 298,
+              "line": 272,
               "column": 21
             }
           },
@@ -1368,11 +1368,11 @@
           "description": "HMAC key to use for recognition on MyScript handwriting recognition server.<br />\nYou have to create your own HMAC key corresponding to your own application key in your account at http://cloud.myscript.com.<br /><br />\n<b>Warning</b>: This parameter may be <b>mandatory</b> if HMAC signature security is enabled for your application. The value should be a string.",
           "sourceRange": {
             "start": {
-              "line": 304,
+              "line": 278,
               "column": 20
             },
             "end": {
-              "line": 307,
+              "line": 281,
               "column": 21
             }
           },
@@ -1384,11 +1384,11 @@
           "description": "Properties to set when you wish to set attributes in javascript. unloaded attributes should be removed once all properties are set.\n(see examples/v4/programmatic_init.html for a better understanding)",
           "sourceRange": {
             "start": {
-              "line": 312,
+              "line": 286,
               "column": 20
             },
             "end": {
-              "line": 318,
+              "line": 292,
               "column": 21
             }
           },
@@ -1400,11 +1400,11 @@
           "description": "True if editor is initialized",
           "sourceRange": {
             "start": {
-              "line": 322,
+              "line": 296,
               "column": 20
             },
             "end": {
-              "line": 328,
+              "line": 302,
               "column": 21
             }
           },
@@ -1416,11 +1416,11 @@
           "description": "The underlying editor created with MyScriptJS. This could allow to access more advanced properties. Mostly used for automatic testing currently.",
           "sourceRange": {
             "start": {
-              "line": 332,
+              "line": 306,
               "column": 20
             },
             "end": {
-              "line": 335,
+              "line": 309,
               "column": 21
             }
           },
@@ -1432,11 +1432,11 @@
           "description": "Set the additional configuration used to feed MyScript editor (Structure of object as defined in MyScriptJS DefaultConfiguration.js file)\nConfiguration values are taken into account when myscript-common-element is attach to the dom and when unloaded is set to false.\nConfiguration values are not reflected to myscript-common-element attributes plus attributes values are always taken into account before configuration values (see demo/programmatic_init.html for a better understanding).",
           "sourceRange": {
             "start": {
-              "line": 341,
+              "line": 315,
               "column": 20
             },
             "end": {
-              "line": 344,
+              "line": 318,
               "column": 21
             }
           },
@@ -1448,11 +1448,11 @@
           "description": "Pen color (supported formats rgb() rgba() hsl() hsla() #rgb #rgba #rrggbb #rrggbbaa)",
           "sourceRange": {
             "start": {
-              "line": 348,
+              "line": 322,
               "column": 20
             },
             "end": {
-              "line": 351,
+              "line": 325,
               "column": 21
             }
           },
@@ -1464,11 +1464,11 @@
           "description": "Pen width in mm (no other unit is supported yet)",
           "sourceRange": {
             "start": {
-              "line": 355,
+              "line": 329,
               "column": 20
             },
             "end": {
-              "line": 358,
+              "line": 332,
               "column": 21
             }
           },
@@ -1480,11 +1480,11 @@
           "description": "Set the additional penStyle used to feed MyScript editor (Structure of object as defined in MyScriptJS DefaultPenStyle.js file)",
           "sourceRange": {
             "start": {
-              "line": 362,
+              "line": 336,
               "column": 20
             },
             "end": {
-              "line": 365,
+              "line": 339,
               "column": 21
             }
           },
@@ -1496,11 +1496,11 @@
           "description": "Main color used by theme  (supported formats rgb() rgba() hsl() hsla() #rgb #rgba #rrggbb #rrggbbaa)",
           "sourceRange": {
             "start": {
-              "line": 369,
+              "line": 343,
               "column": 20
             },
             "end": {
-              "line": 373,
+              "line": 347,
               "column": 21
             }
           },
@@ -1512,11 +1512,11 @@
           "description": "Width of strokes and primitives in mm (no other unit is supported yet)",
           "sourceRange": {
             "start": {
-              "line": 377,
+              "line": 351,
               "column": 20
             },
             "end": {
-              "line": 381,
+              "line": 355,
               "column": 21
             }
           },
@@ -1528,11 +1528,11 @@
           "description": "Set the additional theme used to feed MyScript editor (Structure of object as defined in MyScriptJS DefaultTheme.js file)",
           "sourceRange": {
             "start": {
-              "line": 385,
+              "line": 359,
               "column": 20
             },
             "end": {
-              "line": 388,
+              "line": 362,
               "column": 21
             }
           },
@@ -1544,11 +1544,11 @@
           "description": "True if undo is available",
           "sourceRange": {
             "start": {
-              "line": 392,
+              "line": 366,
               "column": 20
             },
             "end": {
-              "line": 397,
+              "line": 371,
               "column": 21
             }
           },
@@ -1560,11 +1560,11 @@
           "description": "True if redo is available",
           "sourceRange": {
             "start": {
-              "line": 401,
+              "line": 375,
               "column": 20
             },
             "end": {
-              "line": 406,
+              "line": 380,
               "column": 21
             }
           },
@@ -1576,11 +1576,11 @@
           "description": "True if there is something to clear",
           "sourceRange": {
             "start": {
-              "line": 410,
+              "line": 384,
               "column": 20
             },
             "end": {
-              "line": 415,
+              "line": 389,
               "column": 21
             }
           },
@@ -1592,11 +1592,11 @@
           "description": "True if export button could be displayed.",
           "sourceRange": {
             "start": {
-              "line": 419,
+              "line": 393,
               "column": 20
             },
             "end": {
-              "line": 424,
+              "line": 398,
               "column": 21
             }
           },
@@ -1608,11 +1608,11 @@
           "description": "True if convert button could be displayed.",
           "sourceRange": {
             "start": {
-              "line": 428,
+              "line": 402,
               "column": 20
             },
             "end": {
-              "line": 433,
+              "line": 407,
               "column": 21
             }
           },
@@ -1624,11 +1624,11 @@
           "description": "If set to true, disable the autoReconnect.",
           "sourceRange": {
             "start": {
-              "line": 437,
+              "line": 411,
               "column": 20
             },
             "end": {
-              "line": 442,
+              "line": 416,
               "column": 21
             }
           },
@@ -1640,11 +1640,11 @@
           "description": "If set to true, remove the controls (undo/redo, clear...).",
           "sourceRange": {
             "start": {
-              "line": 446,
+              "line": 420,
               "column": 20
             },
             "end": {
-              "line": 451,
+              "line": 425,
               "column": 21
             }
           },
@@ -1656,11 +1656,11 @@
           "description": "If set to true, remove the undo/redo controls.",
           "sourceRange": {
             "start": {
-              "line": 455,
+              "line": 429,
               "column": 20
             },
             "end": {
-              "line": 459,
+              "line": 433,
               "column": 21
             }
           },
@@ -1672,11 +1672,11 @@
           "description": "If set to true, remove the clear control.",
           "sourceRange": {
             "start": {
-              "line": 463,
+              "line": 437,
               "column": 20
             },
             "end": {
-              "line": 467,
+              "line": 441,
               "column": 21
             }
           },
@@ -1688,11 +1688,11 @@
           "description": "If set to true, remove the convert control.",
           "sourceRange": {
             "start": {
-              "line": 471,
+              "line": 445,
               "column": 20
             },
             "end": {
-              "line": 475,
+              "line": 449,
               "column": 21
             }
           },
@@ -1704,11 +1704,11 @@
           "description": "Exports.",
           "sourceRange": {
             "start": {
-              "line": 480,
+              "line": 454,
               "column": 20
             },
             "end": {
-              "line": 483,
+              "line": 457,
               "column": 21
             }
           },
@@ -1720,11 +1720,11 @@
           "description": "True if component is idle",
           "sourceRange": {
             "start": {
-              "line": 487,
+              "line": 461,
               "column": 20
             },
             "end": {
-              "line": 491,
+              "line": 465,
               "column": 21
             }
           },
@@ -1736,11 +1736,11 @@
           "description": "True to display console output, false otherwise.",
           "sourceRange": {
             "start": {
-              "line": 495,
+              "line": 469,
               "column": 20
             },
             "end": {
-              "line": 499,
+              "line": 473,
               "column": 21
             }
           },
@@ -1752,11 +1752,11 @@
           "description": "",
           "sourceRange": {
             "start": {
-              "line": 500,
+              "line": 474,
               "column": 20
             },
             "end": {
-              "line": 503,
+              "line": 477,
               "column": 21
             }
           },
@@ -1934,6 +1934,765 @@
       "summary": "",
       "path": "myscript-languages-element.html",
       "properties": [
+        {
+          "name": "__serializing",
+          "type": "boolean",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-accessors.html",
+            "start": {
+              "line": 123,
+              "column": 8
+            },
+            "end": {
+              "line": 123,
+              "column": 27
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyAccessors"
+        },
+        {
+          "name": "__dataCounter",
+          "type": "number",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1151,
+              "column": 8
+            },
+            "end": {
+              "line": 1151,
+              "column": 27
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__dataEnabled",
+          "type": "boolean",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-accessors.html",
+            "start": {
+              "line": 127,
+              "column": 8
+            },
+            "end": {
+              "line": 127,
+              "column": 27
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyAccessors"
+        },
+        {
+          "name": "__dataReady",
+          "type": "boolean",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-accessors.html",
+            "start": {
+              "line": 129,
+              "column": 8
+            },
+            "end": {
+              "line": 129,
+              "column": 25
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyAccessors"
+        },
+        {
+          "name": "__dataInvalid",
+          "type": "boolean",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-accessors.html",
+            "start": {
+              "line": 131,
+              "column": 8
+            },
+            "end": {
+              "line": 131,
+              "column": 27
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyAccessors"
+        },
+        {
+          "name": "__data",
+          "type": "!Object",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1133,
+              "column": 8
+            },
+            "end": {
+              "line": 1133,
+              "column": 20
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__dataPending",
+          "type": "!Object",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1135,
+              "column": 8
+            },
+            "end": {
+              "line": 1135,
+              "column": 27
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__dataOld",
+          "type": "!Object",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1137,
+              "column": 8
+            },
+            "end": {
+              "line": 1137,
+              "column": 23
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__dataProto",
+          "type": "Object",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-accessors.html",
+            "start": {
+              "line": 139,
+              "column": 8
+            },
+            "end": {
+              "line": 139,
+              "column": 25
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyAccessors"
+        },
+        {
+          "name": "__dataHasAccessor",
+          "type": "Object",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-accessors.html",
+            "start": {
+              "line": 141,
+              "column": 8
+            },
+            "end": {
+              "line": 141,
+              "column": 31
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyAccessors"
+        },
+        {
+          "name": "__dataInstanceProps",
+          "type": "Object",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-accessors.html",
+            "start": {
+              "line": 143,
+              "column": 8
+            },
+            "end": {
+              "line": 143,
+              "column": 33
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyAccessors"
+        },
+        {
+          "name": "__dataClientsReady",
+          "type": "boolean",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1115,
+              "column": 8
+            },
+            "end": {
+              "line": 1115,
+              "column": 32
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__dataPendingClients",
+          "type": "Array",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1117,
+              "column": 8
+            },
+            "end": {
+              "line": 1117,
+              "column": 34
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__dataToNotify",
+          "type": "Object",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1119,
+              "column": 8
+            },
+            "end": {
+              "line": 1119,
+              "column": 28
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__dataLinkedPaths",
+          "type": "Object",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1121,
+              "column": 8
+            },
+            "end": {
+              "line": 1121,
+              "column": 31
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__dataHasPaths",
+          "type": "boolean",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1123,
+              "column": 8
+            },
+            "end": {
+              "line": 1123,
+              "column": 28
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__dataCompoundStorage",
+          "type": "Object",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1125,
+              "column": 8
+            },
+            "end": {
+              "line": 1125,
+              "column": 35
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__dataHost",
+          "type": "Polymer_PropertyEffects",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1127,
+              "column": 8
+            },
+            "end": {
+              "line": 1127,
+              "column": 24
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__dataTemp",
+          "type": "!Object",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1129,
+              "column": 8
+            },
+            "end": {
+              "line": 1129,
+              "column": 24
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__dataClientsInitialized",
+          "type": "boolean",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1131,
+              "column": 8
+            },
+            "end": {
+              "line": 1131,
+              "column": 38
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__computeEffects",
+          "type": "Object",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1139,
+              "column": 8
+            },
+            "end": {
+              "line": 1139,
+              "column": 30
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__reflectEffects",
+          "type": "Object",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1141,
+              "column": 8
+            },
+            "end": {
+              "line": 1141,
+              "column": 30
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__notifyEffects",
+          "type": "Object",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1143,
+              "column": 8
+            },
+            "end": {
+              "line": 1143,
+              "column": 29
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__propagateEffects",
+          "type": "Object",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1145,
+              "column": 8
+            },
+            "end": {
+              "line": 1145,
+              "column": 32
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__observeEffects",
+          "type": "Object",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1147,
+              "column": 8
+            },
+            "end": {
+              "line": 1147,
+              "column": 30
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__readOnly",
+          "type": "Object",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1149,
+              "column": 8
+            },
+            "end": {
+              "line": 1149,
+              "column": 24
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "__templateInfo",
+          "type": "!TemplateInfo",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/property-effects.html",
+            "start": {
+              "line": 1153,
+              "column": 8
+            },
+            "end": {
+              "line": 1153,
+              "column": 28
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.PropertyEffects"
+        },
+        {
+          "name": "_template",
+          "type": "HTMLTemplateElement",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/element-mixin.html",
+            "start": {
+              "line": 549,
+              "column": 8
+            },
+            "end": {
+              "line": 549,
+              "column": 23
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.ElementMixin"
+        },
+        {
+          "name": "_importPath",
+          "type": "string",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/element-mixin.html",
+            "start": {
+              "line": 551,
+              "column": 8
+            },
+            "end": {
+              "line": 551,
+              "column": 25
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.ElementMixin"
+        },
+        {
+          "name": "rootPath",
+          "type": "string",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/element-mixin.html",
+            "start": {
+              "line": 553,
+              "column": 8
+            },
+            "end": {
+              "line": 553,
+              "column": 22
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.ElementMixin"
+        },
+        {
+          "name": "importPath",
+          "type": "string",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/element-mixin.html",
+            "start": {
+              "line": 555,
+              "column": 8
+            },
+            "end": {
+              "line": 555,
+              "column": 24
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.ElementMixin"
+        },
+        {
+          "name": "root",
+          "type": "(StampedTemplate|HTMLElement|ShadowRoot)",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/element-mixin.html",
+            "start": {
+              "line": 557,
+              "column": 8
+            },
+            "end": {
+              "line": 557,
+              "column": 18
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.ElementMixin"
+        },
+        {
+          "name": "$",
+          "type": "!Object.<string, !Node>",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/polymer/lib/mixins/element-mixin.html",
+            "start": {
+              "line": 559,
+              "column": 8
+            },
+            "end": {
+              "line": 559,
+              "column": 15
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          },
+          "inheritedFrom": "Polymer.ElementMixin"
+        },
         {
           "name": "type",
           "type": "string",

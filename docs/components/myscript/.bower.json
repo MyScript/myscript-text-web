@@ -26,11 +26,11 @@
   "dependencies": {
     "pepjs": "^0.4.3"
   },
-  "_release": "3c33776581",
+  "_release": "b6f65f5b7b",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "3c337765816cb1295d68fbbce4b95a9abef3069d"
+    "commit": "b6f65f5b7ba3732bf4efa0e6a7934b950ece0bea"
   },
   "_source": "https://github.com/MyScript/MyScriptJS.git",
   "_target": "master",
