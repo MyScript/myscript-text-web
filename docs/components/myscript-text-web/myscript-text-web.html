@@ -108,7 +108,7 @@ CSS variable | Default
                                hidden="[[ disableexportpanel ]]"
                                exports="[[ exports ]]"
                                debug="[[ debug ]]"
-                               on-change="_exportChangeListener">
+                               on-changed="_exportChangedListener">
         </myscript-text-exports>
         <myscript-common-element
             type="TEXT"
@@ -189,7 +189,7 @@ CSS variable | Default
 
             /**
              * Fired when editor state changed.
-             * @event change
+             * @event changed
              */
 
             /**
@@ -818,7 +818,7 @@ CSS variable | Default
                     this.spellingdistortion);
             }
 
-            _exportChangeListener(event) {
+            _exportChangedListener(event) {
                 this.logger.trace('candidates ' + event.type + ' event intercepted', event);
                 this._manageExports(event, this);
                 this.dispatchEvent(new CustomEvent('exported', {
