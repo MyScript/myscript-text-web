@@ -1,7 +1,8 @@
 :pencil: The easy way to integrate text handwriting recognition in your web app.
 
-![myscript-text-web preview](./preview.gif)
-
+<p align="center">
+  <img src="preview.gif">
+</p>
  
 <a style="text-align:center; font-size:150%;" href="https://myscript.github.io/myscript-text-web/components/myscript-text-web/examples/">Test it live</a>
 
@@ -49,7 +50,7 @@ bower install myscript-text-web
 
 ## Examples
 
-Browse [the examples hosted on github.io](https://myscript.github.io/myscript-text-web/examples/).
+Browse [the examples hosted on github.io](https://myscript.github.io/myscript-text-web/components/myscript-text-web/#/elements/myscript-text-web).
 
 The [directory examples/](/examples) of this Git repository contains all the example source codes. 
 
