@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="HandheldFriendly" content="true"/>
+
+    <title>Interact with your app</title>
+
+    <link rel="stylesheet" href="../examples.css">
+    <style>
+        * {
+          font-family: "Source Sans Pro",sans-serif;
+        }
+        nav {
+            height: 60px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        nav span {
+            display: flex;
+            width: 100%;
+        }
+
+        input {
+            width: 100%;
+        }
+
+        myscript-text-web {
+            height: calc(100% - 60px);
+        }
+
+        #question {
+            font-size: 2em;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 10px 0 10px;
+            border-bottom: 1px solid #D7DDE3;
+            text-align: center;
+        }
+        #result {
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: auto;
+        }
+
+        #result span {
+            font-size: xx-large;
+        }
+        #nextOne {
+            text-align: center;
+            height: 60px;
+        }
+
+        #nextOne .btn {
+            line-height: 30px;
+            background-color: rgba(0,0,0,.08);
+            display: inline-block;
+            font-weight: 700;
+            font-size: 24px;
+            text-align: center;
+            white-space: nowrap;
+            color: #1a9fff;
+            text-decoration: none;
+            border: 2px solid transparent;
+            border-radius: 3px;
+            -ms-touch-action: manipulation;
+            touch-action: manipulation;
+            cursor: pointer;
+            transition: all 125ms;
+            padding: 4px 2px 4px 2px;
+        }
+
+        #nextOne .icn {
+            margin: 0 0px -2px 12px;
+        }
+    </style>
+
+    <!-- As web components are not fully support -->
+    <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
+    <!-- myscript-common-element is import to be used later -->
+    <link rel="import" href="../../myscript-text-web.html">
+</head>
+
+<body>
+<svg style="display: none;">
+    <symbol id="icn-play" viewBox="0 0 16 16">
+        <path
+            d="M13.153 8.589c.606-.325.603-.854 0-1.178L4.873 2.97C4.392 2.709 4 2.945 4 3.496v9.008c0 .55.39.787.874.527l8.28-4.442z"
+            fill="currentColor" fill-rule="evenodd"></path>
+    </symbol>
+</svg>
+<p id="question"></p>
+<div id="result"></div>
+<div id="nextOne"></div>
+    <myscript-text-web scheme="https"
+                       host="webdemoapi.myscript.com"
+                       applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
+                       hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad"
+                       disableexportpanel="true">
+    </myscript-text-web>
+<script>
+    var editorElement = document.querySelector('myscript-text-web');
+    var questionElement = document.getElementById('question');
+    var resultElement = document.getElementById('result');
+    var nextElement = document.getElementById('nextOne');
+
+    const countries = ['France', 'Italy', 'Spain', 'Argentina', 'Japan'];
+    const capitals = ['Paris', 'Rome', 'Madrid', 'Buenos Aires', 'Tokyo'];
+
+    var randomNumber = Math.floor(Math.random() * countries.length);
+
+    questionElement.innerText = 'What is the capital of ' + countries[randomNumber] + '?';
+
+    editorElement.addEventListener('exported', function (evt) {
+        var exports = evt.detail.exports;
+        if (exports && exports['text/plain']) {
+            exportedIsAnswer(exports);
+        } else {
+            resultElement.innerHTML = '';
+        }
+    });
+
+    nextElement.addEventListener('click', function () {
+        changeQuestion();
+    });
+
+    function exportedIsAnswer(exports) {
+        if (exports['text/plain'] === capitals[randomNumber]) {
+            resultElement.innerHTML = '<span> Yes, it is ' + exports['text/plain'] + '.</span>';
+            resultElement.style.cssText = "color: green;";
+            nextElement.innerHTML = '<a class="btn">Next question<svg class="icn"><use xmlns:xlink="http://www.w3.org/1999/xlink" href="#icn-play"></use></svg></a>';
+        } else {
+            resultElement.innerHTML = '<span> No, it is not ' + exports['text/plain'] + '.</span>';
+            resultElement.style.cssText = "color: red;";
+            nextElement.innerHTML = '';
+        }
+    }
+
+    function changeQuestion() {
+        countries.splice(randomNumber, 1);
+        capitals.splice(randomNumber, 1);
+        randomNumber = Math.floor(Math.random() * countries.length);
+        questionElement.innerHTML = countries[randomNumber] ? 'What is the capital of ' + countries[randomNumber] + ' ?' : 'You won !';
+        nextElement.innerHTML = '';
+        editorElement.editor.clear();
+    }
+
+    window.addEventListener('resize', function () {
+        editorElement.editor.resize();
+    });
+</script>
+</body>
+
+</html>
