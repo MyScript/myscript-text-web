@@ -84,6 +84,7 @@
 
     <!-- As web components are not fully support -->
     <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../../../pepjs/dist/pep.min.js"></script>
     <!-- myscript-common-element is import to be used later -->
     <link rel="import" href="../../myscript-text-web.html">
 </head>
@@ -103,7 +104,8 @@
                        host="webdemoapi.myscript.com"
                        applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
                        hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad"
-                       disableexportpanel="true">
+                       disableexportpanel="true"
+                       touch-action="none">
     </myscript-text-web>
 <script>
     var editorElement = document.querySelector('myscript-text-web');
@@ -135,7 +137,7 @@
         if (exports['text/plain'] === capitals[randomNumber]) {
             resultElement.innerHTML = '<span> Yes, it is ' + exports['text/plain'] + '.</span>';
             resultElement.style.cssText = "color: green;";
-            nextElement.innerHTML = '<a class="btn">Next question<svg class="icn"><use xmlns:xlink="http://www.w3.org/1999/xlink" href="#icn-play"></use></svg></a>';
+            nextElement.innerHTML = '<a class="btn">Next question<svg class="icn"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icn-play"></use></svg></a>';
         } else {
             resultElement.innerHTML = '<span> No, it is not ' + exports['text/plain'] + '.</span>';
             resultElement.style.cssText = "color: red;";
