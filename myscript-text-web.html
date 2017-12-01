@@ -319,7 +319,6 @@ CSS variable | Default
                         type: Boolean,
                         value: false,
                         notify: true,
-                        notify: true,
                         reflectToAttribute: true
                     },
                     /**
@@ -835,6 +834,7 @@ CSS variable | Default
                 super.connectedCallback();
                 this.logger.setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
                 this.configuration = this._buildConfiguration(); // Build default configuration to use in common element
+                this.logger.info('attached');
             }
 
             //-----------------------------------------------------------------------
@@ -927,11 +927,6 @@ CSS variable | Default
 
             _computeCommonTheme(theme, fontfamily, fontsize) {
                 return MyScriptTextWeb._generateTextTheme(theme, fontfamily, fontsize);
-            }
-
-            connectedCallback() {
-                super.connectedCallback();
-                this.logger.info('attached');
             }
 
             disconnectedCallback() {
