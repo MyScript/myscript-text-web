@@ -468,6 +468,11 @@ CSS variable | Default
                         value: true,
                         notify: true
                     },
+                    usepointerlisteners: {
+                        type: Boolean,
+                        reflectToAttribute: true,
+                        value: false,
+                    },
                     /**
                      * True to display console output, false otherwise.
                      */
@@ -667,10 +672,11 @@ CSS variable | Default
                 };
 
                 const checkHover = (evt) => {
-                    if (evt.detail.hover()) {
+                    if (!this.usepointerlisteners && evt.detail.hover()) {
+                        console.log(evt.detail.hover().id === 'editorDomElement' || evt.detail.hover().className.includes('ms-canvas'));
                         return evt.detail.hover().id === 'editorDomElement' || evt.detail.hover().className.includes('ms-canvas');
-                    } else
-                        return false;
+                    }
+                    return false;
                 };
 
                 const pointerDownHandler = (evt) => { // Trigger a pointerDown
@@ -690,7 +696,7 @@ CSS variable | Default
                 const pointerMoveHandler = (evt) => { // Trigger a pointerMove
                     patchPointerEvent(evt);
                     // Only considering the active pointer
-                    if (checkHover(evt) && this.activePointerId && this.activePointerId === evt.pointerId) {
+                    if ((this.usepointerlisteners || checkHover(evt)) && this.activePointerId && this.activePointerId === evt.pointerId) {
                         evt.stopPropagation();
                         editor.pointerMove(MyScriptCommonElement._extractPoint(evt, editor.configuration));
                     } else {
@@ -736,7 +742,7 @@ CSS variable | Default
 
                 const context = {
                     options: editor.configuration.listenerOptions,
-                    listeners: polymerGestureListeners
+                    listeners: this.usepointerlisteners ? pointerListeners : polymerGestureListeners
                 };
 
                 if (this.debug) {

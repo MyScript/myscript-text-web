@@ -142,6 +142,7 @@ CSS variable | Default
             disableclearcontrol="[[ disableclearcontrol ]]"
             disableundoredocontrol="[[ disableundoredocontrol ]]"
             disableconvertcontrol="[[ disableconvertcontrol ]]"
+            usepointerlisteners="[[ usepointerlisteners ]]"
             touch-action="[[ touch-action ]]">
         </myscript-common-element>
     </template>
@@ -319,7 +320,6 @@ CSS variable | Default
                         type: Boolean,
                         value: false,
                         notify: true,
-                        notify: true,
                         reflectToAttribute: true
                     },
                     /**
@@ -478,7 +478,14 @@ CSS variable | Default
                         reflectToAttribute: true,
                         value: false
                     },
-
+                    /**
+                     * True if pointer events listeners is used, false otherwise
+                     */
+                    usepointerlisteners: {
+                        type: Boolean,
+                        reflectToAttribute: true,
+                        value: false,
+                    },
                     //------------------------------------------------------------------------------
                     //                 End of recopy
                     // -----------------------------------------------------------------------------
@@ -835,6 +842,7 @@ CSS variable | Default
                 super.connectedCallback();
                 this.logger.setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
                 this.configuration = this._buildConfiguration(); // Build default configuration to use in common element
+                this.logger.info('attached');
             }
 
             //-----------------------------------------------------------------------
@@ -927,11 +935,6 @@ CSS variable | Default
 
             _computeCommonTheme(theme, fontfamily, fontsize) {
                 return MyScriptTextWeb._generateTextTheme(theme, fontfamily, fontsize);
-            }
-
-            connectedCallback() {
-                super.connectedCallback();
-                this.logger.info('attached');
             }
 
             disconnectedCallback() {
