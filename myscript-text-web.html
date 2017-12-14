@@ -843,6 +843,11 @@ CSS variable | Default
             }
 
             _buildConfiguration() {
+                if (this.disablesmartguide === false) {
+                    this.disableconvertcontrol = true;
+                    this.disableclearcontrol = true;
+                    this.disableexportpanel = true;
+                }
                 return MyScriptTextWeb._generateTextConfiguration(
                     this.configuration,
                     this.language,
