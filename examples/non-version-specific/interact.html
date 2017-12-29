@@ -12,26 +12,17 @@
 
     <link rel="stylesheet" href="../examples.css">
     <style>
-        * {
-          font-family: "Source Sans Pro",sans-serif;
-        }
-        nav {
-            height: 60px;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        nav span {
-            display: flex;
-            width: 100%;
-        }
-
-        input {
-            width: 100%;
-        }
-
         myscript-text-web {
             height: calc(100% - 60px);
+        }
+
+        .nextOne {
+            text-align: center;
+            height: 60px;
+        }
+
+        #nextButton .icn {
+            margin: 0 -6px -4px 6px;
         }
 
         #question {
@@ -42,6 +33,7 @@
             border-bottom: 1px solid #D7DDE3;
             text-align: center;
         }
+
         #result {
             height: 100px;
             display: flex;
@@ -52,33 +44,6 @@
 
         #result span {
             font-size: xx-large;
-        }
-        #nextOne {
-            text-align: center;
-            height: 60px;
-        }
-
-        #nextOne .btn {
-            line-height: 30px;
-            background-color: rgba(0,0,0,.08);
-            display: inline-block;
-            font-weight: 700;
-            font-size: 24px;
-            text-align: center;
-            white-space: nowrap;
-            color: #1a9fff;
-            text-decoration: none;
-            border: 2px solid transparent;
-            border-radius: 3px;
-            -ms-touch-action: manipulation;
-            touch-action: manipulation;
-            cursor: pointer;
-            transition: all 125ms;
-            padding: 4px 2px 4px 2px;
-        }
-
-        #nextOne .icn {
-            margin: 0 0px -2px 12px;
         }
     </style>
 
@@ -99,7 +64,7 @@
 </svg>
 <p id="question"></p>
 <div id="result"></div>
-<div id="nextOne"></div>
+<div id= 'nextDiv' class="nextOne"></div>
     <myscript-text-web scheme="https"
                        host="webdemoapi.myscript.com"
                        applicationkey="7d223f9e-a3cb-4213-ba4b-85e930605f8b"
@@ -107,10 +72,15 @@
                        touch-action="none">
     </myscript-text-web>
 <script>
+    const nextButton = document.createElement('button');
+    nextButton.id = 'nextButton';
+    nextButton.classList.add('classic-btn');
+    nextButton.innerHTML = 'Next question<svg class="icn"><use xmlns:xlink="http://www.w3.org/1999/xlink" href="#icn-play"></use></svg>';
+
     var editorElement = document.querySelector('myscript-text-web');
     var questionElement = document.getElementById('question');
     var resultElement = document.getElementById('result');
-    var nextElement = document.getElementById('nextOne');
+    var nextDivElement = document.getElementById('nextDiv');
 
     const countries = ['France', 'Italy', 'Spain', 'Argentina', 'Japan'];
     const capitals = ['Paris', 'Rome', 'Madrid', 'Buenos Aires', 'Tokyo'];
@@ -128,19 +98,18 @@
         }
     });
 
-    nextElement.addEventListener('click', function () {
+    nextButton.addEventListener('click', function () {
         changeQuestion();
     });
-
     function exportedIsAnswer(exports) {
         if (exports['text/plain'] === capitals[randomNumber]) {
             resultElement.innerHTML = '<span> Yes, it is ' + exports['text/plain'] + '.</span>';
             resultElement.style.cssText = "color: green;";
-            nextElement.innerHTML = '<a class="btn">Next question<svg class="icn"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icn-play"></use></svg></a>';
+            nextDivElement.appendChild(nextButton);
         } else {
             resultElement.innerHTML = '<span> No, it is not ' + exports['text/plain'] + '.</span>';
             resultElement.style.cssText = "color: red;";
-            nextElement.innerHTML = '';
+            nextDivElement.innerHTML = '';
         }
     }
 
@@ -149,7 +118,7 @@
         capitals.splice(randomNumber, 1);
         randomNumber = Math.floor(Math.random() * countries.length);
         questionElement.innerHTML = countries[randomNumber] ? 'What is the capital of ' + countries[randomNumber] + ' ?' : 'You won !';
-        nextElement.innerHTML = '';
+        nextDivElement.innerHTML = '';
         editorElement.editor.clear();
     }
 
