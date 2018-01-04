@@ -121,7 +121,6 @@ This element is `display:block` by default, but you can set the `inline` attribu
       :host {
         display: block;
         padding: 8px 0;
-        overflow: hidden;
 
         --paper-input-container-shared-input-style: {
           position: relative; /* to make a stacking context */
@@ -230,7 +229,6 @@ This element is `display:block` by default, but you can set the `inline` attribu
       .input-content ::slotted(.paper-input-label) {
         position: absolute;
         top: 0;
-        right: 0;
         left: 0;
         width: 100%;
         font: inherit;
@@ -261,9 +259,9 @@ This element is `display:block` by default, but you can set the `inline` attribu
       }
 
       :host(:dir(rtl)) .input-content.label-is-floating ::slotted(label),
-      :host(:dir(rtl)) .input-content.label-is-floating ::slotted(.paper-input-label),
-      :host-context([dir="rtl"]) .input-content.label-is-floating ::slotted(label),
-      :host-context([dir="rtl"]) .input-content.label-is-floating ::slotted(.paper-input-label) {
+      :host(:dir(rtl)) .input-content.label-is-floating ::slotted(.paper-input-label) {
+        right: 0;
+        left: auto;
         -webkit-transform-origin: right top;
         transform-origin: right top;
       }

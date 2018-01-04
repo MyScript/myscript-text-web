@@ -14,7 +14,8 @@
         <link rel="stylesheet" href="../examples.css">
         <style>
             nav {
-                line-height: 52px;
+                padding: 12px;
+                line-height: 48px;
             }
 
             myscript-common-element {
@@ -30,11 +31,11 @@
 
     <body>
         <nav>
-            <button onclick="myscriptCommonElement.undo()">undo</button>
-            <button onclick="myscriptCommonElement.redo()">redo</button>
-            <button onclick="myscriptCommonElement.clear()">clear</button>
-            <button onclick="myscriptCommonElement.exportContent()">export</button>
-            <button onclick="myscriptCommonElement.convert()">convert</button>
+            <button class="classic-btn" onclick="myscriptCommonElement.undo()">undo</button>
+            <button class="classic-btn" onclick="myscriptCommonElement.redo()">redo</button>
+            <button class="classic-btn" onclick="myscriptCommonElement.clear()">clear</button>
+            <button class="classic-btn" onclick="myscriptCommonElement.exportContent()">export</button>
+            <button class="classic-btn" onclick="myscriptCommonElement.convert()">convert</button>
         </nav>
         <paper-toast class="fit-top"></paper-toast>
         <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->

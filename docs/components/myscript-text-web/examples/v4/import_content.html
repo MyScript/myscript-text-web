@@ -14,18 +14,18 @@
     <link rel="stylesheet" href="../examples.css">
     <style>
         nav {
-            height: 60px;
             display: flex;
             justify-content: space-between;
-        }
-
-        nav span {
-            display: flex;
-            width: 100%;
+            align-items: center;
         }
 
         input {
-            width: 100%;
+            flex-grow: 1;
+            margin: 12px;
+        }
+
+        button {
+            margin-right: 12px;
         }
 
         myscript-text-web {
@@ -42,11 +42,9 @@
 
 <body>
 <nav>
-            <span>
-                <input type="text" id="importContentField" data-type="text/plain"
-                       placeholder="e.g. hello world"/>
-                <button id="importContent">Import</button>
-            </span>
+        <input type="text" class="input-field" id="importContentField" data-type="text/plain"
+               placeholder="e.g. hello world"/>
+        <button class="classic-btn" id="importContent">Import</button>
 </nav>
 <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->
 <myscript-text-web scheme="https"

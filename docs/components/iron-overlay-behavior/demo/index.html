@@ -285,6 +285,36 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </simple-overlay>
     </template>
   </demo-snippet>
+  
+  <h3>Use <code>scroll-action</code> to lock, refit or cancel an overlay on scroll.</h3>
+  <demo-snippet>
+    <template>
+      <span>
+        <button onclick="lockOnScroll.open()">locks scroll</button>
+        <simple-overlay id="lockOnScroll" scroll-action="lock" no-overlap
+                        vertical-align="bottom" horizontal-align="left" tabindex=-1>
+          <h2>Prevents scroll outside</h2>
+          <button onclick="lockOnScroll.close()">Close this</button>
+        </simple-overlay>
+      </span>
+      <span>
+        <button onclick="refitOnScroll.open()">refits on scroll</button>
+        <simple-overlay id="refitOnScroll" scroll-action="refit" no-overlap
+                        vertical-align="bottom" horizontal-align="left" tabindex=-1>
+          <h2>Refits on scroll</h2>
+          <button onclick="refitOnScroll.close()">Close this</button>
+        </simple-overlay>
+      </span>
+      <span>
+        <button onclick="cancelOnScroll.open()">cancels on scroll</button>
+        <simple-overlay id="cancelOnScroll" scroll-action="cancel" no-overlap
+                        vertical-align="bottom" horizontal-align="left" tabindex=-1>
+          <h2>Cancels on scroll</h2>
+          <button onclick="cancelOnScroll.close()">Close this</button>
+        </simple-overlay>
+      </span>
+    </template>
+  </demo-snippet>
 
 </body>
 

@@ -490,8 +490,8 @@ CSS variable | Default
                     //                 End of recopy
                     // -----------------------------------------------------------------------------
                     /**
-                    * True if smart guide is disables, false otherwise.
-                    */
+                     * True if smart guide is disabled, false otherwise.
+                     */
                     disablesmartguide: {
                         type: Boolean,
                         value: false,
@@ -499,16 +499,16 @@ CSS variable | Default
                         notify: true
                     },
                     /**
-                     * True if smart guide is disables, false otherwise.
+                     * True if smart guide fade out is enabled, false otherwise.
                      */
-                    disablesmartguidefadeout: {
+                    enablesmartguidefadeout: {
                         type: Boolean,
                         value: false,
                         reflectToAttribute: true,
                         notify: true
                     },
                     /**
-                     * True if smart guide is disables, false otherwise.
+                     * Duration of the fade out animation in milliseconds.
                      */
                     smartguidefadeoutduration: {
                         type: Number,
@@ -747,10 +747,9 @@ CSS variable | Default
                 return stylesheet;
             }
 
-            static _generateTextConfiguration(configuration, language, mimetypes, disablesmartguide, disablesmartguidefadeout, smartguidefadeoutduration, textinputmode, resultdetail, contenttypes, subsetknowledges, userlkwords, userresources, textcandidatelistsize, wordcandidatelistsize, wordpredictionlistsize, wordcompletionlistsize, charactercandidatelistsize, enableoutoflexicon, discardcasevariations, discardaccentuationvariations, glyphdistortion, enabletagger, spellingdistortion) {
+            static _generateTextConfiguration(configuration, language, mimetypes, disablesmartguide, enablesmartguidefadeout, smartguidefadeoutduration, textinputmode, resultdetail, contenttypes, subsetknowledges, userlkwords, userresources, textcandidatelistsize, wordcandidatelistsize, wordpredictionlistsize, wordcompletionlistsize, charactercandidatelistsize, enableoutoflexicon, discardcasevariations, discardaccentuationvariations, glyphdistortion, enabletagger, spellingdistortion) {
                 // FIXME: find a way to do a proper deep merge
                 const conf = Object.assign({}, configuration);
-                console.log(conf);
                 if (!conf.recognitionParams) {
                     conf.recognitionParams = {};
                 }
@@ -782,8 +781,8 @@ CSS variable | Default
                 if (!conf.recognitionParams.v4.text.smartGuideFadeOut) {
                     conf.recognitionParams.v4.text.smartGuideFadeOut = {};
                 }
-                if (disablesmartguidefadeout !== undefined) {
-                    conf.recognitionParams.v4.text.smartGuideFadeOut.enabled = !disablesmartguidefadeout;
+                if (enablesmartguidefadeout !== undefined) {
+                    conf.recognitionParams.v4.text.smartGuideFadeOut.enabled = enablesmartguidefadeout;
                 }
                 if (smartguidefadeoutduration) {
                     conf.recognitionParams.v4.text.smartGuideFadeOut.duration = smartguidefadeoutduration;
@@ -843,7 +842,7 @@ CSS variable | Default
             }
 
             _buildConfiguration() {
-                if (this.disablesmartguide === false) {
+                if (this.disablesmartguide === false && this.apiversion !== 'V3') {
                     this.disableconvertcontrol = true;
                     this.disableclearcontrol = true;
                     this.disableexportpanel = true;
@@ -853,7 +852,7 @@ CSS variable | Default
                     this.language,
                     this.mimetypes,
                     this.disablesmartguide,
-                    this.disablesmartguidefadeout,
+                    this.enablesmartguidefadeout,
                     this.smartguidefadeoutduration,
                     this.textinputmode,
                     this.resultdetail,
@@ -946,8 +945,28 @@ CSS variable | Default
             }
 
             /**
-             * Import ink
-             * @param {Array<Object>} strokes
+             * Import multiple strokes at the same time also call batch mode.
+             * @param {Array<{gesture: Boolean, pointerType: String, pointerId: Integer, x: Array<Floats>, y: Array<Floats>, t: Array<Floats>}>} strokes
+             * Depending of of your users writes the strokes you may or may not activate the gestures. <code>t</code> attribute is optional in the set of strokes but it is highly recommended to pass it for better accuracy.
+             *
+             * Example of input :
+             * ````
+             *     [{
+             *     "gesture": false,
+             *     "pointerType": "PEN",
+             *     "pointerId": 1,
+             *     "x": [273, 278, 281],
+             *     "y": [121, 128, 133],
+             *     "t": [3185.7900000000004, 3213.8150000000005, 3222.5350000000003]
+             *     },{
+             *     "gesture": false,
+             *     "pointerType": "PEN",
+             *     "pointerId": 1,
+             *     "x": [173, 178, 181],
+             *     "y": [221, 228, 233],
+             *     "t": [6185.7900000000004, 6213.8150000000005,6222.5350000000003]
+             *     }]
+             * ````
              */
             importInk(strokes) {
                 if (this.editor) {

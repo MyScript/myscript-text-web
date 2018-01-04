@@ -635,11 +635,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 556,
+              "line": 560,
               "column": 8
             },
             "end": {
-              "line": 556,
+              "line": 560,
               "column": 23
             }
           },
@@ -658,11 +658,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 558,
+              "line": 562,
               "column": 8
             },
             "end": {
-              "line": 558,
+              "line": 562,
               "column": 25
             }
           },
@@ -681,11 +681,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 560,
+              "line": 564,
               "column": 8
             },
             "end": {
-              "line": 560,
+              "line": 564,
               "column": 22
             }
           },
@@ -704,11 +704,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 562,
+              "line": 566,
               "column": 8
             },
             "end": {
-              "line": 562,
+              "line": 566,
               "column": 24
             }
           },
@@ -727,11 +727,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 564,
+              "line": 568,
               "column": 8
             },
             "end": {
-              "line": 564,
+              "line": 568,
               "column": 18
             }
           },
@@ -750,11 +750,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 566,
+              "line": 570,
               "column": 8
             },
             "end": {
-              "line": 566,
+              "line": 570,
               "column": 15
             }
           },
@@ -944,11 +944,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 750,
+              "line": 754,
               "column": 6
             },
             "end": {
-              "line": 758,
+              "line": 762,
               "column": 7
             }
           },
@@ -979,11 +979,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 580,
+              "line": 584,
               "column": 6
             },
             "end": {
-              "line": 614,
+              "line": 618,
               "column": 7
             }
           },
@@ -1477,11 +1477,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 678,
+              "line": 682,
               "column": 6
             },
             "end": {
-              "line": 684,
+              "line": 688,
               "column": 7
             }
           },
@@ -1941,11 +1941,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 695,
+              "line": 699,
               "column": 6
             },
             "end": {
-              "line": 704,
+              "line": 708,
               "column": 7
             }
           },
@@ -2654,11 +2654,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 660,
+              "line": 664,
               "column": 6
             },
             "end": {
-              "line": 665,
+              "line": 669,
               "column": 7
             }
           },
@@ -2673,11 +2673,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 671,
+              "line": 675,
               "column": 6
             },
             "end": {
-              "line": 671,
+              "line": 675,
               "column": 31
             }
           },
@@ -2692,11 +2692,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 718,
+              "line": 722,
               "column": 6
             },
             "end": {
-              "line": 734,
+              "line": 738,
               "column": 7
             }
           },
@@ -2721,11 +2721,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 778,
+              "line": 782,
               "column": 6
             },
             "end": {
-              "line": 782,
+              "line": 786,
               "column": 7
             }
           },
@@ -2749,11 +2749,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 795,
+              "line": 799,
               "column": 6
             },
             "end": {
-              "line": 800,
+              "line": 804,
               "column": 7
             }
           },
@@ -2960,11 +2960,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 811,
+              "line": 815,
               "column": 6
             },
             "end": {
-              "line": 814,
+              "line": 818,
               "column": 7
             }
           },
@@ -3636,11 +3636,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 478,
+              "line": 482,
               "column": 6
             },
             "end": {
-              "line": 482,
+              "line": 486,
               "column": 7
             }
           },
@@ -3658,11 +3658,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 624,
+              "line": 628,
               "column": 6
             },
             "end": {
-              "line": 626,
+              "line": 630,
               "column": 7
             }
           },
@@ -3692,11 +3692,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 637,
+              "line": 641,
               "column": 6
             },
             "end": {
-              "line": 648,
+              "line": 652,
               "column": 7
             }
           },
@@ -4396,11 +4396,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 556,
+              "line": 560,
               "column": 8
             },
             "end": {
-              "line": 556,
+              "line": 560,
               "column": 23
             }
           },
@@ -4419,11 +4419,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 558,
+              "line": 562,
               "column": 8
             },
             "end": {
-              "line": 558,
+              "line": 562,
               "column": 25
             }
           },
@@ -4442,11 +4442,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 560,
+              "line": 564,
               "column": 8
             },
             "end": {
-              "line": 560,
+              "line": 564,
               "column": 22
             }
           },
@@ -4465,11 +4465,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 562,
+              "line": 566,
               "column": 8
             },
             "end": {
-              "line": 562,
+              "line": 566,
               "column": 24
             }
           },
@@ -4488,11 +4488,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 564,
+              "line": 568,
               "column": 8
             },
             "end": {
-              "line": 564,
+              "line": 568,
               "column": 18
             }
           },
@@ -4511,11 +4511,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 566,
+              "line": 570,
               "column": 8
             },
             "end": {
-              "line": 566,
+              "line": 570,
               "column": 15
             }
           },
@@ -5205,7 +5205,7 @@
         {
           "name": "disablesmartguide",
           "type": "boolean",
-          "description": "True if smart guide is disables, false otherwise.",
+          "description": "True if smart guide is disabled, false otherwise.",
           "privacy": "public",
           "sourceRange": {
             "start": {
@@ -5225,9 +5225,9 @@
           "defaultValue": "false"
         },
         {
-          "name": "disablesmartguidefadeout",
+          "name": "enablesmartguidefadeout",
           "type": "boolean",
-          "description": "True if smart guide is disables, false otherwise.",
+          "description": "True if smart guide fade out is enabled, false otherwise.",
           "privacy": "public",
           "sourceRange": {
             "start": {
@@ -5249,7 +5249,7 @@
         {
           "name": "smartguidefadeoutduration",
           "type": "number",
-          "description": "True if smart guide is disables, false otherwise.",
+          "description": "Duration of the fade out animation in milliseconds.",
           "privacy": "public",
           "sourceRange": {
             "start": {
@@ -5970,11 +5970,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 750,
+              "line": 754,
               "column": 6
             },
             "end": {
-              "line": 758,
+              "line": 762,
               "column": 7
             }
           },
@@ -6005,11 +6005,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 580,
+              "line": 584,
               "column": 6
             },
             "end": {
-              "line": 614,
+              "line": 618,
               "column": 7
             }
           },
@@ -6503,11 +6503,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 678,
+              "line": 682,
               "column": 6
             },
             "end": {
-              "line": 684,
+              "line": 688,
               "column": 7
             }
           },
@@ -6967,11 +6967,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 695,
+              "line": 699,
               "column": 6
             },
             "end": {
-              "line": 704,
+              "line": 708,
               "column": 7
             }
           },
@@ -7679,11 +7679,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 889,
+              "line": 888,
               "column": 12
             },
             "end": {
-              "line": 894,
+              "line": 893,
               "column": 13
             }
           },
@@ -7696,11 +7696,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 988,
+              "line": 1007,
               "column": 12
             },
             "end": {
-              "line": 991,
+              "line": 1010,
               "column": 13
             }
           },
@@ -7714,11 +7714,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 718,
+              "line": 722,
               "column": 6
             },
             "end": {
-              "line": 734,
+              "line": 738,
               "column": 7
             }
           },
@@ -7743,11 +7743,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 778,
+              "line": 782,
               "column": 6
             },
             "end": {
-              "line": 782,
+              "line": 786,
               "column": 7
             }
           },
@@ -7771,11 +7771,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 795,
+              "line": 799,
               "column": 6
             },
             "end": {
-              "line": 800,
+              "line": 804,
               "column": 7
             }
           },
@@ -7804,11 +7804,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 844,
+              "line": 843,
               "column": 12
             },
             "end": {
-              "line": 874,
+              "line": 873,
               "column": 13
             }
           },
@@ -7821,11 +7821,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 876,
+              "line": 875,
               "column": 12
             },
             "end": {
-              "line": 882,
+              "line": 881,
               "column": 13
             }
           },
@@ -7842,11 +7842,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 902,
+              "line": 901,
               "column": 12
             },
             "end": {
-              "line": 906,
+              "line": 905,
               "column": 13
             }
           },
@@ -7859,11 +7859,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 911,
+              "line": 910,
               "column": 12
             },
             "end": {
-              "line": 915,
+              "line": 914,
               "column": 13
             }
           },
@@ -7876,11 +7876,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 920,
+              "line": 919,
               "column": 12
             },
             "end": {
-              "line": 924,
+              "line": 923,
               "column": 13
             }
           },
@@ -7893,11 +7893,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 929,
+              "line": 928,
               "column": 12
             },
             "end": {
-              "line": 933,
+              "line": 932,
               "column": 13
             }
           },
@@ -7910,11 +7910,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 941,
+              "line": 940,
               "column": 12
             },
             "end": {
-              "line": 945,
+              "line": 944,
               "column": 13
             }
           },
@@ -7937,46 +7937,7 @@
         },
         {
           "name": "importInk",
-          "description": "Import ink",
-          "privacy": "public",
-          "sourceRange": {
-            "start": {
-              "line": 951,
-              "column": 12
-            },
-            "end": {
-              "line": 955,
-              "column": 13
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "strokes",
-              "type": "Array.<Object>"
-            }
-          ]
-        },
-        {
-          "name": "convert",
-          "description": "Launch convert",
-          "privacy": "public",
-          "sourceRange": {
-            "start": {
-              "line": 960,
-              "column": 12
-            },
-            "end": {
-              "line": 964,
-              "column": 13
-            }
-          },
-          "metadata": {},
-          "params": []
-        },
-        {
-          "name": "getStats",
-          "description": "Return the stats allowing to monitor what ink size is send to the server.\nStats objects format {strokesCount : 0, pointsCount : 0, byteSize : 0, humanSize : 0, humanUnit : 'BYTE'} humanUnit could have the values BYTE, BYTES, KiB, MiB",
+          "description": "Import multiple strokes at the same time also call batch mode.",
           "privacy": "public",
           "sourceRange": {
             "start": {
@@ -7989,6 +7950,46 @@
             }
           },
           "metadata": {},
+          "params": [
+            {
+              "name": "strokes",
+              "type": "Array.<{gesture: Boolean, pointerType: String, pointerId: Integer, x: Array.<Floats>, y: Array.<Floats>, t: Array.<Floats>}>",
+              "description": "Depending of of your users writes the strokes you may or may not activate the gestures. <code>t</code> attribute is optional in the set of strokes but it is highly recommended to pass it for better accuracy.\n\nExample of input :\n````\n    [{\n    \"gesture\": false,\n    \"pointerType\": \"PEN\",\n    \"pointerId\": 1,\n    \"x\": [273, 278, 281],\n    \"y\": [121, 128, 133],\n    \"t\": [3185.7900000000004, 3213.8150000000005, 3222.5350000000003]\n    },{\n    \"gesture\": false,\n    \"pointerType\": \"PEN\",\n    \"pointerId\": 1,\n    \"x\": [173, 178, 181],\n    \"y\": [221, 228, 233],\n    \"t\": [6185.7900000000004, 6213.8150000000005,6222.5350000000003]\n    }]\n````"
+            }
+          ]
+        },
+        {
+          "name": "convert",
+          "description": "Launch convert",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 979,
+              "column": 12
+            },
+            "end": {
+              "line": 983,
+              "column": 13
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "getStats",
+          "description": "Return the stats allowing to monitor what ink size is send to the server.\nStats objects format {strokesCount : 0, pointsCount : 0, byteSize : 0, humanSize : 0, humanUnit : 'BYTE'} humanUnit could have the values BYTE, BYTES, KiB, MiB",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 989,
+              "column": 12
+            },
+            "end": {
+              "line": 993,
+              "column": 13
+            }
+          },
+          "metadata": {},
           "params": []
         },
         {
@@ -7997,11 +7998,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 976,
+              "line": 995,
               "column": 12
             },
             "end": {
-              "line": 982,
+              "line": 1001,
               "column": 13
             }
           },
@@ -8018,11 +8019,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 984,
+              "line": 1003,
               "column": 12
             },
             "end": {
-              "line": 986,
+              "line": 1005,
               "column": 13
             }
           },
@@ -8045,11 +8046,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 993,
+              "line": 1012,
               "column": 12
             },
             "end": {
-              "line": 1010,
+              "line": 1029,
               "column": 13
             }
           },
@@ -8066,11 +8067,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 1012,
+              "line": 1031,
               "column": 12
             },
             "end": {
-              "line": 1015,
+              "line": 1034,
               "column": 13
             }
           },
@@ -8127,11 +8128,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 811,
+              "line": 815,
               "column": 6
             },
             "end": {
-              "line": 814,
+              "line": 818,
               "column": 7
             }
           },
@@ -8803,11 +8804,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 478,
+              "line": 482,
               "column": 6
             },
             "end": {
-              "line": 482,
+              "line": 486,
               "column": 7
             }
           },
@@ -8825,11 +8826,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 624,
+              "line": 628,
               "column": 6
             },
             "end": {
-              "line": 626,
+              "line": 630,
               "column": 7
             }
           },
@@ -8859,11 +8860,11 @@
           "sourceRange": {
             "file": "bower_components/polymer/lib/mixins/element-mixin.html",
             "start": {
-              "line": 637,
+              "line": 641,
               "column": 6
             },
             "end": {
-              "line": 648,
+              "line": 652,
               "column": 7
             }
           },
@@ -8922,7 +8923,7 @@
           "column": 8
         },
         "end": {
-          "line": 1016,
+          "line": 1035,
           "column": 9
         }
       },
@@ -9380,7 +9381,7 @@
         },
         {
           "name": "disablesmartguide",
-          "description": "True if smart guide is disables, false otherwise.",
+          "description": "True if smart guide is disabled, false otherwise.",
           "sourceRange": {
             "start": {
               "line": 494,
@@ -9395,8 +9396,8 @@
           "type": "boolean"
         },
         {
-          "name": "disablesmartguidefadeout",
-          "description": "True if smart guide is disables, false otherwise.",
+          "name": "enablesmartguidefadeout",
+          "description": "True if smart guide fade out is enabled, false otherwise.",
           "sourceRange": {
             "start": {
               "line": 503,
@@ -9412,7 +9413,7 @@
         },
         {
           "name": "smartguidefadeoutduration",
-          "description": "True if smart guide is disables, false otherwise.",
+          "description": "Duration of the fade out animation in milliseconds.",
           "sourceRange": {
             "start": {
               "line": 512,
@@ -9982,8 +9983,8 @@
         },
         {
           "type": "CustomEvent",
-          "name": "disablesmartguidefadeout-changed",
-          "description": "Fired when the `disablesmartguidefadeout` property changes.",
+          "name": "enablesmartguidefadeout-changed",
+          "description": "Fired when the `enablesmartguidefadeout` property changes.",
           "metadata": {}
         },
         {

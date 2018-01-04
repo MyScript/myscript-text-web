@@ -15,6 +15,7 @@
         <style>
             nav {
                 line-height: 52px;
+                padding: 0 12px;
             }
 
             myscript-text-web {
@@ -30,11 +31,11 @@
 
     <body>
         <nav>
-            <button onclick="myscriptTextWeb.undo()">undo</button>
-            <button onclick="myscriptTextWeb.redo()">redo</button>
-            <button onclick="myscriptTextWeb.clear()">clear</button>
-            <button onclick="myscriptTextWeb.exportContent()">export</button>
-            <button onclick="myscriptTextWeb.convert()">convert</button>
+            <button class="classic-btn" onclick="myscriptTextWeb.undo()">undo</button>
+            <button class="classic-btn" onclick="myscriptTextWeb.redo()">redo</button>
+            <button class="classic-btn" onclick="myscriptTextWeb.clear()">clear</button>
+            <button class="classic-btn" onclick="myscriptTextWeb.exportContent()">export</button>
+            <button class="classic-btn" onclick="myscriptTextWeb.convert()">convert</button>
         </nav>
         <paper-toast class="fit-top"></paper-toast>
         <!-- Please change applicationkey and hmackey below with those send by mail during your registration. You can re-access them by connecting to your dashboard at developer.myscript.com with your myscript account -->

@@ -19,7 +19,7 @@
     </head>
 
     <body>
-        <myscript-common-element unloaded touch-action="none">
+        <myscript-common-element unloaded touch-action="none" disableconvertcontrol disableclearcontrol>
         </myscript-common-element>
         <script>
             window.addEventListener('load', () => {
@@ -44,7 +44,7 @@
                     recognitionParams: {
                         v4: {
                             text: {
-                                mimeTypes: ['text/plain']
+                                mimeTypes: ['text/plain', 'application/vnd.myscript.jiix']
                             }
                         }
                     }
