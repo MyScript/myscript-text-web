@@ -19,7 +19,6 @@ CSS variable | Default
 -------------|--------
 `--myscript-text-web-background` | none
 `--myscript-text-web-color` | #FFFFFF
-`--myscript-text-web-line-pattern` | Classic notebook line pattern
 `--myscript-text-web-button-background` | #1A9FFF
 `--myscript-text-web-button-focus-background` | #1A9FFF
 `--myscript-text-web-button-disabled-background` | #F5F6F7
@@ -50,7 +49,6 @@ CSS variable | Default
                 --myscript-text-web-hover-color: var(--myscript-editor-hover-color);
                 --myscript-text-web-focus-color: var(--myscript-editor-focus-color);
                 --myscript-text-web-disabled-color: var(--myscript-editor-disabled-color);
-                --myscript-text-web-line-pattern: var(--myscript-editor-line-pattern);
                 --myscript-text-web-capture-background: var(--myscript-editor-capture-background);
                 --myscript-text-web-error-background: var(--myscript-editor-error-background);
                 --myscript-text-web-loader: var(--myscript-editor-loader);
@@ -88,7 +86,6 @@ CSS variable | Default
                 --myscript-common-element-hover-color: var(--myscript-text-web-hover-color);
                 --myscript-common-element-focus-color: var(--myscript-text-web-focus-color);
                 --myscript-common-element-disabled-color: var(--myscript-text-web-disabled-color);
-                --myscript-common-element-line-pattern: var(--myscript-text-web-line-pattern);
                 --myscript-common-element-capture-background: var(--myscript-text-web-capture-background);
                 --myscript-common-element-button-background: var(--myscript-text-web-button-background);
                 --myscript-common-element-button-focus-background: var(--myscript-text-web-button-focus-background);
@@ -490,6 +487,14 @@ CSS variable | Default
                     //                 End of recopy
                     // -----------------------------------------------------------------------------
                     /**
+                     * If set to true, disable the guide lines
+                     */
+                    disableguidelines: {
+                        type: Boolean,
+                        reflectToAttribute: true,
+                        value: false
+                    },
+                    /**
                      * True if smart guide is disabled, false otherwise.
                      */
                     disablesmartguide: {
@@ -747,7 +752,7 @@ CSS variable | Default
                 return stylesheet;
             }
 
-            static _generateTextConfiguration(configuration, language, mimetypes, disablesmartguide, enablesmartguidefadeout, smartguidefadeoutduration, textinputmode, resultdetail, contenttypes, subsetknowledges, userlkwords, userresources, textcandidatelistsize, wordcandidatelistsize, wordpredictionlistsize, wordcompletionlistsize, charactercandidatelistsize, enableoutoflexicon, discardcasevariations, discardaccentuationvariations, glyphdistortion, enabletagger, spellingdistortion) {
+            static _generateTextConfiguration(configuration, language, mimetypes, disableguidelines, disablesmartguide, enablesmartguidefadeout, smartguidefadeoutduration, textinputmode, resultdetail, contenttypes, subsetknowledges, userlkwords, userresources, textcandidatelistsize, wordcandidatelistsize, wordpredictionlistsize, wordcompletionlistsize, charactercandidatelistsize, enableoutoflexicon, discardcasevariations, discardaccentuationvariations, glyphdistortion, enabletagger, spellingdistortion) {
                 // FIXME: find a way to do a proper deep merge
                 const conf = Object.assign({}, configuration);
                 if (!conf.recognitionParams) {
@@ -768,12 +773,18 @@ CSS variable | Default
                 if (!conf.recognitionParams.v4.text) {
                     conf.recognitionParams.v4.text = {};
                 }
+                if (!conf.recognitionParams.v4.text.guide) {
+                    conf.recognitionParams.v4.text.guide = {};
+                }
                 if (language) {
                     conf.recognitionParams.v3.textParameter.language = language;
                     conf.recognitionParams.v4.lang = language;
                 }
                 if (mimetypes) {
                     conf.recognitionParams.v4.text.mimeTypes = mimetypes.split(',');
+                }
+                if (disableguidelines !== undefined) {
+                    conf.recognitionParams.v4.text.guide.enable = !disableguidelines;
                 }
                 if (disablesmartguide !== undefined) {
                     conf.recognitionParams.v4.text.smartGuide = !disablesmartguide;
@@ -851,6 +862,7 @@ CSS variable | Default
                     this.configuration,
                     this.language,
                     this.mimetypes,
+                    this.disableguidelines,
                     this.disablesmartguide,
                     this.enablesmartguidefadeout,
                     this.smartguidefadeoutduration,

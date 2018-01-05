@@ -23,7 +23,6 @@ CSS variable | Default
 -------------|--------
 `--myscript-common-element-background` | none
 `--myscript-common-element-color` | #FFFFFF
-`--myscript-common-element-line-pattern` | Classic notebook square pattern
 `--myscript-common-element-button-background` | #1A9FFF
 `--myscript-common-element-button-focus-background` | #1A9FFF
 `--myscript-common-element-button-disabled-background` | #F5F6F7
@@ -45,7 +44,6 @@ CSS variable | Default
                 --myscript-common-element-hover-color: var(--myscript-editor-hover-color);
                 --myscript-common-element-focus-color: var(--myscript-editor-focus-color);
                 --myscript-common-element-disabled-color: var(--myscript-editor-disabled-color);
-                --myscript-common-element-line-pattern: var(--myscript-editor-line-pattern);
                 --myscript-common-element-capture-background: var(--myscript-editor-capture-background);
                 --myscript-common-element-error-background: var(--myscript-editor-error-background);
                 --myscript-common-element-loader: var(--myscript-editor-loader);
@@ -91,11 +89,6 @@ CSS variable | Default
                 background: var(--myscript-common-element-background);
             }
 
-            .ms-editor canvas.ms-rendering-canvas,
-            .ms-editor svg {
-                @apply --myscript-common-element-line-pattern;
-            }
-
             .ms-editor canvas.ms-capture-canvas {
                 background: var(--myscript-common-element-capture-background);
             }
@@ -123,10 +116,9 @@ CSS variable | Default
                        disabled="[[ !canredo ]]" hidden="[[ disableundoredocontrol ]]">
             </paper-fab>
             <div class="spacer"></div>
-            <paper-button mini title="convert" on-tap="convert"
-                          disabled="[[ !canconvert ]]" hidden="[[ disableconvertcontrol ]]">
+            <button class="classic-btn" title="convert" on-tap="convert" disabled="[[ !canconvert ]]" hidden="[[ disableconvertcontrol ]]">
                 Convert
-            </paper-button>
+            </button>
         </nav>
         <div id="editorDomElement"
              class="ms-editor"
