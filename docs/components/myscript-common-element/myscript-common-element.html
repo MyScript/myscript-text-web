@@ -23,6 +23,7 @@ CSS variable | Default
 -------------|--------
 `--myscript-common-element-background` | none
 `--myscript-common-element-color` | #FFFFFF
+`--myscript-common-element-line-pattern` | Classic notebook square pattern
 `--myscript-common-element-button-background` | #1A9FFF
 `--myscript-common-element-button-focus-background` | #1A9FFF
 `--myscript-common-element-button-disabled-background` | #F5F6F7
@@ -44,6 +45,7 @@ CSS variable | Default
                 --myscript-common-element-hover-color: var(--myscript-editor-hover-color);
                 --myscript-common-element-focus-color: var(--myscript-editor-focus-color);
                 --myscript-common-element-disabled-color: var(--myscript-editor-disabled-color);
+                --myscript-common-element-line-pattern: var(--myscript-editor-line-pattern);
                 --myscript-common-element-capture-background: var(--myscript-editor-capture-background);
                 --myscript-common-element-error-background: var(--myscript-editor-error-background);
                 --myscript-common-element-loader: var(--myscript-editor-loader);
@@ -87,6 +89,10 @@ CSS variable | Default
 
             .ms-editor {
                 background: var(--myscript-common-element-background);
+            }
+
+            .ms-editor canvas.ms-rendering-canvas {
+                @apply --myscript-common-element-line-pattern;
             }
 
             .ms-editor canvas.ms-capture-canvas {
@@ -647,6 +653,7 @@ CSS variable | Default
             }
 
             _attachGrabber(element, editor) {
+                let mMaxDiffX = 0;
                 let smartGuidePointerDown = false;
                 let downSmartGuidePoint = null;
 
@@ -716,7 +723,12 @@ CSS variable | Default
                         editor.pointerMove(MyScriptCommonElement._extractPoint(evt, element, editor.configuration));
                     } else if (smartGuidePointerDown) {
                         const point = MyScriptCommonElement._extractPoint(evt, element, editor.configuration);
-                        if (point.y >= downSmartGuidePoint.y + 5 && (point.x >= downSmartGuidePoint.x - 10 && point.x <= downSmartGuidePoint.x + 10)) {
+                        const diffX = Math.abs(downSmartGuidePoint.x - point.x);
+                        const diffY = Math.abs(downSmartGuidePoint.y - point.y);
+                        mMaxDiffX = Math.max(diffX, mMaxDiffX);
+                        const cond1 = diffX < 5 && diffY > 5 && mMaxDiffX < 15;
+                        const cond2 = diffX > 5 && diffY > 5 && mMaxDiffX < 15;
+                        if (cond1 || cond2) {
                             this.activePointerId = evt.pointerId;
                             // Hack for iOS 9 Safari : pointerId has to be int so -1 if > max value
                             const pointerId = evt.pointerId > 2147483647 ? -1 : evt.pointerId;
@@ -752,7 +764,12 @@ CSS variable | Default
                         editor.pointerMove(MyScriptCommonElement._extractPoint(evt, element, editor.configuration));
                     } else if (smartGuidePointerDown) {
                         const point = MyScriptCommonElement._extractPoint(evt, element, editor.configuration);
-                        if (point.y >= downSmartGuidePoint.y + 5 && (point.x >= downSmartGuidePoint.x - 10 && point.x <= downSmartGuidePoint.x + 10)) {
+                        const diffX = Math.abs(downSmartGuidePoint.x - point.x);
+                        const diffY = Math.abs(downSmartGuidePoint.y - point.y);
+                        mMaxDiffX = Math.max(diffX, mMaxDiffX);
+                        const cond1 = diffX < 5 && diffY > 5 && mMaxDiffX < 15;
+                        const cond2 = diffX > 5 && diffY > 5 && mMaxDiffX < 15;
+                        if (cond1 || cond2) {
                             this.activePointerId = evt.pointerId;
                             // Hack for iOS 9 Safari : pointerId has to be int so -1 if > max value
                             const pointerId = evt.pointerId > 2147483647 ? -1 : evt.pointerId;
@@ -769,6 +786,7 @@ CSS variable | Default
 
                 const pointerUpHandler = (evt) => { // Trigger a pointerUp
                     patchPointerEvent(evt);
+                    mMaxDiffX = 0;
                     smartGuidePointerDown = false;
                     const smartGuideIds = ['smartguide', 'prompter-text-container', 'prompter-text', 'tag-icon', 'ellipsis'];
                     const scrollbarClasses = ['ps__rail-x', 'ps__thumb-x'];
@@ -791,6 +809,7 @@ CSS variable | Default
 
                 const polymerPointerUpHandler = (evt) => { // Trigger a pointerUp
                     patchPointerEvent(evt);
+                    mMaxDiffX = 0;
                     smartGuidePointerDown = false;
                     if (this.activePointerId && this.activePointerId === evt.pointerId) { // Only considering the active pointer
                         this.activePointerId = undefined; // Managing the active pointer
