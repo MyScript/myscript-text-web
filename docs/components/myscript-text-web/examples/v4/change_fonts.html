@@ -53,7 +53,7 @@
     </div>
 </nav>
 <myscript-text-web scheme="https"
-                   host="cloud-internal-stable.corp.myscript.com"
+                   host="webdemoapi.myscript.com"
                    applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
                    hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad"
                    touch-action="none">
@@ -77,7 +77,7 @@
 
         function getFontsForLang(language) {
             fontsElement.options.length = 0;
-            request('http://cloud-internal-stable.corp.myscript.com/api/v4.0/iink/font/google/language/' + language)
+            request('http://webdemoapi.myscript.com/api/v4.0/iink/font/google/language/' + language)
                 .then(function(e) {
                     res = JSON.parse(e.target.responseText).result;
                     Object.keys(res).forEach(function (index) {

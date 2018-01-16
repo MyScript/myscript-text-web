@@ -522,6 +522,22 @@ CSS variable | Default
                         notify: true
                     },
                     /**
+                     * If set to true, lexical knowledge (LK) is added to current LK, false otherwise
+                     */
+                    addlktext: {
+                        type: Boolean,
+                        value: false,
+                        reflectToAttribute: true
+                    },
+                    /**
+                     * Name of the custom resources to be used
+                     */
+                    customresources: {
+                        type: Array,
+                        value: [],
+                        reflectToAttribute: true
+                    },
+                    /**
                      * If set to true, hide the export panel.
                      */
                     disableexportpanel: {
@@ -752,7 +768,7 @@ CSS variable | Default
                 return stylesheet;
             }
 
-            static _generateTextConfiguration(configuration, language, mimetypes, disableguidelines, disablesmartguide, enablesmartguidefadeout, smartguidefadeoutduration, textinputmode, resultdetail, contenttypes, subsetknowledges, userlkwords, userresources, textcandidatelistsize, wordcandidatelistsize, wordpredictionlistsize, wordcompletionlistsize, charactercandidatelistsize, enableoutoflexicon, discardcasevariations, discardaccentuationvariations, glyphdistortion, enabletagger, spellingdistortion) {
+            static _generateTextConfiguration(configuration, language, mimetypes, disableguidelines, disablesmartguide, enablesmartguidefadeout, smartguidefadeoutduration, addlktext, customresources, textinputmode, resultdetail, contenttypes, subsetknowledges, userlkwords, userresources, textcandidatelistsize, wordcandidatelistsize, wordpredictionlistsize, wordcompletionlistsize, charactercandidatelistsize, enableoutoflexicon, discardcasevariations, discardaccentuationvariations, glyphdistortion, enabletagger, spellingdistortion) {
                 // FIXME: find a way to do a proper deep merge
                 const conf = Object.assign({}, configuration);
                 if (!conf.recognitionParams) {
@@ -797,6 +813,13 @@ CSS variable | Default
                 }
                 if (smartguidefadeoutduration) {
                     conf.recognitionParams.v4.text.smartGuideFadeOut.duration = smartguidefadeoutduration;
+                }
+                if (!conf.recognitionParams.v4.text.configuration) {
+                    conf.recognitionParams.v4.text.configuration = {};
+                }
+                if (customresources) {
+                    conf.recognitionParams.v4.text.configuration.customResources = customresources;
+                    conf.recognitionParams.v4.text.configuration.addLKText = addlktext;
                 }
                 if (textinputmode) {
                     conf.recognitionParams.v3.textParameter.textInputMode = textinputmode;
@@ -866,6 +889,8 @@ CSS variable | Default
                     this.disablesmartguide,
                     this.enablesmartguidefadeout,
                     this.smartguidefadeoutduration,
+                    this.addlktext,
+                    this.customresources,
                     this.textinputmode,
                     this.resultdetail,
                     this.contenttypes,

@@ -5289,9 +5289,9 @@
           "defaultValue": "10000"
         },
         {
-          "name": "disableexportpanel",
+          "name": "addlktext",
           "type": "boolean",
-          "description": "If set to true, hide the export panel.",
+          "description": "If set to true, lexical knowledge (LK) is added to current LK, false otherwise",
           "privacy": "public",
           "sourceRange": {
             "start": {
@@ -5309,9 +5309,9 @@
           "defaultValue": "false"
         },
         {
-          "name": "language",
-          "type": "string",
-          "description": "The recognition language used by the recognition process.",
+          "name": "customresources",
+          "type": "Array",
+          "description": "Name of the custom resources to be used",
           "privacy": "public",
           "sourceRange": {
             "start": {
@@ -5319,7 +5319,47 @@
               "column": 20
             },
             "end": {
-              "line": 539,
+              "line": 538,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "[]"
+        },
+        {
+          "name": "disableexportpanel",
+          "type": "boolean",
+          "description": "If set to true, hide the export panel.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 542,
+              "column": 20
+            },
+            "end": {
+              "line": 546,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "false"
+        },
+        {
+          "name": "language",
+          "type": "string",
+          "description": "The recognition language used by the recognition process.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 550,
+              "column": 20
+            },
+            "end": {
+              "line": 555,
               "column": 21
             }
           },
@@ -5337,11 +5377,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 543,
+              "line": 559,
               "column": 20
             },
             "end": {
-              "line": 547,
+              "line": 563,
               "column": 21
             }
           },
@@ -5357,11 +5397,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 551,
+              "line": 567,
               "column": 20
             },
             "end": {
-              "line": 555,
+              "line": 571,
               "column": 21
             }
           },
@@ -5377,11 +5417,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 559,
+              "line": 575,
               "column": 20
             },
             "end": {
-              "line": 563,
+              "line": 579,
               "column": 21
             }
           },
@@ -5397,11 +5437,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 567,
+              "line": 583,
               "column": 20
             },
             "end": {
-              "line": 570,
+              "line": 586,
               "column": 21
             }
           },
@@ -5417,11 +5457,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 574,
+              "line": 590,
               "column": 20
             },
             "end": {
-              "line": 577,
+              "line": 593,
               "column": 21
             }
           },
@@ -5437,11 +5477,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 581,
+              "line": 597,
               "column": 20
             },
             "end": {
-              "line": 584,
+              "line": 600,
               "column": 21
             }
           },
@@ -5457,11 +5497,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 588,
+              "line": 604,
               "column": 20
             },
             "end": {
-              "line": 591,
+              "line": 607,
               "column": 21
             }
           },
@@ -5477,11 +5517,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 596,
+              "line": 612,
               "column": 20
             },
             "end": {
-              "line": 600,
+              "line": 616,
               "column": 21
             }
           },
@@ -5497,11 +5537,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 606,
+              "line": 622,
               "column": 20
             },
             "end": {
-              "line": 608,
+              "line": 624,
               "column": 21
             }
           },
@@ -5516,11 +5556,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 613,
+              "line": 629,
               "column": 20
             },
             "end": {
-              "line": 616,
+              "line": 632,
               "column": 21
             }
           },
@@ -5536,11 +5576,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 621,
+              "line": 637,
               "column": 20
             },
             "end": {
-              "line": 624,
+              "line": 640,
               "column": 21
             }
           },
@@ -5556,11 +5596,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 630,
+              "line": 646,
               "column": 20
             },
             "end": {
-              "line": 632,
+              "line": 648,
               "column": 21
             }
           },
@@ -5575,11 +5615,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 636,
+              "line": 652,
               "column": 20
             },
             "end": {
-              "line": 639,
+              "line": 655,
               "column": 21
             }
           },
@@ -5595,11 +5635,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 643,
+              "line": 659,
               "column": 20
             },
             "end": {
-              "line": 646,
+              "line": 662,
               "column": 21
             }
           },
@@ -5615,11 +5655,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 650,
+              "line": 666,
               "column": 20
             },
             "end": {
-              "line": 653,
+              "line": 669,
               "column": 21
             }
           },
@@ -5635,11 +5675,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 664,
+              "line": 680,
               "column": 20
             },
             "end": {
-              "line": 666,
+              "line": 682,
               "column": 21
             }
           },
@@ -5654,11 +5694,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 670,
+              "line": 686,
               "column": 20
             },
             "end": {
-              "line": 673,
+              "line": 689,
               "column": 21
             }
           },
@@ -5674,11 +5714,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 683,
+              "line": 699,
               "column": 20
             },
             "end": {
-              "line": 685,
+              "line": 701,
               "column": 21
             }
           },
@@ -5693,11 +5733,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 690,
+              "line": 706,
               "column": 20
             },
             "end": {
-              "line": 693,
+              "line": 709,
               "column": 21
             }
           },
@@ -5714,11 +5754,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 697,
+              "line": 713,
               "column": 20
             },
             "end": {
-              "line": 700,
+              "line": 716,
               "column": 21
             }
           },
@@ -5735,11 +5775,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 704,
+              "line": 720,
               "column": 20
             },
             "end": {
-              "line": 707,
+              "line": 723,
               "column": 21
             }
           },
@@ -5756,11 +5796,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 712,
+              "line": 728,
               "column": 20
             },
             "end": {
-              "line": 715,
+              "line": 731,
               "column": 21
             }
           },
@@ -5777,11 +5817,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 719,
+              "line": 735,
               "column": 20
             },
             "end": {
-              "line": 723,
+              "line": 739,
               "column": 21
             }
           },
@@ -5799,11 +5839,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 727,
+              "line": 743,
               "column": 20
             },
             "end": {
-              "line": 731,
+              "line": 747,
               "column": 21
             }
           },
@@ -5819,11 +5859,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 732,
+              "line": 748,
               "column": 20
             },
             "end": {
-              "line": 735,
+              "line": 751,
               "column": 21
             }
           },
@@ -7699,11 +7739,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 900,
+              "line": 925,
               "column": 12
             },
             "end": {
-              "line": 905,
+              "line": 930,
               "column": 13
             }
           },
@@ -7716,11 +7756,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 1019,
+              "line": 1044,
               "column": 12
             },
             "end": {
-              "line": 1022,
+              "line": 1047,
               "column": 13
             }
           },
@@ -7824,11 +7864,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 854,
+              "line": 877,
               "column": 12
             },
             "end": {
-              "line": 885,
+              "line": 910,
               "column": 13
             }
           },
@@ -7841,11 +7881,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 887,
+              "line": 912,
               "column": 12
             },
             "end": {
-              "line": 893,
+              "line": 918,
               "column": 13
             }
           },
@@ -7862,11 +7902,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 913,
+              "line": 938,
               "column": 12
             },
             "end": {
-              "line": 917,
+              "line": 942,
               "column": 13
             }
           },
@@ -7879,11 +7919,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 922,
+              "line": 947,
               "column": 12
             },
             "end": {
-              "line": 926,
+              "line": 951,
               "column": 13
             }
           },
@@ -7896,11 +7936,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 931,
+              "line": 956,
               "column": 12
             },
             "end": {
-              "line": 935,
+              "line": 960,
               "column": 13
             }
           },
@@ -7913,11 +7953,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 940,
+              "line": 965,
               "column": 12
             },
             "end": {
-              "line": 944,
+              "line": 969,
               "column": 13
             }
           },
@@ -7930,11 +7970,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 952,
+              "line": 977,
               "column": 12
             },
             "end": {
-              "line": 956,
+              "line": 981,
               "column": 13
             }
           },
@@ -7961,11 +8001,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 982,
+              "line": 1007,
               "column": 12
             },
             "end": {
-              "line": 986,
+              "line": 1011,
               "column": 13
             }
           },
@@ -7984,11 +8024,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 991,
+              "line": 1016,
               "column": 12
             },
             "end": {
-              "line": 995,
+              "line": 1020,
               "column": 13
             }
           },
@@ -8001,11 +8041,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 1001,
+              "line": 1026,
               "column": 12
             },
             "end": {
-              "line": 1005,
+              "line": 1030,
               "column": 13
             }
           },
@@ -8018,11 +8058,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 1007,
+              "line": 1032,
               "column": 12
             },
             "end": {
-              "line": 1013,
+              "line": 1038,
               "column": 13
             }
           },
@@ -8039,11 +8079,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 1015,
+              "line": 1040,
               "column": 12
             },
             "end": {
-              "line": 1017,
+              "line": 1042,
               "column": 13
             }
           },
@@ -8066,11 +8106,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 1024,
+              "line": 1049,
               "column": 12
             },
             "end": {
-              "line": 1041,
+              "line": 1066,
               "column": 13
             }
           },
@@ -8087,11 +8127,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 1043,
+              "line": 1068,
               "column": 12
             },
             "end": {
-              "line": 1046,
+              "line": 1071,
               "column": 13
             }
           },
@@ -8943,7 +8983,7 @@
           "column": 8
         },
         "end": {
-          "line": 1047,
+          "line": 1072,
           "column": 9
         }
       },
@@ -9464,8 +9504,8 @@
           "type": "number"
         },
         {
-          "name": "disableexportpanel",
-          "description": "If set to true, hide the export panel.",
+          "name": "addlktext",
+          "description": "If set to true, lexical knowledge (LK) is added to current LK, false otherwise",
           "sourceRange": {
             "start": {
               "line": 526,
@@ -9480,43 +9520,43 @@
           "type": "boolean"
         },
         {
-          "name": "language",
-          "description": "The recognition language used by the recognition process.",
+          "name": "customresources",
+          "description": "Name of the custom resources to be used",
           "sourceRange": {
             "start": {
               "line": 534,
               "column": 20
             },
             "end": {
-              "line": 539,
+              "line": 538,
               "column": 21
             }
           },
           "metadata": {},
-          "type": "string"
+          "type": "Array"
         },
         {
-          "name": "mimetypes",
-          "description": "Text export types (text/plain, ...).",
+          "name": "disableexportpanel",
+          "description": "If set to true, hide the export panel.",
           "sourceRange": {
             "start": {
-              "line": 543,
+              "line": 542,
               "column": 20
             },
             "end": {
-              "line": 547,
+              "line": 546,
               "column": 21
             }
           },
           "metadata": {},
-          "type": "string"
+          "type": "boolean"
         },
         {
-          "name": "textinputmode",
-          "description": "The text input mode to use (CURSIVE, ISOLATED, SUPERIMPOSED or VERTICAL).",
+          "name": "language",
+          "description": "The recognition language used by the recognition process.",
           "sourceRange": {
             "start": {
-              "line": 551,
+              "line": 550,
               "column": 20
             },
             "end": {
@@ -9528,8 +9568,8 @@
           "type": "string"
         },
         {
-          "name": "resultdetail",
-          "description": "The resultdetail is an entry property that conditioning result depth output. To use (TEXT, WORD or CHARACTER).",
+          "name": "mimetypes",
+          "description": "Text export types (text/plain, ...).",
           "sourceRange": {
             "start": {
               "line": 559,
@@ -9544,15 +9584,47 @@
           "type": "string"
         },
         {
-          "name": "contenttypes",
-          "description": "The content types to use for the recognition.",
+          "name": "textinputmode",
+          "description": "The text input mode to use (CURSIVE, ISOLATED, SUPERIMPOSED or VERTICAL).",
           "sourceRange": {
             "start": {
               "line": 567,
               "column": 20
             },
             "end": {
-              "line": 570,
+              "line": 571,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "resultdetail",
+          "description": "The resultdetail is an entry property that conditioning result depth output. To use (TEXT, WORD or CHARACTER).",
+          "sourceRange": {
+            "start": {
+              "line": 575,
+              "column": 20
+            },
+            "end": {
+              "line": 579,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "contenttypes",
+          "description": "The content types to use for the recognition.",
+          "sourceRange": {
+            "start": {
+              "line": 583,
+              "column": 20
+            },
+            "end": {
+              "line": 586,
               "column": 21
             }
           },
@@ -9564,11 +9636,11 @@
           "description": "The subset knowledges to use for the recognition.",
           "sourceRange": {
             "start": {
-              "line": 574,
+              "line": 590,
               "column": 20
             },
             "end": {
-              "line": 577,
+              "line": 593,
               "column": 21
             }
           },
@@ -9580,11 +9652,11 @@
           "description": "The user lk words to use for the recognition.",
           "sourceRange": {
             "start": {
-              "line": 581,
+              "line": 597,
               "column": 20
             },
             "end": {
-              "line": 584,
+              "line": 600,
               "column": 21
             }
           },
@@ -9596,11 +9668,11 @@
           "description": "List of user resources to use for recognitions. Theses user resources have to be attached to the user account where application is declare.",
           "sourceRange": {
             "start": {
-              "line": 588,
+              "line": 604,
               "column": 20
             },
             "end": {
-              "line": 591,
+              "line": 607,
               "column": 21
             }
           },
@@ -9612,39 +9684,7 @@
           "description": "The size of the candidate lists that will be provided at the text level in the recognition result.\nThis value must be between `1` and `20`.",
           "sourceRange": {
             "start": {
-              "line": 596,
-              "column": 20
-            },
-            "end": {
-              "line": 600,
-              "column": 21
-            }
-          },
-          "metadata": {},
-          "type": "number"
-        },
-        {
-          "name": "wordcandidatelistsize",
-          "description": "The size of the candidate lists that will be provided at the word level in the recognition result.\nThis value must be between `1` and `20`.\nYou can't set a wordCandidateListSize > 0 if depth is not set to WORD or CHARACTER",
-          "sourceRange": {
-            "start": {
-              "line": 606,
-              "column": 20
-            },
-            "end": {
-              "line": 608,
-              "column": 21
-            }
-          },
-          "metadata": {},
-          "type": "number"
-        },
-        {
-          "name": "wordpredictionlistsize",
-          "description": "The size of the candidate prediction lists that will be provided at the word level in the recognition result.\nThis value must be between `0` and `20`.",
-          "sourceRange": {
-            "start": {
-              "line": 613,
+              "line": 612,
               "column": 20
             },
             "end": {
@@ -9656,11 +9696,11 @@
           "type": "number"
         },
         {
-          "name": "wordcompletionlistsize",
-          "description": "The size of the candidate completion lists that will be provided at the word level in the recognition result.\nThis value must be between `0` and `20`.",
+          "name": "wordcandidatelistsize",
+          "description": "The size of the candidate lists that will be provided at the word level in the recognition result.\nThis value must be between `1` and `20`.\nYou can't set a wordCandidateListSize > 0 if depth is not set to WORD or CHARACTER",
           "sourceRange": {
             "start": {
-              "line": 621,
+              "line": 622,
               "column": 20
             },
             "end": {
@@ -9672,11 +9712,11 @@
           "type": "number"
         },
         {
-          "name": "charactercandidatelistsize",
-          "description": "The size of the candidate lists that will be provided at the character level in the recognition result.\nThis value must be between `1` and `20`.\nYou can't set a characterCandidateListSize > 0 if depth is not set to CHARACTER",
+          "name": "wordpredictionlistsize",
+          "description": "The size of the candidate prediction lists that will be provided at the word level in the recognition result.\nThis value must be between `0` and `20`.",
           "sourceRange": {
             "start": {
-              "line": 630,
+              "line": 629,
               "column": 20
             },
             "end": {
@@ -9688,15 +9728,47 @@
           "type": "number"
         },
         {
+          "name": "wordcompletionlistsize",
+          "description": "The size of the candidate completion lists that will be provided at the word level in the recognition result.\nThis value must be between `0` and `20`.",
+          "sourceRange": {
+            "start": {
+              "line": 637,
+              "column": 20
+            },
+            "end": {
+              "line": 640,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "number"
+        },
+        {
+          "name": "charactercandidatelistsize",
+          "description": "The size of the candidate lists that will be provided at the character level in the recognition result.\nThis value must be between `1` and `20`.\nYou can't set a characterCandidateListSize > 0 if depth is not set to CHARACTER",
+          "sourceRange": {
+            "start": {
+              "line": 646,
+              "column": 20
+            },
+            "end": {
+              "line": 648,
+              "column": 21
+            }
+          },
+          "metadata": {},
+          "type": "number"
+        },
+        {
           "name": "enableoutoflexicon",
           "description": "Property that controls the out of lexicon match.",
           "sourceRange": {
             "start": {
-              "line": 636,
+              "line": 652,
               "column": 20
             },
             "end": {
-              "line": 639,
+              "line": 655,
               "column": 21
             }
           },
@@ -9708,11 +9780,11 @@
           "description": "Property that tells the recognizer to detect the candidates that differ only in case and return the best candidate of that lot.",
           "sourceRange": {
             "start": {
-              "line": 643,
+              "line": 659,
               "column": 20
             },
             "end": {
-              "line": 646,
+              "line": 662,
               "column": 21
             }
           },
@@ -9724,11 +9796,11 @@
           "description": "Property that tells the recognizer to detect the candidates that differ only in accentuation and return the best candidate of that lot.",
           "sourceRange": {
             "start": {
-              "line": 650,
+              "line": 666,
               "column": 20
             },
             "end": {
-              "line": 653,
+              "line": 669,
               "column": 21
             }
           },
@@ -9740,11 +9812,11 @@
           "description": "",
           "sourceRange": {
             "start": {
-              "line": 664,
+              "line": 680,
               "column": 20
             },
             "end": {
-              "line": 666,
+              "line": 682,
               "column": 21
             }
           },
@@ -9756,11 +9828,11 @@
           "description": "Attach a digital ink tagger to the recognizer",
           "sourceRange": {
             "start": {
-              "line": 670,
+              "line": 686,
               "column": 20
             },
             "end": {
-              "line": 673,
+              "line": 689,
               "column": 21
             }
           },
@@ -9772,11 +9844,11 @@
           "description": "SpellingDistortion is only valid with ISOLATED mode\n\nThe value of the <code>SpellingDistortion</code> property that controls the amount of spelling distortion.\nA value between <code>0</code> and <code>255</code>.\n\n<code>0</code> means no distortion.\n<code>255</code> means maximum supported distortion.",
           "sourceRange": {
             "start": {
-              "line": 683,
+              "line": 699,
               "column": 20
             },
             "end": {
-              "line": 685,
+              "line": 701,
               "column": 21
             }
           },
@@ -9788,11 +9860,11 @@
           "description": "Exports.",
           "sourceRange": {
             "start": {
-              "line": 690,
+              "line": 706,
               "column": 20
             },
             "end": {
-              "line": 693,
+              "line": 709,
               "column": 21
             }
           },
@@ -9804,11 +9876,11 @@
           "description": "The export rawResult",
           "sourceRange": {
             "start": {
-              "line": 697,
+              "line": 713,
               "column": 20
             },
             "end": {
-              "line": 700,
+              "line": 716,
               "column": 21
             }
           },
@@ -9820,11 +9892,11 @@
           "description": "The recognition result selected candidate label",
           "sourceRange": {
             "start": {
-              "line": 704,
+              "line": 720,
               "column": 20
             },
             "end": {
-              "line": 707,
+              "line": 723,
               "column": 21
             }
           },
@@ -9836,11 +9908,11 @@
           "description": "The recognition result candidates",
           "sourceRange": {
             "start": {
-              "line": 712,
+              "line": 728,
               "column": 20
             },
             "end": {
-              "line": 715,
+              "line": 731,
               "column": 21
             }
           },
@@ -9852,11 +9924,11 @@
           "description": "True if component is idle",
           "sourceRange": {
             "start": {
-              "line": 719,
+              "line": 735,
               "column": 20
             },
             "end": {
-              "line": 723,
+              "line": 739,
               "column": 21
             }
           },
@@ -9868,11 +9940,11 @@
           "description": "True to display console output, false otherwise.",
           "sourceRange": {
             "start": {
-              "line": 727,
+              "line": 743,
               "column": 20
             },
             "end": {
-              "line": 731,
+              "line": 747,
               "column": 21
             }
           },
@@ -9884,11 +9956,11 @@
           "description": "",
           "sourceRange": {
             "start": {
-              "line": 732,
+              "line": 748,
               "column": 20
             },
             "end": {
-              "line": 735,
+              "line": 751,
               "column": 21
             }
           },
