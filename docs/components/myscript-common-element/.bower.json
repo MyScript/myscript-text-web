@@ -47,11 +47,11 @@
     "paper-toggle-button": "^2.0.0",
     "paper-slider": "^2.0.2"
   },
-  "_release": "5a1c9718f9",
+  "_release": "1c75efa6d7",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "5a1c9718f9db297d64f306e9ab8993faa493542e"
+    "commit": "1c75efa6d76fc51696a76c4850eeffa4ff445f0d"
   },
   "_source": "https://github.com/MyScript/myscript-common-element.git",
   "_target": "master",
