@@ -127,6 +127,7 @@ CSS variable | Default
             pencolor="[[ pencolor ]]"
             penwidth="[[ penwidth ]]"
             penstyle="[[ penstyle ]]"
+            penstyleclasses="[[ penstyleclasses ]]"
             themecolor="[[ themecolor ]]"
             themewidth="[[ themewidth ]]"
             theme="[[ commontheme ]]"
@@ -354,6 +355,14 @@ CSS variable | Default
                      */
                     penstyle: {
                         type: Object,
+                        notify: true
+                    },
+                    /**
+                     * Pen style classes
+                     */
+                    penstyleclasses: {
+                        type: String,
+                        value: '',
                         notify: true
                     },
                     /**

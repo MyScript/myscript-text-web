@@ -39,6 +39,7 @@
     "iron-component-page": "^3.0.0",
     "paper-swatch-picker": "^2.0.1",
     "paper-toggle-button": "^2.0.0",
-    "paper-slider": "^2.0.2"
+    "paper-slider": "^2.0.2",
+    "web-animations-js": "^2.3.1"
   }
 }
