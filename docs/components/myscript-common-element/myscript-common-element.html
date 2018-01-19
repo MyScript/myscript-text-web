@@ -633,7 +633,11 @@ CSS variable | Default
             _changedListener(event) {
                 if (event.detail) {
                     this.initialized = event.detail.initialized;
-                    this.canclear = event.detail.canClear;
+                    if (event.detail.isEmpty !== undefined) {
+                        this.canclear = !event.detail.isEmpty;
+                    } else {
+                        this.canclear = event.detail.canClear;
+                    }
                     this.canundo = event.detail.canUndo;
                     this.canredo = event.detail.canRedo;
                     this.canexport = event.detail.canExport;
@@ -649,8 +653,6 @@ CSS variable | Default
 
             _exportedListener(event) {
                 this.exports = event.detail ? event.detail.exports : {};
-                if (this.apiversion === 'V4')
-                    this.canclear = this.exports[Object.keys(this.exports)[0]] !== '';
             }
 
             _errorListener(event) {
@@ -717,6 +719,9 @@ CSS variable | Default
                             evt.stopPropagation();
                             editor.pointerDown(MyScriptCommonElement._extractPoint(evt, element, editor.configuration), evt.pointerType, evt.pointerId);
                         }
+                    }  else if (evt.target.id === 'ellipsis' || evt.target.id === 'tag-icon') {
+                        hideMenu(evt);
+                        hideCandidates(evt);
                     } else { // FIXME add more complete verification to pointer down on smart guide
                         hideMenu(evt);
                         hideCandidates(evt);
@@ -944,9 +949,9 @@ CSS variable | Default
             /**
              * Trigger export
              */
-            exportContent() {
+            export_() {
                 if (this.editor) {
-                    this.editor.exportContent();
+                    this.editor.export_();
                 }
             }
 
