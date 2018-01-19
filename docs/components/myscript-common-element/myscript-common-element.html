@@ -664,6 +664,7 @@ CSS variable | Default
             }
 
             _attachGrabber(element, editor) {
+                let firstPointerDown = true;
                 let mMaxDiffX = 0;
                 let smartGuidePointerDown = false;
                 let downSmartGuidePoint = null;
@@ -705,7 +706,15 @@ CSS variable | Default
                     return false;
                 };
 
+                const downText = () => {
+                    this.logger.debug('down on prompter text');
+                };
+
                 const pointerDownHandler = (evt) => { // Trigger a pointerDown
+                    if (firstPointerDown) {
+                        Polymer.Gestures.addListener(editor.smartGuide.elements.textContainer, 'down', downText);
+                    }
+                    firstPointerDown = false;
                     patchPointerEvent(evt);
                     const pointerDownOnEditor = evt.target.id === editor.domElement.id || evt.target.classList.contains('ms-canvas');
                     if (this.activePointerId) {
