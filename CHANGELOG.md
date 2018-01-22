@@ -1,3 +1,24 @@
+# v4.1.0
+
+## Features
+- Modifications to include smart guide from MyScriptJS
+    - New `disablesmartguide` property to disable smart guide.
+    - New `disablesmartguidefadeout` and  `smartguidefadeoutduration` to disable smart guide fadeout or modify the duration.
+- New `usepointerlisteners` property used to force the pointer events use.
+- New guides and `disableguidelines` to disable the guides.
+- Google fonts supports (see the [example](./examples/v4/change_fonts.html)).
+- Custom resources support, upload your custom resources to modify the recognition behaviour (see the [example](./examples/v4/custom_resources.html)).
+- New `penStyleClasses` property. Used to change the theme using classes passed using the `theme` property (see the [example](./examples/non-version-specific/customize_style.html)).
+
+## Breaking changes
+- `importContent()` and `exportContent()` respectively renamed to `import_()` and `export_()`.
+- `importInk(strokes)` changed to `pointerEvents(events)`.
+
+# [v4.0.1](https://github.com/MyScript/myscript-text-web/tree/v4.0.1)
+
+## Bug fixed
+- Editor on iOS wasn't working properly due to touch-action: none in CSS not supported in Safari.
+
 # [v4.0.0](https://github.com/MyScript/myscript-text-web/tree/v4.0.0)
 
 ## Features
