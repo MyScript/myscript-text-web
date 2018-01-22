@@ -5,7 +5,8 @@
     - New `disablesmartguide` property to disable smart guide.
     - New `disablesmartguidefadeout` and  `smartguidefadeoutduration` to disable smart guide fadeout or modify the duration.
 - New `usepointerlisteners` property used to force the pointer events use.
-- New guides and `disableguidelines` to disable the guides.
+- New guides for text using a svg DOM element behind the model layer and `disableguidelines` to disable the guides.
+- No more css background if api is set to `V4`.
 - Google fonts supports (see the [example](./examples/v4/change_fonts.html)).
 - Custom resources support, upload your custom resources to modify the recognition behaviour (see the [example](./examples/v4/custom_resources.html)).
 - New `penStyleClasses` property. Used to change the theme using classes passed using the `theme` property (see the [example](./examples/non-version-specific/customize_style.html)).
