@@ -417,6 +417,20 @@ CSS variable | Default
                         notify: true
                     },
                     /**
+                     * Number of operations that it is currently possible to undo.
+                     */
+                    possibleUndoCount: {
+                        type: Number,
+                        value: 0,
+                    },
+                    /**
+                     * The position of the cursor identifying the current state in the internal iink undo/redo stack.
+                     */
+                    undoStackIndex: {
+                        type: Number,
+                        value: 0,
+                    },
+                    /**
                      * If set to true, disable the autoReconnect.
                      */
                     disableautoreconnect: {
@@ -642,6 +656,8 @@ CSS variable | Default
                     this.canredo = event.detail.canRedo;
                     this.canexport = event.detail.canExport;
                     this.canconvert = event.detail.canConvert;
+                    this.possibleUndoCount = event.detail.possibleUndoCount;
+                    this.undoStackIndex = event.detail.undoStackIndex;
                 }
             }
 

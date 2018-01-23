@@ -5311,7 +5311,7 @@
           "defaultValue": "10000"
         },
         {
-          "name": "addlktext",
+          "name": "nolktext",
           "type": "boolean",
           "description": "If set to true, lexical knowledge (LK) is added to current LK, false otherwise",
           "privacy": "public",
@@ -9537,7 +9537,7 @@
           "type": "number"
         },
         {
-          "name": "addlktext",
+          "name": "nolktext",
           "description": "If set to true, lexical knowledge (LK) is added to current LK, false otherwise",
           "sourceRange": {
             "start": {
