@@ -32,7 +32,7 @@
   ],
   "dependencies": {
     "polymer": "^2.0.1",
-    "myscript-common-element": "master"
+    "myscript-common-element": "4.1.x"
   },
   "devDependencies": {
     "webcomponentsjs": "^1.0.1",
