@@ -192,7 +192,7 @@
 
         function getFontsForLang(language) {
             fontsElement.options.length = 0;
-            request('http://webdemoapi.myscript.com/api/v4.0/iink/font/google/language/' + language)
+            request('https://webdemoapi.myscript.com/api/v4.0/iink/font/google/language/' + language)
                 .then(function(e) {
                     res = JSON.parse(e.target.responseText).result;
                     Object.keys(res).forEach(function (index) {
