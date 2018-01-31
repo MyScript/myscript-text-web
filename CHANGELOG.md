@@ -1,4 +1,9 @@
-# v4.1.0
+# v4.1.1
+
+## Bugs fixed
+- Documentation and paper buttons colors were not taken into account in Edge.
+
+# [v4.1.0](https://github.com/MyScript/myscript-text-web/tree/v4.1.0)
 
 ## Features
 - Modifications to include smart guide from MyScriptJS
