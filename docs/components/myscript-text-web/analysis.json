@@ -5101,7 +5101,7 @@
           "defaultValue": "false"
         },
         {
-          "name": "disableguidelines",
+          "name": "disableguides",
           "type": "boolean",
           "description": "If set to true, disable the guide lines",
           "privacy": "public",
@@ -9591,7 +9591,7 @@
           "type": "boolean"
         },
         {
-          "name": "disableguidelines",
+          "name": "disableguides",
           "description": "If set to true, disable the guide lines",
           "sourceRange": {
             "start": {

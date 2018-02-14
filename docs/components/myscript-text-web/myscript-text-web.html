@@ -499,7 +499,7 @@ CSS variable | Default
                     /**
                      * If set to true, disable the guide lines
                      */
-                    disableguidelines: {
+                    disableguides: {
                         type: Boolean,
                         reflectToAttribute: true,
                         value: false
@@ -778,7 +778,7 @@ CSS variable | Default
                 return stylesheet;
             }
 
-            static _generateTextConfiguration(configuration, language, mimetypes, disableguidelines, disablesmartguide, enablesmartguidefadeout, smartguidefadeoutduration, nolktext, customresources, textinputmode, resultdetail, contenttypes, subsetknowledges, userlkwords, userresources, textcandidatelistsize, wordcandidatelistsize, wordpredictionlistsize, wordcompletionlistsize, charactercandidatelistsize, enableoutoflexicon, discardcasevariations, discardaccentuationvariations, glyphdistortion, enabletagger, spellingdistortion) {
+            static _generateTextConfiguration(configuration, language, mimetypes, disableguides, disablesmartguide, enablesmartguidefadeout, smartguidefadeoutduration, nolktext, customresources, textinputmode, resultdetail, contenttypes, subsetknowledges, userlkwords, userresources, textcandidatelistsize, wordcandidatelistsize, wordpredictionlistsize, wordcompletionlistsize, charactercandidatelistsize, enableoutoflexicon, discardcasevariations, discardaccentuationvariations, glyphdistortion, enabletagger, spellingdistortion) {
                 // FIXME: find a way to do a proper deep merge
                 const conf = Object.assign({}, configuration);
                 if (!conf.recognitionParams) {
@@ -799,8 +799,8 @@ CSS variable | Default
                 if (!conf.recognitionParams.v4.text) {
                     conf.recognitionParams.v4.text = {};
                 }
-                if (!conf.recognitionParams.v4.text.guide) {
-                    conf.recognitionParams.v4.text.guide = {};
+                if (!conf.recognitionParams.v4.text.guides) {
+                    conf.recognitionParams.v4.text.guides = {};
                 }
                 if (language) {
                     conf.recognitionParams.v3.textParameter.language = language;
@@ -809,8 +809,8 @@ CSS variable | Default
                 if (mimetypes) {
                     conf.recognitionParams.v4.text.mimeTypes = mimetypes.split(',');
                 }
-                if (disableguidelines !== undefined) {
-                    conf.recognitionParams.v4.text.guide.enable = !disableguidelines;
+                if (disableguides !== undefined) {
+                    conf.recognitionParams.v4.text.guides.enable = !disableguides;
                 }
                 if (disablesmartguide !== undefined) {
                     conf.recognitionParams.v4.text.smartGuide = !disablesmartguide;
@@ -895,7 +895,7 @@ CSS variable | Default
                     this.configuration,
                     this.language,
                     this.mimetypes,
-                    this.disableguidelines,
+                    this.disableguides,
                     this.disablesmartguide,
                     this.enablesmartguidefadeout,
                     this.smartguidefadeoutduration,
