@@ -3,6 +3,11 @@
 ## Bugs fixed
 - Documentation and paper buttons colors were not taken into account in Edge.
 
+## Breaking changes
+
+In order to be consistent with the native API :
+- `disableguidelines` renamed to `disableguides` in the configuration.
+
 # [v4.1.0](https://github.com/MyScript/myscript-text-web/tree/v4.1.0)
 
 ## Features
