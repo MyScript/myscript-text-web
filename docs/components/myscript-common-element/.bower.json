@@ -52,7 +52,7 @@
   "_resolution": {
     "type": "version",
     "tag": "v4.1.1",
-    "commit": "4b2a4dab06b689c17a21abf3bbad6ddf365334c2"
+    "commit": "c5df2554426ce8b87f788b67ced4f3262f418585"
   },
   "_source": "https://github.com/MyScript/myscript-common-element.git",
   "_target": "^4.1.1",
