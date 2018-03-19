@@ -886,10 +886,12 @@ CSS variable | Default
             }
 
             _buildConfiguration() {
-                if (this.disablesmartguide === false && this.apiversion !== 'V3') {
+                if (this.disablesmartguide === false && this.apiversion !== 'V3' && this.protocol !== 'REST') {
                     this.disableconvertcontrol = true;
                     this.disableclearcontrol = true;
                     this.disableexportpanel = true;
+                } else if (this.apiversion === 'V3' || this.protocol === 'REST') {
+                    this.disableconvertcontrol = true;
                 }
                 return MyScriptTextWeb._generateTextConfiguration(
                     this.configuration,
