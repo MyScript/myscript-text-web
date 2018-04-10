@@ -138,9 +138,12 @@ Custom property | Description | Default
             }
 
             _getPlainText(exports) {
+                console.log(exports);
                 if (exports) {
                     if (exports.TEXT) {
                         return exports.TEXT;
+                    } else if (exports.text) {
+                        return exports.text;
                     }
                     return exports['text/plain'];
                 }

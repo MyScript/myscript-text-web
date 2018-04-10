@@ -44,7 +44,12 @@ var components = {
 		},
 		"markup": {
 			"title": "Markup",
-			"aliasTitles": { "html": "HTML", "xml": "XML", "svg": "SVG", "mathml": "MathML" },
+			"aliasTitles": {
+				"html": "HTML",
+				"xml": "XML",
+				"svg": "SVG",
+				"mathml": "MathML"
+			},
 			"option": "default"
 		},
 		"css": {
@@ -89,6 +94,10 @@ var components = {
 			"title": "Arduino",
 			"require": "cpp",
 			"owner": "eisbehr-"
+		},
+		"arff": {
+			"title": "ARFF",
+			"owner": "Golmote"
 		},
 		"asciidoc": {
 			"title": "AsciiDoc",
@@ -155,6 +164,10 @@ var components = {
 			"title": "CoffeeScript",
 			"require": "javascript",
 			"owner": "R-osey"
+		},
+		"clojure": {
+			"title": "Clojure",
+			"owner": "troglotit"
 		},
 		"crystal": {
 			"title": "Crystal",
@@ -341,6 +354,10 @@ var components = {
 			"require": "css",
 			"owner": "Golmote"
 		},
+		"liquid": {
+			"title": "Liquid",
+			"owner": "cinhtau"
+		},
 		"livescript": {
 			"title": "LiveScript",
 			"owner": "Golmote"
@@ -378,7 +395,7 @@ var components = {
 			"title": "Monkey",
 			"owner": "Golmote"
 		},
-		"n4js":{
+		"n4js": {
 			"title": "N4JS",
 			"require": "javascript",
 			"owner": "bsmith-n4"
@@ -501,13 +518,13 @@ var components = {
 			"title": "R",
 			"owner": "Golmote"
 		},
-		"jsx":{
+		"jsx": {
 			"title": "React JSX",
 			"require": ["markup", "javascript"],
 			"owner": "vkbansal"
 		},
 		"tsx": {
-			"title": "React TSX", 
+			"title": "React TSX",
 			"require": ["jsx", "typescript"]
 		},
 		"renpy": {
@@ -559,9 +576,9 @@ var components = {
 			"require": "java",
 			"owner": "jozic"
 		},
-		"scheme" : {
+		"scheme": {
 			"title": "Scheme",
-			"owner" : "bacchus123"
+			"owner": "bacchus123"
 		},
 		"smalltalk": {
 			"title": "Smalltalk",
@@ -576,7 +593,7 @@ var components = {
 			"title": "SQL",
 			"owner": "multipetros"
 		},
-		"stylus" : {
+		"stylus": {
 			"title": "Stylus",
 			"owner": "vkbansal"
 		},
@@ -599,7 +616,7 @@ var components = {
 			"require": "markup",
 			"owner": "brandonkelly"
 		},
-		"typescript":{
+		"typescript": {
 			"title": "TypeScript",
 			"require": "javascript",
 			"owner": "vkbansal"

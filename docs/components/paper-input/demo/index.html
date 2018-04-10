@@ -22,6 +22,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
   <link rel="import" href="../../iron-icon/iron-icon.html">
   <link rel="import" href="../../iron-icons/iron-icons.html">
+  <link rel="import" href="../../iron-input/iron-input.html">
   <link rel="import" href="../../paper-icon-button/paper-icon-button.html">
   <link rel="import" href="../../paper-styles/color.html">
   <link rel="import" href="../paper-input-container.html">
@@ -138,6 +139,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <label slot="label">Social Security Number</label>
           <ssn-input class="paper-input-input" slot="input"></ssn-input>
           <paper-input-error slot="add-on">SSN invalid!</paper-input-error>
+        </paper-input-container>
+      </template>
+    </demo-snippet>
+
+    <h3>You can use <code>paper-input-container</code> directly if you want more control
+      over the input (for example, if you want to use this in a native <code>form</code>, etc.)</h3>
+    <demo-snippet>
+      <template>
+        <custom-style>
+          <style is="custom-style">
+            input.my-input {
+              @apply --paper-input-container-shared-input-style;
+            }
+          </style>
+        </custom-style>
+        <paper-input-container>
+          <label slot="label">This is a label</label>
+          <iron-input slot="input">
+            <input class="my-input">
+          </iron-input>
         </paper-input-container>
       </template>
     </demo-snippet>

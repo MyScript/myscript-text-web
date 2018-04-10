@@ -43,6 +43,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         type: String
       },
 
+      /**
+       * @type {boolean}
+       */
       disabled: {
         type: Boolean,
         value: false,
@@ -50,8 +53,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
     },
 
-    // The list of keys has been taken from
-    // https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/getModifierState
+    /**
+     * The list of keys has been taken from
+     * https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/getModifierState
+     * @private
+     */
     _MODIFIER_KEYS : [
       'Alt',
       'AltGraph',
@@ -70,8 +76,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       'SymbolLock'
     ],
 
+    /** @private */
     _SEARCH_RESET_TIMEOUT_MS: 1000,
 
+    /** @private */
     _previousTabIndex: 0,
 
     hostAttributes: {
@@ -88,6 +96,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       'iron-items-changed': '_onIronItemsChanged'
     },
 
+    /**
+     * @type {!Object}
+     */
     keyBindings: {
       'up': '_onUpKey',
       'down': '_onDownKey',
