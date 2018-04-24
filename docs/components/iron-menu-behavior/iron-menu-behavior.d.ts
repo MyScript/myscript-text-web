@@ -26,9 +26,9 @@ declare namespace Polymer {
     readonly focusedItem: object|null;
 
     /**
-     * The attribute to use on menu items to look up the item title. Typing the first
-     * letter of an item when the menu is open focuses that item. If unset, `textContent`
-     * will be used.
+     * The attribute to use on menu items to look up the item title. Typing the
+     * first letter of an item when the menu is open focuses that item. If
+     * unset, `textContent` will be used.
      */
     attrForItemTitle: string|null|undefined;
     disabled: boolean;
@@ -36,8 +36,9 @@ declare namespace Polymer {
     attached(): void;
 
     /**
-     * Selects the given value. If the `multi` property is true, then the selected state of the
-     * `value` will be toggled; otherwise the `value` will be selected.
+     * Selects the given value. If the `multi` property is true, then the selected
+     * state of the `value` will be toggled; otherwise the `value` will be
+     * selected.
      *
      * @param value the value to select.
      */

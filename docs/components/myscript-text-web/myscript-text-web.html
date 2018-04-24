@@ -113,6 +113,7 @@ CSS variable | Default
             protocol="[[ protocol ]]"
             apiversion="[[ apiversion ]]"
             host="[[ host ]]"
+            usewindowlocation="[[ usewindowlocation ]]"
             scheme="[[ scheme ]]"
             applicationkey="[[ applicationkey ]]"
             hmackey="[[ hmackey ]]"
@@ -236,6 +237,14 @@ CSS variable | Default
                         type: String,
                         reflectToAttribute: true,
                         value: 'cloud.myscript.com'
+                    },
+                    /**
+                     * Use if host and scheme should be set using window.location
+                     */
+                    usewindowlocation: {
+                        type: Boolean,
+                        reflectToAttribute: true,
+                        value: false
                     },
                     /**
                      * Cloud API version to use.

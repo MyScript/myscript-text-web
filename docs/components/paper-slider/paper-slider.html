@@ -519,6 +519,12 @@ Custom property | Description | Default
         'up pageup end': '_incrementKey'
       },
 
+      ready: function() {
+        if(this.ignoreBarTouch) {
+          Polymer.Gestures.setTouchAction(this.$.sliderBar, 'auto');
+        }
+      },
+      
       /**
        * Increases value by `step` but not above `max`.
        * @method increment
