@@ -25,10 +25,10 @@
             }
         </style>
 
-        <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
-        <script src="../../../pepjs/dist/pep.min.js"></script>
-        <link rel="import" href="../../../myscript-common-element/myscript-languages-element.html">
-        <link rel="import" href="../../myscript-text-web.html">
+        <script src="@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+        <script src="pepjs/dist/pep.min.js"></script>
+        <script type="module" src="myscript-common-element/myscript-languages-element.js"></script>
+        <script type="module" src="../../myscript-text-web.js"></script>
     </head>
 
     <body>
@@ -46,20 +46,22 @@
                            hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad"
                            touch-action="none">
         </myscript-text-web>
-        <script>
-            window.addEventListener('load', () => {
-                const textElement = document.querySelector('myscript-text-web');
-                const langElement = document.querySelector('myscript-languages-element');
-                langElement.addEventListener('change', (evt) => {
-                    const lang = evt.detail.find(language => language.selected === true).value;
-                    if (textElement.configuration && (lang !== textElement.language)) {
-                        textElement.unloaded = true;
-                        textElement.language = evt.detail.find(language => language.selected === true).value;
-                        textElement.unloaded = false;
-                    }
-                })
-            });
-        </script>
+        <script type="module">
+import 'myscript-common-element/myscript-languages-element.js';
+import '../../myscript-text-web.js';
+window.addEventListener('load', () => {
+    const textElement = document.querySelector('myscript-text-web');
+    const langElement = document.querySelector('myscript-languages-element');
+    langElement.addEventListener('change', (evt) => {
+        const lang = evt.detail.find(language => language.selected === true).value;
+        if (textElement.configuration && (lang !== textElement.language)) {
+            textElement.unloaded = true;
+            textElement.language = evt.detail.find(language => language.selected === true).value;
+            textElement.unloaded = false;
+        }
+    })
+});
+</script>
     </body>
 
 </html>

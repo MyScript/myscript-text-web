@@ -65,12 +65,12 @@
 
     <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
     <script src="../../../pepjs/dist/pep.min.js"></script>
-    <link rel="import" href="../../../paper-toggle-button/paper-toggle-button.html">
-    <link rel="import" href="../../../paper-swatch-picker/paper-swatch-picker.html">
-    <link rel="import" href="../../../paper-slider/paper-slider.html">
-    <link rel="import" href="../../../neon-animation/web-animations.html">
-    <link rel="import" href="../../../myscript-common-element/myscript-languages-element.html">
-    <link rel="import" href="../../myscript-text-web.html">
+    <script type="module" src="../../../paper-toggle-button/paper-toggle-button.js"></script>
+    <script type="module" src="../../../paper-swatch-picker/paper-swatch-picker.js"></script>
+    <script type="module" src="../../../paper-slider/paper-slider.js"></script>
+    <script type="module" src="../../../neon-animation/web-animations.js"></script>
+    <script type="module" src="../../../myscript-common-element/myscript-languages-element.js"></script>
+    <script type="module" src="../../myscript-text-web.js"></script>
     <custom-style>
         <style>
             myscript-text-web {
@@ -153,126 +153,132 @@
             Theme or pen style applied will be written here (where component is myscript-text-web).
         </div>
     </div>
-    <script>
-        function request(url) {
-            return new Promise(function (resolve, reject) {
-                var xhr = new XMLHttpRequest();
-                xhr.open('GET', url);
-                xhr.onload = resolve;
-                xhr.onerror = reject;
-                xhr.send();
+    <script type="module">
+import '../../../paper-toggle-button/paper-toggle-button.js';
+import '../../../paper-swatch-picker/paper-swatch-picker.js';
+import '../../../paper-slider/paper-slider.js';
+import '../../../neon-animation/web-animations.js';
+import '../../../myscript-common-element/myscript-languages-element.js';
+import '../../myscript-text-web.js';
+function request(url) {
+    return new Promise(function (resolve, reject) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', url);
+        xhr.onload = resolve;
+        xhr.onerror = reject;
+        xhr.send();
+    });
+}
+
+const themes = [{
+    name: 'normal-white',
+    color: '#FFFFFF',
+    width: 2,
+    fontsize: 12
+}, {
+    name: 'thin-green',
+    color: '#2E7D32',
+    width: 1,
+    fontsize: 10
+}, {
+    name: 'bold-red',
+    color: '#B71C1C',
+    width: 3,
+    fontsize: 14
+}];
+
+const component = document.querySelector('myscript-text-web');
+const penSettings = document.querySelector('#pensettings');
+const penColor = document.querySelector('#pencolor');
+const penWidth = document.querySelector('#penwidth');
+const penStyleClasses = document.querySelector('#penstyleclasses');
+const langElement = document.querySelector('myscript-languages-element');
+const fontsElement = document.getElementById('fonts');
+const prompterText = document.getElementById('prompter-css-text');
+
+function getFontsForLang(language) {
+    fontsElement.options.length = 0;
+    request('https://webdemoapi.myscript.com/api/v4.0/iink/font/google/language/' + language)
+        .then(function(e) {
+            res = JSON.parse(e.target.responseText).result;
+            Object.keys(res).forEach(function (index) {
+                fontsElement.options[fontsElement.options.length] = new Option(res[index], res[index]);
             });
-        }
+        }, function(e) {
+            console.log('Error on get language', e);
+        });
+}
 
-        const themes = [{
-            name: 'normal-white',
-            color: '#FFFFFF',
-            width: 2,
-            fontsize: 12
-        }, {
-            name: 'thin-green',
-            color: '#2E7D32',
-            width: 1,
-            fontsize: 10
-        }, {
-            name: 'bold-red',
-            color: '#B71C1C',
-            width: 3,
-            fontsize: 14
-        }];
+function updatePrompter(values) {
+    prompterText.innerText = '';
+    values.forEach(function(value) {
+        prompterText.innerText += `${value[0]} = ${JSON.stringify(value[1])} \n`;
+    });
+}
 
-        const component = document.querySelector('myscript-text-web');
-        const penSettings = document.querySelector('#pensettings');
-        const penColor = document.querySelector('#pencolor');
-        const penWidth = document.querySelector('#penwidth');
-        const penStyleClasses = document.querySelector('#penstyleclasses');
-        const langElement = document.querySelector('myscript-languages-element');
-        const fontsElement = document.getElementById('fonts');
-        const prompterText = document.getElementById('prompter-css-text');
+getFontsForLang(component.language);
 
-        function getFontsForLang(language) {
-            fontsElement.options.length = 0;
-            request('https://webdemoapi.myscript.com/api/v4.0/iink/font/google/language/' + language)
-                .then(function(e) {
-                    res = JSON.parse(e.target.responseText).result;
-                    Object.keys(res).forEach(function (index) {
-                        fontsElement.options[fontsElement.options.length] = new Option(res[index], res[index]);
-                    });
-                }, function(e) {
-                    console.log('Error on get language', e);
-                });
-        }
-
-        function updatePrompter(values) {
-            prompterText.innerText = '';
-            values.forEach(function(value) {
-                prompterText.innerText += `${value[0]} = ${JSON.stringify(value[1])} \n`;
-            });
-        }
-
+langElement.addEventListener('change', (evt) => {
+    const lang = evt.detail.find(language => language.selected === true).value;
+    if (component.configuration && (lang !== component.language)) {
+        component.unloaded = true;
+        component.language = evt.detail.find(language => language.selected === true).value;
+        component.unloaded = false;
         getFontsForLang(component.language);
+        prompterText.innerText = 'Theme reset'
+    }
+});
 
-        langElement.addEventListener('change', (evt) => {
-            const lang = evt.detail.find(language => language.selected === true).value;
-            if (component.configuration && (lang !== component.language)) {
-                component.unloaded = true;
-                component.language = evt.detail.find(language => language.selected === true).value;
-                component.unloaded = false;
-                getFontsForLang(component.language);
-                prompterText.innerText = 'Theme reset'
-            }
-        });
+fontsElement.addEventListener('change', function (e) {
+    component.fontfamily = e.target.value;
+});
 
-        fontsElement.addEventListener('change', function (e) {
-            component.fontfamily = e.target.value;
-        });
+// Set penColor after to prevent taken into account too early
+penColor.color = '#ff7314';
 
-        // Set penColor after to prevent taken into account too early
-        penColor.color = '#ff7314';
+document.querySelector('#theme').addEventListener('change', (event) => {
+    const selectedTheme = themes.find(theme => theme.name === event.target.value);
+    if (selectedTheme) {
+        component.themecolor = selectedTheme.color;
+        component.themewidth = selectedTheme.width;
+        component.fontsize = selectedTheme.fontsize;
+        updatePrompter([['component.themecolor', selectedTheme.color], ['component.themewidth', selectedTheme.width], ['component.fontsize', selectedTheme.fontsize]]);
+    }
+});
 
-        document.querySelector('#theme').addEventListener('change', (event) => {
-            const selectedTheme = themes.find(theme => theme.name === event.target.value);
-            if (selectedTheme) {
-                component.themecolor = selectedTheme.color;
-                component.themewidth = selectedTheme.width;
-                component.fontsize = selectedTheme.fontsize;
-                updatePrompter([['component.themecolor', selectedTheme.color], ['component.themewidth', selectedTheme.width], ['component.fontsize', selectedTheme.fontsize]]);
-            }
-        });
+document.querySelector('#penenabled').addEventListener('change', (event) => {
+    if (event.target.checked) {
+        penSettings.classList.remove('hidden');
+        component.pencolor = penColor.color;
+        component.penwidth = penWidth.value;
+        updatePrompter([['component.pencolor', penColor.color], ['component.penwidth', penWidth.value]]);
+    } else {
+        penSettings.classList.add('hidden');
+        component.pencolor = undefined;
+        component.penwidth = undefined;
+        updatePrompter([['component.pencolor', undefined], ['component.penwidth', undefined]]);
+    }
+});
 
-        document.querySelector('#penenabled').addEventListener('change', (event) => {
-            if (event.target.checked) {
-                penSettings.classList.remove('hidden');
-                component.pencolor = penColor.color;
-                component.penwidth = penWidth.value;
-                updatePrompter([['component.pencolor', penColor.color], ['component.penwidth', penWidth.value]]);
-            } else {
-                penSettings.classList.add('hidden');
-                component.pencolor = undefined;
-                component.penwidth = undefined;
-                updatePrompter([['component.pencolor', undefined], ['component.penwidth', undefined]]);
-            }
-        });
+penColor.addEventListener('color-changed', (event) => {
+    component.pencolor = event.target.color;
+    updatePrompter([['component.pencolor', event.target.color]])
+});
 
-        penColor.addEventListener('color-changed', (event) => {
-            component.pencolor = event.target.color;
-            updatePrompter([['component.pencolor', event.target.color]])
-        });
+penWidth.addEventListener('change', (event) => {
+    component.penwidth = event.target.value;
+    updatePrompter([['component.pencolor', event.target.value]])
+});
 
-        penWidth.addEventListener('change', (event) => {
-            component.penwidth = event.target.value;
-            updatePrompter([['component.pencolor', event.target.value]])
-        });
-
-        penStyleClasses.addEventListener('change', (event) => {
-            if (event.target.checked) {
-                component.penstyleclasses = 'green';
-                updatePrompter([['component.penstyleclasses ', 'green']]);
-            } else {
-                component.penstyleclasses = '';
-                updatePrompter([['component.penstyleclasses', '']]);
-            }
-        });
+penStyleClasses.addEventListener('change', (event) => {
+    if (event.target.checked) {
+        component.penstyleclasses = 'green';
+        updatePrompter([['component.penstyleclasses ', 'green']]);
+    } else {
+        component.penstyleclasses = '';
+        updatePrompter([['component.penstyleclasses', '']]);
+    }
+});
 </script>
 </body>
 

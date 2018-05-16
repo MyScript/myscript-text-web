@@ -15,7 +15,7 @@
 
         <script src="../../../webcomponentsjs/webcomponents-loader.js"></script>
         <script src="../../../pepjs/dist/pep.min.js"></script>
-        <link rel="import" href="../../myscript-text-web.html">
+        <script type="module" src="../../myscript-text-web.js"></script>
     </head>
 
     <body>
@@ -26,15 +26,16 @@
                            hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad"
                            touch-action="none">
         </myscript-text-web>
-        <script>
-            const component = document.querySelector('myscript-text-web');
-            // Set the glyph color to the current theme
-            component.theme = Object.assign({}, component.theme, {
-                glyph: {
-                    color: '#000000'
-                }
-            });
-        </script>
+        <script type="module">
+import '../../myscript-text-web.js';
+const component = document.querySelector('myscript-text-web');
+// Set the glyph color to the current theme
+component.theme = Object.assign({}, component.theme, {
+    glyph: {
+        color: '#000000'
+    }
+});
+</script>
     </body>
 
 </html>

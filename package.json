@@ -1,8 +1,40 @@
 {
+  "name": "myscript-text-web",
+  "flat": true,
+  "version": "4.2.0",
+  "description": "The easy way to integrate text handwriting recognition in your web app.",
+  "keywords": [
+    "web-component",
+    "web-components",
+    "polymer",
+    "myscript",
+    "education",
+    "write",
+    "text",
+    "handwriting",
+    "recognition"
+  ],
+  "main": "myscript-text-web.html",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/MyScript/myscript-text-web.git"
+  },
+  "license": "Apache-2.0",
+  "homepage": "https://myscript.github.io/myscript-text-web/components/myscript-text-web/",
+  "dependencies": {
+    "@polymer/polymer": "^3.0.0-pre.1",
+    "myscript-common-element": "github:myscript/myscript-common-element#wip-polymer-3"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.8.2"
+  },
   "scripts": {
-    "cache-clean": "bower cache clean",
-    "install": "bower install",
-    "analyze": "polymer analyze myscript-text-exports.html myscript-text-web.html > analysis.json",
+    "cache-clean": "npm cache clean",
+    "analyze": "polymer analyze myscript-common-element.html myscript-languages-element.html myscript-stylesheet.html > analysis.json",
     "start": "polymer serve"
   }
 }
