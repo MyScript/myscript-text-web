@@ -1,5 +1,7 @@
+/* eslint-disable class-methods-use-this,no-undef,no-param-reassign,no-underscore-dangle */
 import { html, PolymerElement } from '@polymer/polymer';
-/*
+
+/**
 `myscript-text-exports` is a component to display `myscript-text-web` exports candidates.
 
     <myscript-text-exports
@@ -15,6 +17,7 @@ Custom property | Description | Default
 `--myscript-text-exports-predicted-color` | Candidate predicted part color | #73818C
 `--myscript-text-exports-completed-color` | Candidate completed part color | #1A9FFF
 */
+
 class MyScriptTextExports extends PolymerElement {
   static get template() {
     return html`
@@ -81,6 +84,7 @@ class MyScriptTextExports extends PolymerElement {
                 color: var(--myscript-text-exports-completed-color, #1A9FFF);
             }
         </style>
+        
         <div id="plaintext">{{ _getPlainText(exports) }}</div>
         <div id="candidates">
             <template is="dom-if" if="[[ exports.CANDIDATES ]]">
@@ -105,36 +109,35 @@ class MyScriptTextExports extends PolymerElement {
                     </span>
                 </template>
             </template>
-        </div>
-`;
+        </div>`;
   }
 
   static get is() {
-      return 'myscript-text-exports'
+    return 'myscript-text-exports';
   }
 
   static get properties() {
-      return {
-          /**
+    return {
+      /**
            * Exports result.
            * @attribute exports
            * @type {Object<String, Object>}.
            */
-          exports: {
-              type: Object,
-              notify: true
-          }
+      exports: {
+        type: Object,
+        notify: true
       }
+    };
   }
 
   _getPlainText(exports) {
-      if (exports) {
-          if (exports.TEXT) {
-              return exports.TEXT;
-          }
-          return exports['text/plain'];
+    if (exports) {
+      if (exports.TEXT) {
+        return exports.TEXT;
       }
-      return undefined;
+      return exports['text/plain'];
+    }
+    return undefined;
   }
 
   /**
@@ -142,74 +145,74 @@ class MyScriptTextExports extends PolymerElement {
    * @param e
    */
   _select(e) {
-      const exports = this.exports;
-      if (exports.CANDIDATES) {
-          exports.CANDIDATES.textSegmentResult.selectedCandidateIdx = e.model.textIndex;
-          exports.TEXT = exports.CANDIDATES.textSegmentResult.candidates[exports.CANDIDATES.textSegmentResult.selectedCandidateIdx].label;
+    const exports = this.exports;
+    if (exports.CANDIDATES) {
+      exports.CANDIDATES.textSegmentResult.selectedCandidateIdx = e.model.textIndex;
+      exports.TEXT = exports.CANDIDATES.textSegmentResult.candidates[exports.CANDIDATES.textSegmentResult.selectedCandidateIdx].label;
+    }
+    this.exports = {};
+    this.exports = exports;
+    this.dispatchEvent(new CustomEvent('change', {
+      detail: {
+        exports
       }
-      this.exports = {};
-      this.exports = exports;
-      this.dispatchEvent(new CustomEvent('change', {
-          detail: {
-              exports
-          }
-      }));
+    }));
   }
 
   _isSelected(index, selectedIndex) {
-      return index === selectedIndex;
+    return index === selectedIndex;
   }
 
   _getChildSegments(candidate, exports, type) {
-      const segments = [];
+    const segments = [];
 
-      function addSegment(child, segment) {
-          if (segment.inkRanges === child.inkRanges) {
-              segment.selectedCandidateIdx = child.selectedCandidateIdx;
-              segments.push(segment);
-          }
+    function addSegment(child, segment) {
+      if (segment.inkRanges === child.inkRanges) {
+        segment.selectedCandidateIdx = child.selectedCandidateIdx;
+        segments.push(segment);
       }
+    }
 
-      if (candidate.children) {
-          candidate.children.forEach(function (child, index) {
-              if (type === 'text' &&
+    if (candidate.children) {
+      candidate.children.forEach((child, index) => {
+        if (type === 'text' &&
                   exports &&
                   exports.CANDIDATES &&
                   exports.CANDIDATES.wordSegments &&
                   exports.CANDIDATES.wordSegments.length > -1) {
-                  exports.CANDIDATES.wordSegments.forEach(segment => addSegment(child, segment));
-              } else if (type === 'word' &&
+          exports.CANDIDATES.wordSegments.forEach(segment => addSegment(child, segment));
+        } else if (type === 'word' &&
                   exports &&
                   exports.CANDIDATES &&
                   exports.CANDIDATES.charSegments &&
                   exports.CANDIDATES.charSegments.length > -1) {
-                  if (!child.inkRanges) {
-                      segments.push({
-                          candidates: [{
-                              label: candidate.label.charAt(index),
-                              flags: candidate.flags
-                          }],
-                          selectedCandidateIdx: 0
-                      });
-                  } else {
-                      exports.CANDIDATES.charSegments.forEach(segment => addSegment(child, segment));
-                  }
-              }
-          });
-      }
-      return segments;
+          if (!child.inkRanges) {
+            segments.push({
+              candidates: [{
+                label: candidate.label.charAt(index),
+                flags: candidate.flags
+              }],
+              selectedCandidateIdx: 0
+            });
+          } else {
+            exports.CANDIDATES.charSegments.forEach(segment => addSegment(child, segment));
+          }
+        }
+      });
+    }
+    return segments;
   }
 
   _getChildCandidates(candidate, exports, type) {
-      return this._getChildSegments(candidate, exports, type)
-          .map(segment => segment.candidates[segment.selectedCandidateIdx]);
+    return this._getChildSegments(candidate, exports, type)
+      .map(segment => segment.candidates[segment.selectedCandidateIdx]);
   }
 
   _getCandidateFlags(candidate) {
-      if (candidate && candidate.flags) {
-          return candidate.flags.join(' ').toLowerCase();
-      }
-      return '';
+    if (candidate && candidate.flags) {
+      return candidate.flags.join(' ').toLowerCase();
+    }
+    return '';
   }
 }
 
