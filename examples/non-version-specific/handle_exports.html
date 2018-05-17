@@ -13,9 +13,8 @@
 
         <link rel="stylesheet" href="../examples.css">
 
-        <script src="@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
-        <script src="pepjs/dist/pep.min.js"></script>
-        <script type="module" src="@polymer/paper-toast/paper-toast.js"></script>
+        <script src="../../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+        <script type="module" src="../../node_modules/@polymer/paper-toast/paper-toast.js"></script>
         <script type="module" src="../../myscript-text-web.js"></script>
     </head>
 
@@ -28,9 +27,7 @@
                            hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad"
                            touch-action="none">
         </myscript-text-web>
-        <script type="module">
-import '@polymer/paper-toast/paper-toast.js';
-import '../../myscript-text-web.js';
+        <script>
 const paperToast = document.querySelector('paper-toast');
 document.querySelector('myscript-text-web').addEventListener('exported', function (event) {
     paperToast.text = `Recognition object contains : ${JSON.stringify(event.detail)}`;

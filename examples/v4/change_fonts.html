@@ -16,6 +16,7 @@
         myscript-text-web {
             height: calc(100% - 2.625rem);
         }
+
         nav {
             display: flex;
             flex-wrap: wrap;
@@ -29,9 +30,8 @@
         }
     </style>
 
-    <script src="@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
-    <script src="pepjs/dist/pep.min.js"></script>
-    <script type="module" src="myscript-common-element/myscript-languages-element.js"></script>
+    <script src="../../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script type="module" src="../../node_modules/myscript-common-element/myscript-languages-element.js"></script>
     <script type="module" src="../../myscript-text-web.js"></script>
 </head>
 
@@ -58,54 +58,53 @@
                    hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad"
                    touch-action="none">
 </myscript-text-web>
-<script type="module">
-import 'myscript-common-element/myscript-languages-element.js';
-import '../../myscript-text-web.js';
-function request(url) {
-    return new Promise(function (resolve, reject) {
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', url);
-        xhr.onload = resolve;
-        xhr.onerror = reject;
-        xhr.send();
-    });
-}
+<script>
 
-window.addEventListener('load', () => {
-
-    const textElement = document.querySelector('myscript-text-web');
-    const langElement = document.querySelector('myscript-languages-element');
-    const fontsElement = document.getElementById('fonts');
-
-    function getFontsForLang(language) {
-        fontsElement.options.length = 0;
-        request('https://webdemoapi.myscript.com/api/v4.0/iink/font/google/language/' + language)
-            .then(function(e) {
-                res = JSON.parse(e.target.responseText).result;
-                Object.keys(res).forEach(function (index) {
-                    fontsElement.options[fontsElement.options.length] = new Option(res[index], res[index]);
-                });
-            }, function(e) {
-                console.log('Error on get language', e);
-            });
+    function request(url) {
+        return new Promise(function (resolve, reject) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', url);
+            xhr.onload = resolve;
+            xhr.onerror = reject;
+            xhr.send();
+        });
     }
 
-    getFontsForLang(textElement.language);
+    window.addEventListener('load', () => {
 
-    langElement.addEventListener('change', (evt) => {
-        const lang = evt.detail.find(language => language.selected === true).value;
-        if (textElement.configuration && (lang !== textElement.language)) {
-            textElement.unloaded = true;
-            textElement.language = evt.detail.find(language => language.selected === true).value;
-            textElement.unloaded = false;
-            getFontsForLang(textElement.language);
+        const textElement = document.querySelector('myscript-text-web');
+        const langElement = document.querySelector('myscript-languages-element');
+        const fontsElement = document.getElementById('fonts');
+
+        function getFontsForLang(language) {
+            fontsElement.options.length = 0;
+            request('https://webdemoapi.myscript.com/api/v4.0/iink/font/google/language/' + language)
+                .then(function (e) {
+                    res = JSON.parse(e.target.responseText).result;
+                    Object.keys(res).forEach(function (index) {
+                        fontsElement.options[fontsElement.options.length] = new Option(res[index], res[index]);
+                    });
+                }, function (e) {
+                    console.log('Error on get language', e);
+                });
         }
-    });
 
-    fontsElement.addEventListener('change', function (e) {
-        textElement.fontfamily = e.target.value;
+        getFontsForLang(textElement.language);
+
+        langElement.addEventListener('change', (evt) => {
+            const lang = evt.detail.find(language => language.selected === true).value;
+            if (textElement.configuration && (lang !== textElement.language)) {
+                textElement.unloaded = true;
+                textElement.language = evt.detail.find(language => language.selected === true).value;
+                textElement.unloaded = false;
+                getFontsForLang(textElement.language);
+            }
+        });
+
+        fontsElement.addEventListener('change', function (e) {
+            textElement.fontfamily = e.target.value;
+        });
     });
-});
 </script>
 </body>
 
