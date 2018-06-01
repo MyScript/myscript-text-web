@@ -1,13 +1,9 @@
 /* eslint-disable no-underscore-dangle */
-import { html, PolymerElement } from '@polymer/polymer';
-
-import * as MyScript from 'myscript/dist/myscript.esm';
-
-import 'myscript-common-element/myscript-common-element';
-import 'myscript-common-element/myscript-stylesheet';
-import './myscript-text-exports';
-
-
+import { html, PolymerElement } from "./node_modules/@polymer/polymer/polymer-element.js";
+import * as MyScript from "./node_modules/myscript/dist/myscript.esm.js";
+import "./node_modules/myscript-common-element/myscript-common-element.js";
+import "./node_modules/myscript-common-element/myscript-stylesheet.js";
+import "./myscript-text-exports.js";
 /**
 `myscript-text-web` is a turnkey solution for those who need to quickly implement MyScript Text recognition.
 
@@ -47,6 +43,7 @@ CSS variable | Default
 @demo src/demo-app/examples/v3/superimposed.html Superimposed technology [V3]
 @demo src/demo-app/examples/index.html Other examples
 */
+
 class MyScriptTextWeb extends PolymerElement {
   static get template() {
     return html`
@@ -119,7 +116,6 @@ class MyScriptTextWeb extends PolymerElement {
   static get is() {
     return 'myscript-text-web';
   }
-
   /**
    * Fired when editor is idle.
    * @event idle
@@ -175,12 +171,14 @@ class MyScriptTextWeb extends PolymerElement {
    * @event error
    */
 
+
   static get properties() {
     return {
       // ----------------------------------------------------------------------------------------------
       // The following section is a recopy of myscript-common-element attributes
       // Polymer documentation generation prevent from reusing attributes from another element.
       // ----------------------------------------------------------------------------------------------
+
       /**
            * The current recognition protocol (WEBSOCKET or REST). We strongly recommend using WEBSOCKET.
            */
@@ -189,6 +187,7 @@ class MyScriptTextWeb extends PolymerElement {
         reflectToAttribute: true,
         value: 'WEBSOCKET'
       },
+
       /**
            * Scheme to use to connect to MyScript Cloud or Server. (https or http)
            */
@@ -197,6 +196,7 @@ class MyScriptTextWeb extends PolymerElement {
         reflectToAttribute: true,
         value: 'https'
       },
+
       /**
            * The current recognition service host.
            */
@@ -205,6 +205,7 @@ class MyScriptTextWeb extends PolymerElement {
         reflectToAttribute: true,
         value: 'cloud.myscript.com'
       },
+
       /**
            * Use if host and scheme should be set using window.location
            */
@@ -213,6 +214,7 @@ class MyScriptTextWeb extends PolymerElement {
         reflectToAttribute: true,
         value: false
       },
+
       /**
            * Cloud API version to use.
            */
@@ -221,6 +223,7 @@ class MyScriptTextWeb extends PolymerElement {
         reflectToAttribute: true,
         value: 'V4'
       },
+
       /**
            * Delay without any user input before asking for recognition, only use in REST mode.
            */
@@ -229,6 +232,7 @@ class MyScriptTextWeb extends PolymerElement {
         reflectToAttribute: true,
         value: 2000
       },
+
       /**
            * Delay without any recognition result received before processing the last one received, only use in WEBSOCKET mode.
            */
@@ -237,6 +241,7 @@ class MyScriptTextWeb extends PolymerElement {
         reflectToAttribute: true,
         value: 1000
       },
+
       /**
            * True if export should be done on-demand, false otherwise
            */
@@ -245,6 +250,7 @@ class MyScriptTextWeb extends PolymerElement {
         reflectToAttribute: true,
         value: false
       },
+
       /**
            * The recognition timeout, only use in REST mode.
            */
@@ -253,6 +259,7 @@ class MyScriptTextWeb extends PolymerElement {
         reflectToAttribute: true,
         value: 2000
       },
+
       /**
            * Application key to use for recognition on MyScript handwriting recognition server.<br />
            * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.<br /><br />
@@ -262,6 +269,7 @@ class MyScriptTextWeb extends PolymerElement {
         type: String,
         reflectToAttribute: true
       },
+
       /**
            * HMAC key to use for recognition on MyScript handwriting recognition server.<br />
            * You have to create your own HMAC key corresponding to your own application key in your account at http://cloud.myscript.com.<br /><br />
@@ -271,6 +279,7 @@ class MyScriptTextWeb extends PolymerElement {
         type: String,
         reflectToAttribute: true
       },
+
       /**
            * Properties to set when you wish to set attributes in javascript. unloaded attributes should be removed once all properties are set.
            * (see examples/programmatic_init.html for a better understanding)
@@ -281,6 +290,7 @@ class MyScriptTextWeb extends PolymerElement {
         notify: true,
         reflectToAttribute: true
       },
+
       /**
            * @private
            */
@@ -288,6 +298,7 @@ class MyScriptTextWeb extends PolymerElement {
         type: Boolean,
         computed: '_computeCommonUnloaded(unloaded)'
       },
+
       /**
            * True if editor is initialized
            */
@@ -297,6 +308,7 @@ class MyScriptTextWeb extends PolymerElement {
         notify: true,
         reflectToAttribute: true
       },
+
       /**
            * The underlying editor created with MyScriptJS. This could allow to access more advanced properties. Mostly used for automatic testing currently.
            */
@@ -304,6 +316,7 @@ class MyScriptTextWeb extends PolymerElement {
         type: Object,
         notify: true
       },
+
       /**
            * Set the additional configuration used to feed MyScript editor (Structure of object as defined in MyScriptjs MyScriptJSOptions.js file)
            * Options values are taken into account when myscript-common-element is attach to the dom and when detached is set to false.
@@ -313,6 +326,7 @@ class MyScriptTextWeb extends PolymerElement {
         type: Object,
         notify: true
       },
+
       /**
            * Pen color (supported formats rgb() rgba() hsl() hsla() #rgb #rgba #rrggbb #rrggbbaa)
            */
@@ -320,6 +334,7 @@ class MyScriptTextWeb extends PolymerElement {
         type: String,
         reflectToAttribute: true
       },
+
       /**
            * Pen width in mm (no other unit is supported yet)
            */
@@ -327,6 +342,7 @@ class MyScriptTextWeb extends PolymerElement {
         type: Number,
         reflectToAttribute: true
       },
+
       /**
            * Set the additional penStyle used to feed MyScript editor (Structure of object as defined in MyScriptJS DefaultPenStyle.js file)
            */
@@ -334,6 +350,7 @@ class MyScriptTextWeb extends PolymerElement {
         type: Object,
         notify: true
       },
+
       /**
            * Pen style classes
            */
@@ -342,6 +359,7 @@ class MyScriptTextWeb extends PolymerElement {
         value: '',
         notify: true
       },
+
       /**
            * Main color used by theme  (supported formats rgb() rgba() hsl() hsla() #rgb #rgba #rrggbb #rrggbbaa)
            */
@@ -350,6 +368,7 @@ class MyScriptTextWeb extends PolymerElement {
         value: '#1580CD',
         reflectToAttribute: true
       },
+
       /**
            * Width of strokes and primitives in mm (no other unit is supported yet)
            */
@@ -358,6 +377,7 @@ class MyScriptTextWeb extends PolymerElement {
         value: 1,
         reflectToAttribute: true
       },
+
       /**
            * font-family used to render text conversion
            */
@@ -366,6 +386,7 @@ class MyScriptTextWeb extends PolymerElement {
         value: 'Open Sans',
         reflectToAttribute: true
       },
+
       /**
            * font-size used to render text conversion
            */
@@ -374,6 +395,7 @@ class MyScriptTextWeb extends PolymerElement {
         value: 10.0,
         reflectToAttribute: true
       },
+
       /**
            * Set the additional theme used to feed MyScript editor (Structure of object as defined in MyScriptJS DefaultTheme.js file)
            */
@@ -381,6 +403,7 @@ class MyScriptTextWeb extends PolymerElement {
         type: Object,
         notify: true
       },
+
       /**
            * @private
            */
@@ -388,6 +411,7 @@ class MyScriptTextWeb extends PolymerElement {
         type: Object,
         computed: '_computeCommonTheme(theme, fontfamily, fontsize)'
       },
+
       /**
            * True if undo is available
            * @private
@@ -398,6 +422,7 @@ class MyScriptTextWeb extends PolymerElement {
         reflectToAttribute: true,
         notify: true
       },
+
       /**
            * True if redo is available
            * @private
@@ -408,6 +433,7 @@ class MyScriptTextWeb extends PolymerElement {
         reflectToAttribute: true,
         notify: true
       },
+
       /**
            * True if there is something to clear
            * @private
@@ -418,6 +444,7 @@ class MyScriptTextWeb extends PolymerElement {
         reflectToAttribute: true,
         notify: true
       },
+
       /**
            * If set to true, disable the autoReconnect.
            */
@@ -427,6 +454,7 @@ class MyScriptTextWeb extends PolymerElement {
         value: false,
         notify: true
       },
+
       /**
            * If set to true, hide the buttons (Trash, Undo, Redo).
            */
@@ -445,6 +473,7 @@ class MyScriptTextWeb extends PolymerElement {
         reflectToAttribute: true,
         value: false
       },
+
       /**
            * True if the clear feature is disabled, false otherwise
            */
@@ -453,6 +482,7 @@ class MyScriptTextWeb extends PolymerElement {
         reflectToAttribute: true,
         value: false
       },
+
       /**
            * True if the typeset feature is disabled, false otherwise
            */
@@ -461,6 +491,7 @@ class MyScriptTextWeb extends PolymerElement {
         reflectToAttribute: true,
         value: false
       },
+
       /**
            * True if pointer events listeners is used, false otherwise
            */
@@ -472,6 +503,7 @@ class MyScriptTextWeb extends PolymerElement {
       //------------------------------------------------------------------------------
       //                 End of recopy
       // -----------------------------------------------------------------------------
+
       /**
            * True if we want to use always connected mode, false otherwise
            */
@@ -480,6 +512,7 @@ class MyScriptTextWeb extends PolymerElement {
         reflectToAttribute: true,
         value: false
       },
+
       /**
            * If set to true, disable the guide lines
            */
@@ -488,6 +521,7 @@ class MyScriptTextWeb extends PolymerElement {
         reflectToAttribute: true,
         value: false
       },
+
       /**
            * True if smart guide is disabled, false otherwise.
            */
@@ -497,6 +531,7 @@ class MyScriptTextWeb extends PolymerElement {
         reflectToAttribute: true,
         notify: true
       },
+
       /**
            * True if smart guide fade out is enabled, false otherwise.
            */
@@ -506,6 +541,7 @@ class MyScriptTextWeb extends PolymerElement {
         reflectToAttribute: true,
         notify: true
       },
+
       /**
            * Duration of the fade out animation in milliseconds.
            */
@@ -515,6 +551,7 @@ class MyScriptTextWeb extends PolymerElement {
         reflectToAttribute: true,
         notify: true
       },
+
       /**
            * If set to true, lexical knowledge (LK) is added to current LK, false otherwise
            */
@@ -523,6 +560,7 @@ class MyScriptTextWeb extends PolymerElement {
         value: false,
         reflectToAttribute: true
       },
+
       /**
            * Name of the custom resources to be used
            */
@@ -531,6 +569,7 @@ class MyScriptTextWeb extends PolymerElement {
         value: [],
         reflectToAttribute: true
       },
+
       /**
            * If set to true, hide the export panel.
            */
@@ -539,6 +578,7 @@ class MyScriptTextWeb extends PolymerElement {
         value: false,
         reflectToAttribute: true
       },
+
       /**
            * The recognition language used by the recognition process.
            */
@@ -548,6 +588,7 @@ class MyScriptTextWeb extends PolymerElement {
         reflectToAttribute: true,
         value: 'en_US'
       },
+
       /**
            * Text export types (text/plain, ...).
            */
@@ -556,6 +597,7 @@ class MyScriptTextWeb extends PolymerElement {
         value: 'text/plain,application/vnd.myscript.jiix',
         reflectToAttribute: true
       },
+
       /**
            * The text input mode to use (CURSIVE, ISOLATED, SUPERIMPOSED or VERTICAL).
            */
@@ -564,6 +606,7 @@ class MyScriptTextWeb extends PolymerElement {
         value: 'CURSIVE',
         reflectToAttribute: true
       },
+
       /**
            * The resultdetail is an entry property that conditioning result depth output. To use (TEXT, WORD or CHARACTER).
            */
@@ -572,6 +615,7 @@ class MyScriptTextWeb extends PolymerElement {
         value: 'WORD',
         reflectToAttribute: true
       },
+
       /**
            * The content types to use for the recognition.
            */
@@ -579,6 +623,7 @@ class MyScriptTextWeb extends PolymerElement {
         type: Array,
         value: []
       },
+
       /**
            * The subset knowledges to use for the recognition.
            */
@@ -586,6 +631,7 @@ class MyScriptTextWeb extends PolymerElement {
         type: Array,
         value: []
       },
+
       /**
            * The user lk words to use for the recognition.
            */
@@ -593,6 +639,7 @@ class MyScriptTextWeb extends PolymerElement {
         type: Array,
         value: []
       },
+
       /**
            * List of user resources to use for recognitions. Theses user resources have to be attached to the user account where application is declare.
            */
@@ -600,6 +647,7 @@ class MyScriptTextWeb extends PolymerElement {
         type: Array,
         value: []
       },
+
       /**
            * The size of the candidate lists that will be provided at the text level in the recognition result.
            * This value must be between `1` and `20`.
@@ -609,6 +657,7 @@ class MyScriptTextWeb extends PolymerElement {
         value: 1,
         reflectToAttribute: true
       },
+
       /**
            * The size of the candidate lists that will be provided at the word level in the recognition result.
            * This value must be between `1` and `20`.
@@ -617,6 +666,7 @@ class MyScriptTextWeb extends PolymerElement {
       wordcandidatelistsize: {
         type: Number
       },
+
       /**
            * The size of the candidate prediction lists that will be provided at the word level in the recognition result.
            * This value must be between `0` and `20`.
@@ -625,6 +675,7 @@ class MyScriptTextWeb extends PolymerElement {
         type: Number,
         value: 0
       },
+
       /**
            * The size of the candidate completion lists that will be provided at the word level in the recognition result.
            * This value must be between `0` and `20`.
@@ -633,6 +684,7 @@ class MyScriptTextWeb extends PolymerElement {
         type: Number,
         value: 0
       },
+
       /**
            * The size of the candidate lists that will be provided at the character level in the recognition result.
            * This value must be between `1` and `20`.
@@ -641,6 +693,7 @@ class MyScriptTextWeb extends PolymerElement {
       charactercandidatelistsize: {
         type: Number
       },
+
       /**
            * Property that controls the out of lexicon match.
            */
@@ -648,6 +701,7 @@ class MyScriptTextWeb extends PolymerElement {
         type: Boolean,
         value: false
       },
+
       /**
            * Property that tells the recognizer to detect the candidates that differ only in case and return the best candidate of that lot.
            */
@@ -655,6 +709,7 @@ class MyScriptTextWeb extends PolymerElement {
         type: Boolean,
         value: false
       },
+
       /**
            * Property that tells the recognizer to detect the candidates that differ only in accentuation and return the best candidate of that lot.
            */
@@ -662,6 +717,7 @@ class MyScriptTextWeb extends PolymerElement {
         type: Boolean,
         value: false
       },
+
       /**
            * Glyphdistortion is only valid with ISOLATED mode
            *
@@ -671,10 +727,10 @@ class MyScriptTextWeb extends PolymerElement {
            * <code>0</code> means no distortion.
            * <code>255</code> means maximum supported distortion.
            */
-
       glyphdistortion: {
         type: Number
       },
+
       /**
            * Attach a digital ink tagger to the recognizer
            */
@@ -682,6 +738,7 @@ class MyScriptTextWeb extends PolymerElement {
         type: Boolean,
         value: false
       },
+
       /**
            * SpellingDistortion is only valid with ISOLATED mode
            *
@@ -694,6 +751,7 @@ class MyScriptTextWeb extends PolymerElement {
       spellingdistortion: {
         type: Number
       },
+
       /**
            * Exports.
            * @type {Object<String, Object>} Attributes depends on recognition type already configured.
@@ -702,6 +760,7 @@ class MyScriptTextWeb extends PolymerElement {
         type: Object,
         notify: true
       },
+
       /**
            * The export rawResult
            */
@@ -709,6 +768,7 @@ class MyScriptTextWeb extends PolymerElement {
         type: Object,
         notify: true
       },
+
       /**
            * The recognition result selected candidate label
            */
@@ -716,6 +776,7 @@ class MyScriptTextWeb extends PolymerElement {
         type: String,
         notify: true
       },
+
       /**
            * The recognition result candidates
            * @type {Array<{label: String, flags: Array<String>}>}
@@ -724,6 +785,7 @@ class MyScriptTextWeb extends PolymerElement {
         type: Array,
         notify: true
       },
+
       /**
            * True if component is idle
            */
@@ -732,6 +794,7 @@ class MyScriptTextWeb extends PolymerElement {
         value: true,
         notify: true
       },
+
       /**
            * True to display console output, false otherwise.
            */
@@ -750,125 +813,164 @@ class MyScriptTextWeb extends PolymerElement {
   static _generateTextTheme(theme, fontfamily, fontsize) {
     // FIXME: find a way to do a proper deep merge
     const stylesheet = Object.assign({}, theme);
+
     if (!stylesheet['.text']) {
       stylesheet['.text'] = {};
     }
+
     if (fontfamily) {
       stylesheet['.text']['font-family'] = fontfamily;
     }
+
     if (fontsize) {
       stylesheet['.text']['font-size'] = fontsize;
     }
+
     return stylesheet;
   }
 
   static _generateTextConfiguration(configuration, language, mimetypes, alwaysconnected, disableguides, disablesmartguide, enablesmartguidefadeout, smartguidefadeoutduration, nolktext, customresources, textinputmode, resultdetail, contenttypes, subsetknowledges, userlkwords, userresources, textcandidatelistsize, wordcandidatelistsize, wordpredictionlistsize, wordcompletionlistsize, charactercandidatelistsize, enableoutoflexicon, discardcasevariations, discardaccentuationvariations, glyphdistortion, enabletagger, spellingdistortion) {
     // FIXME: find a way to do a proper deep merge
     const conf = Object.assign({}, configuration);
+
     if (!conf.recognitionParams) {
       conf.recognitionParams = {};
     }
+
     if (!conf.recognitionParams.v3) {
       conf.recognitionParams.v3 = {};
     }
+
     if (!conf.recognitionParams.v3.textParameter) {
       conf.recognitionParams.v3.textParameter = {};
     }
+
     if (!conf.recognitionParams.v3.textParameter.textProperties) {
       conf.recognitionParams.v3.textParameter.textProperties = {};
     }
+
     if (!conf.recognitionParams.v4) {
       conf.recognitionParams.v4 = {};
     }
+
     if (!conf.recognitionParams.v4.text) {
       conf.recognitionParams.v4.text = {};
     }
+
     if (!conf.recognitionParams.v4.text.guides) {
       conf.recognitionParams.v4.text.guides = {};
     }
+
     if (language) {
       conf.recognitionParams.v3.textParameter.language = language;
       conf.recognitionParams.v4.lang = language;
     }
+
     if (mimetypes) {
       conf.recognitionParams.v4.text.mimeTypes = mimetypes.split(',');
     }
+
     if (alwaysconnected !== undefined) {
       conf.recognitionParams.v4.alwaysConnected = alwaysconnected;
     }
+
     if (disableguides !== undefined) {
       conf.recognitionParams.v4.text.guides.enable = !disableguides;
     }
+
     if (disablesmartguide !== undefined) {
       conf.recognitionParams.v4.text.smartGuide = !disablesmartguide;
     }
+
     if (!conf.recognitionParams.v4.text.smartGuideFadeOut) {
       conf.recognitionParams.v4.text.smartGuideFadeOut = {};
     }
+
     if (enablesmartguidefadeout !== undefined) {
       conf.recognitionParams.v4.text.smartGuideFadeOut.enabled = enablesmartguidefadeout;
     }
+
     if (smartguidefadeoutduration) {
       conf.recognitionParams.v4.text.smartGuideFadeOut.duration = smartguidefadeoutduration;
     }
+
     if (!conf.recognitionParams.v4.text.configuration) {
       conf.recognitionParams.v4.text.configuration = {};
     }
+
     if (customresources) {
       conf.recognitionParams.v4.text.configuration.customResources = customresources;
       conf.recognitionParams.v4.text.configuration.addLKText = !nolktext;
     }
+
     if (textinputmode) {
       conf.recognitionParams.v3.textParameter.textInputMode = textinputmode;
     }
+
     if (resultdetail) {
       conf.recognitionParams.v3.textParameter.resultDetail = resultdetail;
     }
+
     if (contenttypes) {
       conf.recognitionParams.v3.textParameter.contentTypes = contenttypes;
     }
+
     if (subsetknowledges) {
       conf.recognitionParams.v3.textParameter.subsetKnowledges = subsetknowledges;
     }
+
     if (userlkwords) {
       conf.recognitionParams.v3.textParameter.userLkWords = userlkwords;
     }
+
     if (userresources) {
       conf.recognitionParams.v3.textParameter.userResources = userresources;
     }
+
     if (textcandidatelistsize) {
       conf.recognitionParams.v3.textParameter.textProperties.textCandidateListSize = textcandidatelistsize;
     }
+
     if (wordcandidatelistsize) {
       conf.recognitionParams.v3.textParameter.textProperties.wordCandidateListSize = wordcandidatelistsize;
     }
+
     if (wordpredictionlistsize) {
       conf.recognitionParams.v3.textParameter.textProperties.wordPredictionListSize = wordpredictionlistsize;
     }
+
     if (wordcompletionlistsize) {
       conf.recognitionParams.v3.textParameter.textProperties.wordCompletionListSize = wordcompletionlistsize;
     }
+
     if (charactercandidatelistsize) {
       conf.recognitionParams.v3.textParameter.textProperties.characterCandidateListSize = charactercandidatelistsize;
     }
+
     if (enableoutoflexicon) {
       conf.recognitionParams.v3.textParameter.textProperties.enableOutOfLexicon = enableoutoflexicon;
     }
+
     if (discardcasevariations) {
       conf.recognitionParams.v3.textParameter.textProperties.discardCaseVariations = discardcasevariations;
     }
+
     if (discardaccentuationvariations) {
       conf.recognitionParams.v3.textParameter.textProperties.discardAccentuationVariations = discardaccentuationvariations;
     }
+
     if (glyphdistortion) {
       conf.recognitionParams.v3.textParameter.textProperties.glyphDistortion = glyphdistortion;
     }
+
     if (enabletagger) {
       conf.recognitionParams.v3.textParameter.textProperties.enableTagger = enabletagger;
     }
+
     if (spellingdistortion) {
       conf.recognitionParams.v3.textParameter.textProperties.spellingDistortion = spellingdistortion;
     }
+
     return conf;
   }
 
@@ -880,40 +982,15 @@ class MyScriptTextWeb extends PolymerElement {
     } else if (this.apiversion === 'V3' || this.protocol === 'REST') {
       this.disableconvertcontrol = true;
     }
-    return MyScriptTextWeb._generateTextConfiguration(
-      this.configuration,
-      this.language,
-      this.mimetypes,
-      this.alwaysconnected,
-      this.disableguides,
-      this.disablesmartguide,
-      this.enablesmartguidefadeout,
-      this.smartguidefadeoutduration,
-      this.nolktext,
-      this.customresources,
-      this.textinputmode,
-      this.resultdetail,
-      this.contenttypes,
-      this.subsetknowledges,
-      this.userlkwords,
-      this.userresources,
-      this.textcandidatelistsize,
-      this.wordcandidatelistsize,
-      this.wordpredictionlistsize,
-      this.wordcompletionlistsize,
-      this.charactercandidatelistsize,
-      this.enableoutoflexicon,
-      this.discardcasevariations,
-      this.discardaccentuationvariations,
-      this.glyphdistortion,
-      this.enabletagger,
-      this.spellingdistortion
-    );
+
+    return MyScriptTextWeb._generateTextConfiguration(this.configuration, this.language, this.mimetypes, this.alwaysconnected, this.disableguides, this.disablesmartguide, this.enablesmartguidefadeout, this.smartguidefadeoutduration, this.nolktext, this.customresources, this.textinputmode, this.resultdetail, this.contenttypes, this.subsetknowledges, this.userlkwords, this.userresources, this.textcandidatelistsize, this.wordcandidatelistsize, this.wordpredictionlistsize, this.wordcompletionlistsize, this.charactercandidatelistsize, this.enableoutoflexicon, this.discardcasevariations, this.discardaccentuationvariations, this.glyphdistortion, this.enabletagger, this.spellingdistortion);
   }
 
   _exportChangedListener(event) {
     this.logger.trace('candidates ' + event.type + ' event intercepted', event);
+
     this._manageExports(event, this);
+
     this.dispatchEvent(new CustomEvent('exported', {
       detail: event.detail
     }));
@@ -928,59 +1005,64 @@ class MyScriptTextWeb extends PolymerElement {
     super.connectedCallback();
     this.logger.setLevel(this.debug ? 'DEBUG' : 'ERROR', false);
     this.configuration = this._buildConfiguration(); // Build default configuration to use in common element
-    this.logger.info('attached');
-  }
 
-  //-----------------------------------------------------------------------
+    this.logger.info('attached');
+  } //-----------------------------------------------------------------------
   // ---------  Wrapping of myscript-common-element  methods    ------------
   //-----------------------------------------------------------------------
+
   /**
    * Clear all context
    */
+
+
   clear() {
     if (this.editor) {
       this.editor.clear();
     }
   }
-
   /**
    * Undo action, and launch recognition if timeout is set
    */
+
+
   undo() {
     if (this.editor) {
       this.editor.undo();
     }
   }
-
   /**
    * Redo action, and launch recognition if timeout is set
    */
+
+
   redo() {
     if (this.editor) {
       this.editor.redo();
     }
   }
-
   /**
    * Launch export
    */
+
+
   export_() {
     if (this.editor) {
       this.editor.export_();
     }
   }
-
   /**
    * Import content
    * @param {Blob|*} data Data to import
    * @param {String} [mimetype] Mimetype of the data, needed if data is not a Blob
    */
+
+
   import_(data, mimetype) {
     if (this.editor) {
       this.editor.import_(data, mimetype);
     }
   }
-
   /**
    * Send multiple strokes at the same time also call batch mode.
    * @param {{events: Array<{gesture: Boolean, pointerType: String, pointerId: Integer, x: Array<Floats>, y: Array<Floats>, t: Array<Floats>}>}} events to process (strokes)
@@ -1004,34 +1086,40 @@ class MyScriptTextWeb extends PolymerElement {
    *     }
    * ````
    */
+
+
   pointerEvents(events) {
     if (this.editor) {
       this.editor.pointerEvents(events);
     }
   }
-
   /**
    * Launch convert
    */
+
+
   convert() {
     if (this.editor) {
       this.editor.convert();
     }
   }
-
   /**
    * Return the stats allowing to monitor what ink size is send to the server.
    * Stats objects format {strokesCount : 0, pointsCount : 0, byteSize : 0, humanSize : 0, humanUnit : 'BYTE'} humanUnit could have the values BYTE, BYTES, KiB, MiB
    */
+
+
   getStats() {
     return this.editor.getStats();
   }
 
   _computeCommonUnloaded(unloaded) {
     this.logger.trace('unloaded changed', unloaded);
+
     if (unloaded === false) {
       this.configuration = this._buildConfiguration();
     }
+
     return unloaded;
   }
 
@@ -1048,14 +1136,13 @@ class MyScriptTextWeb extends PolymerElement {
     this.rawresult = {};
     this.resultlabel = '';
     this.candidates = [];
+
     if (event.detail) {
       if (event.detail.exports && event.detail.exports.TEXT) {
         this.resultlabel = event.detail.exports.TEXT;
       }
-      if (event.detail.rawResult &&
-              event.detail.rawResult.result &&
-              event.detail.rawResult.result.textSegmentResult &&
-              event.detail.rawResult.result.textSegmentResult.candidates) {
+
+      if (event.detail.rawResult && event.detail.rawResult.result && event.detail.rawResult.result.textSegmentResult && event.detail.rawResult.result.textSegmentResult.candidates) {
         this.rawresult = event.detail.rawResult;
         this.candidates = this.rawresult.result.textSegmentResult.candidates;
       }
@@ -1066,6 +1153,7 @@ class MyScriptTextWeb extends PolymerElement {
     // Common element should not be attached if the unload attribute of myscript-math-web element is set to true and if he is not already connected to the dom.
     return !hideExports && (!unloaded || unloaded === true);
   }
+
 }
 
 customElements.define(MyScriptTextWeb.is, MyScriptTextWeb);
