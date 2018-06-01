@@ -261,9 +261,9 @@ class MyScriptTextWeb extends PolymerElement {
       },
 
       /**
-           * Application key to use for recognition on MyScript handwriting recognition server.<br />
-           * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.<br /><br />
-           * <b>Warning</b>: This parameter is <b>mandatory</b> and its value should be a string.
+           * Application key to use for recognition on MyScript handwriting recognition server.
+           * You have to create your own MyScript Developer account at http://dev.myscript.com and then generate your application key at http://cloud.myscript.com. See the Developer Guide to learn how to register.
+           * Warning: This parameter is mandatory and its value should be a string.
            */
       applicationkey: {
         type: String,
@@ -271,9 +271,9 @@ class MyScriptTextWeb extends PolymerElement {
       },
 
       /**
-           * HMAC key to use for recognition on MyScript handwriting recognition server.<br />
-           * You have to create your own HMAC key corresponding to your own application key in your account at http://cloud.myscript.com.<br /><br />
-           * <b>Warning</b>: This parameter may be <b>mandatory</b> if HMAC signature security is enabled for your application. The value should be a string.
+           * HMAC key to use for recognition on MyScript handwriting recognition server.
+           * You have to create your own HMAC key corresponding to your own application key in your account at http://cloud.myscript.com.
+           * Warning: This parameter may be mandatory if HMAC signature security is enabled for your application. The value should be a string.
            */
       hmackey: {
         type: String,
