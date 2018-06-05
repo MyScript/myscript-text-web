@@ -1,5 +1,5 @@
 import { PolymerElement, html } from "../../node_modules/@polymer/polymer/polymer-element.js";
-import "../../node_modules/@polymer/iron-component-page/iron-component-page.js";
+import '@polymer/iron-component-page';
 /* Extend the base PolymerElement class */
 
 class Docs extends PolymerElement {
