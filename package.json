@@ -42,6 +42,6 @@
     "analyze": "polymer analyze myscript-text-web.js myscript-text-exports.js > analysis.json",
     "start": "polymer serve",
     "build": "polymer build",
-    "docs": "npm run analyze & npm run build"
+    "docs": "npm run analyze && npm run build"
   }
 }
