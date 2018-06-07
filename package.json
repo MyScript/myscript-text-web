@@ -24,6 +24,7 @@
   "dependencies": {
     "@polymer/polymer": "^3.0.0-pre.13",
     "myscript-common-element": "github:myscript/myscript-common-element#wip-polymer-3",
+    "@polymer/paper-toast": "^3.0.0-pre.19",
     "@webcomponents/webcomponentsjs": "^2.0.0"
   },
   "devDependencies": {
