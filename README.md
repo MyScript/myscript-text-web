@@ -29,9 +29,9 @@ It integrates all you need:
 
 If you're not familiar with MyScript and Interactive Ink, consider discovering its major features with our [text demo and tutorial](http://webdemo.myscript.com/views/text.html).
 
-You can find on our examples page a [simple example](https://myscript.github.io/myscript-text-web/components/myscript-text-web/#/elements/myscript-text-web/demos/get-started-[v4]) of `myscript-text-web`. 
+[Simple example](https://myscript.github.io/myscript-text-web/components/myscript-text-web/#/elements/myscript-text-web/demos/get-started-[v4]) of `myscript-text-web`. 
 
-We also provide several examples to show the features of `myscript-text-web`. Those examples can be found on our [examples page](https://myscript.github.io/myscript-text-web/components/myscript-text-web/#/elements/myscript-text-web/demos/other-examples) with the source codes in [this directory](https://github.com/MyScript/myscript-text-web/tree/master/examples).
+[All our examples](https://myscript.github.io/myscript-text-web/components/myscript-text-web/#/elements/myscript-text-web/demos/other-examples) with the [source codes](https://github.com/MyScript/myscript-text-web/tree/master/examples).
 
 ## Features
 
