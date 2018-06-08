@@ -1,0 +1,27 @@
+{
+  "entrypoint": "index.html",
+  "sources": [
+    "src/**/*",
+    "analysis.json",
+    "myscript-text-web.js",
+    "myscript-text-exports.js"
+  ],
+  "extraDependencies": [
+    "node_modules/@webcomponents/webcomponentsjs/**",
+    "node_modules/web-animations-js/**",
+    "node_modules/@polymer/**",
+    "node_modules/myscript-common-element/**",
+    "node_modules/myscript/**"
+  ],
+  "builds": [
+    {
+      "name": "docs"
+    }
+  ],
+  "npm": true,
+  "lint": {
+    "rules": [
+      "polymer-3"
+    ]
+  }
+}
