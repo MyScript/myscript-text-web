@@ -306,7 +306,7 @@ class MyScriptTextWeb extends PolymerElement {
       },
       /**
            * Set the additional configuration used to feed MyScript editor (Structure of object as defined in MyScriptjs MyScriptJSOptions.js file)
-           * Options values are taken into account when myscript-common-element is attach to the dom and when detached is set to false.
+           * Options values are taken into account when myscript-common-element is attached to the dom and when detached is set to false.
            * Options values are not reflected to myscript-common-element attributes plus attributes values are always taken into account before configuration values (see examples/programmatic_init.html for a better understanding).
            */
       configuration: {

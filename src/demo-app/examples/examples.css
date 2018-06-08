@@ -96,6 +96,15 @@ select:focus {
     box-shadow: 0 1px 1px 0 rgba(0,0,0,.16);
 }
 
+.toast {
+    position: absolute;
+    bottom: 0;
+    background: rgba(235,235,235,0.9);
+    max-height: 100px;
+    overflow: auto;
+    padding: 6px;
+}
+
 /* Index page style */
 
 .svg-icn {
