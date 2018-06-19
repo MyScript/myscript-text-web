@@ -42,9 +42,6 @@ CSS variable | Default
 @demo src/demo-app/examples/non-version-specific/interact.html Interact [V4]
 @demo src/demo-app/examples/v4/custom_resources.html Use a custom resource [V4]
 @demo src/demo-app/examples/non-version-specific/custom_controls.html Redefining the controls [V4]
-@demo src/demo-app/examples/v3/websocket_text.html Configure component with legacy api [V3]
-@demo src/demo-app/examples/v3/prediction_completion.html Prediction and completion [V3]
-@demo src/demo-app/examples/v3/superimposed.html Superimposed technology [V3]
 @demo src/demo-app/examples/index.html Other examples
 */
 class MyScriptTextWeb extends PolymerElement {
