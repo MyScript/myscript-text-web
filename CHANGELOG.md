@@ -2,7 +2,7 @@
 
 ## Features
 
-`myscript-text-web` now supports all the features introduced by the version [4.2.0 of MyScriptJS](https://github.com/MyScript/myscript-js/tree/v4.2.0).
+`myscript-text-web` now supports all the features introduced by the version [4.2.0 of MyScriptJS](https://github.com/MyScript/myscriptjs/tree/v4.2.0).
 
 ## Breaking changes
 

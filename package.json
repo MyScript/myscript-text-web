@@ -23,7 +23,7 @@
   "homepage": "https://myscript.github.io/myscript-text-web/components/myscript-text-web/",
   "dependencies": {
     "@polymer/polymer": "^3.0.0-pre.13",
-    "myscript-common-element": "github:myscript/myscript-common-element#wip-polymer-3",
+    "myscript-common-element": "^5.0.0",
     "@polymer/paper-toast": "^3.0.0-pre.19",
     "@webcomponents/webcomponentsjs": "^2.0.0"
   },
