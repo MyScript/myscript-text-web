@@ -1,4 +1,12 @@
 # MyScript Text Web
+
+[![npm version](https://badge.fury.io/js/myscript-text-web.svg)](https://badge.fury.io/js/myscript-text-web)
+[![Published on Vaadin  Directory](https://img.shields.io/badge/Vaadin%20Directory-published-00b4f0.svg)](https://vaadin.com/directory/component/MyScriptmyscript-text-web)
+[![Stars on vaadin.com/directory](https://img.shields.io/vaadin-directory/star/MyScriptmyscript-text-web.svg)](https://vaadin.com/directory/component/MyScriptmyscript-text-web)
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/MyScript/myscript-text-web)
+[![Examples](https://img.shields.io/badge/Link%20to-examples-blue.svg)](https://myscript.github.io/myscript-common-element/#/elements/myscript-text-web/demos/other-demonstrations)
+[![Documentation](https://img.shields.io/badge/Link%20to-documentation-green.svg)](https://developer.myscript.com/docs/interactive-ink/latest/web/web-components/text-web/)
+
 > The easy way to integrate text handwriting recognition in your web app.
 
 <p align="center">
