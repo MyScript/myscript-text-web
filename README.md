@@ -49,7 +49,7 @@ If you're not familiar with MyScript and Interactive Ink, consider discovering i
 * Import and export content,
 * Styling,
 * Typeset support,
-* 59 supported languages.
+* 65 supported languages.
 
 You can discover all the text features on our [Developer website](https://developer.myscript.com/text).
 
