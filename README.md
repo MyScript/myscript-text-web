@@ -89,7 +89,7 @@ npm install myscript-text-web
 ```html
 <style>
     myscript-text-web {
-        height: 100vw;
+        height: 100vh;
     }
 </style>
 ```
@@ -112,7 +112,7 @@ npm install myscript-text-web
         <script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
         <style>
             myscript-text-web {
-                height: 100vw;
+                height: 100vh;
             }
         </style>
     </head>
