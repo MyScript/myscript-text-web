@@ -143,7 +143,7 @@ You can find a complete documentation with the following sections on our Develop
 * **Import and Export**: [how to import and export your content](https://developer.myscript.com/docs/interactive-ink/latest/web/web-components/text-element/import-and-export/),
 * **Styling**: [how to style content](https://developer.myscript.com/docs/interactive-ink/latest/web/web-components/text-element/styling/).
 
-We also provide a complete [API Reference](https://myscript.github.io/myscript-text-web/components/myscript-text-web/#/elements/myscript-text-web).
+We also provide a complete [API Reference](https://myscript.github.io/myscript-text-web/#/elements/myscript-text-web).
 
 
 ## Getting support
