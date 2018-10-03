@@ -23,14 +23,28 @@
     </head>
 
     <body>
-    <p class="description">Pre-loaded custom resources: <b>Dinosaurs</b>. Try to write some dinosaurs name!</p>
-    <myscript-text-web scheme="http"
-                           host="localhost:8897"
+    <input type="text" class="input-field" id="lexicon" data-type="text/plain" placeholder="Add your own lexicon (space-separated)">
+    <button class="classic-btn" id="reinit">Reinit</button>
+    <myscript-text-web scheme="https"
+                           host="webdemoapi.myscript.com"
                            applicationkey="515131ab-35fa-411c-bb4d-3917e00faf60"
                            hmackey="54b2ca8a-6752-469d-87dd-553bb450e9ad"
-                           touch-action="none"
-                           customresources='["dinosaur"]'
-                           nolktext>
+                           touch-action="none">
         </myscript-text-web>
+    <script>
+        window.addEventListener('load', () => {
+
+            const textElement = document.querySelector('myscript-text-web');
+            const reinitButton = document.getElementById('reinit');
+            const lexicon = document.getElementById('lexicon');
+
+            reinitButton.addEventListener('click', function () {
+                const values = lexicon.value;
+                textElement.unloaded = true;
+                textElement.customlexicon = values.split(' ');
+                textElement.unloaded = false;
+            });
+        });
+    </script>
     </body>
 </html>
