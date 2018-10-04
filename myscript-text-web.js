@@ -528,6 +528,14 @@ class MyScriptTextWeb extends PolymerElement {
         value: [],
         reflectToAttribute: true
       },
+        /**
+         * custom lexicon
+         */
+        customlexicon: {
+            type: Array,
+            value: [],
+            reflectToAttribute: true
+        },
       /**
            * If set to true, hide the export panel.
            */
@@ -759,7 +767,7 @@ class MyScriptTextWeb extends PolymerElement {
     return stylesheet;
   }
 
-  static _generateTextConfiguration(configuration, language, mimetypes, alwaysconnected, disableguides, disablesmartguide, enablesmartguidefadeout, smartguidefadeoutduration, nolktext, customresources, textinputmode, resultdetail, contenttypes, subsetknowledges, userlkwords, userresources, textcandidatelistsize, wordcandidatelistsize, wordpredictionlistsize, wordcompletionlistsize, charactercandidatelistsize, enableoutoflexicon, discardcasevariations, discardaccentuationvariations, glyphdistortion, enabletagger, spellingdistortion) {
+  static _generateTextConfiguration(configuration, language, mimetypes, alwaysconnected, disableguides, disablesmartguide, enablesmartguidefadeout, smartguidefadeoutduration, nolktext, customresources, customlexicon, textinputmode, resultdetail, contenttypes, subsetknowledges, userlkwords, userresources, textcandidatelistsize, wordcandidatelistsize, wordpredictionlistsize, wordcompletionlistsize, charactercandidatelistsize, enableoutoflexicon, discardcasevariations, discardaccentuationvariations, glyphdistortion, enabletagger, spellingdistortion) {
     // FIXME: find a way to do a proper deep merge
     const conf = Object.assign({}, configuration);
     if (!conf.recognitionParams) {
@@ -813,7 +821,12 @@ class MyScriptTextWeb extends PolymerElement {
     }
     if (customresources) {
       conf.recognitionParams.v4.text.configuration.customResources = customresources;
-      conf.recognitionParams.v4.text.configuration.addLKText = !nolktext;
+    }
+    if (customlexicon) {
+      conf.recognitionParams.v4.text.configuration.customLexicon = customlexicon;
+    }
+    if (customresources || customlexicon) {
+        conf.recognitionParams.v4.text.configuration.addLKText = !nolktext;
     }
     if (textinputmode) {
       conf.recognitionParams.v3.textParameter.textInputMode = textinputmode;
@@ -888,6 +901,7 @@ class MyScriptTextWeb extends PolymerElement {
       this.smartguidefadeoutduration,
       this.nolktext,
       this.customresources,
+      this.customlexicon,
       this.textinputmode,
       this.resultdetail,
       this.contenttypes,
