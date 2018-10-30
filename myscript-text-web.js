@@ -513,7 +513,7 @@ class MyScriptTextWeb extends PolymerElement {
         notify: true
       },
       /**
-           * If set to true, lexical knowledge (LK) is added to current LK, false otherwise
+           * If set to true, lexical knowledge (LK) is not added to current LK, false otherwise
            */
       nolktext: {
         type: Boolean,
