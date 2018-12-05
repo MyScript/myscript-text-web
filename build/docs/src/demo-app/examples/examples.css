@@ -96,6 +96,11 @@ select:focus {
     box-shadow: 0 1px 1px 0 rgba(0,0,0,.16);
 }
 
+#lexicon {
+    margin: 0 12px;
+    width: 500px;
+}
+
 .toast {
     position: absolute;
     bottom: 0;

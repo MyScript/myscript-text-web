@@ -550,7 +550,7 @@ class MyScriptTextWeb extends PolymerElement {
       },
 
       /**
-           * If set to true, lexical knowledge (LK) is added to current LK, false otherwise
+           * If set to true, lexical knowledge (LK) is not added to current LK, false otherwise
            */
       nolktext: {
         type: Boolean,
@@ -562,6 +562,15 @@ class MyScriptTextWeb extends PolymerElement {
            * Name of the custom resources to be used
            */
       customresources: {
+        type: Array,
+        value: [],
+        reflectToAttribute: true
+      },
+
+      /**
+       * custom lexicon
+       */
+      customlexicon: {
         type: Array,
         value: [],
         reflectToAttribute: true
@@ -826,7 +835,7 @@ class MyScriptTextWeb extends PolymerElement {
     return stylesheet;
   }
 
-  static _generateTextConfiguration(configuration, language, mimetypes, alwaysconnected, disableguides, disablesmartguide, enablesmartguidefadeout, smartguidefadeoutduration, nolktext, customresources, textinputmode, resultdetail, contenttypes, subsetknowledges, userlkwords, userresources, textcandidatelistsize, wordcandidatelistsize, wordpredictionlistsize, wordcompletionlistsize, charactercandidatelistsize, enableoutoflexicon, discardcasevariations, discardaccentuationvariations, glyphdistortion, enabletagger, spellingdistortion) {
+  static _generateTextConfiguration(configuration, language, mimetypes, alwaysconnected, disableguides, disablesmartguide, enablesmartguidefadeout, smartguidefadeoutduration, nolktext, customresources, customlexicon, textinputmode, resultdetail, contenttypes, subsetknowledges, userlkwords, userresources, textcandidatelistsize, wordcandidatelistsize, wordpredictionlistsize, wordcompletionlistsize, charactercandidatelistsize, enableoutoflexicon, discardcasevariations, discardaccentuationvariations, glyphdistortion, enabletagger, spellingdistortion) {
     // FIXME: find a way to do a proper deep merge
     const conf = Object.assign({}, configuration);
 
@@ -897,6 +906,13 @@ class MyScriptTextWeb extends PolymerElement {
 
     if (customresources) {
       conf.recognitionParams.v4.text.configuration.customResources = customresources;
+    }
+
+    if (customlexicon) {
+      conf.recognitionParams.v4.text.configuration.customLexicon = customlexicon;
+    }
+
+    if (customresources || customlexicon) {
       conf.recognitionParams.v4.text.configuration.addLKText = !nolktext;
     }
 
@@ -980,7 +996,7 @@ class MyScriptTextWeb extends PolymerElement {
       this.disableconvertcontrol = true;
     }
 
-    return MyScriptTextWeb._generateTextConfiguration(this.configuration, this.language, this.mimetypes, this.alwaysconnected, this.disableguides, this.disablesmartguide, this.enablesmartguidefadeout, this.smartguidefadeoutduration, this.nolktext, this.customresources, this.textinputmode, this.resultdetail, this.contenttypes, this.subsetknowledges, this.userlkwords, this.userresources, this.textcandidatelistsize, this.wordcandidatelistsize, this.wordpredictionlistsize, this.wordcompletionlistsize, this.charactercandidatelistsize, this.enableoutoflexicon, this.discardcasevariations, this.discardaccentuationvariations, this.glyphdistortion, this.enabletagger, this.spellingdistortion);
+    return MyScriptTextWeb._generateTextConfiguration(this.configuration, this.language, this.mimetypes, this.alwaysconnected, this.disableguides, this.disablesmartguide, this.enablesmartguidefadeout, this.smartguidefadeoutduration, this.nolktext, this.customresources, this.customlexicon, this.textinputmode, this.resultdetail, this.contenttypes, this.subsetknowledges, this.userlkwords, this.userresources, this.textcandidatelistsize, this.wordcandidatelistsize, this.wordpredictionlistsize, this.wordcompletionlistsize, this.charactercandidatelistsize, this.enableoutoflexicon, this.discardcasevariations, this.discardaccentuationvariations, this.glyphdistortion, this.enabletagger, this.spellingdistortion);
   }
 
   _exportChangedListener(event) {

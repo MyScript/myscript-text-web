@@ -1,7 +1,7 @@
 {
   "name": "myscript-text-web",
   "flat": true,
-  "version": "5.0.0",
+  "version": "5.1.0",
   "description": "The easy way to integrate text handwriting recognition in your web app.",
   "keywords": [
     "web-component",
@@ -23,7 +23,7 @@
   "homepage": "https://myscript.github.io/myscript-text-web/components/myscript-text-web/",
   "dependencies": {
     "@polymer/polymer": "^3.0.0-pre.13",
-    "myscript-common-element": "^5.0.0",
+    "myscript-common-element": "^5.1.0",
     "@polymer/paper-toast": "^3.0.0-pre.19",
     "@webcomponents/webcomponentsjs": "^2.0.0"
   },
