@@ -232,7 +232,7 @@ class MyScriptTextWeb extends PolymerElement {
       processdelay: {
         type: Number,
         reflectToAttribute: true,
-        value: 1000
+        value: 0
       },
       /**
            * True if export should be done on-demand, false otherwise
