@@ -4727,7 +4727,7 @@
               "attributeType": "Number"
             }
           },
-          "defaultValue": "1000"
+          "defaultValue": "0"
         },
         {
           "name": "ondemand",
