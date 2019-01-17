@@ -20,7 +20,9 @@
 <div class="toast"></div>
 <script>const toast = document.querySelector('.toast');
 document.querySelector('myscript-text-web').addEventListener('error', function (event) {
-  toast.textContent = `Error : ${JSON.stringify(event)}`;
+  if (event.detail && event.detail.type !== 'close') {
+    toast.textContent = `Error : ${JSON.stringify(event.detail)}`;
+  }
 });</script>
 
 
